@@ -9,6 +9,7 @@ Validation result: **38 Node tests + all 9 browser cases passed**, including the
 | Check | Outcome | Evidence |
 | --- | --- | --- |
 | Frozen installation, build and unit/integration tests | Passed | `bash scripts/install.sh` completed `npm ci`, esbuild and all 38 Node tests with zero failures/skips. |
+| Supplied photograph and bilingual annotations | Passed | The uploaded 352 × 347 JPEG loads successfully with the current server’s `image/jpeg` response. Label endpoints were checked against the photograph; Chinese/English desktop and 360 px mobile views were reviewed with no page overflow. The desktop inquiry/PDF and mobile workflow tests passed after integration. |
 | Student, teacher, mobile and PDF browser workflow | Passed | All 8 `workflow.spec.js` cases passed in the final full run. |
 | Isolated cross-browser collection and dashboard export | Passed | The additional `cloud-browser.spec.js` case used independent desktop student, mobile student and teacher contexts with an intercepted Google-origin iframe. It verified true save acknowledgement, complete images, failed-save queue/retry, authenticated multi-page reads, fresh real XLSX download and prevention of partial-class export. No live Google request was made and the checked-in endpoint remained empty. |
 | Original hypothesis/design/repeat snapshots and independent plate results | Passed | Unit tests and browser revisions retained first/latest answers, original proposal of 2 tests, actual 3 plates, and fixed results. |
@@ -24,8 +25,6 @@ Validation result: **38 Node tests + all 9 browser cases passed**, including the
 | Corrupt local storage | Passed | Browser and unit checks retained damaged raw values and displayed a backup warning rather than overwriting them. |
 
 ## Remaining outside this validation
-
-- The supplied photograph is visible in chat but its original PNG/JPG is not present in the workspace. The bilingual annotation overlay is prepared; the checked-in application uses the historical illustration with an illustration caption until the original image asset is available.
 
 - `CLOUD_ENDPOINT` is intentionally empty. A new owner-controlled Google spreadsheet and Apps Script `/exec` deployment must be configured, and the actual deployed Google sandbox-frame and cross-device collection verified. The isolated browser test uses an intercepted single Google-origin iframe; the real HtmlService nested-frame deployment remains unverified. Isolated service tests are not a Google deployment.
 - The public website and a new cloud environment snapshot have not been published by these commands. The reusable `install_script` and `start_skill` were saved as a configuration draft for environment settings review/publication.

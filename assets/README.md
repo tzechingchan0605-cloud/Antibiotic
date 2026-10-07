@@ -1,7 +1,7 @@
 # Historical plate photograph
 
-The photograph shown in chat is awaiting its original PNG/JPG file. No replacement photograph has been generated.
+`alexander-fleming-petri-dish-penicillin.jpg` is the photograph uploaded by the teacher to GitHub (352 × 347 pixels). The original image file is used unchanged.
 
-`history-figure.js` contains the bilingual annotation overlay. Save the original photo here, set `HISTORY_PHOTO_URL` to its relative path, then rebuild the frontend. Keep the photograph's pixels unchanged; labels are separate SVG text and switch with the interface language. Check every label endpoint against the saved photo before publishing.
+`history-figure.js` supplies separate bilingual SVG labels for Penicillium (a fungus), the small amount of bacterial growth near it, and bacterial colonies with a brief definition. These labels switch with the interface language. Their leader lines are positioned for this image; check them again if replacing the photograph.
 
-Until then, the existing historical illustration and its illustration caption are used. The application makes no missing-image request.
+Include the `assets/` folder when deploying the static site. The caption identifies this as the supplied photograph; its archival provenance has not been independently verified.
