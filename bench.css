@@ -1,0 +1,91 @@
+/* Interactive tools, preparation steps, and the three-plate incubator. */
+#phase-3 .bench-sidebar { display: block; }
+#phase-3 .bench-sidebar > * + * { margin-top: 18px; }
+#plateTabs .plate-tab-group { display: grid; align-content: start; gap: 8px; }
+#plateTabs .auto-prepare { padding: 8px 10px; font-size: 12px; min-height: 40px; }
+#plateTabs .plate-tab-group:first-child { padding-bottom: 48px; }
+#benchTools { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 8px; margin: 12px 0; }
+#benchTools .bench-tool { display: grid; justify-items: center; align-content: end; min-width: 86px; max-width: 135px; min-height: 110px; padding: 8px; gap: 5px; font-size: 12px; }
+.bench-tool-icon { display: grid; place-items: center; width: 65px; height: 70px; overflow: hidden; }
+.bench-tool-icon > svg { display: block; height: 68px; width: 45px; }
+.bench-tool-icon > img { width: 30px; height: 74px; object-fit: contain; transform: rotate(32deg); }
+.bench-tool.selected { background: #e4f3ea; border-color: #087b78; box-shadow: 0 0 0 2px #087b7833; }
+.tool-selected-animation .bench-tool-icon { animation: tool-pick .3s ease-out; }
+#toolStatus { min-height: 24px; color: var(--teal); text-align: center; font-size: 13px; }
+#discTray { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; padding: 12px; border: 1px solid #e0e6da; border-radius: 10px; background: #fafcf7; }
+.disc-tray-item { display: flex; gap: 7px; align-items: center; font-size: 13px; padding: 8px 12px; min-height: 43px; border: 1px solid #cedfd3; border-radius: 8px; background: #fff; }
+.disc-tray-item.selected { border-color: #087b78; background: #e7f4ee; }
+.tray-disc { display: grid; place-items: center; width: 25px; height: 25px; background: #fffef8; border: 1px solid #a5b4a9; border-radius: 50%; color: #304e50; font-weight: 700; }
+#quadrantLabels { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+#quadrantLabels .quadrant-select { position: absolute; width: 58px; transform: translate(-50%, -50%); pointer-events: auto; }
+#quadrantLabels .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+#quadrantLabels select { display: block; width: 100%; height: 40px; border: 1px solid #6ba592; border-radius: 6px; color: #15333b; background: #fffef7; text-align: center; font-size: 16px; font-weight: 700; }
+#procedureList { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+#procedureList li { display: flex; gap: 9px; align-items: flex-start; padding: 11px 9px; border: 1px solid transparent; border-radius: 9px; font-size: 13px; line-height: 1.7; color: #607d78; }
+#procedureList li.current { color: #153f43; border-color: #83baa5; background: #edf7ee; box-shadow: inset 3px 0 #087b78; font-weight: 600; }
+#procedureList li.complete { color: #487268; }
+.procedure-number { flex: 0 0 25px; display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid #d3e3d8; border-radius: 50%; font-weight: 700; line-height: 1; background: #fff; }
+.current .procedure-number { color: #fff; background: #087b78; border-color: #087b78; }
+#procedureHint { font-size: 13px; line-height: 1.8; min-height: 48px; }
+#toolCursor { position: fixed; z-index: 45; width: 56px; height: 88px; pointer-events: none; filter: drop-shadow(1px 2px 2px #15333b55); }
+#toolCursor > svg { width: 40px; height: 80px; transform: rotate(-22deg); transform-origin: top center; }
+#toolCursor > img { display: block; width: 35px; height: 92px; object-fit: contain; transform: rotate(35deg); transform-origin: top center; }
+#toolCursor[data-tool="spreader"] > img { transform: rotate(0); width: 36px; }
+.cursor-disc { position: absolute; top: 0; left: 8px; display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: #fffdf4; border: 1px solid #78958c; font-size: 10px; font-weight: 700; }
+.cursor-drop { position: absolute; top: 52px; left: 29px; color: #75bca0; font-size: 13px; }
+.bench-guide { position: fixed; z-index: 60; pointer-events: none; font-size: 37px; line-height: 1; color: #e6a72f; text-shadow: 0 1px 2px #fff, 1px 0 2px #fff; animation: bench-guide-bounce .7s ease-in-out infinite; }
+.bench-hint-target { outline: 3px solid #e6b24388; outline-offset: 3px; }
+#benchAnimation { position: absolute; inset: 0; display: grid; justify-items: center; align-content: end; padding: 14px; z-index: 3; pointer-events: none; }
+#benchAnimation[hidden], #toolCursor[hidden], #quadrantLabels[hidden], .bench-guide[hidden] { display: none; }
+.bench-animation-label { padding: 8px 13px; border-radius: 8px; background: #fffef6e8; color: #266657; font-size: 13px; box-shadow: 0 2px 8px #15333b12; }
+.plate-flipping { transform-origin: 50% 43%; animation: plate-flip .52s ease-in-out; }
+.plate-sealing { transform-origin: 50% 43%; animation: plate-seal .85s ease-in-out; }
+.cross-drawing path { stroke-dasharray: 310; stroke-dashoffset: 310; animation: draw-mark .32s linear forwards; }
+.cross-drawing .cross-vertical { animation-delay: .32s; }
+.animated-marker { animation: marker-draw .7s linear both; }
+.suspension-droplet { transform-box: fill-box; transform-origin: center; animation: drop-release .6s ease-in both; }
+.animated-forceps { animation: forceps-place .42s ease-in-out both; }
+.animated-spreader { animation: spreader-travel .65s ease-in-out both; }
+.bottle-loading .bench-tool-icon { animation: bottle-load .4s ease-in-out; }
+.incubator-animation { position: absolute; top: 35%; left: 10%; right: 10%; display: flex; gap: 8px; align-items: center; justify-content: center; min-height: 120px; border-radius: 12px; background: #f9fcf6dc; }
+.incubator-plate { display: grid; place-items: center; width: 43px; height: 22px; border: 2px solid #89ac99; border-radius: 50%; background: #e9dec1; font-size: 11px; animation: plate-enter 1.6s ease-in-out forwards; }
+.incubator-plate:nth-child(2) { animation-delay: .12s; }
+.incubator-plate:nth-child(3) { animation-delay: .24s; }
+.incubator-body { display: grid; place-items: center; width: 83px; height: 110px; background: #ecf3ee; border: 4px solid #759c8f; border-radius: 10px; font-size: 16px; color: #326352; font-weight: 700; text-align: center; }
+.auto-preparation-animation { position: absolute; top: 43%; display: flex; gap: 8px; }
+.auto-preparation-animation span { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #91b8a6; border-radius: 50%; background: #fff; color: #087b78; animation: auto-step .9s forwards; }
+.auto-preparation-animation span:nth-child(2) { animation-delay: .12s; }
+.auto-preparation-animation span:nth-child(3) { animation-delay: .24s; }
+.auto-preparation-animation span:nth-child(4) { animation-delay: .36s; }
+.auto-preparation-animation span:nth-child(5) { animation-delay: .48s; }
+@keyframes tool-pick { 50% { transform: translateY(-5px) rotate(-4deg); } }
+@keyframes bottle-load { 50% { transform: translateY(4px) scale(.96); filter: brightness(1.12); } }
+@keyframes bench-guide-bounce { 50% { transform: translateY(6px); } }
+@keyframes plate-flip { 50% { transform: scaleX(.08); opacity: .75; } }
+@keyframes plate-seal { 35% { transform: translateY(4px) scale(.98); } 70% { transform: scaleX(.08); } }
+@keyframes draw-mark { to { stroke-dashoffset: 0; } }
+@keyframes marker-draw { 0% { transform: translate(45px, 191px); } 45% { transform: translate(348px, 191px); } 50% { transform: translate(195px, 36px); } 100% { transform: translate(195px, 347px); } }
+@keyframes drop-release { 0% { transform: translateY(-90px) scale(.4); opacity: 0; } 45% { opacity: 1; } 75% { transform: translateY(0) scale(1); } 100% { transform: scale(1.4,.7); opacity: .5; } }
+@keyframes forceps-place { 0% { transform: translateY(-35px); opacity: .3; } 65% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-25px); opacity: 0; } }
+@keyframes spreader-travel { 0% { transform: translateY(-50px); } 50% { transform: translateY(130px); } 100% { transform: translateY(-50px); } }
+@keyframes plate-enter { to { transform: translateX(94px) scale(.7); opacity: 0; } }
+@keyframes auto-step { 45%,100% { color: white; background: #087b78; } }
+@media (max-width: 700px) {
+  #plateTabs { gap: 7px; }
+  #plateTabs .tab-button { padding: 8px 6px; font-size: 13px; }
+  #plateTabs .auto-prepare { font-size: 11px; padding: 7px 5px; }
+  #plateTabs .plate-tab-group:first-child { padding-bottom: 48px; }
+  #benchTools .bench-tool { min-width: 71px; max-width: 100px; min-height: 94px; font-size: 11px; }
+  .bench-tool-icon { height: 56px; width: 55px; }
+  .bench-tool-icon > svg { height: 55px; }
+  .bench-tool-icon > img { height: 60px; }
+  #quadrantLabels .quadrant-select { width: 47px; }
+  #quadrantLabels select { font-size: 14px; height: 35px; }
+  #procedureList li { font-size: 13px; }
+  #toolCursor { transform: scale(.85); transform-origin: top left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bench-guide { animation: none; }
+  .plate-flipping, .plate-sealing, .cross-drawing path, .animated-marker, .suspension-droplet,
+  .animated-forceps, .animated-spreader, .incubator-plate, .auto-preparation-animation span { animation-duration: .1s; animation-delay: 0s; }
+}

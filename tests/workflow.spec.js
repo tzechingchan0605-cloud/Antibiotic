@@ -110,15 +110,17 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
 }
 
 async function preparePlate(page, index) {
-  await page.locator(`[data-plate="${index}"]`).click();
-  if (index === 0) {
-    await page.locator('#addBacteria').click();
-    await page.locator('#assistSpread').click();
-    await page.locator('#assistDiscs').click();
-  } else {
-    await page.locator('#standardRepeat').click();
+  // The three independent plates share one incubation. Plate 1 is always
+  // prepared through the actual pointer controls; later plates may be automated.
+  if (!(await current(page)).plates.every(plate => plate.completed)) {
+    await prepareFirstPlate(page);
+    for (const later of [1, 2]) {
+      await page.locator(`[data-auto="${later}"]`).click();
+      await expect(page.locator(later === 1 ? '[data-plate="2"]' : '#setTemperature')).toBeEnabled();
+    }
+    await incubatePreparedPlates(page);
   }
-  await page.locator('#incubate').click();
+  await page.locator(`[data-plate="${index}"]`).click();
   await expect.poll(async () => (await current(page))?.plates[index]?.completed,
     { timeout: 15000 }).toBe(true);
   const plate = (await current(page)).plates[index];
@@ -135,6 +137,81 @@ async function preparePlate(page, index) {
     return SAMPLES.every(sample => Boolean(state?.measurements[plate.id]?.[sample]?.confirmedAt));
   }).toBe(true);
   return plate.result;
+}
+
+async function clickSVG(page, x, y) {
+  await page.locator('#plateSVG').scrollIntoViewIfNeeded();
+  const point = await svgScreenPoint(page, 'plateSVG', x, y);
+  await page.mouse.click(point.x, point.y);
+}
+
+async function labelAndInoculate(page) {
+  await page.locator('#flipPlate').click();
+  await expect(page.locator('#selectMarker')).toBeEnabled();
+  await page.locator('#selectMarker').click();
+  await clickSVG(page, 200, 200);
+  await expect(page.locator('#quadrantLabels')).toBeVisible();
+  for (const [quadrant, sample] of Object.entries({ NW: 'X', NE: 'Y', SW: 'Z', SE: 'C' })) {
+    await page.locator(`#quadrantLabels [data-quadrant="${quadrant}"]`).selectOption(sample);
+  }
+  await expect(page.locator('#flipPlate')).toBeEnabled();
+  await page.locator('#flipPlate').click();
+  await expect(page.locator('#selectDropper')).toBeEnabled();
+  await page.locator('#selectDropper').click();
+  await page.locator('#bacteriaBottle').click();
+  await expect(page.locator('#toolCursor')).toHaveAttribute('data-loaded', 'true');
+  await clickSVG(page, 200, 200);
+  await expect(page.locator('#selectSpreader')).toBeEnabled();
+}
+
+async function spreadByRotation(page) {
+  if (!(await page.locator('#selectSpreader').getAttribute('class'))?.includes('selected')) {
+    await page.locator('#selectSpreader').click();
+  }
+  for (let angle = 0; angle < 180; angle += 30) {
+    if (await page.locator('#selectTweezers').isEnabled()) break;
+    if (angle) {
+      await page.locator('#rotateRight').click();
+      await page.locator('#rotateRight').click();
+    }
+    await dragSVG(page, 'plateSVG', [200, 50], [200, 350], 60);
+  }
+  await expect(page.locator('#selectTweezers')).toBeEnabled();
+}
+
+async function placeDiscs(page) {
+  // Labels rotate with the plate. Convert each labelled centre to screen
+  // coordinates; each sample selection represents new sterile forceps.
+  const rotation = Number(await page.locator('#plateSVG').getAttribute('data-rotation'));
+  const angle = rotation * Math.PI / 180;
+  for (const [sample, position] of Object.entries({ X: [130, 130], Y: [270, 130], Z: [130, 270], C: [270, 270] })) {
+    await page.locator('#selectTweezers').click();
+    await page.locator(`#discTray [data-tray-disc="${sample}"]`).click();
+    const [x, y] = position.map(coordinate => coordinate - 200);
+    await clickSVG(page, 200 + x * Math.cos(angle) - y * Math.sin(angle),
+      200 + x * Math.sin(angle) + y * Math.cos(angle));
+    await expect(page.locator(`#discTray [data-tray-disc="${sample}"]`)).toBeDisabled();
+  }
+  await expect(page.locator('#sealPlate')).toBeEnabled();
+}
+
+async function prepareFirstPlate(page) {
+  await page.locator('[data-plate="0"]').click();
+  await labelAndInoculate(page);
+  await spreadByRotation(page);
+  await placeDiscs(page);
+  await expect(page.locator('#sealPlate')).toBeEnabled();
+  await page.locator('#sealPlate').click();
+  await expect(page.locator('[data-plate="1"]')).toBeEnabled();
+}
+
+async function incubatePreparedPlates(page) {
+  await expect(page.locator('#setTemperature')).toBeEnabled();
+  await page.locator('#setTemperature').click();
+  await page.locator('#setDuration').click();
+  await expect(page.locator('#incubate')).toBeEnabled();
+  await page.locator('#incubate').click();
+  await expect(page.locator('#measurementRows input[data-reading="X"]')).toBeEnabled({ timeout: 15000 });
 }
 
 async function analyseInvestigation(page, { beforeSubmit } = {}) {
@@ -263,24 +340,27 @@ async function svgScreenPoint(page, id, x, y) {
   }, { id, x, y });
 }
 
-async function dragSVG(page, id, from, to) {
+async function dragSVG(page, id, from, to, steps = 8) {
   await page.locator('#' + id).scrollIntoViewIfNeeded();
   const start = await svgScreenPoint(page, id, ...from);
   const finish = await svgScreenPoint(page, id, ...to);
   await page.mouse.move(start.x, start.y);
   await page.mouse.down();
-  await page.mouse.move(finish.x, finish.y, { steps: 8 });
+  await page.mouse.move(finish.x, finish.y, { steps });
   await page.mouse.up();
 }
 
-test('manual spreading, handle rotation and disc placement use plate coordinates consistently', async ({ page }) => {
-  test.setTimeout(45000);
+test('manual preparation uses vertical strokes and labelled plate coordinates before shared incubation', async ({ page }) => {
+  test.setTimeout(60000);
   await page.goto('/');
   await login(page);
   await planInvestigation(page);
-  await page.locator('#addBacteria').click();
+  await expect(page.locator('[data-plate="1"]')).toBeDisabled();
+  await expect(page.locator('[data-auto="0"]')).toHaveCount(0);
+  await labelAndInoculate(page);
+  await expect(page.locator('#assistSpread')).toBeHidden();
   await page.locator('#selectSpreader').click();
-  await dragSVG(page, 'plateSVG', [117.4, 173.2], [190.6, 173.2]);
+  await dragSVG(page, 'plateSVG', [200, 80], [200, 320], 48);
   let state = await current(page);
   const baseline = state.plates[0].coverage;
   expect(baseline.length).toBeGreaterThan(0);
@@ -288,28 +368,31 @@ test('manual spreading, handle rotation and disc placement use plate coordinates
   state = await current(page);
   expect(state.plates[0].rotation).toBeCloseTo(90, 1);
   expect(state.plates[0].coverage).toEqual(baseline);
-  await dragSVG(page, 'plateSVG', [226.8, 117.4], [226.8, 190.6]);
+  await dragSVG(page, 'plateSVG', [200, 80], [200, 320], 48);
   state = await current(page);
-  expect(state.plates[0].coverage).toEqual(baseline);
+  expect(state.plates[0].coverage.length).toBeGreaterThan(baseline.length);
   expect(state.plates[0].result).toBeNull();
-
-  for (const [sample, world] of Object.entries({ X: [270, 130], Y: [270, 270], Z: [130, 130], C: [130, 270] })) {
-    await page.locator(`[data-disc="${sample}"]`).click();
-    await page.locator('#plateSVG').scrollIntoViewIfNeeded();
-    const point = await svgScreenPoint(page, 'plateSVG', ...world);
-    await page.mouse.click(point.x, point.y);
-    expect((await current(page)).plates[0].discPositions[sample]).toBeTruthy();
-  }
+  await expect(page.locator('#selectTweezers')).toBeDisabled();
+  await expect(page.locator('#incubate')).toBeDisabled();
+  // Return to zero, then perform the six rotated vertical strokes needed for
+  // an even lawn. No assistance or direct state mutation is used on plate 1.
+  for (let i = 0; i < 6; i++) await page.locator('#rotateLeft').click();
+  await spreadByRotation(page);
+  await placeDiscs(page);
+  state = await current(page);
   expect((await current(page)).plates[0].discPositions).toEqual({
     X: { x: 130, y: 130 }, Y: { x: 270, y: 130 }, Z: { x: 130, y: 270 }, C: { x: 270, y: 270 },
   });
   const resultsBefore = (await current(page)).plates.map(plate => plate.result);
-  await page.locator('#incubate').click();
+  await page.locator('#sealPlate').click();
+  await expect(page.locator('[data-plate="1"]')).toBeEnabled();
+  await expect(page.locator('#incubate')).toBeDisabled();
   expect((await current(page)).plates.map(plate => plate.result)).toEqual(resultsBefore);
-  await expect(page.locator('#toast')).toBeVisible();
-  await page.locator('#assistSpread').click();
-  await page.locator('#incubate').click();
-  await expect.poll(async () => (await current(page)).plates[0].completed).toBe(true);
+  await page.locator('[data-auto="1"]').click();
+  await expect(page.locator('[data-plate="2"]')).toBeEnabled();
+  await page.locator('[data-auto="2"]').click();
+  await incubatePreparedPlates(page);
+  await page.locator('[data-plate="0"]').click();
   const fixed = (await current(page)).plates[0].result;
   await dragSVG(page, 'plateSVG', [75, 355], [105, 325]);
   await page.waitForTimeout(500);
@@ -466,11 +549,11 @@ test('teacher demonstration operates without creating student records or upload 
   await page.locator('#teacherDemo').click();
   await expect(page.locator('#demoBanner')).toBeVisible();
   await planInvestigation(page);
-  await page.locator('#addBacteria').click();
-  await page.locator('#assistSpread').click();
-  await page.locator('#assistDiscs').click();
-  await page.locator('#incubate').click();
-  await expect(page.locator('#measurementRows input[data-reading="X"]')).toBeEnabled({ timeout: 15000 });
+  await prepareFirstPlate(page);
+  await page.locator('[data-auto="1"]').click();
+  await expect(page.locator('[data-plate="2"]')).toBeEnabled();
+  await page.locator('[data-auto="2"]').click();
+  await incubatePreparedPlates(page);
   await page.waitForTimeout(500);
   await page.locator('.topbar [data-language]').click();
   await page.waitForTimeout(500);
@@ -480,8 +563,8 @@ test('teacher demonstration operates without creating student records or upload 
   expect(await storageSnapshot(page)).toEqual(before);
 });
 
-test('360px mobile supports login language switching and assisted plate preparation without page overflow', async ({ page }) => {
-  test.setTimeout(45000);
+test('360px mobile supports manual preparation, later automatic plates and measurement without overflow', async ({ page }) => {
+  test.setTimeout(60000);
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
   await assertNoOverflow(page);
@@ -500,7 +583,7 @@ test('360px mobile supports login language switching and assisted plate preparat
   await screenshot(page, 'artifacts/vl4-mobile-lab.png');
   const plate = await page.locator('#plateSVG').boundingBox();
   expect(plate.width).toBeLessThanOrEqual(328);
-  const button = await page.locator('#assistSpread').boundingBox();
+  const button = await page.locator('#selectSpreader').boundingBox();
   expect(button.height).toBeGreaterThanOrEqual(44);
   const fixed = (await current(page)).plates[0].result;
   await page.locator('#toggleZoom').click();

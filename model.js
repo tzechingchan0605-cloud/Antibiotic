@@ -16,7 +16,9 @@ export function freshRecord(profile,demo=false){
   return {schemaVersion:1,moduleId:MODULE_ID,id:crypto.randomUUID(),version:0,profile:clone(profile),demo,
     createdAt:nowISO(),savedAt:nowISO(),phase:1,unlocked:1,submittedAt:null,reflectionSubmittedAt:null,
     answers:{iv:[],dv:[],cv:[],assumptions:[]},original:null,actualReplicates:3,
+    experiment:{version:1,incubator:{temperature:null,hours:null},incubatedAt:null},
     plates:Array.from({length:3},(_,i)=>({id:`plate-${i+1}`,label:`P${i+1}`,seed:crypto.getRandomValues(new Uint32Array(1))[0],
+      preparation:{version:1,orientation:'top',crossMarked:false,quadrantLabels:{NW:'',NE:'',SW:'',SE:''},dropperLoaded:false,covered:false,inverted:false,ready:false},
       rotation:0,coverage:[],discPositions:{},inoculated:false,result:null,completed:false,operations:[]})),
     measurements:{},means:{},graph:{values:{},confirmedAt:null},design:{image:'',description:'',saved:false},
     extension:{started:false},events:[],timing:{1:0,2:0,3:0,4:0}};

@@ -1,4 +1,5 @@
 import {language,t,setLanguage,translate} from './i18n.js';
+import {createExperimentBench} from './experiment-bench.js';
 import {historyFigureMarkup,historyCaptionKey} from './history-figure.js';
 import {MODULE_ID,KEYS,SAMPLES,GRID,DEFAULT_POSITIONS,freshRecord,isTeacher,nowISO,clone,toPlatePoint,addCoverage,coverageFraction,placementIssue,generateResult,independentRepeat,validDecimal,validReplicates,confirmMeasurement,allMeasurements,captureOriginal,canonicalRecord} from './model.js';
 import {CLOUD_ENDPOINT} from './cloud-config.js';
@@ -32,16 +33,18 @@ $('#reflectionFields').innerHTML=field('reflection','reflectionQuestion');
 $('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('blank'):s}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" aria-label="${s} mm"></label>`).join('');
 $('#graphInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('blank'):s}<input id="bar-${s}" data-bar="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" aria-label="${s} mm"></label>`).join('');
 $('#extensionFields').innerHTML=field('ext-prediction','extensionPrediction',{scope:'extension'})+field('ext-reason','reason',{scope:'extension'})+field('ext-fairComparison','fairComparison',{scope:'extension'})+`<button id="viewExtension" class="secondary" data-i18n="viewExtension"></button><div id="extensionResults"></div>`+field('ext-analysis','extensionAnalysis',{scope:'extension'});
-$('#materials').innerHTML=['Plate','Bacteria','Spreader','Discs','Tweezers','Incubator','Ruler','Flame'].map((k,i)=>`<article class="equipment"><span class="badge">0${i+1}</span><p data-i18n="material${k}"></p></article>`).join('');
 const equipmentArt=[
- ['equipmentPlate',3,'<ellipse cx="50" cy="54" rx="36" ry="25" fill="#eadfbc" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="52" rx="30" ry="19" fill="none" stroke="#fff"/>'],
+ ['equipmentPlate',3,'<ellipse cx="50" cy="54" rx="36" ry="25" fill="#eadfbc" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="52" rx="30" ry="19" fill="none" stroke="#fff"/>','equipmentPlateNote'],
+ ['equipmentMarker',1,'<g transform="rotate(28 50 50)"><rect x="42" y="13" width="16" height="69" rx="5" fill="#24594e"/><path d="M42 82h16l-8 12z" fill="#15333b"/><rect x="42" y="10" width="16" height="15" rx="3" fill="#a5c4bc"/></g>'],
+ ['equipmentDropper',1,'<path d="M40 16q10-12 20 0v19H40z" fill="#27796e"/><path d="M44 35h12v38l-6 15-6-15z" fill="#e0efef" stroke="#7faaa0" stroke-width="2"/><path d="M50 91q-7 8 0 8q7 0 0-8" fill="#6ea89d"/>'],
  ['equipmentBacteria',1,'<path d="M35 22h30v12l8 50H27l8-50z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M31 59h38l4 25H27z" fill="#adc7ad"/><path d="M32 19h36" stroke="#087b78" stroke-width="7"/>'],
- ['equipmentSpreader',1,'<path d="M22 23h58M50 23v62" stroke="#7faaa0" stroke-width="7" stroke-linecap="round"/>'],
+ ['equipmentSpreader',1,'<g transform="rotate(30 50 50)"><image href="assets/lab-spreader.png" x="30" y="2" width="40" height="96"/></g>'],
+ ['equipmentTweezers',4,'<g transform="rotate(30 50 50)"><image href="assets/lab-forceps.png" x="30" y="2" width="40" height="96"/></g>'],
  ['equipmentDiscs',3,'<g fill="#fff" stroke="#7faaa0">'+[[28,30,'X'],[70,30,'Y'],[28,72,'Z'],[70,72,'C']].map(([x,y,label])=>`<circle cx="${x}" cy="${y}" r="17"/><text x="${x}" y="${y+4}" text-anchor="middle" fill="#15333b" stroke="none" font-size="14">${label}</text>`).join('')+'</g>'],
- ['equipmentTweezers',1,'<path d="M29 16L47 42 38 85M29 16L62 39 68 85" fill="none" stroke="#7faaa0" stroke-width="6" stroke-linecap="round"/>'],
+ ['equipmentIncubator',1,'<rect x="16" y="14" width="68" height="74" rx="5" fill="#e5ede8" stroke="#7faaa0" stroke-width="3"/><rect x="24" y="24" width="46" height="52" rx="2" fill="#c9dcd4"/><path d="M29 43h35M29 62h35" stroke="#7faaa0"/><path d="M77 43v19" stroke="#087b78" stroke-width="4"/>'],
  ['equipmentRuler',1,'<rect x="9" y="35" width="82" height="29" rx="3" fill="#f6e8ba" stroke="#c8b582"/>'+Array.from({length:16},(_,i)=>`<path d="M${12+i*5} 35v${i%5===0?14:7}" stroke="#927d4a"/>`).join('')]
 ];
-if($('#equipmentBank'))$('#equipmentBank').innerHTML=equipmentArt.map(([key,count,art])=>`<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} ×${count}</figcaption></figure>`).join('');
+if($('#equipmentBank'))$('#equipmentBank').innerHTML=equipmentArt.map(([key,count,art,note])=>`<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} ×${count}${note?`<small>${span(note)}</small>`:''}</figcaption></figure>`).join('');
 $('#historyFigure').innerHTML=historyFigureMarkup();
 // Older cached HTML has these paragraphs without their newer IDs.
 const historyCaption=$('#historyCaption')||$('[data-i18n="historyCaption"]')||$('#historyFigure + .caption');
@@ -74,11 +77,11 @@ $$('[data-variable]').forEach(button=>button.onclick=()=>{
  recordAnswer(group,choices);button.classList.toggle('selected',choices.includes(value));button.setAttribute('aria-pressed',String(choices.includes(value)));
  log('variable_choice',{group,choices:clone(choices)});
 });
-function stopActivity(){generation++;if(animation)cancelAnimationFrame(animation);animation=null;clearTimeout(saveTimer);gesture=null;drawing=false;tool=null;plateIndex=0;ruler={x:60,y:350};graphDraft={};showCoverage=true;zoom=false;drawn=false;$('#setupCanvas').getContext('2d').clearRect(0,0,1000,400);}
+function stopActivity(){bench.cancel();bench.reset();generation++;if(animation)cancelAnimationFrame(animation);animation=null;clearTimeout(saveTimer);gesture=null;drawing=false;tool=null;plateIndex=0;ruler={x:60,y:350};graphDraft={};showCoverage=true;zoom=false;drawn=false;$('#setupCanvas').getContext('2d').clearRect(0,0,1000,400);}
 function clearForms(){for(const el of $$('main input, main textarea, main select')){if(el.type==='checkbox')el.checked=el.id==='showCoverage';else if(el.type!=='file')el.value=el.id==='rulerSample'?'X':'';el.disabled=false;}$$('main button').forEach(b=>b.disabled=false);$$('[data-variable]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});refreshLargestPrediction();$('#designStatus').textContent='';$('#graphStatus').textContent='';$('#measurementStatus').textContent='';$('#extensionFields').hidden=true;$('#extensionResults').innerHTML='';$('#startExtension').hidden=false;$('#learningSection').hidden=true;$('#submitActions').hidden=false;$('#submitDialog').open&&$('#submitDialog').close();}
 function begin(profile,demo=false){save();stopActivity();clearForms();state=freshRecord(profile,demo);lastTime=performance.now();$('#main').hidden=false;$('#studentName').textContent=profile.name;$('#demoBanner').hidden=!demo;$('#teacherBack').hidden=!demo;$('#loginDialog').open&&$('#loginDialog').close();$('#teacherDialog').open&&$('#teacherDialog').close();showPhase(1);save();}
 function showLogin(){save();stopActivity();state=null;teacherPassword='';selectedRecord=null;cloudRecords=null;teacherProfile=null;$('#teacherPassword').value='';$('#teacherDialog').open&&$('#teacherDialog').close();$('#main').hidden=true;$('#studentName').textContent='';$('#teacherBack').hidden=true;$('#loginForm').reset();if(!$('#loginDialog').open)$('#loginDialog').showModal();}
-function showPhase(number){if(!state||number>state.unlocked)return;settleTime();state.phase=number;$$('.phase').forEach(el=>el.hidden=el.id!==`phase-${number}`);$$('[data-phase]').forEach(b=>{const n=Number(b.dataset.phase);b.disabled=n>state.unlocked;b.classList.toggle('active',n===number);b.classList.toggle('done',n<number);if(n===number)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});if(number===3)renderBench();if(number===4){renderSummary();renderGraph();}save();$('#phase-'+number+' h2').focus({preventScroll:true});}
+function showPhase(number){if(!state||number>state.unlocked)return;if(number!==3)bench.cancel();settleTime();state.phase=number;$$('.phase').forEach(el=>el.hidden=el.id!==`phase-${number}`);$$('[data-phase]').forEach(b=>{const n=Number(b.dataset.phase);b.disabled=n>state.unlocked;b.classList.toggle('active',n===number);b.classList.toggle('done',n<number);if(n===number)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});if(number===3)renderBench();if(number===4){renderSummary();renderGraph();}save();$('#phase-'+number+' h2').focus({preventScroll:true});}
 $$('[data-phase]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.phase)));
 $$('[data-back]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.back)));
 function completeFields(ids){const bad=ids.find(id=>!String(state?.answers[id]??'').trim());if(bad){toast('required');const target=$('#'+bad);(target?.querySelector('button,input')||target)?.focus();return false;}return true;}
@@ -100,72 +103,8 @@ $$('[data-language]').forEach(b=>b.onclick=()=>{setLanguage(language==='zh'?'en'
 $('#retryCloud').onclick=()=>cloud.flush().catch(()=>toast('cloudError'));
 
 function currentPlate(){return state.plates[plateIndex];}
-$('#centerRuler').insertAdjacentHTML('afterend','<button type="button" id="toggleZoom" class="secondary" data-i18n="zoom"></button>');translate();
-$('#toggleZoom').onclick=()=>{if(!state||!currentPlate().completed)return;zoom=!zoom;if(zoom)$('#centerRuler').click();renderPlate();};
-$('#rulerSample').onchange=()=>{if(zoom){$('#centerRuler').click();renderPlate();}};
-function renderBench(rebuildReadings=true){
- if(!state)return;const p=currentPlate(),locked=!!state.submittedAt;
- $('#plateTabs').innerHTML=state.plates.map((plate,i)=>`<button type="button" class="tab-button ${i===plateIndex?'active':''}" data-plate="${i}" ${i>0&&!state.plates[i-1].completed?'disabled':''}>${t('plate')} ${i+1} ${plate.completed?'✓':''}</button>`).join('');
- $$('[data-plate]').forEach(b=>b.onclick=()=>{plateIndex=Number(b.dataset.plate);gesture=null;tool=null;zoom=false;ruler={x:60,y:350};renderBench();});
- $('#plateName').value=p.label;$('#plateName').disabled=locked||p.completed;
- $('#plateProgress').textContent=`${plateIndex+1} / 3`;
- $('#addBacteria').disabled=locked||p.inoculated||p.completed;
- for(const id of ['selectSpreader','assistSpread','assistDiscs'])$('#'+id).disabled=locked||!p.inoculated||p.completed||!!animation;
- $('#selectSpreader').classList.toggle('selected',tool==='spreader');
- $('#standardRepeat').hidden=plateIndex===0||p.completed;$('#standardRepeat').disabled=locked||!!animation;
- $('#incubate').disabled=locked||p.completed||!!animation;
- $('#discSelectors').innerHTML=SAMPLES.map(s=>`<button type="button" class="choice ${tool===s?'selected':''}" data-disc="${s}" aria-pressed="${tool===s}" ${locked||!p.inoculated||p.completed?'disabled':''}>${s==='C'?t('blank'):s} ${p.discPositions[s]?'✓':''}</button>`).join('');
- $$('[data-disc]').forEach(b=>b.onclick=()=>{tool=b.dataset.disc;renderBench(false);});
- $('#showCoverage').checked=showCoverage;
- $('#coverageStatus').textContent=p.completed?t('endpoint'):`${t(coverageFraction(p)>=.85?'uniform':'uneven')} (${Math.round(coverageFraction(p)*100)}%)`;
- $('#incubationStatus').textContent=p.completed?t('endpoint'):'';
- renderPlate();if(rebuildReadings)renderMeasurements();
-}
-function renderPlate(){
- if(!state)return;const p=currentPlate(),rot=p.rotation;
- $('#toggleZoom').disabled=!p.completed;$('#toggleZoom').textContent=t(zoom?'zoomOut':'zoom');
- if(zoom&&p.completed){const q=toPlatePoint(p.discPositions[$('#rulerSample').value]||{x:200,y:200},-rot);$('#plateSVG').setAttribute('viewBox',`${q.x-75} ${q.y-75} 150 172.5`);}else $('#plateSVG').setAttribute('viewBox','0 0 400 460');
- const circles=p.completed?SAMPLES.map(s=>{const q=p.discPositions[s];return q?`<circle cx="${q.x}" cy="${q.y}" r="${p.result[s]}" fill="black"/>`:'';}).join(''):'';
- const cover=showCoverage&&!p.completed?p.coverage.map(i=>`<circle cx="${GRID[i].x}" cy="${GRID[i].y}" r="9" fill="#55ad9d" opacity=".15"/>`).join(''):'';
- const discs=SAMPLES.map(s=>{const q=p.discPositions[s];return q?`<g><circle cx="${q.x}" cy="${q.y}" r="6" fill="#fff" stroke="#8c9c91" stroke-width=".8"/><text x="${q.x}" y="${q.y+3}" font-size="9" text-anchor="middle" fill="#15333b">${s}</text></g>`:'';}).join('');
- const ticks=Array.from({length:41},(_,i)=>`<path d="M${i*2} 0v${i%5===0?10:5}" stroke="#345950" stroke-width=".6"/>${i%10===0?`<text x="${i*2}" y="22" text-anchor="middle" font-size="7" fill="#345950">${i}</text>`:''}`).join('');
- $('#plateSVG').innerHTML=`<defs><radialGradient id="plateAgar"><stop stop-color="#fcf5db"/><stop offset="1" stop-color="#e5d8b0"/></radialGradient><pattern id="growthPattern" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#d6c181"/><circle cx="2" cy="3" r="1.1" fill="#b7a86e" opacity=".6"/><circle cx="6" cy="6" r=".8" fill="#e9d69c"/></pattern><clipPath id="plateClip"><circle cx="200" cy="200" r="157"/></clipPath><mask id="growthMask"><rect width="400" height="400" fill="white"/>${circles}</mask></defs><ellipse cx="200" cy="368" rx="139" ry="12" fill="#8a9c86" opacity=".1"/><circle cx="200" cy="200" r="168" fill="#f8faf5" stroke="#bdcec3" stroke-width="3"/><circle cx="200" cy="200" r="160" fill="url(#plateAgar)" stroke="#cbd7ba" stroke-width="3"/><g transform="rotate(${rot} 200 200)" clip-path="url(#plateClip)">${p.completed?`<circle cx="200" cy="200" r="157" fill="url(#growthPattern)" mask="url(#growthMask)"/>`:''}${cover}${discs}</g><circle cx="200" cy="200" r="151" stroke="#fffdf4" stroke-width="1.5" fill="none" opacity=".6"/><path data-rotate="true" d="M324 76 A176 176 0 0 1 370 164" fill="none" stroke="#087b78" stroke-width="12" stroke-linecap="round" tabindex="0" role="button" aria-label="${esc(t('rotate'))}" style="cursor:grab"/><g data-ruler="true" transform="translate(${ruler.x} ${ruler.y})" style="cursor:move"><rect x="-4" y="-2" width="88" height="29" rx="3" fill="#fffdf0" opacity=".9" stroke="#7c9a83"/>${ticks}<text x="94" y="15" font-size="9" fill="#345950">mm</text></g><text x="200" y="431" text-anchor="middle" fill="#658087" font-size="12">${esc(t(p.completed?'endpoint':'coverageNote'))}</text>`;
-}
-function svgPoint(e){return new DOMPoint(e.clientX,e.clientY).matrixTransform($('#plateSVG').getScreenCTM().inverse());}
-function rotatePlate(delta){if(!state||state.submittedAt||currentPlate().completed||animation)return;currentPlate().rotation=(currentPlate().rotation+delta)%360;renderPlate();log('plate_rotated',{plateId:currentPlate().id,rotation:currentPlate().rotation});scheduleSave();}
-$('#plateSVG').onpointerdown=e=>{
- if(!state||animation)return;e.preventDefault();const p=currentPlate(),world=svgPoint(e);
- if(e.target.closest('[data-ruler]')){gesture={mode:'ruler',start:world,ruler:{...ruler}};}
- else if(e.target.closest('[data-rotate]')){if(state.submittedAt||p.completed)return;gesture={mode:'rotate',angle:Math.atan2(world.y-200,world.x-200),rotation:p.rotation};}
- else if(!state.submittedAt&&!p.completed&&p.inoculated){
-   const point=toPlatePoint(world,p.rotation);
-   if(Math.hypot(point.x-200,point.y-200)>157)return;
-   if(tool==='spreader'){gesture={mode:'spread'};addCoverage(p,point);renderPlate();}
-   else if(SAMPLES.includes(tool)){const issue=placementIssue(p,tool,point);if(issue){toast(issue);return;}p.discPositions[tool]={x:Math.round(point.x),y:Math.round(point.y)};p.operations.push({type:'disc_placed',sample:tool,position:clone(p.discPositions[tool]),at:nowISO()});log('disc_placed',{plateId:p.id,sample:tool,position:p.discPositions[tool]});tool=null;save();renderBench(false);}
- }
- if(gesture)$('#plateSVG').setPointerCapture(e.pointerId);
-};
-$('#plateSVG').onpointermove=e=>{if(!gesture||!state)return;const world=svgPoint(e),p=currentPlate();if(gesture.mode==='ruler'){ruler={x:Math.max(0,Math.min(310,gesture.ruler.x+world.x-gesture.start.x)),y:Math.max(30,Math.min(360,gesture.ruler.y+world.y-gesture.start.y))};}else if(gesture.mode==='rotate'){p.rotation=gesture.rotation+(Math.atan2(world.y-200,world.x-200)-gesture.angle)*180/Math.PI;}else if(gesture.mode==='spread')addCoverage(p,toPlatePoint(world,p.rotation));renderPlate();};
-$('#plateSVG').onpointerup=$('#plateSVG').onpointercancel=()=>{if(!gesture||!state)return;const mode=gesture.mode;gesture=null;if(mode==='ruler'){log('ruler_moved',{plateId:currentPlate().id,position:ruler});scheduleSave();}else{currentPlate().operations.push({type:mode,at:nowISO(),coverage:coverageFraction(currentPlate()),rotation:currentPlate().rotation});log(mode==='rotate'?'plate_rotated':'plate_spread',{plateId:currentPlate().id,coverage:coverageFraction(currentPlate()),rotation:currentPlate().rotation});save();}renderBench(false);};
-$('#plateSVG').onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();rotatePlate(e.key==='ArrowLeft'?-15:15);}};
-$('#rotateLeft').onclick=()=>rotatePlate(-15);$('#rotateRight').onclick=()=>rotatePlate(15);
-$('#plateName').oninput=e=>{if(!state||state.submittedAt||currentPlate().completed)return;currentPlate().label=e.target.value;scheduleSave();};
-$('#showCoverage').onchange=e=>{showCoverage=e.target.checked;renderPlate();};
-$('#addBacteria').onclick=()=>{if(!state||state.submittedAt||currentPlate().completed)return;currentPlate().inoculated=true;currentPlate().operations.push({type:'simulated_inoculum_added',at:nowISO()});log('simulated_bacteria_added',{plateId:currentPlate().id});save();renderBench(false);};
-$('#selectSpreader').onclick=()=>{tool=tool==='spreader'?null:'spreader';renderBench(false);};
-$('#assistSpread').onclick=()=>{const p=currentPlate();if(!p.inoculated||p.completed||state.submittedAt)return;GRID.forEach(point=>addCoverage(p,point));p.operations.push({type:'assisted_uniform_spread',at:nowISO()});log('assisted_spread',{plateId:p.id});save();renderBench(false);};
-$('#assistDiscs').onclick=()=>{const p=currentPlate();if(!p.inoculated||p.completed||state.submittedAt)return;p.discPositions=clone(DEFAULT_POSITIONS);p.operations.push({type:'assisted_disc_placement',at:nowISO()});log('assisted_disc_placement',{plateId:p.id});tool=null;save();renderBench(false);};
-$('#standardRepeat').onclick=()=>{if(plateIndex===0||state.submittedAt)return;independentRepeat(state.plates[plateIndex-1],currentPlate());log('independent_standardized_preparation',{plateId:currentPlate().id});save();renderBench(false);};
-$('#incubate').onclick=()=>{
- const p=currentPlate();if(state.submittedAt||p.completed||animation)return;
- if(!p.label.trim()||!p.inoculated||coverageFraction(p)<.85||!SAMPLES.every(s=>p.discPositions[s])){toast(coverageFraction(p)<.85?'uneven':'required');return;}
- const id=state.id,g=generation,started=performance.now(),duration=matchMedia('(prefers-reduced-motion:reduce)').matches?350:1800;
- tool=null;$('#incubationProgress').hidden=false;$('#incubationStatus').textContent=t('incubating');
- function tick(n){if(state?.id!==id||generation!==g)return;const progress=Math.min(1,(n-started)/duration);$('#incubationProgress .meter').style.width=`${progress*100}%`;if(progress<1){animation=requestAnimationFrame(tick);}else{animation=null;$('#incubationProgress').hidden=true;generateResult(p);p.operations.push({type:'common_observation_endpoint',at:nowISO()});log('plate_result_generated',{plateId:p.id});save();renderBench();}}
- animation=requestAnimationFrame(tick);renderBench(false);$('#incubationStatus').textContent=t('incubating');
-};
-$('#centerRuler').onclick=()=>{if(!state)return;const p=currentPlate(),q=p.discPositions[$('#rulerSample').value];if(!q)return;const world=toPlatePoint(q,-p.rotation);ruler={x:Math.max(0,world.x-40),y:world.y};renderPlate();};
-$('#rulerLeft').onclick=()=>{ruler.x=Math.max(0,ruler.x-2);renderPlate();};$('#rulerRight').onclick=()=>{ruler.x=Math.min(310,ruler.x+2);renderPlate();};
+const bench=createExperimentBench({getRecord:()=>state,getPlateIndex:()=>plateIndex,setPlateIndex:index=>{plateIndex=index;},save,log,toast,onMeasurements:renderMeasurements});
+function renderBench(rebuildReadings=true){bench.render(rebuildReadings);}
 function renderMeasurements(){
  const p=currentPlate(),locked=!!state.submittedAt||!p.completed;
  $('#measurementRows').innerHTML=SAMPLES.map(s=>{const r=state.measurements[p.id]?.[s]||{};return `<tr><th>${s==='C'?span('blank'):s}</th><td><select data-visible="${s}" aria-label="${s} ${esc(t('visible'))}" ${locked?'disabled':''}>${option('','choose')}${option('yes','yes')}${option('no','no')}</select></td><td><input data-reading="${s}" aria-label="${s} ${esc(t('diameter'))}" type="number" min="6" max="40" step="0.1" placeholder="mm" value="${esc(r.value||'')}" ${locked?'disabled':''}></td><td><input data-note="${s}" aria-label="${s} ${esc(t('notes'))}" data-i18n-placeholder="notes" value="${esc(r.note||'')}" ${locked?'disabled':''}></td></tr>`;}).join('');
