@@ -202,6 +202,7 @@ input[readonly], textarea[readonly] { background: #f7f8f2; }
 .design-stack { display: grid; gap: 20px; }
 .design-stack .card + .card { margin-top: 0; }
 .action-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 23px 0 35px; }
+#phase-1 .action-row { justify-content: flex-end; }
 .primary, .secondary, .upload-button, .drawing-tools button, .tab-button {
   display: inline-flex;
   align-items: center;

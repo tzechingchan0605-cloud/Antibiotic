@@ -10,6 +10,8 @@ Include the `assets/` folder when deploying the static site. The teacher-specifi
 
 ## Virtual laboratory tools
 
-`lab-spreader.png` and `lab-forceps.png` are AI-generated transparent PNG illustrations made for this activity from the teacher's tool-reference photographs. The spreader depicts a clear triangular loop on a long handle; the forceps depict open stainless-steel arms with grooved gripping surfaces. These are new illustrations, rather than edits to the reference photographs or to the historical plate photograph.
+`lab-spreader-cartoon.png` and `lab-forceps-cartoon.png` are AI-generated transparent PNG illustrations made for this activity from the teacher's tool-reference photographs and the earlier generated tool cutouts. They use a flat mint/teal cartoon style to match the other equipment illustrations. The spreader depicts a closed triangular loop on a long straight handle; the forceps depict two open arms with blunt grooved tips and a fused rounded base. The tools contain no text, so accompanying labels can change with the interface language.
 
-The two PNGs appear in the phase-02 materials list, the phase-03 tool buttons, selected-tool cursors and operation animations. Both files must remain available under these filenames when deploying the site. They contain no text, so the accompanying labels can change with the interface language.
+The current cartoon PNGs appear in the phase-02 materials list, the phase-03 tool buttons, selected-tool cursors and operation animations. Include both current files when deploying the site.
+
+`lab-spreader.png` and `lab-forceps.png` are the earlier generated realistic tool cutouts. They remain under their original filenames so previously cached application bundles can still load their images. The original teacher-supplied reference photographs and the historical plate photograph have not been altered.

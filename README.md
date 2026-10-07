@@ -16,7 +16,7 @@ npm start
 
 The static server uses port 4173; set `PORT` to choose another port. Open the server with your hosting platform's normal browser access. In this cloud workspace, `bash scripts/install.sh` uses the shared writable `/workspace/.npm-cache`. The built static files can also be served with `python3 -m http.server 4173` without installing Node. Serve over HTTP(S), rather than double-clicking `index.html`.
 
-For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/` folder and the `app.bundle*.js` files. The repository includes prebuilt files. `npm run build` writes a bundle with a content hash in its filename and updates the matching import in `index.html`; this prevents cached JavaScript from being paired with newer page markup. When changing the cloud endpoint or any JavaScript source, rebuild and commit the updated HTML, versioned bundle, compatibility bundle and source map together. Keep previously published versioned bundles available for cached HTML. `.nojekyll` serves the project as static files on GitHub Pages. If startup fails, the page displays a reload button without clearing saved records. Filesystem setup and a running local server do not publish the site.
+For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/` folder and the `app.bundle*.js` files. The repository includes prebuilt files. `npm run build` writes a bundle with a content hash in its filename and updates the matching import in `index.html`; this prevents cached JavaScript from being paired with newer page markup. It also versions the stylesheet URLs from their contents so changed button positions and tool orientations load with the new page. When changing the cloud endpoint or any JavaScript/CSS source, rebuild and commit the updated HTML, versioned bundle, compatibility bundle and source map together. Keep previously published versioned bundles available for cached HTML. `.nojekyll` serves the project as static files on GitHub Pages. If startup fails, the page displays a reload button without clearing saved records. Filesystem setup and a running local server do not publish the site.
 
 ## Student workflow
 
@@ -28,7 +28,7 @@ For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/
 
 The initial trial target is 45–55 minutes, excluding optional extension. See [design rationale](docs/design-rationale.md) for the proposed teaching sequence and candidate English glossary terms. English terminology has no unapproved Chinese parenthetical additions.
 
-The design-phase materials match the virtual procedure: three nutrient-containing agar plates; one marker, dropper, diluted bacterial suspension and sterile spreader; four sterile forceps; three X/Y/Z/C disc sets; one incubator and ruler. The spreader and forceps use transparent generated illustrations based on the teacher's reference photographs; see [asset notes](assets/README.md).
+The design-phase materials match the virtual procedure: three nutrient-containing agar plates; one marker, dropper, diluted bacterial suspension and sterile spreader; four sterile forceps; three X/Y/Z/C disc sets; one incubator and ruler. C is labelled as the control. The agar plate illustration shows its sidewall and depth. The spreader and forceps use mint/teal cartoon illustrations based on the teacher's reference photographs; the forceps opening faces the lower left. See [asset notes](assets/README.md).
 
 ## Scientific model and measurement rules
 

@@ -9,6 +9,7 @@
 .bench-tool-icon { display: grid; place-items: center; width: 65px; height: 70px; overflow: hidden; }
 .bench-tool-icon > svg { display: block; height: 68px; width: 45px; }
 .bench-tool-icon > img { width: 30px; height: 74px; object-fit: contain; transform: rotate(32deg); }
+#selectTweezers .bench-tool-icon > img { transform: rotate(212deg); }
 .bench-tool.selected { background: #e4f3ea; border-color: #087b78; box-shadow: 0 0 0 2px #087b7833; }
 .tool-selected-animation .bench-tool-icon { animation: tool-pick .3s ease-out; }
 #toolStatus { min-height: 24px; color: var(--teal); text-align: center; font-size: 13px; }
@@ -31,6 +32,7 @@
 #toolCursor > svg { width: 40px; height: 80px; transform: rotate(-22deg); transform-origin: top center; }
 #toolCursor > img { display: block; width: 35px; height: 92px; object-fit: contain; transform: rotate(35deg); transform-origin: top center; }
 #toolCursor[data-tool="spreader"] > img { transform: rotate(0); width: 36px; }
+#toolCursor[data-tool="tweezers"] > img { transform: rotate(215deg); }
 .cursor-disc { position: absolute; top: 0; left: 8px; display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: #fffdf4; border: 1px solid #78958c; font-size: 10px; font-weight: 700; }
 .cursor-drop { position: absolute; top: 52px; left: 29px; color: #75bca0; font-size: 13px; }
 .bench-guide { position: fixed; z-index: 60; pointer-events: none; font-size: 37px; line-height: 1; color: #e6a72f; text-shadow: 0 1px 2px #fff, 1px 0 2px #fff; animation: bench-guide-bounce .7s ease-in-out infinite; }
