@@ -85,3 +85,13 @@ There is no ruler attraction target for samples without a visible zone. Completi
 
 
 Final validation for this revision: `npm test` passed all 54 Node cases and `npm run test:browser` passed all 16 browser cases against `app.bundle.f87f6ec0d3bb.js`. The regression coverage includes zero accepted by Enter and confirmation on every plate, zero preserved after language switching, numeric/reference zero in XLSX, exact no-zone grading, three-column headings, absent note inputs and larger-zone ruler release/reacquisition. The mobile table now fits all three columns without sideways scrolling; the updated desktop and mobile views were inspected after the CSS change.
+
+
+## 2026-10-08 — measurement navigation and mean-entry formatting
+
+The confirmation message now asks students to measure and record any remaining agar plates. Successful confirmation scrolls back to the plate buttons only while another plate has unconfirmed readings; it does not select another plate or change the student's data. When all plates are confirmed, the page remains at the measurement section. The analysis heading is 總直徑的平均值計算 / Mean total diameter calculation, and the former mean instructions are removed. Generated interface, report and rubric text now names the control C（對照） / C (control), without rewriting student free text or stored sample IDs.
+
+Enter in a mean field accepts a valid value in 0–40, rounds it and displays one decimal place (6 → 6.0; 6.25 → 6.3), saves the formatted value and advances to the next input. Empty, negative and out-of-range means remain invalid. Readings and chart-bar precision remain unchanged. Any changed mean still invalidates chart confirmation.
+
+
+Validation: all 54 Node cases passed; all 12 selected browser cases (eight workflow and four startup cases) passed across the full run and the focused rerun of mean-entry validation. The mean test waits for the existing debounced local save before checking the persisted formatted value. After the final wording update, all ten report/XLSX tests passed again. An additional desktop/360 px review confirmed the scroll-back location, new heading, absence of the old instructions, C labels, 6.0 / 0.0 / 6.3 formatting, stored means and preservation across language switching, with no page overflow or JavaScript errors. Published bundle: `app.bundle.d8d6ea3e2769.js`.

@@ -115,9 +115,23 @@ function renderMeasurements(){
  for(const el of $$('[data-reading], [data-visible]'))el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{if(state.submittedAt)return;const s=el.dataset.reading||el.dataset.visible;const group=state.measurements[p.id]??={};const row=group[s]??={};row[el.dataset.reading?'value':'visible']=el.value;row.confirmedAt=null;state.graph.confirmedAt=null;scheduleSave();});
  translate($('#measurementRows'));
 }
-$('#confirmReadings').onclick=()=>{if(!state||state.submittedAt)return;const p=currentPlate();if(!p.completed)return;for(const s of SAMPLES){if(!validDecimal($(`[data-reading="${s}"]`).value,0,40)||!$(`[data-visible="${s}"]`).value){toast('invalidNumber');$(`[data-reading="${s}"]`).focus();return;}}for(const s of SAMPLES)confirmMeasurement(state,p.id,s,{value:$(`[data-reading="${s}"]`).value,visible:$(`[data-visible="${s}"]`).value,note:state.measurements[p.id]?.[s]?.note||''});log('measurements_confirmed',{plateId:p.id});save();renderMeasurements();};
+$('#confirmReadings').onclick=()=>{if(!state||state.submittedAt)return;const p=currentPlate();if(!p.completed)return;for(const s of SAMPLES){if(!validDecimal($(`[data-reading="${s}"]`).value,0,40)||!$(`[data-visible="${s}"]`).value){toast('invalidNumber');$(`[data-reading="${s}"]`).focus();return;}}for(const s of SAMPLES)confirmMeasurement(state,p.id,s,{value:$(`[data-reading="${s}"]`).value,visible:$(`[data-visible="${s}"]`).value,note:state.measurements[p.id]?.[s]?.note||''});log('measurements_confirmed',{plateId:p.id});save();renderMeasurements();if(state.plates.some(other=>other.id!==p.id&&!SAMPLES.every(s=>state.measurements[other.id]?.[s]?.confirmedAt)))$('#plateTabs').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};
 $('#experimentNext').onclick=()=>{if(!allMeasurements(state)){toast('allPlatesRequired');return;}state.unlocked=Math.max(4,state.unlocked);showPhase(4);};
-document.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.isComposing||e.target.tagName!=='INPUT'||!e.target.matches('[data-reading],[data-mean],[data-bar]'))return;e.preventDefault();const el=e.target;if(!validDecimal(el.value,0,40)){toast('invalidNumber');return;}const selector=el.matches('[data-reading]')?'[data-reading]:enabled':el.matches('[data-mean]')?'[data-mean]:enabled':'[data-bar]:enabled',inputs=$$(selector),i=inputs.indexOf(el);(inputs[i+1]||$(el.matches('[data-reading]')?'#confirmReadings':'#confirmGraph')).focus();});
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Enter'||e.isComposing||e.target.tagName!=='INPUT'||!e.target.matches('[data-reading],[data-mean],[data-bar]'))return;
+ e.preventDefault();const el=e.target,isMean=el.matches('[data-mean]');
+ const valid=isMean?/^\d+(\.\d+)?$/.test(el.value.trim())&&Number(el.value)<=40:validDecimal(el.value,0,40);
+ if(!valid){toast('invalidNumber');return;}
+ if(isMean){
+  if(!state||state.submittedAt)return;
+  const formatted=(Math.round((Number(el.value)+Number.EPSILON)*10)/10).toFixed(1);
+  el.value=formatted;
+  if(state.means[el.dataset.mean]!==formatted){state.means[el.dataset.mean]=formatted;state.graph.confirmedAt=null;$('#graphStatus').textContent='';scheduleSave();}
+ }
+ const selector=el.matches('[data-reading]')?'[data-reading]:enabled':isMean?'[data-mean]:enabled':'[data-bar]:enabled',inputs=$$(selector),i=inputs.indexOf(el);
+ (inputs[i+1]||$(el.matches('[data-reading]')?'#confirmReadings':'#confirmGraph')).focus();
+});
+
 function renderSummary(){
  $('#resultsSummary').innerHTML=`<table><thead><tr><th>${t('sample')}</th>${state.plates.map((p,i)=>`<th>${t('plate')} ${i+1} (mm)</th>`).join('')}</tr></thead><tbody>${SAMPLES.map(s=>`<tr><th>${s==='C'?t('blank'):s}</th>${state.plates.map(p=>`<td>${esc(state.measurements[p.id]?.[s]?.value??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 }

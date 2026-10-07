@@ -31,6 +31,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   const zh=renderReport(record),en=renderReport(record,'en');
   assert.match(zh,/你的原始研究計劃/);assert.match(en,/Your original research plan/);
   assert.match(zh,/學習重溫備註/);assert.match(en,/Learning review notes/);
+  assert.match(zh,/C（對照）/);assert.match(en,/C \(control\)/);
   assert.match(zh,/原始假說|原始研究/);assert.match(en,/Independent variable/);
   assert.match(en,/Dependent variable/);assert.match(en,/Controlled variables/);
   for(const html of [zh,en]){

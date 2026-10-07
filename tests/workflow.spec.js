@@ -144,6 +144,14 @@ async function preparePlate(page, index) {
     const state = await current(page);
     return SAMPLES.every(sample => Boolean(state?.measurements[plate.id]?.[sample]?.confirmedAt));
   }).toBe(true);
+  const confirmed=await current(page);
+  const pending=confirmed.plates.some(other=>other.id!==plate.id&&!SAMPLES.every(sample=>confirmed.measurements[other.id]?.[sample]?.confirmedAt));
+  if(pending){
+    await expect.poll(()=>page.locator('#plateTabs').evaluate(tabs=>{const r=tabs.getBoundingClientRect();return r.top>=-1&&r.bottom<=innerHeight;})).toBe(true);
+    expect(confirmed.plates[index].id).toBe(plate.id);
+  }else await expect(page.locator('#confirmReadings')).toBeInViewport();
+  await expect(page.locator('#measurementStatus')).toHaveText(/讀數已確認，請為其他瓊脂板作量度與記錄（如有）。|Readings confirmed. Measure and record the other agar plates, if any remain./);
+
   return plate.result;
 }
 
@@ -227,6 +235,9 @@ async function incubatePreparedPlates(page) {
 async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await page.locator('#experimentNext').click();
   await expect(page.locator('#phase-4')).toBeVisible();
+  await expect(page.locator('[data-i18n="meanNote"]')).toHaveCount(0);
+  await expect(page.locator('[data-i18n="mean"]')).toHaveText(/總直徑的平均值計算|Mean total diameter calculation/);
+  await expect(page.locator('#mean-C').locator('..')).toContainText(/C（對照）|C \(control\)/);
   const state = await current(page);
   for (const sample of SAMPLES) {
     const mean = (state.plates.reduce((sum, plate) =>
@@ -439,12 +450,18 @@ test('completion gates reject missing data and invalid Enter readings while comp
   await preparePlate(page, 1);
   await preparePlate(page, 2);
   await analyseInvestigation(page, { beforeSubmit: async () => {
-    await page.locator('[data-mean="X"]').fill('6.01');
-    await page.locator('[data-mean="X"]').press('Enter');
-    await expect(page.locator('[data-mean="X"]')).toBeFocused();
-    await page.locator('[data-mean="X"]').fill('6.0');
-    await page.locator('[data-mean="X"]').press('Enter');
-    await expect(page.locator('[data-mean="Y"]')).toBeFocused();
+    for(const invalid of ['', '-0.1', '40.01']){
+      await page.locator('[data-mean="X"]').fill(invalid);
+      await page.locator('[data-mean="X"]').press('Enter');
+      await expect(page.locator('[data-mean="X"]')).toBeFocused();
+    }
+    for(const [input,rounded] of [['6.01','6.0'],['6.25','6.3'],['6','6.0']]){
+      await page.locator('[data-mean="X"]').fill(input);
+      await page.locator('[data-mean="X"]').press('Enter');
+      await expect(page.locator('[data-mean="X"]')).toHaveValue(rounded);
+      await expect(page.locator('[data-mean="Y"]')).toBeFocused();
+      await expect.poll(async()=>(await current(page)).means.X).toBe(rounded);
+    }
     await page.locator('[data-bar="X"]').fill('6.01');
     await page.locator('[data-bar="X"]').press('Enter');
     await expect(page.locator('[data-bar="X"]')).toBeFocused();

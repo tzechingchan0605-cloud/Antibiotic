@@ -11,7 +11,7 @@ const dateText = (value, language = 'zh') => {
   return Number.isFinite(date.getTime()) ? date.toLocaleString(language === 'en' ? 'en-GB' : 'zh-HK', { timeZone: 'Asia/Hong_Kong', hour12: false }) : String(value);
 };
 const imagePattern = /^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+/=]+$/;
-const sampleName = (sample, language) => sample === 'C' ? tr(language, '空白對照', 'Carrier control') : sample;
+const sampleName = (sample, language) => sample === 'C' ? tr(language, 'C（對照）', 'C (control)') : sample;
 const notAnswered = language => tr(language, '未回答', 'Not answered');
 
 export const ANSWER_FIELDS = [
@@ -27,7 +27,7 @@ export const ANSWER_FIELDS = [
   ['designDescription', '瓊脂板位置及實驗設計文字', 'Plate positions and experiment setup', 'conducting'],
   ['plannedReplicates', ...L.plannedReplicates, 'designing'],
   ['plannedReplicateReason', ...L.plannedReplicateReason, 'designing'],
-  ['analysisControl', '空白對照的生長情況如何？它提供甚麼比較基礎？', 'What growth is visible around the carrier control? What comparison does it provide?', 'inferring'],
+  ['analysisControl', 'C（對照）的生長情況如何？它提供甚麼比較基礎？', 'What growth is visible around C (control)? What comparison does it provide?', 'inferring'],
   ['analysisConsistent', '哪些樣本在三次測試均出現可見清晰區？', 'Which samples show a visible zone in all three tests?', 'inferring'],
   ['analysisVariation', '同一樣本的三次結果是否一致？請引用數據。', 'Are the three results for each sample consistent? Use your data.', 'inferring'],
   ['analysisMethod', '如果差異較大，需要檢查哪些操作或條件？', 'If the results vary greatly, which methods or conditions should you check?', 'conducting'],
@@ -76,8 +76,8 @@ function referenceFor(field, record, language) {
     designDescription: ['清楚標示樣本與對照，留足間距及邊緣距離，避免清晰區互相干擾；可用圖像或文字表達。', 'Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable.'],
     plannedReplicates: ['次數包括第一次。選三次不是標準答案；次數多不保證可靠。', 'Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability.'],
     plannedReplicateReason: ['考慮一致性、變異、公平比較及課堂可行性。', 'Consider consistency, variation, fair comparisons and practical feasibility.'],
-    analysisControl: ['本模型的空白對照沒有紙碟外清晰區；清晰區的總直徑記為 0 mm。它提供不含抗生素的比較基礎。', 'The model carrier control has no visible zone outside the disc. Its clear-zone diameter is recorded as 0 mm. It provides an antibiotic-free comparison.'],
-    analysisConsistent: ['依三片瓊脂板實際資料判斷。本模型 X、Z 各次有外圍清晰區，Y 及空白對照沒有。', 'Use all three plate records. In this model, X and Z have visible zones in each test; Y and the carrier control do not.'],
+    analysisControl: ['本模型的 C（對照）沒有紙碟外清晰區；清晰區的總直徑記為 0 mm。它提供不含抗生素的比較基礎。', 'The model C (control) has no visible zone outside the disc. Its clear-zone diameter is recorded as 0 mm. It provides an antibiotic-free comparison.'],
+    analysisConsistent: ['依三片瓊脂板實際資料判斷。本模型 X、Z 各次有外圍清晰區，Y 及 C（對照）沒有。', 'Use all three plate records. In this model, X and Z have visible zones in each test; Y and C (control) do not.'],
     analysisVariation: ['引用自己的三次讀數，分開結果趨勢與瓊脂板間變異。', 'Quote your three readings and distinguish a consistent pattern from variation between plates.'],
     analysisMethod: ['可檢查初始分布、污染、紙碟位置、製備及共同觀察條件；結果不穩定時先查方法，再考慮額外測試。', 'Check initial distribution, contamination, disc positions, preparation and shared observation conditions. Investigate unstable methods before considering more tests.'],
     analysisHypothesis: ['以自己的樣本／對照及重複結果評估原始假說。未獲支持仍可作有證據的修訂。', 'Evaluate your original hypothesis using your sample–control and repeated results. An unsupported hypothesis can still lead to an evidence-based revision.'],
@@ -186,7 +186,7 @@ export function renderReport(record, language = 'zh') {
   <div class="report-meta"><span>${t('姓名','Name')}：${esc(record.profile?.name || '—')}</span><span>${t('班別及學號','Class and number')}：${esc(record.profile?.className || record.profile?.classInfo || '—')}</span><span>${t('電郵','Email')}：${esc(record.profile?.email || '—')}</span><span>${t('探究遞交','Inquiry submitted')}：${esc(dateText(record.submittedAt,language))}</span><span>${t('反思提交','Reflection submitted')}：${esc(dateText(record.reflectionSubmittedAt,language))}</span><span>${t('有效操作時間','Active time')}：${Math.floor(totalSeconds/60)} ${t('分','min')} ${totalSeconds%60} ${t('秒','s')}</span></div>
   <p class="simulation-note">${t('所有圖像與結果均為虛擬教學模擬，不能用作患者治療或臨床敏感性判定。歷史觀察是葡萄球菌，不是 MRSA；MRSA 首次正式報告於 1961 年。','All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming’s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.')}</p>
   ${section(t('01 了解情境：你的初步觀察','01 Context: your initial observations'),fields(['observation']))}
-  ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的瓊脂板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
+  ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的瓊脂板，每片含 X、Y、Z 及 C（對照）。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a C (control). The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
   ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','largestPrediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
   ${section(t('03 三片獨立瓊脂板的觀察及量度','03 Observations and readings from independent plates'),`<p>${t('已產生結果的獨立瓊脂板數','Independent plates with generated results')}：${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter(plate=>plate.result).map(plate=>reportPlate(plate,language)).join('')}</div>${readingsTable}`)}
   ${section(t('04 你的平均值及圖表','04 Your means and chart'),meansTable + reportGraph(record,language) + `<p>${t('圖表確認時間','Chart confirmed')}：${esc(dateText(record.graph?.confirmedAt,language))}</p>`)}
