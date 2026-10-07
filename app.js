@@ -8,8 +8,8 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const span=key=>`<span data-i18n="${key}">${esc(t(key))}</span>`;
 const option=(value,key)=>`<option value="${value}" data-i18n="${key}">${esc(t(key))}</option>`;
-function field(id,key,{options,type='textarea',optional=false,min,max,placeholder,scope='answer'}={}){
-  const attrs=`id="${id}" data-field="${id}" data-scope="${scope}" ${optional?'':'required'} data-i18n-placeholder="${placeholder||'genericPH'}"`;
+function field(id,key,{options,type='textarea',optional=false,min,max,placeholder='genericPH',scope='answer'}={}){
+  const attrs=`id="${id}" data-field="${id}" data-scope="${scope}" ${optional?'':'required'} ${placeholder===null?'':`data-i18n-placeholder="${placeholder}"`}`;
   const input=options?`<select ${attrs}>${option('','choose')}${options.map(([v,k])=>option(v,k)).join('')}</select>`:type==='textarea'?`<textarea ${attrs} rows="3" maxlength="2000"></textarea>`:`<input ${attrs} type="${type}" ${min!==undefined?`min="${min}"`:''} ${max!==undefined?`max="${max}"`:''} ${type==='number'?'step="1"':''}>`;
   return `<label class="field">${span(key)}${input}</label>`;
 }
@@ -24,7 +24,7 @@ $('#controlFields').innerHTML=field('controlPlan','controlPlan').replace('<texta
 $('#controlPlan').maxLength=1000;
 $('#designFields').innerHTML=field('designDescription','designDescription',{optional:true,placeholder:'designDescriptionPH'});
 $('#designDescription').rows=2;$('#designDescription').maxLength=1000;
-$('#replicateFields').innerHTML=field('repeatChoice','repeatChoice',{options:[['yes','repeatYes'],['no','repeatNo']]})+field('plannedReplicates','plannedReplicates',{type:'number',min:1})+field('plannedReplicateReason','plannedReplicateReason');
+$('#replicateFields').innerHTML=field('plannedReplicates','plannedReplicates',{type:'number',min:1,placeholder:null})+field('plannedReplicateReason','plannedReplicateReason',{placeholder:null});
 $('#analysisFields').innerHTML=['analysisControl','analysisConsistent','analysisVariation','analysisMethod','analysisHypothesis','analysisRepeatPlan','analysisRepeatValue'].map(k=>field(k,k)).join('')+['analysisDeath','analysisClinical'].map(k=>field(k,k,{options:[['cannot','cannot'],['can','can']]})).join('')+field('conclusion','conclusion',{placeholder:'conclusionPH'})+field('knowledgeBacteria','bacteriaQuestion',{options:[['bacteria','bacteria'],['viruses','viruses']]})+field('knowledgeResistance','resistanceQuestion',{options:[['bacteria','resistanceBacteria'],['body','resistanceBody']]})+field('knowledgeLimits','limitsQuestion',{options:[['limited','limited'],['best','bestDrug']]});
 $('#reflectionFields').innerHTML=field('reflection','reflectionQuestion');
 $('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('blank'):s}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" aria-label="${s} mm"></label>`).join('');
@@ -81,7 +81,7 @@ $$('[data-phase]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.phase)));
 $$('[data-back]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.back)));
 function completeFields(ids){const bad=ids.find(id=>!String(state?.answers[id]??'').trim());if(bad){toast('required');const target=$('#'+bad);(target?.querySelector('button,input')||target)?.focus();return false;}return true;}
 $('#orientationNext').onclick=()=>{if(!completeFields(['observation']))return;state.unlocked=Math.max(2,state.unlocked);log('orientation_confirmed');showPhase(2);};
-$('#designNext').onclick=()=>{if(!completeFields(['prediction','reason','iv','dv','controlPlan','repeatChoice','plannedReplicates','plannedReplicateReason']))return;if(!state.answers.cv.length||!state.answers.assumptions.length||!state.design.saved){toast('required');return;}if(!validReplicates(state.answers.plannedReplicates)){toast('required');$('#plannedReplicates').focus();return;}captureOriginal(state);state.plannedReplicates=state.original.plannedReplicates;state.plannedReplicateReason=state.original.plannedReplicateReason;state.unlocked=Math.max(3,state.unlocked);log('original_plan_saved',{plannedReplicates:state.original.plannedReplicates,actualReplicates:3});showPhase(3);};
+$('#designNext').onclick=()=>{if(!completeFields(['prediction','reason','iv','dv','controlPlan','plannedReplicates','plannedReplicateReason']))return;if(!state.answers.cv.length||!state.answers.assumptions.length||!state.design.saved){toast('required');return;}if(!validReplicates(state.answers.plannedReplicates)){toast('required');$('#plannedReplicates').focus();return;}captureOriginal(state);state.plannedReplicates=state.original.plannedReplicates;state.plannedReplicateReason=state.original.plannedReplicateReason;state.unlocked=Math.max(3,state.unlocked);log('original_plan_saved',{plannedReplicates:state.original.plannedReplicates,actualReplicates:3});showPhase(3);};
 const canvas=$('#setupCanvas'),ctx=canvas.getContext('2d');
 function canvasPoint(e){const b=canvas.getBoundingClientRect();return{x:(e.clientX-b.left)*canvas.width/b.width,y:(e.clientY-b.top)*canvas.height/b.height};}
 canvas.onpointerdown=e=>{if(!state||state.submittedAt)return;e.preventDefault();drawing=true;canvas.setPointerCapture(e.pointerId);const p=canvasPoint(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.strokeStyle=drawTool==='eraser'?'#fff':'#15333b';ctx.lineWidth=drawTool==='eraser'?22:3;ctx.lineCap='round';ctx.lineJoin='round';};

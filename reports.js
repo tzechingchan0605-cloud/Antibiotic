@@ -23,9 +23,8 @@ export const ANSWER_FIELDS = [
   ['assumptions', '探究假設', 'Assumptions for a fair investigation', 'designing'],
   ['controlPlan', ...L.controlPlan, 'designing'],
   ['designDescription', '平板位置及實驗設計文字', 'Plate positions and experiment setup', 'conducting'],
-  ['repeatChoice', '如果由你安排，你會否使用新平板重複同一比較？', 'Would you repeat the same comparison on new plates?', 'designing'],
-  ['plannedReplicates', '你建議每種樣本共測試多少次（包括第一次）？', 'How many tests do you propose for each sample, including the first?', 'designing'],
-  ['plannedReplicateReason', '原始重複安排的理由', 'Your original reason for the number of repeats', 'designing'],
+  ['plannedReplicates', ...L.plannedReplicates, 'designing'],
+  ['plannedReplicateReason', ...L.plannedReplicateReason, 'designing'],
   ['analysisControl', '空白對照的生長情況如何？它提供甚麼比較基礎？', 'What growth is visible around the carrier control? What comparison does it provide?', 'inferring'],
   ['analysisConsistent', '哪些樣本在三次測試均出現可見清晰區？', 'Which samples show a visible zone in all three tests?', 'inferring'],
   ['analysisVariation', '同一樣本的三次結果是否一致？請引用數據。', 'Are the three results for each sample consistent? Use your data.', 'inferring'],
@@ -51,12 +50,12 @@ const CHOICES = {
   cannot: ['不能', 'Cannot'], can: ['能', 'Can'], bacteria: ['細菌', 'Bacteria'], viruses: ['病毒', 'Viruses'], body: ['人的身體', 'The human body'],
   limited: ['局部可見生長受到抑制，重複可檢查一致性；仍有推論限制', 'Local visible growth is inhibited; repeats check consistency, with limits on inference'], guaranteed: ['最大清晰區及三次測試保證最佳治療', 'The largest zone and three repeats guarantee the best treatment']
 };
-const choiceFields = new Set(['prediction', 'iv', 'dv', 'cv', 'assumptions', 'repeatChoice', 'analysisDeath', 'analysisClinical', 'knowledgeBacteria', 'knowledgeResistance', 'knowledgeLimits']);
+const choiceFields = new Set(['prediction', 'iv', 'dv', 'cv', 'assumptions',  'analysisDeath', 'analysisClinical', 'knowledgeBacteria', 'knowledgeResistance', 'knowledgeLimits']);
 const variableKeys = {sample:'vSample',zone:'vZone',strain:'vStrain',distribution:'vDistribution',medium:'vMedium',disc:'vDisc',preparation:'vPreparation',observation:'vObservation'};
 const fieldChoiceKeys = {
   prediction:{all:'all',some:'some',none:'none'},iv:variableKeys,dv:variableKeys,cv:variableKeys,
   assumptions:{distribution:'assumptionDistribution',sterile:'assumptionSterile',sameConditions:'assumptionSame',death:'assumptionDeath'},
-  repeatChoice:{yes:'repeatYes',no:'repeatNo'},analysisDeath:{can:'can',cannot:'cannot'},analysisClinical:{can:'can',cannot:'cannot'},
+  analysisDeath:{can:'can',cannot:'cannot'},analysisClinical:{can:'can',cannot:'cannot'},
   knowledgeBacteria:{bacteria:'bacteria',viruses:'viruses'},knowledgeResistance:{bacteria:'resistanceBacteria',body:'resistanceBody'},knowledgeLimits:{limited:'limited',best:'bestDrug'}
 };
 export function answerDisplay(field, value, language = 'zh') {
@@ -72,7 +71,6 @@ function referenceFor(field, record, language) {
     reason: ['說明與細菌生長及可觀察現象相關的理由。', 'Explain a reason related to bacterial growth and observable evidence.'],
     controlPlan: ['用相同載體但不含抗生素的紙碟，排除載體／紙碟影響；其餘條件保持相同。只有所有載體都是水時才稱水對照。', 'Use a matching carrier-only disc without antibiotic to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water.'],
     designDescription: ['清楚標示樣本與對照，留足間距及邊緣距離，避免清晰區互相干擾；可用圖像或文字表達。', 'Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable.'],
-    repeatChoice: ['新的獨立平板提供新的觀察；同一清晰區重複量度不算獨立重複。', 'A new independent plate provides another observation. Remeasuring one zone is not an independent repeat.'],
     plannedReplicates: ['次數包括第一次。選三次不是標準答案；次數多不保證可靠。', 'Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability.'],
     plannedReplicateReason: ['考慮一致性、變異、公平比較及課堂可行性。', 'Consider consistency, variation, fair comparisons and practical feasibility.'],
     analysisControl: ['本模型的空白對照沒有紙碟外清晰區；按總直徑記紙碟本身 6 mm。它提供不含抗生素的比較基礎。', 'The model carrier control has no visible zone outside the disc. Its total diameter is the disc diameter, 6 mm. It provides an antibiotic-free comparison.'],
@@ -165,7 +163,7 @@ export function renderReport(record, language = 'zh') {
   const submitted = !!record.submittedAt;
   const section = (title, content) => `<section class="report-section"><h2>${esc(title)}</h2><div class="report-card">${content}</div></section>`;
   const fields = keys => keys.map(field => reportAnswer(record, field, a[field], language)).join('');
-  const originalFields = ['observation','prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','repeatChoice','plannedReplicates','plannedReplicateReason'];
+  const originalFields = ['observation','prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason'];
   const rows = (record.plates || []).flatMap(plate => SAMPLE_IDS.map(sample => {
     const reading = record.measurements?.[plate.id]?.[sample] || {}, start = reading.first || {}, last = reading.last || reading;
     const check = readingCheck(record, plate, sample, reading);
@@ -186,7 +184,7 @@ export function renderReport(record, language = 'zh') {
   <p class="simulation-note">${t('所有圖像與結果均為虛擬教學模擬，不能用作患者治療或臨床敏感性判定。歷史觀察是葡萄球菌，不是 MRSA；MRSA 首次正式報告於 1961 年。','All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming’s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.')}</p>
   ${section(t('01 了解情境：你的初步觀察','01 Context: your initial observations'),fields(['observation']))}
   ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的平板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
-  ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','repeatChoice','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
+  ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
   ${section(t('03 三片獨立平板的觀察及量度','03 Observations and readings from independent plates'),`<p>${t('已產生結果的獨立平板數','Independent plates with generated results')}：${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter(plate=>plate.result).map(plate=>reportPlate(plate,language)).join('')}</div>${readingsTable}`)}
   ${section(t('04 你的平均值及圖表','04 Your means and chart'),meansTable + reportGraph(record,language) + `<p>${t('圖表確認時間','Chart confirmed')}：${esc(dateText(record.graph?.confirmedAt,language))}</p>`)}
   ${section(t('04 分析及結論','04 Analysis and conclusion'),fields(['analysisControl','analysisConsistent','analysisVariation','analysisMethod','analysisHypothesis','analysisRepeatPlan','analysisRepeatValue','analysisDeath','analysisClinical','conclusion']))}

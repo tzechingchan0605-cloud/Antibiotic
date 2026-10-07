@@ -79,7 +79,9 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await page.locator('#designDescription').fill('X、Y、Z 及空白對照分別放於四個象限，遠離邊緣並保持間距；每片平板相同。');
   await page.locator('#saveDesign').click();
   await expect(page.locator('#designStatus')).not.toBeEmpty();
-  await page.locator('#repeatChoice').selectOption('yes');
+  await expect(page.locator('#repeatChoice')).toHaveCount(0);
+  await expect(page.locator('#plannedReplicates')).not.toHaveAttribute('placeholder');
+  await expect(page.locator('#plannedReplicateReason')).not.toHaveAttribute('placeholder');
   await page.locator('#plannedReplicates').fill('2');
   await page.locator('#plannedReplicateReason').fill('用兩片新平板初步比較一致性，同一圈重讀不算獨立重複。');
   if (wrongAnswers) {

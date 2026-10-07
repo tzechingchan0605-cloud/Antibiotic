@@ -38,3 +38,7 @@ The latest revision adopts the five numbered VL2 design panels and their answer 
 - Browser verification uses desktop Chromium and its mobile viewport/touch emulation, rather than a physical iPhone/Android device or a cross-browser Safari/Firefox study.
 
 Screenshots and PDF artifacts under `artifacts/` use generated test identities and simulated data, not real student research records. The distributable ZIP includes the built static app, sources, tests, Google backend and deployment documentation.
+
+## Original repeat-plan wording follow-up
+
+Removed the yes/no repeat question from the interface, completion gate, reports and spreadsheet question columns. The count question now identifies X, Y, Z and the control; the reason question uses the requested wording. Neither answer field has the generic evidence placeholder. English wording is synchronized, and stored original counts/reasons are retained. Validation: build, all 39 Node tests and 3 targeted desktop/completion-gate/mobile browser cases passed.
