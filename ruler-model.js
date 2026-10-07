@@ -1,4 +1,4 @@
-import {SAMPLES,toPlatePoint} from './model.js';
+import {SAMPLES,toPlatePoint,clearZoneDiameter} from './model.js';
 
 // SVG units: two units per millimetre. Attraction aligns the ruler's zero
 // with the left edge of a horizontal diameter without filling in a reading.
@@ -6,15 +6,18 @@ export const RULER_CAPTURE=12;
 export const RULER_RELEASE=24;
 export function rulerTargets(plate){
   if(!plate?.completed||!plate.result)return [];
-  return SAMPLES.filter(sample=>plate.discPositions[sample]).map(sample=>{
+  return SAMPLES.filter(sample=>plate.discPositions[sample]&&clearZoneDiameter(plate,sample)>0).map(sample=>{
     const centre=toPlatePoint(plate.discPositions[sample],-plate.rotation);
-    return {sample,x:centre.x-plate.result[sample],y:centre.y,centreX:centre.x};
+    return {sample,x:centre.x-clearZoneDiameter(plate,sample),y:centre.y,centreX:centre.x};
   });
 }
 export function moveMagneticRuler(plate,candidate,magnet=null,ignored=null){
   if(magnet){
-    if(Math.abs(candidate.x-magnet.anchorX)<=RULER_RELEASE&&Math.abs(candidate.y-magnet.y)<=RULER_RELEASE){
-      return {ruler:{x:magnet.x,y:candidate.y},magnet,ignored:null};
+    const distance=Math.abs(candidate.x-magnet.x),closest=Math.abs(magnet.anchorX-magnet.x);
+    // Finishing an approach toward the aligned edge must not count as pulling
+    // away. Track the closest approach and release only beyond that distance.
+    if(distance<=closest+RULER_RELEASE&&Math.abs(candidate.y-magnet.y)<=RULER_RELEASE){
+      return {ruler:{x:magnet.x,y:candidate.y},magnet:distance<closest?{...magnet,anchorX:candidate.x}:magnet,ignored:null};
     }
     ignored=magnet.sample;magnet=null;
   }

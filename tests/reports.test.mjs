@@ -9,13 +9,13 @@ const PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAA
 const at='2026-10-07T04:00:00Z';
 function fixture(id='student-one') {
   const answers={observation:'黴菌附近没有可見菌落 <script>alert(1)</script>',inference:'My original inference.',comparison:'Compare with no mould.',prediction:'some',largestPrediction:'Z',controlPrediction:'Compare with carrier.',reason:'Latest reason 保留原文',iv:'sample',dv:'zone',cv:['strain','distribution','medium','disc','preparation','observation'],assumptions:['distribution','sterile','sameConditions'],controlPlan:'Matching carrier without antibiotic.',designDescription:'Keep the discs apart.',repeatChoice:'yes',plannedReplicates:'5',plannedReplicateReason:'Latest plan reason.',analysisControl:'Control has no outer zone.',analysisConsistent:'X and Z in all three.',analysisVariation:'X: 18, 19, 17 mm.',analysisMethod:'Check distribution.',analysisHypothesis:'My original prediction needs revision.',analysisRepeatPlan:'Two tests would not reveal all variation.',analysisRepeatValue:'Check the method before adding tests.',analysisDeath:'cannot',analysisClinical:'cannot',conclusion:'The result supports local growth inhibition only.',knowledgeBacteria:'bacteria',knowledgeResistance:'bacteria',knowledgeLimits:'limited',reflection:'反思原文：X compared with carrier, repeated plates vary.'};
-  const plates=Array.from({length:3},(_,i)=>({id:`plate-${i+1}`,discPositions:{X:{x:130,y:130},Y:{x:270,y:130},Z:{x:130,y:270},C:{x:270,y:270}},rotation:0,result:{X:[18,19,17][i],Y:6,Z:[27,28,26][i],C:6},completed:true,operations:[{type:'independent_repeat',at}]}));
+  const plates=Array.from({length:3},(_,i)=>({id:`plate-${i+1}`,discPositions:{X:{x:130,y:130},Y:{x:270,y:130},Z:{x:130,y:270},C:{x:270,y:270}},rotation:0,result:{X:[18,19,17][i],Y:0,Z:[27,28,26][i],C:0},completed:true,operations:[{type:'independent_repeat',at}]}));
   const measurements=Object.fromEntries(plates.map(plate=>[plate.id,Object.fromEntries(['X','Y','Z','C'].map(sample=>{
     const last={value:String(plate.result[sample]),visible:['Y','C'].includes(sample)?'no':'yes',note:'最後備註',at};
     const first={...last,value:String(plate.result[sample]+2),note:'首次備註'};
     return [sample,{...last,first,last,revisions:[{previous:first,next:last,at}]}];
   }))]));
-  return {schemaVersion:1,moduleId:'VL_BIO_ANTIBIOTICS',id,version:4,demo:false,profile:{name:'陳同學',className:'4A 12',email:'student@example.test'},submittedAt:at,reflectionSubmittedAt:at,answers,original:{answers:{...answers,prediction:'none',largestPrediction:'X',reason:'Original reason 原文',plannedReplicates:'2',plannedReplicateReason:'Original repeat reason.'},plannedReplicates:2,plannedReplicateReason:'Original repeat reason.',capturedAt:at,design:{image:PNG,description:'Original drawing'}},plates,measurements,means:{X:'18.0',Y:'6.0',Z:'27.0',C:'6.0'},graph:{values:{X:18,Y:6,Z:27,C:6},confirmedAt:at},design:{image:PNG,description:'Latest drawing'},extension:{started:true,prediction:'A larger model zone.',reason:'Same sample.',fairComparison:'Keep the strain the same.',results:{low:12,medium:18,high:23},analysis:'This is not a dosing recommendation.'},events:[{type:'measurement_confirmed',at,phase:3,details:{sample:'X',value:18,teacherPassword:'must-not-export',nested:{token:'must-not-export',note:'keep this'}}}],timing:{1:15,2:25,3:90,4:40}};
+  return {schemaVersion:1,moduleId:'VL_BIO_ANTIBIOTICS',id,version:4,demo:false,profile:{name:'陳同學',className:'4A 12',email:'student@example.test'},submittedAt:at,reflectionSubmittedAt:at,answers,original:{answers:{...answers,prediction:'none',largestPrediction:'X',reason:'Original reason 原文',plannedReplicates:'2',plannedReplicateReason:'Original repeat reason.'},plannedReplicates:2,plannedReplicateReason:'Original repeat reason.',capturedAt:at,design:{image:PNG,description:'Original drawing'}},plates,measurements,means:{X:'18.0',Y:'0.0',Z:'27.0',C:'0.0'},graph:{values:{X:18,Y:0,Z:27,C:0},confirmedAt:at},design:{image:PNG,description:'Latest drawing'},extension:{started:true,prediction:'A larger model zone.',reason:'Same sample.',fairComparison:'Keep the strain the same.',results:{low:12,medium:18,high:23},analysis:'This is not a dosing recommendation.'},events:[{type:'measurement_confirmed',at,phase:3,details:{sample:'X',value:18,teacherPassword:'must-not-export',nested:{token:'must-not-export',note:'keep this'}}}],timing:{1:15,2:25,3:90,4:40}};
 }
 const headerIndex=(sheet,label)=>sheet.getRow(1).values.findIndex(value=>value===label);
 
@@ -67,12 +67,16 @@ test('print/PDF unlock depends on reflection submission and language-specific fi
   assert.equal(printed,1);assert.match(written,/<!doctype html>/);assert.match(written,/@media print/);assert.match(written,/<html lang="en">/);assert.match(written,/VL4_Antibiotic_Investigation_4A 12_陳同學/);
 });
 
-test('numeric checks use declared tolerances, own data, and no zone means disc diameter rather than zero',()=>{
+test('numeric checks use declared tolerances, own data, and no zone means zero in checks and exports',()=>{
   const record=fixture();assert.equal(automaticScores(record).readings,2);
   const plate=record.plates[0];
-  assert.equal(readingCheck(record,plate,'Y',{value:'6',visible:'no'}),true);
-  assert.equal(readingCheck(record,plate,'Y',{value:'0',visible:'no'}),false);
+  assert.equal(readingCheck(record,plate,'Y',{value:'6',visible:'no'}),false);
+  assert.equal(readingCheck(record,plate,'Y',{value:'0',visible:'no'}),true);
   assert.equal(readingCheck(record,plate,'Y',{value:'6',visible:'yes'}),false);
+  assert.equal(readingCheck(record,plate,'Y',{value:'1',visible:'no'}),false);
+  const legacy=structuredClone(plate);legacy.result.Y=6;
+  assert.equal(readingCheck(record,legacy,'Y',{value:'0',visible:'no'}),true);
+  assert.equal(legacy.result.Y,6,'legacy saved results are not rewritten');
   assert.equal(readingCheck(record,plate,'X',{value:'19',visible:'yes'}),true);
   assert.equal(readingCheck(record,plate,'X',{value:'19.1',visible:'yes'}),false);
   // A systematic reading error is penalised only in reading accuracy, not again in arithmetic or graph.
@@ -139,6 +143,8 @@ test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, ev
   assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪種樣本的紙碟周圍清晰區最大？')).value,'Z');
   assert.equal(data.getCell('F2').value,20);assert.equal(data.getCell('J2').value,18);
   assert.equal(data.getCell('M2').value,18);assert.equal(data.getCell('P2').value,18);
+  for(const row of [3,5]){assert.equal(data.getCell(`J${row}`).value,0);assert.equal(data.getCell(`M${row}`).value,0);assert.equal(data.getCell(`N${row}`).value,'符合');}
+  assert.doesNotMatch(renderReport(record,'zh'),/不能記 0|紙碟直徑 6 mm/);
   const manual=SCORE_COLUMNS.filter(column=>column.manual);
   for(const column of manual){const index=headerIndex(scores,column.label+`（0–${column.max}）`),cell=scores.getCell(2,index);assert.equal(cell.value,null,column.id);assert.equal(cell.dataValidation.type,'decimal');assert.deepEqual(cell.dataValidation.formulae,[0,column.max]);assert.equal(cell.dataValidation.allowBlank,true);}
   const total=scores.getCell(2,headerIndex(scores,'整體總分（32）（0–32）'));

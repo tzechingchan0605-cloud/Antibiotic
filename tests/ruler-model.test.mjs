@@ -29,4 +29,13 @@ test('a ruler dragged across the diameter snaps without requiring its zero to al
   const moved=moveMagneticRuler(plate,{x:target.centreX-60,y:target.y+5});
   assert.equal(moved.magnet.sample,target.sample);
   assert.deepEqual(moved.ruler,{x:target.x,y:target.y});
+  const finishing=moveMagneticRuler(plate,{x:target.x,y:target.y},moved.magnet);
+  assert.equal(finishing.magnet.sample,target.sample,'finishing the approach keeps attraction');
+  const leaving=moveMagneticRuler(plate,{x:target.x-30,y:target.y},finishing.magnet);
+  assert.equal(leaving.magnet,null,'a later deliberate pull still releases');
+});
+
+test('no-zone samples have no magnetic measurement target, including legacy disc-only results',()=>{
+  const absent={...plate,discPositions:{...plate.discPositions,Y:{x:270,y:130},C:{x:130,y:270}},result:{...plate.result,Y:0,C:6}};
+  assert.deepEqual(rulerTargets(absent).map(target=>target.sample),['X','Z']);
 });

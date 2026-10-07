@@ -126,13 +126,20 @@ async function preparePlate(page, index) {
     { timeout: 15000 }).toBe(true);
   const plate = (await current(page)).plates[index];
   await expect(page.locator('#measurementRows input[data-reading="X"]')).toBeEnabled();
+  await expect(page.locator('.reading-table th[data-i18n="diameter"]')).toHaveText(/清晰區的總直徑|Total clear-zone diameter/);
+  await expect(page.locator('[data-note]')).toHaveCount(0);
+  await expect(page.locator('.reading-table thead th')).toHaveCount(3);
   for (const sample of SAMPLES) {
     await page.locator(`#measurementRows [data-visible="${sample}"]`).selectOption(
       ['X', 'Z'].includes(sample) ? 'yes' : 'no');
     await page.locator(`#measurementRows [data-reading="${sample}"]`).fill(
       Number(plate.result[sample]).toFixed(1));
   }
+  await page.locator('[data-reading="Y"]').press('Enter');
+  await expect(page.locator('[data-reading="Z"]')).toBeFocused();
   await page.locator('#confirmReadings').click();
+  await expect(page.locator('[data-reading="Y"]')).toHaveValue('0.0');
+  await expect(page.locator('[data-reading="C"]')).toHaveValue('0.0');
   await expect.poll(async () => {
     const state = await current(page);
     return SAMPLES.every(sample => Boolean(state?.measurements[plate.id]?.[sample]?.confirmedAt));
@@ -230,9 +237,9 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await page.locator('#confirmGraph').click();
   await expect(page.locator('#graphStatus')).not.toBeEmpty();
   const explanations = {
-    analysisControl: '空白對照三次均沒有紙碟外可見圈，總直徑為紙碟的 6 mm，可排除載體影響。',
+    analysisControl: '空白對照三次均沒有紙碟外可見圈，清晰區總直徑為 0 mm，可排除載體影響。',
     analysisConsistent: 'X 與 Z 三次均有外圍可見圈；Y 及空白對照均沒有。',
-    analysisVariation: '三片平板的數值稍有變化，但 X、Z 的可見圈趨勢一致，對照仍為 6 mm。',
+    analysisVariation: '三片平板的數值稍有變化，但 X、Z 的可見圈趨勢一致，對照仍為 0 mm。',
     analysisMethod: '先檢查細菌分布、污染、紙碟位置、製備及共同觀察條件，再考慮增加新平板。',
     analysisHypothesis: '部分樣本有可見清晰區，與對照不同，支持我的可測試預測。',
     analysisRepeatPlan: '我原定兩次，活動實做三次；多一片可檢查一致性，但三次不保證可靠。',
@@ -417,7 +424,7 @@ test('completion gates reject missing data and invalid Enter readings while comp
   await expect(page.locator('#phase-3')).toBeVisible();
   await expect(page.locator('[data-reading="X"]')).toBeDisabled();
   const first = await preparePlate(page, 0);
-  for (const invalid of ['', '5.9', '6.01']) {
+  for (const invalid of ['', '-0.1', '6.01']) {
     await page.locator('[data-reading="X"]').fill(invalid);
     await page.locator('[data-reading="X"]').press('Enter');
     await expect(page.locator('[data-reading="X"]')).toBeFocused();
@@ -600,7 +607,7 @@ test('360px mobile supports manual preparation, later automatic plates and measu
   await expect(page.locator('#plateSVG')).toHaveAttribute('viewBox', '0 0 400 460');
   await page.locator('.topbar [data-language]').click();
   await assertNoOverflow(page);
-  await expect(page.locator('[data-reading="Y"]')).toHaveValue('6.0');
+  await expect(page.locator('[data-reading="Y"]')).toHaveValue('0.0');
 });
 
 test('damaged local student records are retained instead of silently overwritten', async ({ page }) => {

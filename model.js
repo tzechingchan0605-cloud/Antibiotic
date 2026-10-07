@@ -43,9 +43,16 @@ export function generateResult(plate){
   if(plate.result)return plate.result;
   let s=plate.seed>>>0;
   const next=()=>{s=(1664525*s+1013904223)>>>0;return s/4294967296;};
-  plate.result={X:Math.round((17.7+next()*1.6)*10)/10,Y:6,Z:Math.round((26.0+next()*2.0)*10)/10,C:6};
+  plate.result={X:Math.round((17.7+next()*1.6)*10)/10,Y:0,Z:Math.round((26.0+next()*2.0)*10)/10,C:0};
   plate.completed=true;
   return plate.result;
+}
+// Older saved results used the disc's 6 mm diameter for absence. Preserve the
+// raw result while presenting/checking it with the current no-zone convention.
+export function clearZoneDiameter(plate,sample){
+  const raw=plate?.result?.[sample];
+  if(raw===undefined||raw===null||raw===''||!Number.isFinite(Number(raw)))return null;
+  return Number(raw)<=DISC_MM?0:Number(raw);
 }
 export function independentRepeat(previous,plate){
   if(!previous.completed)throw Error('previous plate incomplete');
@@ -63,7 +70,7 @@ export function validDecimal(value,min=0,max=40,precision=1){
 export const validReplicates=value=>/^\d+$/.test(String(value))&&Number.isSafeInteger(Number(value))&&Number(value)>0;
 export function confirmMeasurement(record,plateId,sample,reading){
   if(record.submittedAt)throw Error('locked');
-  if(!['yes','no'].includes(reading.visible)||!validDecimal(reading.value,6,40))throw Error('invalid measurement');
+  if(!['yes','no'].includes(reading.visible)||!validDecimal(reading.value,0,40))throw Error('invalid measurement');
   const group=record.measurements[plateId]??={};
   const old=group[sample]??{};
   const confirmed={value:String(reading.value),visible:reading.visible,note:reading.note||'',at:nowISO()};

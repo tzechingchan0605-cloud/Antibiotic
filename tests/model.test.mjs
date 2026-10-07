@@ -106,8 +106,8 @@ test('standardized repetition prepares a separate plate without copying its outc
   const secondResult = generateResult(second);
   assert.notDeepEqual(secondResult, firstResult);
   assert.deepEqual(first.result, firstResult);
-  assert.equal(secondResult.C, DISC_MM);
-  assert.equal(secondResult.Y, DISC_MM);
+  assert.equal(secondResult.C, 0);
+  assert.equal(secondResult.Y, 0);
 });
 
 test('a generated result remains fixed after remeasurement, rotation, and serialization', () => {
@@ -143,18 +143,15 @@ test('disc placement checks spacing and plate edge without revealing sample resu
   }
 });
 
-test('no external inhibition zone has valid total diameter six, never zero', () => {
-  const record = fresh(), id = record.plates[0].id;
-  assert.equal(validDecimal('6', DISC_MM, 40), true);
-  assert.equal(validDecimal('0', DISC_MM, 40), false);
-  confirmMeasurement(record, id, 'C', reading(6, 'no', '紙碟外沒有可見清晰區'));
-  assert.equal(record.measurements[id].C.last.value, '6');
-  assert.equal(record.measurements[id].C.last.visible, 'no');
-  assert.throws(() => confirmMeasurement(record, id, 'C', reading(0, 'no')), /invalid/);
-  for (const invalid of ['5.9', '40.1', '6.01', '-6', '', 'abc', '1e1']) {
-    assert.throws(() => confirmMeasurement(record, id, 'X', reading(invalid)), /invalid/, invalid);
+test('no clear zone accepts zero and rejects invalid readings', () => {
+  const record=fresh(),id=record.plates[0].id;
+  confirmMeasurement(record,id,'C',reading(0,'no','紙碟外沒有可見清晰區'));
+  assert.equal(record.measurements[id].C.last.value,'0');
+  assert.equal(record.measurements[id].C.last.visible,'no');
+  for(const invalid of ['40.1','6.01','-6','','abc','1e1']){
+    assert.throws(()=>confirmMeasurement(record,id,'X',reading(invalid)),/invalid/,invalid);
   }
-  assert.throws(() => confirmMeasurement(record, id, 'X', reading(18, 'maybe')), /invalid/);
+  assert.throws(()=>confirmMeasurement(record,id,'X',reading(18,'maybe')),/invalid/);
 });
 
 test('readings retain first/latest values and meaningful revision history', () => {

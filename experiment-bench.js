@@ -1,4 +1,4 @@
-import {SAMPLES, GRID, coverageFraction, toPlatePoint, clone} from './model.js';
+import {SAMPLES, GRID, coverageFraction, toPlatePoint, clone, clearZoneDiameter} from './model.js';
 import {t} from './i18n.js';
 import {rulerTargets,moveMagneticRuler} from './ruler-model.js';
 import {QUADRANTS, REQUIRED_COVERAGE, ensureExperiment, plateStep, canSelectPlate,
@@ -255,7 +255,7 @@ export function createExperimentBench({getRecord,getPlateIndex,setPlateIndex,sav
     $('#toggleZoom').disabled=!p.completed||busy;$('#toggleZoom').textContent=t(zoom?'zoomOut':'zoom');
     if(zoom&&p.completed){const q=toPlatePoint(p.discPositions[$('#rulerSample').value]||{x:200,y:200},-rot);svg().setAttribute('viewBox',`${q.x-75} ${q.y-75} 150 172.5`);}
     else svg().setAttribute('viewBox','0 0 400 460');
-    const circles=p.completed?SAMPLES.map(sample=>{const q=p.discPositions[sample];return q?`<circle cx="${q.x}" cy="${q.y}" r="${p.result[sample]}" fill="black"/>`:'';}).join(''):'';
+    const circles=p.completed?SAMPLES.map(sample=>{const q=p.discPositions[sample];return q?`<circle cx="${q.x}" cy="${q.y}" r="${clearZoneDiameter(p,sample)}" fill="black"/>`:'';}).join(''):'';
     const coverage=showCoverage&&!p.completed?(coverageFraction(p)>=REQUIRED_COVERAGE?'<circle class="uniform-coverage" cx="200" cy="200" r="157" fill="#55ad9d" opacity=".15"/>':p.coverage.map(i=>GRID[i]?`<circle cx="${GRID[i].x}" cy="${GRID[i].y}" r="10" fill="#55ad9d" opacity=".15"/>`:'').join('')):'';
     const cross=p.preparation.crossMarked||animationKind==='mark'?`<g class="${animationKind==='mark'?'cross-drawing':''}" stroke="#203d42" stroke-width="2.5" stroke-linecap="round"><path class="cross-horizontal" d="M45 200H355"/><path class="cross-vertical" d="M200 45V355"/></g>`:'';
     const labels=p.preparation.crossMarked?QUADRANTS.map(slot=>{const pos=labelPoints[slot],label=p.preparation.quadrantLabels[slot];return label?`<text x="${pos.x}" y="${pos.y+5}" font-size="18" font-weight="700" text-anchor="middle">${label}</text>`:'';}).join(''):'';
@@ -323,7 +323,9 @@ export function createExperimentBench({getRecord,getPlateIndex,setPlateIndex,sav
   bind('rulerSample','change',()=>{if(zoom)centerRuler();renderPlate();});
   function centerRuler(){
     const target=rulerTargets(current()).find(target=>target.sample===$('#rulerSample').value);
-    if(!target)return;ruler={x:target.x,y:target.y};rulerMagnet={...target,anchorX:target.x};renderPlate();
+    if(target){ruler={x:target.x,y:target.y};rulerMagnet={...target,anchorX:target.x};}
+    else{const p=current(),pos=p?.discPositions[$('#rulerSample').value];if(!pos)return;const centre=toPlatePoint(pos,-p.rotation);ruler={x:centre.x-40,y:centre.y};rulerMagnet=null;}
+    renderPlate();
   }
   bind('centerRuler','click',centerRuler);
   bind('rulerLeft','click',()=>{rulerMagnet=null;ruler.x=Math.max(0,ruler.x-2);renderPlate();});

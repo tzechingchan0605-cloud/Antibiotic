@@ -312,9 +312,9 @@ test('later assistance prepares independent plates and incubation waits for all 
   await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','');
   const freeTransform=await page.locator('[data-ruler]').getAttribute('transform');
   const free=freeTransform.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);
-  const next=await worldCentre(page,'NE');
-  await stroke(page,[free[0]+20,free[1]+12],[next[0]-resultBefore.Y+20,next[1]+12]);
-  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','Y');
+  const next=await worldCentre(page,'SW');
+  await stroke(page,[free[0]+20,free[1]+12],[next[0]-resultBefore.Z+20,next[1]+12]);
+  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','Z');
   expect((await current(page)).plates[0].result).toEqual(resultBefore);
   await page.locator('.topbar [data-language]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');

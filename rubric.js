@@ -1,4 +1,5 @@
 // Draft criteria for teaching/research review; not a validated psychometric instrument.
+import {clearZoneDiameter} from './model.js';
 export const TOLERANCES = Object.freeze({ reading: 1, mean: 0.1, graph: 0.5 });
 export const SAMPLE_IDS = Object.freeze(['X', 'Y', 'Z', 'C']);
 export const VARIABLE_REFERENCE = Object.freeze({ iv: 'sample', dv: 'zone', cv: ['disc', 'medium', 'strain', 'distribution', 'preparation'] });
@@ -18,9 +19,10 @@ export function studentMean(record, sample) {
   return values.every(value => value !== null) ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 }
 export function readingCheck(record, plate, sample, reading) {
-  const value = finiteNumber(reading?.value), reference = finiteNumber(plate.result?.[sample]);
+  const value = finiteNumber(reading?.value), reference = clearZoneDiameter(plate,sample);
   if (value === null || reference === null || !['yes', 'no'].includes(reading?.visible)) return null;
-  return Math.abs(value - reference) <= TOLERANCES.reading + 1e-9 && reading.visible === (reference > 6 ? 'yes' : 'no');
+  if(reference===0)return value===0&&reading.visible==='no';
+  return Math.abs(value - reference) <= TOLERANCES.reading + 1e-9 && reading.visible === 'yes';
 }
 export function meanCheck(record, sample) {
   const value = finiteNumber(record.means?.[sample]), expected = studentMean(record, sample);
@@ -94,7 +96,7 @@ export function automaticScores(record) {
 
 export const RUBRIC_ROWS = [
   ['觀察｜初步觀察', 2, '教師', '指出青黴菌（真菌）附近的可見細菌生長較少，並分開觀察與推測。', '1：描述相關現象但位置或觀察／推測區分不完整。', '0：未提供可評答案、無關或把機制當作直接觀察。', 'observing'],
-  ['觀察｜直徑及紙碟外清晰區', 2, '自動', '12 個最後讀數均符合模型直徑 ±1 mm，並正確分辨紙碟外有／無可見清晰區。', '2 × 符合兩項條件的讀數數目 ÷ 12，保留兩位小數。', '0：沒有符合兩項條件的讀數。紙碟 6 mm 本身不算外圍清晰區。', 'observing'],
+  ['觀察｜直徑及紙碟外清晰區', 2, '自動', '12 個最後讀數均符合模型直徑 ±1 mm，並正確分辨紙碟外有／無可見清晰區。', '2 × 符合兩項條件的讀數數目 ÷ 12，保留兩位小數。', '0：沒有符合兩項條件的讀數。沒有清晰區時，總直徑須記 0，並選「無」。', 'observing'],
   ['分類｜獨立變量／因變量／控制變量', 4, '自動', '紙碟所含樣本（1）；是否有清晰區及總直徑（1）；五項控制：紙碟大小、瓊脂板的成份、使用的細菌種類、初始細菌分布、各樣本預設製備條件（2）。', '五項控制變量每項 2/5；全選正確得 2；整欄保留兩位小數。', '選入自／因變量等不適當控制項，控制變量欄 0；未答或分類錯誤 0。', 'classifying'],
   ['設計｜可測試假說及理由', 1, '教師', '1：實驗前提出可用樣本與載體對照比較的預測，並給出相關理由。', '0.5：可測試預測，但理由較薄弱或不清楚。', '0：無可測試預測或無實驗前證據；合理但不被結果支持的假說不因此扣分。', 'designing'],
   ['設計｜原始重複安排理由', 1, '教師', '1：說明獨立重複可檢查一致性／變異，次數安排有可行性理由。', '0.5：提及可靠性但缺少獨立比較或安排理由。', '0：只有次數或無可評理由。不以選 3 次、次數越多給分。', 'designing'],
