@@ -542,3 +542,5 @@ dialog::backdrop { background: #17392dcc; backdrop-filter: blur(5px); }
   .science-diagram { overflow: visible; }
   .science-diagram svg { min-width: 0; }
 }
+
+.history-source a { overflow-wrap: anywhere; }

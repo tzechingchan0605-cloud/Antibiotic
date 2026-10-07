@@ -8,14 +8,14 @@ import { automaticScores, objectiveChecks, meanCheck, graphCheck, readingCheck, 
 const PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlS8AAAAASUVORK5CYII=';
 const at='2026-10-07T04:00:00Z';
 function fixture(id='student-one') {
-  const answers={observation:'黴菌附近没有可見菌落 <script>alert(1)</script>',inference:'My original inference.',comparison:'Compare with no mould.',prediction:'some',controlPrediction:'Compare with carrier.',reason:'Latest reason 保留原文',iv:'sample',dv:'zone',cv:['strain','distribution','medium','disc','preparation','observation'],assumptions:['distribution','sterile','sameConditions'],controlPlan:'Matching carrier without antibiotic.',designDescription:'Keep the discs apart.',repeatChoice:'yes',plannedReplicates:'5',plannedReplicateReason:'Latest plan reason.',analysisControl:'Control has no outer zone.',analysisConsistent:'X and Z in all three.',analysisVariation:'X: 18, 19, 17 mm.',analysisMethod:'Check distribution.',analysisHypothesis:'My original prediction needs revision.',analysisRepeatPlan:'Two tests would not reveal all variation.',analysisRepeatValue:'Check the method before adding tests.',analysisDeath:'cannot',analysisClinical:'cannot',conclusion:'The result supports local growth inhibition only.',knowledgeBacteria:'bacteria',knowledgeResistance:'bacteria',knowledgeLimits:'limited',reflection:'反思原文：X compared with carrier, repeated plates vary.'};
+  const answers={observation:'黴菌附近没有可見菌落 <script>alert(1)</script>',inference:'My original inference.',comparison:'Compare with no mould.',prediction:'some',largestPrediction:'Z',controlPrediction:'Compare with carrier.',reason:'Latest reason 保留原文',iv:'sample',dv:'zone',cv:['strain','distribution','medium','disc','preparation','observation'],assumptions:['distribution','sterile','sameConditions'],controlPlan:'Matching carrier without antibiotic.',designDescription:'Keep the discs apart.',repeatChoice:'yes',plannedReplicates:'5',plannedReplicateReason:'Latest plan reason.',analysisControl:'Control has no outer zone.',analysisConsistent:'X and Z in all three.',analysisVariation:'X: 18, 19, 17 mm.',analysisMethod:'Check distribution.',analysisHypothesis:'My original prediction needs revision.',analysisRepeatPlan:'Two tests would not reveal all variation.',analysisRepeatValue:'Check the method before adding tests.',analysisDeath:'cannot',analysisClinical:'cannot',conclusion:'The result supports local growth inhibition only.',knowledgeBacteria:'bacteria',knowledgeResistance:'bacteria',knowledgeLimits:'limited',reflection:'反思原文：X compared with carrier, repeated plates vary.'};
   const plates=Array.from({length:3},(_,i)=>({id:`plate-${i+1}`,discPositions:{X:{x:130,y:130},Y:{x:270,y:130},Z:{x:130,y:270},C:{x:270,y:270}},rotation:0,result:{X:[18,19,17][i],Y:6,Z:[27,28,26][i],C:6},completed:true,operations:[{type:'independent_repeat',at}]}));
   const measurements=Object.fromEntries(plates.map(plate=>[plate.id,Object.fromEntries(['X','Y','Z','C'].map(sample=>{
     const last={value:String(plate.result[sample]),visible:['Y','C'].includes(sample)?'no':'yes',note:'最後備註',at};
     const first={...last,value:String(plate.result[sample]+2),note:'首次備註'};
     return [sample,{...last,first,last,revisions:[{previous:first,next:last,at}]}];
   }))]));
-  return {schemaVersion:1,moduleId:'VL_BIO_ANTIBIOTICS',id,version:4,demo:false,profile:{name:'陳同學',className:'4A 12',email:'student@example.test'},submittedAt:at,reflectionSubmittedAt:at,answers,original:{answers:{...answers,prediction:'none',reason:'Original reason 原文',plannedReplicates:'2',plannedReplicateReason:'Original repeat reason.'},plannedReplicates:2,plannedReplicateReason:'Original repeat reason.',capturedAt:at,design:{image:PNG,description:'Original drawing'}},plates,measurements,means:{X:'18.0',Y:'6.0',Z:'27.0',C:'6.0'},graph:{values:{X:18,Y:6,Z:27,C:6},confirmedAt:at},design:{image:PNG,description:'Latest drawing'},extension:{started:true,prediction:'A larger model zone.',reason:'Same sample.',fairComparison:'Keep the strain the same.',results:{low:12,medium:18,high:23},analysis:'This is not a dosing recommendation.'},events:[{type:'measurement_confirmed',at,phase:3,details:{sample:'X',value:18,teacherPassword:'must-not-export',nested:{token:'must-not-export',note:'keep this'}}}],timing:{1:15,2:25,3:90,4:40}};
+  return {schemaVersion:1,moduleId:'VL_BIO_ANTIBIOTICS',id,version:4,demo:false,profile:{name:'陳同學',className:'4A 12',email:'student@example.test'},submittedAt:at,reflectionSubmittedAt:at,answers,original:{answers:{...answers,prediction:'none',largestPrediction:'X',reason:'Original reason 原文',plannedReplicates:'2',plannedReplicateReason:'Original repeat reason.'},plannedReplicates:2,plannedReplicateReason:'Original repeat reason.',capturedAt:at,design:{image:PNG,description:'Original drawing'}},plates,measurements,means:{X:'18.0',Y:'6.0',Z:'27.0',C:'6.0'},graph:{values:{X:18,Y:6,Z:27,C:6},confirmedAt:at},design:{image:PNG,description:'Latest drawing'},extension:{started:true,prediction:'A larger model zone.',reason:'Same sample.',fairComparison:'Keep the strain the same.',results:{low:12,medium:18,high:23},analysis:'This is not a dosing recommendation.'},events:[{type:'measurement_confirmed',at,phase:3,details:{sample:'X',value:18,teacherPassword:'must-not-export',nested:{token:'must-not-export',note:'keep this'}}}],timing:{1:15,2:25,3:90,4:40}};
 }
 const headerIndex=(sheet,label)=>sheet.getRow(1).values.findIndex(value=>value===label);
 
@@ -41,7 +41,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
     assert.doesNotMatch(html,/教師評分|整體總分|SPS 總分|0–32|overall score|SPS score/i);
   }
   assert.match(zh,/class="check correct"/);assert.match(en,/Matches reference/);
-  assert.doesNotMatch(en,/你的原始研究計劃|清晰區總直徑包括紙碟|學生平板位置及實驗設計圖/);
+  assert.doesNotMatch(en,/你的原始研究計劃|清晰區總直徑包括紙碟|學生瓊脂板位置及實驗設計圖/);
   assert.match(learningDiagram('en'),/Nucleic acid synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
   assert.deepEqual(record,before,'rendering never mutates record, images, answers, event history or timing');
 });
@@ -107,6 +107,15 @@ test('VL2-style variable choices grade exact sets and retain legacy scalar compa
   assert.deepEqual(automaticScores(record),before);
 });
 
+test('five visible controls receive full/partial marks while six-control legacy records retain their scores',()=>{
+  const record=fixture();assert.equal(automaticScores(record).cv,2);assert.equal(objectiveChecks(record).cv,true);
+  record.answers.cv=['disc','medium','strain','distribution','preparation'];
+  assert.equal(automaticScores(record).cv,2);assert.equal(objectiveChecks(record).cv,true);
+  record.answers.cv=['disc'];assert.equal(automaticScores(record).cv,0.4);assert.equal(objectiveChecks(record).cv,false);
+  record.answers.cv=['disc','sample'];assert.equal(automaticScores(record).cv,0);
+  record.answers.cv=['disc','disc'];assert.equal(automaticScores(record).cv,0);
+});
+
 test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, event details, formulas and blank manual scores',async()=>{
   const record=fixture(),demo={...fixture('demo-id'),demo:true},teacher={...fixture('teacher-id'),profile:{...record.profile,email:'tzechingchan0605@gmail.com'}},foreign={...fixture('vl2-id'),moduleId:'VL_BIO_TRANSPIRATION'};
   const workbook=await buildWorkbook([record,demo,teacher,foreign]);
@@ -123,9 +132,11 @@ test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, ev
   assert.equal(answers.rowCount,2);assert.equal(data.rowCount,13);assert.equal(designs.rowCount,3);assert.equal(designs.getImages().length,2);
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicates｜原始建議')).value,2);
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicateReason｜原始理由')).value,'Original repeat reason.');
-  assert.equal(answers.getCell(2,headerIndex(answers,'actualReplicates｜獨立平板數')).value,3);
+  assert.equal(answers.getCell(2,headerIndex(answers,'actualReplicates｜獨立瓊脂板數')).value,3);
   assert.equal(answers.getCell(2,headerIndex(answers,'原始｜你預測哪些樣本會出現紙碟外的可見清晰區？')).value,'都不會');
   assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪些樣本會出現紙碟外的可見清晰區？')).value,'部分');
+  assert.equal(answers.getCell(2,headerIndex(answers,'原始｜你預測哪種樣本的紙碟周圍清晰區最大？')).value,'X');
+  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪種樣本的紙碟周圍清晰區最大？')).value,'Z');
   assert.equal(data.getCell('F2').value,20);assert.equal(data.getCell('J2').value,18);
   assert.equal(data.getCell('M2').value,18);assert.equal(data.getCell('P2').value,18);
   const manual=SCORE_COLUMNS.filter(column=>column.manual);

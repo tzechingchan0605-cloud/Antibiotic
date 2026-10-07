@@ -65,11 +65,16 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
     '01 · 假說建立器', '02 · 公平測試', '03 · 實驗前提', '04 · 對照組設計', '05 · 實驗裝置設計'
   ]);
   await expect(page.locator('#controlPrediction, #otherHypothesis, #backupRecords')).toHaveCount(0);
-  await page.locator('#prediction').selectOption('some');
+  await page.locator('#prediction').selectOption('X_Z');
+  await page.locator('#largestPrediction').selectOption('na');
+  await expect(page.locator('#largestNASuffix')).toBeVisible();
+  await expect(page.locator('#largestSuffix')).toBeHidden();
+  await page.locator('#largestPrediction').selectOption('Z');
+  await expect(page.locator('#largestSuffix')).toBeVisible();
   await page.locator('#reason').fill('不同樣本可能抑制這株細菌的可見生長，需要比較才知道。');
   await page.locator('[data-group="iv"][data-variable="sample"]').click();
   await page.locator('[data-group="dv"][data-variable="zone"]').click();
-  for (const value of ['strain', 'distribution', 'medium', 'disc', 'preparation', 'observation']) {
+  for (const value of ['disc', 'medium', 'strain', 'distribution', 'preparation']) {
     await page.locator(`[data-group="cv"][data-variable="${value}"]`).click();
   }
   for (const value of ['distribution', 'sterile', 'sameConditions']) {
@@ -85,12 +90,13 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await page.locator('#plannedReplicates').fill('2');
   await page.locator('#plannedReplicateReason').fill('用兩片新平板初步比較一致性，同一圈重讀不算獨立重複。');
   if (wrongAnswers) {
-    await page.locator('#prediction').selectOption('all');
+    await page.locator('#prediction').selectOption('none');
+    await page.locator('#largestPrediction').selectOption('na');
     await page.locator('[data-group="iv"][data-variable="sample"]').click();
     await page.locator('[data-group="iv"][data-variable="zone"]').click();
     await page.locator('[data-group="dv"][data-variable="zone"]').click();
     await page.locator('[data-group="dv"][data-variable="strain"]').click();
-    for (const value of ['strain', 'distribution', 'medium', 'disc', 'preparation', 'observation']) {
+    for (const value of ['disc', 'medium', 'strain', 'distribution', 'preparation']) {
       await page.locator(`[data-group="cv"][data-variable="${value}"]`).click();
     }
     await page.locator('[data-group="cv"][data-variable="zone"]').click();
@@ -207,6 +213,8 @@ test('student completes an evidence-based inquiry, preserves language-independen
   await screenshot(page, 'artifacts/vl4-desktop-lab.png');
   await analyseInvestigation(page);
   saved = await current(page);
+  expect(saved.original.answers.prediction).toBe('X_Z');
+  expect(saved.original.answers.largestPrediction).toBe('Z');
   expect(saved.original.plannedReplicates).toBe(2);
   expect(saved.answers.plannedReplicates).toBe('2');
   expect(saved.actualReplicates).toBe(3);
@@ -359,6 +367,8 @@ test('completion gates reject missing data and invalid Enter readings while comp
   } });
   const state = await current(page);
   expect(state.submittedAt).toBeTruthy();
+  expect(state.original.answers.prediction).toBe('none');
+  expect(state.original.answers.largestPrediction).toBe('na');
   expect(state.original.answers.iv).toEqual(['zone']);
   expect(state.original.answers.assumptions).toEqual(['death']);
   expect(state.answers.knowledgeBacteria).toBe('viruses');

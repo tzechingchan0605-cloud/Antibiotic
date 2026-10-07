@@ -1,6 +1,6 @@
 import ExcelJS from 'exceljs';
 import { L } from './i18n.js';
-import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, automaticScores } from './rubric.js';
+import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, automaticScores } from './rubric.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const tr = (language, zh, en) => language === 'en' ? en : zh;
@@ -16,13 +16,14 @@ const notAnswered = language => tr(language, '未回答', 'Not answered');
 export const ANSWER_FIELDS = [
   ['observation', ...L.observation, 'observing'],
   ['prediction', '你預測哪些樣本會出現紙碟外的可見清晰區？', 'Which samples do you predict will have a visible zone outside the disc?', 'designing'],
-  ['reason', ...L.reason, 'designing'],
+  ['largestPrediction', ...L.largestPrediction, 'designing'],
+  ['reason', ...L.hypothesisReason, 'designing'],
   ['iv', '獨立變量：本次改變甚麼？', 'Independent variable: what do we change?', 'classifying'],
   ['dv', '因變量：本次觀察及量度甚麼？', 'Dependent variable: what do we observe and measure?', 'classifying'],
   ['cv', '控制變量：哪些條件保持相同？', 'Controlled variables: what stays the same?', 'classifying'],
   ['assumptions', '探究假設', 'Assumptions for a fair investigation', 'designing'],
   ['controlPlan', ...L.controlPlan, 'designing'],
-  ['designDescription', '平板位置及實驗設計文字', 'Plate positions and experiment setup', 'conducting'],
+  ['designDescription', '瓊脂板位置及實驗設計文字', 'Plate positions and experiment setup', 'conducting'],
   ['plannedReplicates', ...L.plannedReplicates, 'designing'],
   ['plannedReplicateReason', ...L.plannedReplicateReason, 'designing'],
   ['analysisControl', '空白對照的生長情況如何？它提供甚麼比較基礎？', 'What growth is visible around the carrier control? What comparison does it provide?', 'inferring'],
@@ -45,15 +46,15 @@ const CHOICES = {
   sample: ['紙碟所含樣本', 'The sample carried by each disc'], zone: ['有無可見清晰區及清晰區總直徑', 'Visible zone presence and total zone diameter'],
   strain: ['同一種模擬細菌', 'The same simulated bacterial strain'], distribution: ['可比較的初始細菌分布', 'Comparable initial bacterial distribution'],
   medium: ['相同培養基條件', 'The same agar conditions'], disc: ['相同紙碟大小', 'The same disc size'], preparation: ['各樣本預設製備條件', 'Preset sample preparation conditions'], observation: ['相同模擬培養及觀察條件', 'The same simulated incubation and observation conditions'],
-  sterile: ['器材不會帶入額外污染', 'Equipment does not add contamination'], sameConditions: ['各平板採用相同模擬條件', 'The plates use the same simulated conditions'], death: ['没有可見生長必定代表全部死亡', 'No visible growth must mean all bacteria are dead'],
+  sterile: ['器材不會帶入額外污染', 'Equipment does not add contamination'], sameConditions: ['各瓊脂板採用相同模擬條件', 'The plates use the same simulated conditions'], death: ['没有可見生長必定代表全部死亡', 'No visible growth must mean all bacteria are dead'],
   all: ['全部樣本', 'All samples'], some: ['部分樣本', 'Some samples'], none: ['都不會', 'No samples'], yes: ['會', 'Yes'], no: ['不會', 'No'],
   cannot: ['不能', 'Cannot'], can: ['能', 'Can'], bacteria: ['細菌', 'Bacteria'], viruses: ['病毒', 'Viruses'], body: ['人的身體', 'The human body'],
   limited: ['局部可見生長受到抑制，重複可檢查一致性；仍有推論限制', 'Local visible growth is inhibited; repeats check consistency, with limits on inference'], guaranteed: ['最大清晰區及三次測試保證最佳治療', 'The largest zone and three repeats guarantee the best treatment']
 };
-const choiceFields = new Set(['prediction', 'iv', 'dv', 'cv', 'assumptions',  'analysisDeath', 'analysisClinical', 'knowledgeBacteria', 'knowledgeResistance', 'knowledgeLimits']);
+const choiceFields = new Set(['prediction','largestPrediction', 'iv', 'dv', 'cv', 'assumptions',  'analysisDeath', 'analysisClinical', 'knowledgeBacteria', 'knowledgeResistance', 'knowledgeLimits']);
 const variableKeys = {sample:'vSample',zone:'vZone',strain:'vStrain',distribution:'vDistribution',medium:'vMedium',disc:'vDisc',preparation:'vPreparation',observation:'vObservation'};
 const fieldChoiceKeys = {
-  prediction:{all:'all',some:'some',none:'none'},iv:variableKeys,dv:variableKeys,cv:variableKeys,
+  prediction:{X:'predictionX',Y:'predictionY',Z:'predictionZ',X_Y:'predictionXY',X_Z:'predictionXZ',Y_Z:'predictionYZ',all:'all',some:'some',none:'none'},largestPrediction:{na:'notApplicable'},iv:variableKeys,dv:variableKeys,cv:variableKeys,
   assumptions:{distribution:'assumptionDistribution',sterile:'assumptionSterile',sameConditions:'assumptionSame',death:'assumptionDeath'},
   analysisDeath:{can:'can',cannot:'cannot'},analysisClinical:{can:'can',cannot:'cannot'},
   knowledgeBacteria:{bacteria:'bacteria',viruses:'viruses'},knowledgeResistance:{bacteria:'resistanceBacteria',body:'resistanceBody'},knowledgeLimits:{limited:'limited',best:'bestDrug'}
@@ -62,20 +63,21 @@ export function answerDisplay(field, value, language = 'zh') {
   if (value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length)) return notAnswered(language);
   if (Array.isArray(value)) return value.map(item => answerDisplay(field, item, language)).join(tr(language, '；', '; '));
   const label = L[fieldChoiceKeys[field]?.[value]] || (choiceFields.has(field) && CHOICES[value]);
-  return label ? label[language === 'en' ? 1 : 0] : String(value);
+  return label ? (field==='prediction'&&['X','Y','Z','X_Y','X_Z','Y_Z'].includes(value)&&language!=='en'?label[0].replace(/的$/, ''):label[language === 'en' ? 1 : 0]) : String(value);
 }
 function referenceFor(field, record, language) {
   const refs = {
     observation: ['青黴菌（真菌）附近有清晰區，即沒有可見細菌生長的區域；這是觀察，原因仍需比較。', 'A clear zone with no visible bacterial growth is present near Penicillium (a fungus). This is an observation; its cause needs testing.'],
-    prediction: ['合理可測試的實驗前預測可以與結果不同；未知樣本不必預測強弱排序。', 'A reasonable testable prediction may differ from the results. The coded samples do not need to be ranked in advance.'],
+    prediction: ['合理可測試的實驗前預測可以與結果不同；預測可以與結果不同；合理的推測不需猜中。', 'A reasonable testable prediction may differ from the results. A reasoned prediction does not have to match the outcome.'],
+    largestPrediction: ['根據擴散及細菌生長提出合理預測；若預測沒有清晰區，可選不適用。預測大小不需猜中結果。', 'Give a reasoned prediction based on diffusion and bacterial growth. Choose not applicable if you predict no clear zones. The prediction need not match the result.'],
     reason: ['說明與細菌生長及可觀察現象相關的理由。', 'Explain a reason related to bacterial growth and observable evidence.'],
     controlPlan: ['用相同載體但不含抗生素的紙碟，排除載體／紙碟影響；其餘條件保持相同。只有所有載體都是水時才稱水對照。', 'Use a matching carrier-only disc without antibiotic to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water.'],
     designDescription: ['清楚標示樣本與對照，留足間距及邊緣距離，避免清晰區互相干擾；可用圖像或文字表達。', 'Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable.'],
     plannedReplicates: ['次數包括第一次。選三次不是標準答案；次數多不保證可靠。', 'Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability.'],
     plannedReplicateReason: ['考慮一致性、變異、公平比較及課堂可行性。', 'Consider consistency, variation, fair comparisons and practical feasibility.'],
     analysisControl: ['本模型的空白對照沒有紙碟外清晰區；按總直徑記紙碟本身 6 mm。它提供不含抗生素的比較基礎。', 'The model carrier control has no visible zone outside the disc. Its total diameter is the disc diameter, 6 mm. It provides an antibiotic-free comparison.'],
-    analysisConsistent: ['依三片平板實際資料判斷。本模型 X、Z 各次有外圍清晰區，Y 及空白對照沒有。', 'Use all three plate records. In this model, X and Z have visible zones in each test; Y and the carrier control do not.'],
-    analysisVariation: ['引用自己的三次讀數，分開結果趨勢與平板間變異。', 'Quote your three readings and distinguish a consistent pattern from variation between plates.'],
+    analysisConsistent: ['依三片瓊脂板實際資料判斷。本模型 X、Z 各次有外圍清晰區，Y 及空白對照沒有。', 'Use all three plate records. In this model, X and Z have visible zones in each test; Y and the carrier control do not.'],
+    analysisVariation: ['引用自己的三次讀數，分開結果趨勢與瓊脂板間變異。', 'Quote your three readings and distinguish a consistent pattern from variation between plates.'],
     analysisMethod: ['可檢查初始分布、污染、紙碟位置、製備及共同觀察條件；結果不穩定時先查方法，再考慮額外測試。', 'Check initial distribution, contamination, disc positions, preparation and shared observation conditions. Investigate unstable methods before considering more tests.'],
     analysisHypothesis: ['以自己的樣本／對照及重複結果評估原始假說。未獲支持仍可作有證據的修訂。', 'Evaluate your original hypothesis using your sample–control and repeated results. An unsupported hypothesis can still lead to an evidence-based revision.'],
     analysisRepeatPlan: ['對照自己原始安排，說明保留或修訂的理由。', 'Compare your original plan and explain why you would keep or revise it.'],
@@ -90,7 +92,7 @@ function referenceFor(field, record, language) {
   };
   if (field === 'iv') return answerDisplay(field, VARIABLE_REFERENCE.iv, language);
   if (field === 'dv') return answerDisplay(field, VARIABLE_REFERENCE.dv, language);
-  if (field === 'cv') return answerDisplay(field, VARIABLE_REFERENCE.cv, language);
+  if (field === 'cv') return answerDisplay(field, controlVariableReference(record), language);
   if (field === 'assumptions') return answerDisplay(field, ASSUMPTION_REFERENCE, language);
   return refs[field]?.[language === 'en' ? 1 : 0] || '';
 }
@@ -134,8 +136,8 @@ export function learningPointsHTML(language = 'zh') {
     ['抗藥性描述細菌對藥物的反應，不是人的身體習慣抗生素。', 'Resistance describes the bacterial response to a drug, not the human body becoming used to antibiotics.'],
     ['抗生素可令原有抗藥細菌較易存活及繁殖；細菌不會有目的地決定適應。', 'Antibiotics can favour the survival and reproduction of existing resistant bacteria. Bacteria do not deliberately choose to adapt.'],
     ['圈大小支持局部可見生長受抑制，不能證明全部死亡、特定作用機制或最佳患者治療。擴散特性及紙碟含量亦會影響圈大小。', 'A zone supports local inhibition of visible growth. It does not prove complete killing, a specific mechanism or the best treatment. Diffusion and disc content also affect its size.'],
-    ['没有紙碟外清晰區只表示本條件下未見抑菌作用；未知編碼樣本不使用共同圈大小界線判定臨床敏感或抗藥，也不能由一株菌推廣至所有 MRSA。', 'No outer zone means no inhibition was observed under these conditions. No common zone-size cutoff is used to classify the unknown samples clinically, and one strain cannot represent all MRSA.'],
-    ['新平板的獨立重複可檢查一致性及變異。重新量度同一清晰區不是獨立重複；三次是課堂安排，不保證可靠。', 'Independent repeats on new plates check consistency and variation. Remeasuring one zone is not an independent repeat. Three tests are a classroom arrangement, not a guarantee of reliability.']
+    ['没有紙碟外清晰區只表示本條件下未見抑菌作用；未知樣本不使用共同圈大小界線判定臨床敏感或抗藥，也不能由一株菌推廣至所有 MRSA。', 'No outer zone means no inhibition was observed under these conditions. No common zone-size cutoff is used to classify the unknown samples clinically, and one strain cannot represent all MRSA.'],
+    ['新瓊脂板的獨立重複可檢查一致性及變異。重新量度同一清晰區不是獨立重複；三次是課堂安排，不保證可靠。', 'Independent repeats on new plates check consistency and variation. Remeasuring one zone is not an independent repeat. Three tests are a classroom arrangement, not a guarantee of reliability.']
   ];
   const review = [L.fact1, L.fact2, L.fact3, L.fact4];
   const langIndex = language === 'en' ? 1 : 0;
@@ -153,7 +155,7 @@ function reportGraph(record, language) {
 }
 function reportPlate(plate, language) {
   const positions = { X: { x: 126, y: 126 }, Y: { x: 274, y: 126 }, Z: { x: 126, y: 274 }, C: { x: 274, y: 274 }, ...plate.discPositions };
-  return `<figure class="plate-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${esc(tr(language, `平板 ${plate.id} 的固定模擬觀察`, `Fixed simulated observation for plate ${plate.id}`))}"><circle cx="200" cy="200" r="160" fill="#d8d5a6" stroke="#839976" stroke-width="4"/>${SAMPLE_IDS.map(sample => { const pos = positions[sample], diameter = finiteNumber(plate.result?.[sample]) ?? 6; return `<circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="${diameter}" fill="#f8faed"/><circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="6" fill="#fff" stroke="#52726d"/><text x="${Number(pos.x)}" y="${Number(pos.y)+4}" text-anchor="middle" font-size="10">${sample}</text>`; }).join('')}</svg><figcaption>${esc(plate.id)} · ${tr(language, '固定教學模擬觀察，非臨床校準圖', 'Fixed teaching-model observation; not clinically calibrated')}</figcaption></figure>`;
+  return `<figure class="plate-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${esc(tr(language, `瓊脂板 ${plate.id} 的固定模擬觀察`, `Fixed simulated observation for plate ${plate.id}`))}"><circle cx="200" cy="200" r="160" fill="#d8d5a6" stroke="#839976" stroke-width="4"/>${SAMPLE_IDS.map(sample => { const pos = positions[sample], diameter = finiteNumber(plate.result?.[sample]) ?? 6; return `<circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="${diameter}" fill="#f8faed"/><circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="6" fill="#fff" stroke="#52726d"/><text x="${Number(pos.x)}" y="${Number(pos.y)+4}" text-anchor="middle" font-size="10">${sample}</text>`; }).join('')}</svg><figcaption>${esc(plate.id)} · ${tr(language, '固定教學模擬觀察，非臨床校準圖', 'Fixed teaching-model observation; not clinically calibrated')}</figcaption></figure>`;
 }
 
 export function renderReport(record, language = 'zh') {
@@ -163,7 +165,7 @@ export function renderReport(record, language = 'zh') {
   const submitted = !!record.submittedAt;
   const section = (title, content) => `<section class="report-section"><h2>${esc(title)}</h2><div class="report-card">${content}</div></section>`;
   const fields = keys => keys.map(field => reportAnswer(record, field, a[field], language)).join('');
-  const originalFields = ['observation','prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason'];
+  const originalFields = ['observation','prediction','largestPrediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason'];
   const rows = (record.plates || []).flatMap(plate => SAMPLE_IDS.map(sample => {
     const reading = record.measurements?.[plate.id]?.[sample] || {}, start = reading.first || {}, last = reading.last || reading;
     const check = readingCheck(record, plate, sample, reading);
@@ -171,9 +173,9 @@ export function renderReport(record, language = 'zh') {
     const numeric = value => finiteNumber(value) === null ? '—' : esc(value);
     return `<tr><td>${esc(plate.id)}</td><td>${esc(sampleName(sample, language))}</td><td>${presence(start.visible)} / ${numeric(start.value)}<small>${esc(start.note || '')}</small></td><td>${presence(last.visible)} / ${numeric(last.value)}<small>${esc(last.note || '')}</small></td><td>${presence(reading.visible)} / ${numeric(reading.value)} ${submitted ? markHTML(check, language) : ''}<small>${esc(reading.note || '')}</small></td><td>${submitted ? esc(plate.result?.[sample] ?? '—') : '—'}</td><td>${(reading.revisions || []).length}</td></tr>`;
   })).join('');
-  const readingsTable = `<p>${t('清晰區總直徑包括紙碟，單位 mm。沒有紙碟外清晰區時，本模型記紙碟直徑 6 mm，並分類為無可見清晰區。', 'Total zone diameter includes the disc, in mm. Without a visible outer zone, record the model disc diameter of 6 mm and classify it as no visible outer zone.')}</p><div class="table-wrap"><table><thead><tr>${[t('平板','Plate'),t('樣本','Sample'),t('首次：圈／mm','First: zone/mm'),t('最後快照：圈／mm','Latest snapshot: zone/mm'),t('目前讀數：圈／mm','Current: zone/mm'),t('參考 mm','Reference mm'),t('修訂次數','Revisions')].map(label=>`<th>${label}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="reference">${t('量度檢核容差 ±1 mm；首次及最後讀數保留，不會自動改寫。', 'Reading tolerance: ±1 mm. First and latest readings are retained and never automatically replaced.')}</p>`;
+  const readingsTable = `<p>${t('清晰區總直徑包括紙碟，單位 mm。沒有紙碟外清晰區時，本模型記紙碟直徑 6 mm，並分類為無可見清晰區。', 'Total zone diameter includes the disc, in mm. Without a visible outer zone, record the model disc diameter of 6 mm and classify it as no visible outer zone.')}</p><div class="table-wrap"><table><thead><tr>${[t('瓊脂板','Plate'),t('樣本','Sample'),t('首次：圈／mm','First: zone/mm'),t('最後快照：圈／mm','Latest snapshot: zone/mm'),t('目前讀數：圈／mm','Current: zone/mm'),t('參考 mm','Reference mm'),t('修訂次數','Revisions')].map(label=>`<th>${label}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="reference">${t('量度檢核容差 ±1 mm；首次及最後讀數保留，不會自動改寫。', 'Reading tolerance: ±1 mm. First and latest readings are retained and never automatically replaced.')}</p>`;
   const meansTable = `<table><thead><tr>${[t('樣本','Sample'),t('學生平均值（mm）','Student mean (mm)'),t('依自己的讀數計算','Calculated from own readings'),t('確認棒高（mm）','Confirmed bar height (mm)')].map(label=>`<th>${label}</th>`).join('')}</tr></thead><tbody>${SAMPLE_IDS.map(sample=>`<tr><td>${esc(sampleName(sample, language))}</td><td>${esc(a.means?.[sample] ?? record.means?.[sample] ?? '—')} ${submitted ? markHTML(meanCheck(record,sample),language) : ''}</td><td>${submitted && studentMean(record,sample) !== null ? studentMean(record,sample).toFixed(1) : '—'}</td><td>${esc(record.graph?.values?.[sample] ?? '—')} ${submitted ? markHTML(graphCheck(record,sample),language) : ''}</td></tr>`).join('')}</tbody></table><p class="reference">${t('平均值按自己的最後讀數檢核（±0.1 mm）；圖表按自己的已輸入平均值檢核（±0.5 mm），避免同一量度錯誤重複扣核。', 'Means are checked against your own latest readings (±0.1 mm). Bars are checked against your entered means (±0.5 mm), avoiding repeated penalties for one reading error.')}</p>`;
-  const designImage = imagePattern.test(record.design?.image || '') ? `<img class="design-image" src="${esc(record.design.image)}" alt="${t('學生平板位置及實驗設計圖','Student drawing of disc positions and experiment setup')}">` : '';
+  const designImage = imagePattern.test(record.design?.image || '') ? `<img class="design-image" src="${esc(record.design.image)}" alt="${t('學生瓊脂板位置及實驗設計圖','Student drawing of disc positions and experiment setup')}">` : '';
   const originalDesignImage = imagePattern.test(original.design?.image || '') ? `<img class="design-image" src="${esc(original.design.image)}" alt="${t('首次確認的學生實驗設計圖','First-confirmed student experiment setup drawing')}">` : '';
   const extension = record.extension || {};
   const extensionLabels = { prediction: ['預測','Prediction'], reason:['理由','Reason'],fairComparison:['公平比較','Fair comparison'],results:['實際模擬結果','Simulated results'],analysis:['分析及界線','Analysis and limits'] };
@@ -183,9 +185,9 @@ export function renderReport(record, language = 'zh') {
   <div class="report-meta"><span>${t('姓名','Name')}：${esc(record.profile?.name || '—')}</span><span>${t('班別及學號','Class and number')}：${esc(record.profile?.className || record.profile?.classInfo || '—')}</span><span>${t('電郵','Email')}：${esc(record.profile?.email || '—')}</span><span>${t('探究遞交','Inquiry submitted')}：${esc(dateText(record.submittedAt,language))}</span><span>${t('反思提交','Reflection submitted')}：${esc(dateText(record.reflectionSubmittedAt,language))}</span><span>${t('有效操作時間','Active time')}：${Math.floor(totalSeconds/60)} ${t('分','min')} ${totalSeconds%60} ${t('秒','s')}</span></div>
   <p class="simulation-note">${t('所有圖像與結果均為虛擬教學模擬，不能用作患者治療或臨床敏感性判定。歷史觀察是葡萄球菌，不是 MRSA；MRSA 首次正式報告於 1961 年。','All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming’s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.')}</p>
   ${section(t('01 了解情境：你的初步觀察','01 Context: your initial observations'),fields(['observation']))}
-  ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的平板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
-  ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
-  ${section(t('03 三片獨立平板的觀察及量度','03 Observations and readings from independent plates'),`<p>${t('已產生結果的獨立平板數','Independent plates with generated results')}：${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter(plate=>plate.result).map(plate=>reportPlate(plate,language)).join('')}</div>${readingsTable}`)}
+  ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的瓊脂板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
+  ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','largestPrediction','reason','iv','dv','cv','assumptions','controlPlan','designDescription','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
+  ${section(t('03 三片獨立瓊脂板的觀察及量度','03 Observations and readings from independent plates'),`<p>${t('已產生結果的獨立瓊脂板數','Independent plates with generated results')}：${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter(plate=>plate.result).map(plate=>reportPlate(plate,language)).join('')}</div>${readingsTable}`)}
   ${section(t('04 你的平均值及圖表','04 Your means and chart'),meansTable + reportGraph(record,language) + `<p>${t('圖表確認時間','Chart confirmed')}：${esc(dateText(record.graph?.confirmedAt,language))}</p>`)}
   ${section(t('04 分析及結論','04 Analysis and conclusion'),fields(['analysisControl','analysisConsistent','analysisVariation','analysisMethod','analysisHypothesis','analysisRepeatPlan','analysisRepeatValue','analysisDeath','analysisClinical','conclusion']))}
   ${section(t('可選延伸：同一樣本的紙碟含量','Optional extension: disc content of one sample'),extensionHTML)}
@@ -263,10 +265,10 @@ export async function buildWorkbook(inputRecords) {
   workbook.creator='VL4';workbook.subject='抗生素虛擬探究全班紀錄';workbook.created=new Date('2026-01-01T00:00:00Z');workbook.modified=new Date('2026-01-01T00:00:00Z');
   workbook.calcProperties.fullCalcOnLoad=true;
   const originalFields = ANSWER_FIELDS.filter(([field])=>!field.startsWith('analysis') && !field.startsWith('knowledge') && field !== 'reflection' && field !== 'conclusion');
-  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...ANSWER_FIELDS.map(([,label])=>'最新｜'+label),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立平板數','設計文字','延伸預測','延伸理由','延伸公平比較','延伸結果','延伸分析','有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數')];
+  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...ANSWER_FIELDS.map(([,label])=>'最新｜'+label),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立瓊脂板數','設計文字','延伸預測','延伸理由','延伸公平比較','延伸結果','延伸分析','有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數')];
   const answerGroups = [...Array(9).fill('identity'),...originalFields.map(field=>field[3]),...ANSWER_FIELDS.map(field=>field[3]),...Array(3).fill('designing'),'conducting',...Array(5).fill('inferring'),...Array(5).fill('identity')];
   const answers = createSheet(workbook,'學生探究答案',headings,answerGroups);
-  const dataHeadings=['紀錄識別碼','姓名','平板識別碼','樣本','首次有無紙碟外清晰區','首次總直徑（mm）','首次備註','首次確認（香港）','最後有無紙碟外清晰區','最後總直徑（mm）','最後備註','最後確認（香港）','模型參考總直徑（mm）','直徑／紙碟外清晰區檢核','修訂紀錄','學生平均值（mm）','依學生最後讀數計算平均值','平均值檢核','確認棒高（mm）','圖表檢核','圖表確認（香港）'];
+  const dataHeadings=['紀錄識別碼','姓名','瓊脂板識別碼','樣本','首次有無紙碟外清晰區','首次總直徑（mm）','首次備註','首次確認（香港）','最後有無紙碟外清晰區','最後總直徑（mm）','最後備註','最後確認（香港）','模型參考總直徑（mm）','直徑／紙碟外清晰區檢核','修訂紀錄','學生平均值（mm）','依學生最後讀數計算平均值','平均值檢核','確認棒高（mm）','圖表檢核','圖表確認（香港）'];
   const dataGroups=dataHeadings.map((_,index)=>index<4?'identity':index<15?'observing':index<18?'inferring':'communicating');
   const data=createSheet(workbook,'量度計算與圖表',dataHeadings,dataGroups);
   const scoreHeadings=['紀錄識別碼','姓名','班別及學號','完成狀態',...SCORE_COLUMNS.map(column=>column.label+(column.max!==undefined?`（0–${column.max}）`:''))];
