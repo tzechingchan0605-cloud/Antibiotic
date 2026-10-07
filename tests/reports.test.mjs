@@ -41,7 +41,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
     assert.doesNotMatch(html,/教師評分|整體總分|SPS 總分|0–32|overall score|SPS score/i);
   }
   assert.match(zh,/class="check correct"/);assert.match(en,/Matches reference/);
-  assert.doesNotMatch(en,/你的原始研究計劃|抑菌圈總直徑包括紙碟|學生平板位置及實驗設計圖/);
+  assert.doesNotMatch(en,/你的原始研究計劃|清晰區總直徑包括紙碟|學生平板位置及實驗設計圖/);
   assert.match(learningDiagram('en'),/Nucleic acid synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
   assert.deepEqual(record,before,'rendering never mutates record, images, answers, event history or timing');
 });
@@ -95,6 +95,18 @@ test('hypothesis outcome, requested repeat count and operation speed/count never
   assert.equal(objectiveChecks(record).iv,true);
 });
 
+test('VL2-style variable choices grade exact sets and retain legacy scalar compatibility',()=>{
+  const record=fixture(),before=automaticScores(record);
+  record.answers.iv=['sample'];record.answers.dv=['zone'];
+  assert.equal(objectiveChecks(record).iv,true);assert.equal(objectiveChecks(record).dv,true);
+  assert.deepEqual(automaticScores(record),before);
+  assert.match(renderReport(record,'en'),/Sample in the disc/);
+  record.answers.iv.push('zone');assert.equal(objectiveChecks(record).iv,false);
+  record.answers.dv=[];assert.equal(objectiveChecks(record).dv,null);
+  record.answers.iv='sample';record.answers.dv='zone';
+  assert.deepEqual(automaticScores(record),before);
+});
+
 test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, event details, formulas and blank manual scores',async()=>{
   const record=fixture(),demo={...fixture('demo-id'),demo:true},teacher={...fixture('teacher-id'),profile:{...record.profile,email:'tzechingchan0605@gmail.com'}},foreign={...fixture('vl2-id'),moduleId:'VL_BIO_TRANSPIRATION'};
   const workbook=await buildWorkbook([record,demo,teacher,foreign]);
@@ -112,8 +124,8 @@ test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, ev
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicates｜原始建議')).value,2);
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicateReason｜原始理由')).value,'Original repeat reason.');
   assert.equal(answers.getCell(2,headerIndex(answers,'actualReplicates｜獨立平板數')).value,3);
-  assert.equal(answers.getCell(2,headerIndex(answers,'原始｜你預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'都不會');
-  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'部分');
+  assert.equal(answers.getCell(2,headerIndex(answers,'原始｜你預測哪些樣本會出現紙碟外的可見清晰區？')).value,'都不會');
+  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪些樣本會出現紙碟外的可見清晰區？')).value,'部分');
   assert.equal(data.getCell('F2').value,20);assert.equal(data.getCell('J2').value,18);
   assert.equal(data.getCell('M2').value,18);assert.equal(data.getCell('P2').value,18);
   const manual=SCORE_COLUMNS.filter(column=>column.manual);

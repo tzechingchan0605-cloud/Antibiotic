@@ -42,15 +42,15 @@ This rubric is an initial researcher's draft. Before longitudinal comparisons ac
 | antibiotic | 抗生素 |
 | bacterium / bacteria | 細菌（單數／複數） |
 | bacterial growth | 細菌生長 |
-| inhibition zone | 抑菌圈 |
-| inhibition-zone diameter | 抑菌圈直徑 |
+| inhibition zone | 清晰區 |
+| inhibition-zone diameter | 清晰區直徑 |
 | agar | 瓊脂 |
 | colony | 菌落 |
 | bacterial lawn | 菌層 |
 | Penicillium (a fungus) | 青黴菌（真菌） |
 | carrier-only control | 只含載體的對照 |
 | antibiotic resistance | 抗生素抗藥性 |
-| strain | 菌株 |
+| same bacterial strain (controlled source) | 同一種模擬細菌 |
 | independent repeat | 獨立重複測試 |
 | replicate | 實驗重複／重複樣本 |
 | diffusion | 擴散 |

@@ -184,6 +184,21 @@ input[readonly], textarea[readonly] { background: #f7f8f2; }
 .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .choice { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 9px 14px; border: 1px solid #cedfd1; border-radius: 9px; color: #5b7765; background: #fffefa; font-size: 12px; line-height: 1.65; }
 .choice.selected, .choice[aria-pressed="true"], .tool-selected { color: var(--teal); border-color: #6da694; background: #e4f2e7; box-shadow: inset 0 0 0 1px #6da694; }
+.hypothesis-sentence { display: block; font-size: 17px; line-height: 2.6; font-weight: 600; }
+.hypothesis-sentence select { width: auto; display: inline-block; padding: 7px 10px; border: 1px solid #bdd7cd; border-radius: 8px; background: #f8fcf9; color: var(--teal); font: inherit; }
+.variable-group { padding: 14px 0; border-bottom: 1px solid #edf3ef; }
+.variable-group:last-child { border: 0; }
+.variable-group h4 { margin: 0 0 10px; font-size: 14px; }
+.variable-group h4 > span:last-child { font-size: 12px; color: var(--muted); font-weight: 400; }
+.variable-options { display: flex; gap: 7px; flex-wrap: wrap; }
+.variable-options button { border: 1px solid #d1e2db; border-radius: 20px; background: #fff; padding: 7px 11px; font-size: 12px; color: #597570; }
+.variable-options button.selected { background: #dff2e8; color: var(--teal); border-color: #5fab97; }
+.equipment-bank { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin: 20px 0; }
+.equipment-bank .equipment svg { height: 80px; width: auto; max-width: 100%; display: block; margin: auto; }
+.repeat-planning { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.repeat-planning h4 { margin: 0 0 10px; }
+@media (max-width: 1000px) { .equipment-bank { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .equipment-bank { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hypothesis-sentence { font-size: 15px; } }
 .design-stack { display: grid; gap: 20px; }
 .design-stack .card + .card { margin-top: 0; }
 .action-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 23px 0 35px; }

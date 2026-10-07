@@ -15,7 +15,7 @@ export const isTeacher=profile=>profile?.email?.toLowerCase().trim()===TEACHER_E
 export function freshRecord(profile,demo=false){
   return {schemaVersion:1,moduleId:MODULE_ID,id:crypto.randomUUID(),version:0,profile:clone(profile),demo,
     createdAt:nowISO(),savedAt:nowISO(),phase:1,unlocked:1,submittedAt:null,reflectionSubmittedAt:null,
-    answers:{cv:[],assumptions:[]},original:null,actualReplicates:3,
+    answers:{iv:[],dv:[],cv:[],assumptions:[]},original:null,actualReplicates:3,
     plates:Array.from({length:3},(_,i)=>({id:`plate-${i+1}`,label:`P${i+1}`,seed:crypto.getRandomValues(new Uint32Array(1))[0],
       rotation:0,coverage:[],discPositions:{},inoculated:false,result:null,completed:false,operations:[]})),
     measurements:{},means:{},graph:{values:{},confirmedAt:null},design:{image:'',description:'',saved:false},

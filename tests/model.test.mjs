@@ -147,7 +147,7 @@ test('no external inhibition zone has valid total diameter six, never zero', () 
   const record = fresh(), id = record.plates[0].id;
   assert.equal(validDecimal('6', DISC_MM, 40), true);
   assert.equal(validDecimal('0', DISC_MM, 40), false);
-  confirmMeasurement(record, id, 'C', reading(6, 'no', '紙碟外沒有可見抑菌圈'));
+  confirmMeasurement(record, id, 'C', reading(6, 'no', '紙碟外沒有可見清晰區'));
   assert.equal(record.measurements[id].C.last.value, '6');
   assert.equal(record.measurements[id].C.last.visible, 'no');
   assert.throws(() => confirmMeasurement(record, id, 'C', reading(0, 'no')), /invalid/);

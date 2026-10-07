@@ -29,7 +29,8 @@ export function graphCheck(record, sample) {
 }
 export function objectiveChecks(record) {
   const a = record.answers || {};
-  return { iv: a.iv ? a.iv === 'sample' : null, dv: a.dv ? a.dv === 'zone' : null,
+  const variableCheck=(value,expected)=>Array.isArray(value)?(value.length?sameChoices(value,[expected]):null):(value?value===expected:null);
+  return { iv: variableCheck(a.iv,'sample'), dv: variableCheck(a.dv,'zone'),
     cv: a.cv?.length ? sameChoices(a.cv, VARIABLE_REFERENCE.cv) : null,
     assumptions: a.assumptions?.length ? sameChoices(a.assumptions, ASSUMPTION_REFERENCE) : null,
     analysisDeath: a.analysisDeath ? a.analysisDeath === 'cannot' : null,
@@ -41,7 +42,7 @@ export function objectiveChecks(record) {
 
 export const SCORE_COLUMNS = [
   { id: 'observation', label: '觀察｜初步觀察（教師）', group: 'observing', max: 2, manual: true },
-  { id: 'readings', label: '觀察｜直徑及有無外圍圈（自動）', group: 'observing', max: 2 },
+  { id: 'readings', label: '觀察｜直徑及有無紙碟外清晰區（自動）', group: 'observing', max: 2 },
   { id: 'observing', label: 'SPS 觀察', group: 'observing', max: 4, formula: ['observation', 'readings'] },
   { id: 'iv', label: '分類｜獨立變量（自動）', group: 'classifying', max: 1 },
   { id: 'dv', label: '分類｜因變量（自動）', group: 'classifying', max: 1 },
@@ -66,7 +67,7 @@ export const SCORE_COLUMNS = [
   { id: 'sps', label: 'SPS 總分（24）', group: 'score', max: 24, formula: ['observing', 'classifying', 'designing', 'conducting', 'inferring', 'communicating'] },
   { id: 'knowledgeBacteria', label: '新知識｜抗生素與細菌感染（教師）', group: 'knowledge', max: 2, manual: true },
   { id: 'knowledgeResistance', label: '新知識｜細菌抗藥性（教師）', group: 'knowledge', max: 2, manual: true },
-  { id: 'knowledgeLimits', label: '新知識｜抑菌圈及重複的限制（教師）', group: 'knowledge', max: 2, manual: true },
+  { id: 'knowledgeLimits', label: '新知識｜清晰區及重複的限制（教師）', group: 'knowledge', max: 2, manual: true },
   { id: 'knowledgeRevision', label: '新知識｜以證據修訂原始解釋（教師）', group: 'knowledge', max: 2, manual: true },
   { id: 'knowledge', label: '新知識總分（8）', group: 'knowledge', max: 8, formula: ['knowledgeBacteria', 'knowledgeResistance', 'knowledgeLimits', 'knowledgeRevision'] },
   { id: 'overall', label: '整體總分（32）', group: 'score', max: 32, formula: ['sps', 'knowledge'] },
@@ -90,8 +91,8 @@ export function automaticScores(record) {
 
 export const RUBRIC_ROWS = [
   ['觀察｜初步觀察', 2, '教師', '指出青黴菌（真菌）附近的可見細菌生長較少，並分開觀察與推測。', '1：描述相關現象但位置或觀察／推測區分不完整。', '0：未提供可評答案、無關或把機制當作直接觀察。', 'observing'],
-  ['觀察｜直徑及外圍圈', 2, '自動', '12 個最後讀數均符合模型直徑 ±1 mm，並正確分辨紙碟外有／無可見抑菌圈。', '2 × 符合兩項條件的讀數數目 ÷ 12，保留兩位小數。', '0：沒有符合兩項條件的讀數。紙碟 6 mm 本身不算外圍抑菌圈。', 'observing'],
-  ['分類｜獨立變量／因變量／控制變量', 4, '自動', '紙碟所含樣本（1）；是否有圈及總直徑（1）；六項控制：同一菌株、初始分布、培養基、紙碟大小、預設製備、共同培養及觀察條件（2）。', '六項控制變量每項 2/6；全選正確得 2；整欄保留兩位小數。', '選入自／因變量等不適當控制項，控制變量欄 0；未答或分類錯誤 0。', 'classifying'],
+  ['觀察｜直徑及紙碟外清晰區', 2, '自動', '12 個最後讀數均符合模型直徑 ±1 mm，並正確分辨紙碟外有／無可見清晰區。', '2 × 符合兩項條件的讀數數目 ÷ 12，保留兩位小數。', '0：沒有符合兩項條件的讀數。紙碟 6 mm 本身不算外圍清晰區。', 'observing'],
+  ['分類｜獨立變量／因變量／控制變量', 4, '自動', '紙碟所含樣本（1）；是否有清晰區及總直徑（1）；六項控制：同一種細菌、初始分布、培養基、紙碟大小、預設製備、共同培養及觀察條件（2）。', '六項控制變量每項 2/6；全選正確得 2；整欄保留兩位小數。', '選入自／因變量等不適當控制項，控制變量欄 0；未答或分類錯誤 0。', 'classifying'],
   ['設計｜可測試假說及理由', 1, '教師', '1：實驗前提出可用樣本與載體對照比較的預測，並給出相關理由。', '0.5：可測試預測，但理由較薄弱或不清楚。', '0：無可測試預測或無實驗前證據；合理但不被結果支持的假說不因此扣分。', 'designing'],
   ['設計｜原始重複安排理由', 1, '教師', '1：說明獨立重複可檢查一致性／變異，次數安排有可行性理由。', '0.5：提及可靠性但缺少獨立比較或安排理由。', '0：只有次數或無可評理由。不以選 3 次、次數越多給分。', 'designing'],
   ['設計｜對照理由', 1, '教師', '1：相同載體但不含抗生素的紙碟，解釋排除載體／紙碟影響及相同條件。', '0.5：有恰當空白對照，但理由或共同條件不完整。', '0：缺乏適當對照，或無可評理由。', 'designing'],
@@ -105,7 +106,7 @@ export const RUBRIC_ROWS = [
   ['溝通｜書面表達', 2, '教師', '用清晰的樣本名稱、數據、單位及比較語句傳達設計、分析及結論。', '1：可理解，但缺少必要標示或表述含糊。', '0：沒有可評表達或無法理解；與概念正確性分開評。', 'communicating'],
   ['新知識｜抗生素與細菌', 2, '教師', '正確說明抗生素抑制／殺死細菌，對病毒感染無效，作用機制是補充知識而非本實驗直接證明。', '1：正確提及細菌／病毒區別或作用，但不完整。', '0：核心概念錯誤或無可評內容。', 'knowledge'],
   ['新知識｜細菌抗藥性', 2, '教師', '抗藥性是細菌對藥物的反應；原有抗藥細菌較易存活及繁殖；不說人的身體習慣藥物／細菌有目的適應。', '1：基本描述正確，選擇／繁殖連結不完整。', '0：核心概念錯誤或無可評內容。', 'knowledge'],
-  ['新知識｜抑菌圈與重複限制', 2, '教師', '說明局部可見生長受抑制，不證明全部死亡或最佳治療；重複檢查一致性，不保證可靠，擴散／紙碟含量亦影響。', '1：至少正確說明一項推論限制或重複價值，但不完整。', '0：無可評內容／把 3 次當成可靠保證。', 'knowledge'],
+  ['新知識｜清晰區與重複限制', 2, '教師', '說明局部可見生長受抑制，不證明全部死亡或最佳治療；重複檢查一致性，不保證可靠，擴散／紙碟含量亦影響。', '1：至少正確說明一項推論限制或重複價值，但不完整。', '0：無可評內容／把 3 次當成可靠保證。', 'knowledge'],
   ['新知識｜修訂原始解釋', 2, '教師', '比較原始假說及重複計劃，引用樣本／對照和獨立重複數據，以學習重點修訂／完善，交代仍不能確定甚麼。', '1：有修訂或判斷，但缺少數據／概念連結。', '0：只抄知識，未對照原有想法，或無可評反思。', 'knowledge'],
   ['總分及待評狀態', 32, '公式', '六項 SPS 各 4＝24，四項新知識各 2＝8；12 個必要人工評分格填完且反思已提交，才顯示整體總分。', '人工格空白＝待評，填 0＝已評零分；分數只保存於教師保存的 Excel。', '不把操作次數、速度、時間或完成率直接換算能力。此 rubric 待試教及跨 VL 校準。', 'score']
 ];

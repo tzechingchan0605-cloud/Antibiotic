@@ -52,21 +52,30 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await expect(page.locator('#phase-1')).toBeVisible();
   await expect(page.getByLabel('你的初步觀察', { exact: true })).toBeVisible();
   await expect(page.locator('#inference, #comparison, #backgroundCards')).toHaveCount(0);
+  await expect(page.locator('#historyFigure')).toContainText('清晰區');
+  await expect(page.locator('#historyFigure')).toContainText('（沒有可見細菌生長的區域）');
+  await expect(page.locator('#historyFigure marker, #historyFigure [marker-end]')).toHaveCount(0);
+  const leaders = await page.locator('#historyFigure .history-label-lines path').evaluateAll(paths => paths.map(path => path.getAttribute('d')));
+  expect(leaders).toHaveLength(3);
+  for (const path of leaders) expect(path).toMatch(/^M[\d.]+ [\d.]+H[\d.]+/);
   await page.locator('#observation').fill('黴菌附近少或沒有可見細菌菌落。');
   await page.locator('#orientationNext').click();
   await expect(page.locator('#phase-2')).toBeVisible();
+  await expect(page.locator('#phase-2 .design-stack > .card .card-kicker')).toHaveText([
+    '01 · 假說建立器', '02 · 公平測試', '03 · 實驗前提', '04 · 對照組設計', '05 · 實驗裝置設計'
+  ]);
+  await expect(page.locator('#controlPrediction, #otherHypothesis, #backupRecords')).toHaveCount(0);
   await page.locator('#prediction').selectOption('some');
-  await page.locator('#controlPrediction').fill('部分樣本會出現紙碟外沒有可見生長的區域，載體對照不會。');
   await page.locator('#reason').fill('不同樣本可能抑制這株細菌的可見生長，需要比較才知道。');
-  await page.locator('#iv').selectOption('sample');
-  await page.locator('#dv').selectOption('zone');
+  await page.locator('[data-group="iv"][data-variable="sample"]').click();
+  await page.locator('[data-group="dv"][data-variable="zone"]').click();
   for (const value of ['strain', 'distribution', 'medium', 'disc', 'preparation', 'observation']) {
-    await page.locator(`[data-multi="cv"][value="${value}"]`).check();
+    await page.locator(`[data-group="cv"][data-variable="${value}"]`).click();
   }
   for (const value of ['distribution', 'sterile', 'sameConditions']) {
     await page.locator(`[data-multi="assumptions"][value="${value}"]`).check();
   }
-  await page.locator('#controlPlan').fill('相同紙碟載體但不含抗生素，保持相同菌株、培養基及觀察條件。');
+  await page.locator('#controlPlan').fill('相同紙碟載體但不含抗生素，保持相同種類的細菌、培養基及觀察條件。');
   await page.locator('#designDescription').fill('X、Y、Z 及空白對照分別放於四個象限，遠離邊緣並保持間距；每片平板相同。');
   await page.locator('#saveDesign').click();
   await expect(page.locator('#designStatus')).not.toBeEmpty();
@@ -75,12 +84,14 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await page.locator('#plannedReplicateReason').fill('用兩片新平板初步比較一致性，同一圈重讀不算獨立重複。');
   if (wrongAnswers) {
     await page.locator('#prediction').selectOption('all');
-    await page.locator('#iv').selectOption('zone');
-    await page.locator('#dv').selectOption('strain');
+    await page.locator('[data-group="iv"][data-variable="sample"]').click();
+    await page.locator('[data-group="iv"][data-variable="zone"]').click();
+    await page.locator('[data-group="dv"][data-variable="zone"]').click();
+    await page.locator('[data-group="dv"][data-variable="strain"]').click();
     for (const value of ['strain', 'distribution', 'medium', 'disc', 'preparation', 'observation']) {
-      await page.locator(`[data-multi="cv"][value="${value}"]`).uncheck();
+      await page.locator(`[data-group="cv"][data-variable="${value}"]`).click();
     }
-    await page.locator('[data-multi="cv"][value="zone"]').check();
+    await page.locator('[data-group="cv"][data-variable="zone"]').click();
     for (const value of ['distribution', 'sterile', 'sameConditions']) {
       await page.locator(`[data-multi="assumptions"][value="${value}"]`).uncheck();
     }
@@ -135,7 +146,7 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
     analysisConsistent: 'X 與 Z 三次均有外圍可見圈；Y 及空白對照均沒有。',
     analysisVariation: '三片平板的數值稍有變化，但 X、Z 的可見圈趨勢一致，對照仍為 6 mm。',
     analysisMethod: '先檢查細菌分布、污染、紙碟位置、製備及共同觀察條件，再考慮增加新平板。',
-    analysisHypothesis: '部分樣本有可見抑菌圈，與對照不同，支持我的可測試預測。',
+    analysisHypothesis: '部分樣本有可見清晰區，與對照不同，支持我的可測試預測。',
     analysisRepeatPlan: '我原定兩次，活動實做三次；多一片可檢查一致性，但三次不保證可靠。',
     analysisRepeatValue: '新平板提供獨立結果，能看到變異；同一圈反覆讀數不算獨立重複。',
     conclusion: '在本模型條件下，三片獨立平板的 X、Z 有可見圈，Y 與載體對照沒有，支持局部可見生長受抑制；不能確定細菌全部死亡、作用機制、臨床最佳治療或所有 MRSA 的反應。',
@@ -346,7 +357,7 @@ test('completion gates reject missing data and invalid Enter readings while comp
   } });
   const state = await current(page);
   expect(state.submittedAt).toBeTruthy();
-  expect(state.original.answers.iv).toBe('zone');
+  expect(state.original.answers.iv).toEqual(['zone']);
   expect(state.original.answers.assumptions).toEqual(['death']);
   expect(state.answers.knowledgeBacteria).toBe('viruses');
   expect(state.means.X).toBe('6.0');
@@ -381,7 +392,7 @@ test('graph hovering leaves confirmed answers unchanged and optional extension p
     await expect(page.locator('#submitDialog')).toBeHidden();
     await page.locator('#ext-prediction').fill('同一样本的較高紙碟含量可能出現較大圈。');
     await page.locator('#ext-reason').fill('擴散到瓊脂中的樣本量可能不同。');
-    await page.locator('#ext-fairComparison').fill('只改變預設紙碟含量，保持同一樣本、菌株、培養基、紙碟大小及觀察條件。');
+    await page.locator('#ext-fairComparison').fill('只改變預設紙碟含量，保持同一樣本、細菌種類、培養基、紙碟大小及觀察條件。');
     await page.locator('#viewExtension').click();
     let state = await current(page);
     const original = state.extension.original;

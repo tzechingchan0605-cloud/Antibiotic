@@ -2,13 +2,15 @@
 
 Validation was performed in the actual cloud workspace on 7 October 2026 (Hong Kong time), using Node.js 24.19.0 and system Chromium 151 through Playwright. The frontend is a functioning local development application. Saving its reusable environment instructions is separate from publishing a site or a cloud environment snapshot.
 
-Validation result: **38 Node tests + all 13 browser cases passed**, including eight workflow cases, the isolated multi-browser collector case and four startup regression cases. The complete browser run passed in 32.1 seconds. The context revision was checked in Chinese, English and at 360 px: only the initial observation is required to continue, the two removed questions are absent from the interface and reports, and the four background facts appear in the learning review notes after submission.
+Validation result: **39 Node tests + all 13 browser cases passed**, including eight workflow cases, the isolated multi-browser collector case and four startup regression cases. The complete browser run passed in 33.7 seconds. The context revision was checked in Chinese, English and at 360 px: only the initial observation is required to continue, the two removed questions are absent from the interface and reports, and the four background facts appear in the learning review notes after submission.
+
+The latest revision adopts the five numbered VL2 design panels and their answer controls. Chinese and English context/design views were inspected, including 360 px widths. The supplied photo has plain label lines with horizontal structure segments and no arrowheads; the label now reads 清晰區（沒有可見細菌生長的區域）. Current interface/report/rubric terms use 清晰區 and 菌落, and describe the same type of bacteria without the term 菌株. A carrier explanation is shown beneath the control question. The requested disclaimers, JSON download button and two extra hypothesis fields are removed. Array-based variable answers preserve original snapshots and grade correctly, while legacy scalar answers remain readable.
 
 ## Executed checks
 
 | Check | Outcome | Evidence |
 | --- | --- | --- |
-| Frozen installation, build and unit/integration tests | Passed | `bash scripts/install.sh` completed `npm ci`, esbuild and all 38 Node tests with zero failures/skips. |
+| Frozen installation, build and unit/integration tests | Passed | Frozen installation was verified earlier using `bash scripts/install.sh`. This revision completed `npm run build` and all 39 Node tests with zero failures/skips. |
 | GitHub Pages startup and recovery | Passed | Reproduced the blank screen with historical HTML/JavaScript from different releases. A content-hashed bundle prevents stale unversioned assets from loading; old caption markup remains compatible. Four tests at the intercepted production HTTPS origin and `/Antibiotic/` path covered successful login/photo loading, cached markup, a missing script and a runtime failure. The reload control preserved saved records. |
 | Supplied photograph and bilingual annotations | Passed | The uploaded 352 × 347 JPEG loads successfully with the current server’s `image/jpeg` response. Label endpoints were checked against the photograph; Chinese/English desktop and 360 px mobile views were reviewed with no page overflow. The desktop inquiry/PDF and mobile workflow tests passed after integration. |
 | Student, teacher, mobile and PDF browser workflow | Passed | All 8 `workflow.spec.js` cases passed in the final full run. |
@@ -23,7 +25,7 @@ Validation result: **38 Node tests + all 13 browser cases passed**, including ei
 | Real bilingual PDF output | Passed | Actual Chinese and English A4 PDFs generated in Chromium, original Chinese answers preserved, embedded CJK fonts and extracted text checked. Visual review included the shared science diagram. Active-time units were corrected and regression-checked. |
 | Actual XLSX output | Passed | Workbook ZIP contents and round-trip images, six sheets, original/latest evidence, formulas, validation, conditional formatting and pending manual scores tested. Chinese contents identical across UI languages. Local/class filenames are distinct. |
 | Cloud/backend isolated checks | Passed | 17 tests exercised local-first queue, offline/failure retry, correct save acknowledgements, version order/idempotency, strict message validation, teacher password and complete paging, Unicode-safe image chunks and checksum failures. |
-| Corrupt local storage | Passed | Browser and unit checks retained damaged raw values and displayed a backup warning rather than overwriting them. |
+| Corrupt local storage | Passed | Browser and unit checks retained damaged raw values and displayed a storage warning rather than overwriting them. |
 
 ## Remaining outside this validation
 
