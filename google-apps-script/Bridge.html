@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>VL4 cloud bridge</title></head><body>
+<script>
+'use strict';
+(() => {
+  const parentOrigin = <?!= JSON.stringify(parentOrigin) ?>;
+  const channel = <?!= JSON.stringify(channel) ?>;
+  const handshakeId = <?!= JSON.stringify(requestId) ?>;
+  const moduleId = 'VL_BIO_ANTIBIOTICS';
+  const target = window.top;
+  const active = new Set();
+  function reply(requestId, ok, result, code) {
+    target.postMessage({ type: 'VL4_RESPONSE', moduleId, channel, requestId,
+      ok, ...(ok ? { result } : { code: code || 'CLOUD_REQUEST_FAILED' }) }, parentOrigin);
+  }
+  window.addEventListener('message', event => {
+    const message = event.data;
+    if (event.source !== target || event.origin !== parentOrigin || !message ||
+        message.type !== 'VL4_REQUEST' || message.moduleId !== moduleId ||
+        message.channel !== channel || !/^[A-Za-z0-9_-]{24,80}$/.test(message.requestId || '') ||
+        active.has(message.requestId)) return;
+    if (message.action !== 'save' && message.action !== 'list') return;
+    active.add(message.requestId);
+    const done = result => { active.delete(message.requestId); reply(message.requestId, true, result); };
+    const failed = error => {
+      active.delete(message.requestId);
+      // Never send stack traces or request payloads (which may contain a password).
+      const raw = String(error && error.message || 'CLOUD_REQUEST_FAILED');
+      const code = raw.match(/\b[A-Z][A-Z0-9_]{4,}\b/);
+      reply(message.requestId, false, null, code ? code[0] : 'CLOUD_REQUEST_FAILED');
+    };
+    const payload = message.payload || {};
+    const runner = google.script.run.withSuccessHandler(done).withFailureHandler(failed);
+    if (message.action === 'save') runner.saveRecord(payload.record);
+    else runner.listRecords(payload.password, payload.cursor || '', payload.limit || 25);
+  });
+  target.postMessage({ type: 'VL4_READY', moduleId, channel, requestId: handshakeId }, parentOrigin);
+})();
+</script>
+</body></html>
