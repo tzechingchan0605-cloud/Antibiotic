@@ -2,7 +2,7 @@
 
 Validation was performed in the actual cloud workspace on 7 October 2026 (Hong Kong time), using Node.js 24.19.0 and system Chromium 151 through Playwright. The frontend is a functioning local development application. Saving its reusable environment instructions is separate from publishing a site or a cloud environment snapshot.
 
-Final result: **38 Node tests + 9 browser tests passed**, with zero failed or skipped tests. The final complete browser run took 31 seconds, including both the eight workflow cases and the isolated multi-browser collector case.
+Validation result: **38 Node tests + all 9 browser cases passed**, including the eight workflow cases and the isolated multi-browser collector case. The context revision was checked in Chinese, English and at 360 px: only the initial observation is required to continue, the two removed questions are absent from the interface and reports, and the four background facts appear in the learning review notes after submission.
 
 ## Executed checks
 
@@ -18,12 +18,14 @@ Final result: **38 Node tests + 9 browser tests passed**, with zero failed or sk
 | Language switching and accounts | Passed | Raw records/current/backup/queue snapshots remained equal across Chinese/English toggles; reload returned to blank Chinese login; separate inquiries remained for repeated emails. |
 | Teacher demonstration | Passed | Demonstration produced no student record, queued snapshot or student telemetry. |
 | Mobile controls | Passed | 360 px viewport had no unintended page overflow. Assisted operation, magnification, sample selection and table scrolling verified. |
-| Real bilingual PDF output | Passed | Actual Chinese and English 8-page A4 PDFs generated in Chromium, original Chinese answers preserved, embedded CJK fonts and extracted text checked. Visual review included the shared science diagram. Active-time units were corrected and regression-checked. |
+| Real bilingual PDF output | Passed | Actual Chinese and English A4 PDFs generated in Chromium, original Chinese answers preserved, embedded CJK fonts and extracted text checked. Visual review included the shared science diagram. Active-time units were corrected and regression-checked. |
 | Actual XLSX output | Passed | Workbook ZIP contents and round-trip images, six sheets, original/latest evidence, formulas, validation, conditional formatting and pending manual scores tested. Chinese contents identical across UI languages. Local/class filenames are distinct. |
 | Cloud/backend isolated checks | Passed | 17 tests exercised local-first queue, offline/failure retry, correct save acknowledgements, version order/idempotency, strict message validation, teacher password and complete paging, Unicode-safe image chunks and checksum failures. |
 | Corrupt local storage | Passed | Browser and unit checks retained damaged raw values and displayed a backup warning rather than overwriting them. |
 
 ## Remaining outside this validation
+
+- The supplied photograph is visible in chat but its original PNG/JPG is not present in the workspace. The bilingual annotation overlay is prepared; the checked-in application uses the historical illustration with an illustration caption until the original image asset is available.
 
 - `CLOUD_ENDPOINT` is intentionally empty. A new owner-controlled Google spreadsheet and Apps Script `/exec` deployment must be configured, and the actual deployed Google sandbox-frame and cross-device collection verified. The isolated browser test uses an intercepted single Google-origin iframe; the real HtmlService nested-frame deployment remains unverified. Isolated service tests are not a Google deployment.
 - The public website and a new cloud environment snapshot have not been published by these commands. The reusable `install_script` and `start_skill` were saved as a configuration draft for environment settings review/publication.

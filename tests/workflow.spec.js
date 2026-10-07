@@ -50,9 +50,9 @@ async function screenshot(page, path) {
 
 async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await expect(page.locator('#phase-1')).toBeVisible();
+  await expect(page.getByLabel('你的初步觀察', { exact: true })).toBeVisible();
+  await expect(page.locator('#inference, #comparison, #backgroundCards')).toHaveCount(0);
   await page.locator('#observation').fill('黴菌附近少或沒有可見細菌菌落。');
-  await page.locator('#inference').fill('黴菌可能釋放影響細菌生長的物質。');
-  await page.locator('#comparison').fill('比較有樣本與只有相同載體的對照，其他條件保持相同。');
   await page.locator('#orientationNext').click();
   await expect(page.locator('#phase-2')).toBeVisible();
   await page.locator('#prediction').selectOption('some');
@@ -151,6 +151,8 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await expect(page.locator('#submitDialog')).toBeVisible();
   await page.locator('#confirmSubmit').click();
   await expect(page.locator('#learningSection')).toBeVisible();
+  await expect(page.locator('#learningContent')).toContainText('學習重溫備註');
+  await expect(page.locator('#learningContent')).toContainText('單個細菌通常不能直接看見');
 }
 
 test('student completes an evidence-based inquiry, preserves language-independent data, and exports bilingual PDFs', async ({ page }) => {
@@ -222,8 +224,8 @@ test('student completes an evidence-based inquiry, preserves language-independen
     await expect(popup.locator('html')).toHaveAttribute('lang', lang);
     await expect(popup.locator('body')).toContainText('黴菌附近少或沒有可見細菌菌落。');
     await expect(popup.locator('body')).toContainText(saved.id);
-    if (name === 'en') await expect(popup.locator('body')).toContainText('My original research plan');
-    else await expect(popup.locator('body')).toContainText('我的原始研究計劃');
+    if (name === 'en') await expect(popup.locator('body')).toContainText('Your original research plan');
+    else await expect(popup.locator('body')).toContainText('你的原始研究計劃');
     const path = `artifacts/vl4-student-${name}.pdf`;
     await popup.pdf({ path, format: 'A4', printBackground: true });
     expect((await stat(path)).size).toBeGreaterThan(5000);

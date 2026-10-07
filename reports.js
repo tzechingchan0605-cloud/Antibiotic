@@ -14,22 +14,20 @@ const sampleName = (sample, language) => sample === 'C' ? tr(language, '空白�
 const notAnswered = language => tr(language, '未回答', 'Not answered');
 
 export const ANSWER_FIELDS = [
-  ['observation', '我看見甚麼？', 'What can I see?', 'observing'],
-  ['inference', '我推測甚麼可能造成這個現象？', 'What might cause this observation?', 'observing'],
-  ['comparison', '要測試這個推測，需要怎樣比較？', 'What comparison could test this idea?', 'designing'],
-  ['prediction', '我預測哪些樣本會出現紙碟外的可見抑菌圈？', 'Which samples do I predict will have a visible zone outside the disc?', 'designing'],
-  ['controlPrediction', '與只含載體的對照紙碟比較，我預期甚麼？', 'What do I expect compared with a carrier-only control disc?', 'designing'],
-  ['reason', '我的預測理由', 'My reason for this prediction', 'designing'],
+  ['observation', ...L.observation, 'observing'],
+  ['prediction', '你預測哪些樣本會出現紙碟外的可見抑菌圈？', 'Which samples do you predict will have a visible zone outside the disc?', 'designing'],
+  ['controlPrediction', '與只含載體的對照紙碟比較，你預期甚麼？', 'What do you expect compared with a carrier-only control disc?', 'designing'],
+  ['reason', ...L.reason, 'designing'],
   ['otherHypothesis', '其他可測試假說', 'Another testable hypothesis', 'designing'],
-  ['iv', '自變量：本次改變甚麼？', 'Independent variable: what do we change?', 'classifying'],
+  ['iv', '獨立變量：本次改變甚麼？', 'Independent variable: what do we change?', 'classifying'],
   ['dv', '因變量：本次觀察及量度甚麼？', 'Dependent variable: what do we observe and measure?', 'classifying'],
   ['cv', '控制變量：哪些條件保持相同？', 'Controlled variables: what stays the same?', 'classifying'],
   ['assumptions', '探究假設', 'Assumptions for a fair investigation', 'designing'],
   ['controlPlan', '你會加入甚麼沒有抗生素的對照？為甚麼？哪些條件相同？', 'What antibiotic-free control would you include? Why, and what would stay the same?', 'designing'],
   ['designDescription', '平板位置及實驗設計文字', 'Plate positions and experiment setup', 'conducting'],
-  ['repeatChoice', '如果由我安排，我會否使用新平板重複同一比較？', 'Would I repeat the same comparison on new plates?', 'designing'],
-  ['plannedReplicates', '我建議每種樣本共測試多少次（包括第一次）？', 'How many tests do I propose for each sample, including the first?', 'designing'],
-  ['plannedReplicateReason', '原始重複安排的理由', 'My original reason for the number of repeats', 'designing'],
+  ['repeatChoice', '如果由你安排，你會否使用新平板重複同一比較？', 'Would you repeat the same comparison on new plates?', 'designing'],
+  ['plannedReplicates', '你建議每種樣本共測試多少次（包括第一次）？', 'How many tests do you propose for each sample, including the first?', 'designing'],
+  ['plannedReplicateReason', '原始重複安排的理由', 'Your original reason for the number of repeats', 'designing'],
   ['analysisControl', '空白對照的生長情況如何？它提供甚麼比較基礎？', 'What growth is visible around the carrier control? What comparison does it provide?', 'inferring'],
   ['analysisConsistent', '哪些樣本在三次測試均出現可見抑菌圈？', 'Which samples show a visible zone in all three tests?', 'inferring'],
   ['analysisVariation', '同一樣本的三次結果是否一致？請引用數據。', 'Are the three results for each sample consistent? Use your data.', 'inferring'],
@@ -39,11 +37,11 @@ export const ANSWER_FIELDS = [
   ['analysisRepeatValue', '重複怎樣幫助判斷一致性？不穩定時先檢查方法還是再測試？', 'How do repeats help you judge consistency? If results remain unstable, should you check the method or do more tests?', 'inferring'],
   ['analysisDeath', '沒有可見生長，能否證明細菌全部死亡？', 'Does no visible growth prove that all the bacteria are dead?', 'inferring'],
   ['analysisClinical', '最大抑菌圈是否一定代表臨床治療最佳？', 'Does the largest zone necessarily indicate the best clinical treatment?', 'inferring'],
-  ['conclusion', '我的結論：條件、獨立次數、證據與推論界線', 'My conclusion: conditions, independent tests, evidence and limits', 'communicating'],
+  ['conclusion', '你的結論：條件、獨立次數、證據與推論界線', 'Your conclusion: conditions, independent tests, evidence and limits', 'communicating'],
   ['knowledgeBacteria', '抗生素主要針對甚麼？', 'What do antibiotics act against?', 'knowledge'],
   ['knowledgeResistance', '抗藥性描述誰對藥物的反應？', 'Whose response to a drug does resistance describe?', 'knowledge'],
   ['knowledgeLimits', '抑菌圈及重複測試能支持甚麼？', 'What can zones and repeated tests support?', 'knowledge'],
-  ['reflection', '原有想法有哪些需要修訂或完善？引用樣本與對照的比較及重複結果，用學習重點說明能支持及仍不能確定的結論。', 'Which original ideas need revision or improvement? Use a sample–control comparison and repeated results, together with the learning points, to explain what is supported and what remains uncertain.', 'knowledge']
+  ['reflection', ...L.reflectionQuestion, 'knowledge']
 ];
 
 const CHOICES = {
@@ -71,9 +69,7 @@ export function answerDisplay(field, value, language = 'zh') {
 }
 function referenceFor(field, record, language) {
   const refs = {
-    observation: ['黴菌附近少或沒有可見細菌生長；這是觀察，原因仍需比較。', 'There is little or no visible bacterial growth near the mould. This is an observation; its cause needs testing.'],
-    inference: ['黴菌可能產生影響細菌生長的物質；這是可測試的推測。', 'The mould may release a substance that affects bacterial growth. This is a testable inference.'],
-    comparison: ['比較有／沒有該物質而其餘條件可比較的組別。', 'Compare conditions with and without the substance, keeping other conditions comparable.'],
+    observation: ['青黴菌（真菌）附近只有小量可見細菌生長；這是觀察，原因仍需比較。', 'There is only a little visible bacterial growth near Penicillium (a fungus). This is an observation; its cause needs testing.'],
     prediction: ['合理可測試的實驗前預測可以與結果不同；未知樣本不必預測強弱排序。', 'A reasonable testable prediction may differ from the results. The coded samples do not need to be ranked in advance.'],
     controlPrediction: ['比較樣本與相同載體、沒有抗生素的對照。', 'Compare each sample with a matching carrier-only control containing no antibiotic.'],
     reason: ['說明與細菌生長及可觀察現象相關的理由。', 'Explain a reason related to bacterial growth and observable evidence.'],
@@ -140,15 +136,16 @@ export function learningDiagram(language = 'zh') {
 }
 export function learningPointsHTML(language = 'zh') {
   const points = [
-    ['抗生素能殺死細菌或抑制細菌生長，不能治療病毒引起的傷風或流感。', 'Antibiotics can kill bacteria or inhibit bacterial growth. They do not treat viral colds or influenza.'],
     ['不同抗生素可能影響細胞壁、細胞膜、蛋白質或核酸合成；這是補充知識，不是本次圈大小直接證明的機制。', 'Different antibiotics may affect the cell wall, cell membrane, protein synthesis or nucleic acid synthesis. These are additional concepts, not mechanisms proved by zone size here.'],
-    ['抗藥性描述細菌對藥物的反應，不是人的身體習慣抗生素。MRSA 對甲氧西林及大多數相關 β-內酰胺類有抗藥性，不代表對所有抗生素都有抗藥性。', 'Resistance describes the bacterial response to a drug, not the human body becoming used to antibiotics. MRSA is resistant to meticillin and most related beta-lactams, but not necessarily to every antibiotic.'],
+    ['抗藥性描述細菌對藥物的反應，不是人的身體習慣抗生素。', 'Resistance describes the bacterial response to a drug, not the human body becoming used to antibiotics.'],
     ['抗生素可令原有抗藥細菌較易存活及繁殖；細菌不會有目的地決定適應。', 'Antibiotics can favour the survival and reproduction of existing resistant bacteria. Bacteria do not deliberately choose to adapt.'],
     ['圈大小支持局部可見生長受抑制，不能證明全部死亡、特定作用機制或最佳患者治療。擴散特性及紙碟含量亦會影響圈大小。', 'A zone supports local inhibition of visible growth. It does not prove complete killing, a specific mechanism or the best treatment. Diffusion and disc content also affect its size.'],
     ['没有外圍圈只表示本條件下未見抑菌作用；未知編碼樣本不使用共同圈大小界線判定臨床敏感或抗藥，也不能由一株菌推廣至所有 MRSA。', 'No outer zone means no inhibition was observed under these conditions. No common zone-size cutoff is used to classify the unknown samples clinically, and one strain cannot represent all MRSA.'],
     ['新平板的獨立重複可檢查一致性及變異。重新量度同一圈不是獨立重複；三次是課堂安排，不保證可靠。', 'Independent repeats on new plates check consistency and variation. Remeasuring one zone is not an independent repeat. Three tests are a classroom arrangement, not a guarantee of reliability.']
   ];
-  return `${learningDiagram(language)}<ul class="learning-list">${points.map(point => `<li>${esc(point[language === 'en' ? 1 : 0])}</li>`).join('')}</ul>`;
+  const review = [L.fact1, L.fact2, L.fact3, L.fact4];
+  const langIndex = language === 'en' ? 1 : 0;
+  return `<aside class="note learning-review"><h3>${esc(L.learningReview[langIndex])}</h3><ul class="learning-list">${review.map(point=>`<li>${esc(point[langIndex])}</li>`).join('')}</ul></aside>${learningDiagram(language)}<ul class="learning-list">${points.map(point => `<li>${esc(point[langIndex])}</li>`).join('')}</ul>`;
 }
 
 function reportGraph(record, language) {
@@ -172,7 +169,7 @@ export function renderReport(record, language = 'zh') {
   const submitted = !!record.submittedAt;
   const section = (title, content) => `<section class="report-section"><h2>${esc(title)}</h2><div class="report-card">${content}</div></section>`;
   const fields = keys => keys.map(field => reportAnswer(record, field, a[field], language)).join('');
-  const originalFields = ['observation','inference','comparison','prediction','controlPrediction','reason','otherHypothesis','iv','dv','cv','assumptions','controlPlan','designDescription','repeatChoice','plannedReplicates','plannedReplicateReason'];
+  const originalFields = ['observation','prediction','controlPrediction','reason','otherHypothesis','iv','dv','cv','assumptions','controlPlan','designDescription','repeatChoice','plannedReplicates','plannedReplicateReason'];
   const rows = (record.plates || []).flatMap(plate => SAMPLE_IDS.map(sample => {
     const reading = record.measurements?.[plate.id]?.[sample] || {}, start = reading.first || {}, last = reading.last || reading;
     const check = readingCheck(record, plate, sample, reading);
@@ -191,11 +188,11 @@ export function renderReport(record, language = 'zh') {
   return `<article class="vl4-report" lang="${language === 'en' ? 'en' : 'zh-Hant-HK'}"><header class="report-cover"><div class="report-brand">IBL · VL4 · ${t('生物','Biology')}</div><h1>${t('抗生素研究任務：哪些樣本能抑制細菌生長？','Antibiotic investigation: which samples inhibit bacterial growth?')}</h1><p>${t('個人學習紀錄','Personal learning record')}${record.demo ? ` · ${t('教師示範','Teacher demonstration')}` : ''}</p></header>
   <div class="report-meta"><span>${t('姓名','Name')}：${esc(record.profile?.name || '—')}</span><span>${t('班別及學號','Class and number')}：${esc(record.profile?.className || record.profile?.classInfo || '—')}</span><span>${t('電郵','Email')}：${esc(record.profile?.email || '—')}</span><span>${t('探究遞交','Inquiry submitted')}：${esc(dateText(record.submittedAt,language))}</span><span>${t('反思提交','Reflection submitted')}：${esc(dateText(record.reflectionSubmittedAt,language))}</span><span>${t('有效操作時間','Active time')}：${Math.floor(totalSeconds/60)} ${t('分','min')} ${totalSeconds%60} ${t('秒','s')}</span></div>
   <p class="simulation-note">${t('所有圖像與結果均為虛擬教學模擬，不能用作患者治療或臨床敏感性判定。歷史觀察是葡萄球菌，不是 MRSA；MRSA 首次正式報告於 1961 年。','All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming’s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.')}</p>
-  ${section(t('01 了解情境：觀察、推測及比較','01 Context: observation, inference and comparison'),fields(['observation','inference','comparison']))}
-  ${section(t('02 我的原始研究計劃（首次確認快照）','02 My original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的平板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
+  ${section(t('01 了解情境：你的初步觀察','01 Context: your initial observations'),fields(['observation']))}
+  ${section(t('02 你的原始研究計劃（首次確認快照）','02 Your original research plan (first confirmed snapshot)'),`<p>${t('保存時間','Captured')}：${esc(dateText(original.capturedAt,language))}</p>${originalFields.map(field=>reportAnswer(record,field,first[field],language,false)).join('')}${originalDesignImage}<p>${t('實際課堂安排：3 片分別準備的平板，每片含 X、Y、Z 及空白對照。學生原始建議與課堂安排分開保留；3 次不保證可靠。','Classroom arrangement: three separately prepared plates, each with X, Y, Z and a carrier control. The original proposal is retained separately; three tests do not guarantee reliability.')}</p>`)}
   ${section(t('02 最新設計、假說及對照','02 Latest setup, hypothesis and control'),fields(['prediction','controlPrediction','reason','otherHypothesis','iv','dv','cv','assumptions','controlPlan','designDescription','repeatChoice','plannedReplicates','plannedReplicateReason']) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ''))}
   ${section(t('03 三片獨立平板的觀察及量度','03 Observations and readings from independent plates'),`<p>${t('已產生結果的獨立平板數','Independent plates with generated results')}：${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter(plate=>plate.result).map(plate=>reportPlate(plate,language)).join('')}</div>${readingsTable}`)}
-  ${section(t('04 我的平均值及圖表','04 My means and chart'),meansTable + reportGraph(record,language) + `<p>${t('圖表確認時間','Chart confirmed')}：${esc(dateText(record.graph?.confirmedAt,language))}</p>`)}
+  ${section(t('04 你的平均值及圖表','04 Your means and chart'),meansTable + reportGraph(record,language) + `<p>${t('圖表確認時間','Chart confirmed')}：${esc(dateText(record.graph?.confirmedAt,language))}</p>`)}
   ${section(t('04 分析及結論','04 Analysis and conclusion'),fields(['analysisControl','analysisConsistent','analysisVariation','analysisMethod','analysisHypothesis','analysisRepeatPlan','analysisRepeatValue','analysisDeath','analysisClinical','conclusion']))}
   ${section(t('可選延伸：同一樣本的紙碟含量','Optional extension: disc content of one sample'),extensionHTML)}
   ${submitted ? section(t('遞交後的學習重點','Learning points after submission'),learningPointsHTML(language)+fields(['knowledgeBacteria','knowledgeResistance','knowledgeLimits'])) : ''}

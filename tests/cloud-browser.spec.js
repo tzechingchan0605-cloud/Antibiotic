@@ -166,8 +166,6 @@ test('isolated Google-origin bridge collects independent desktop/mobile inquirie
     const firstId = (await current(desktop)).id;
     const firstAnswer = '桌面探究：黴菌附近少或沒有可見細菌生長。';
     await desktop.locator('#observation').fill(firstAnswer);
-    await desktop.locator('#inference').fill('黴菌可能產生影響生長的物質。');
-    await desktop.locator('#comparison').fill('比較樣本與相同載體對照。');
     await desktop.locator('#orientationNext').click();
     await expect(desktop.locator('#phase-2')).toBeVisible();
     const imageBase64 = await desktop.evaluate(() => {

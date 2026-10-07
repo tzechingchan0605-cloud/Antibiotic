@@ -8,7 +8,7 @@ VL4 is a scaffolded inquiry activity for Hong Kong S4 students encountering anti
 
 | Time | Phase | Student decisions and evidence |
 | --- | --- | --- |
-| 0–7 min | 01 Understand the context / 了解情境 | Compare a labelled Fleming historical illustration; separate what is seen from possible explanations; propose a fair comparison. Distinguish historical staphylococci from the modern MRSA scenario. |
+| 0–7 min | 01 Understand the context / 了解情境 | View the labelled Fleming historical illustration and record initial observations using the same prompt as VL2. Distinguish historical staphylococci from the modern MRSA scenario. |
 | 7–20 min | 02 Design the investigation / 設計探究 | Predict which coded samples might affect visible growth without being required to rank unknown drugs; justify a carrier-only control and controlled variables; draw/upload or describe disc positions; explain a proposed number of independent repeats. Save the original design and repeat plan before showing the common three-plate classroom arrangement. |
 | 20–35 min | 03 Investigate and record / 進行實驗及記錄 | Prepare the first virtual plate, spread using plate-local coverage, rotate and revise uneven areas, position discs, and observe the fixed teaching result. Prepare independent plates 2 and 3, manually or using a stated standardized repeat. Measure and classify each sample on each plate, retaining first and latest confirmed readings. |
 | 35–46 min | 04 Analyse and conclude / 分析及結論 | Calculate means from the student's own readings, construct a bar chart, compare controls and repeats, evaluate the original hypothesis and repeat plan, and write an evidence-based conclusion with limits. |
@@ -18,12 +18,12 @@ For a 45-minute trial, shorten class discussion and ask for concise written resp
 
 ## Inquiry and scientific boundaries
 
-- Before the experiment, supply enough background to make a comparison possible without revealing the X/Y/Z model ranking. Students may proceed with a reasonable but unsupported prediction or an incorrect completed answer; gates check completeness and valid numeric format, not agreement with the reference answer.
+- Before the experiment, provide a brief MRSA terminology note. The four background facts appear in the learning review notes after submission, without revealing the X/Y/Z model ranking in advance. Students may proceed with a reasonable but unsupported prediction or an incorrect completed answer; gates check completeness and valid numeric format, not agreement with the reference answer.
 - Store the original hypothesis, reasons, design and proposed repeats separately from later answers. Three independently prepared classroom plates are an explicit shared arrangement, not a universal reliability threshold. Re-measuring one zone is not an independent repeat; three plates are not three patients or strains.
 - The coverage overlay is a virtual spreading aid, not instantly visible bacteria. A plate's outcomes remain fixed when revisited, remeasured, translated, or graphed. The simulation provides no physical MRSA inoculation, cultivation, concentration, temperature, or incubation-time protocol.
 - Record total inhibition-zone diameter through the disc centre, including the disc. With the 6 mm model disc, no visible zone beyond the disc is classified as no external inhibition zone and recorded as 6 mm, rather than zero.
 - An inhibition zone supports reduced visible growth under this model's conditions. It alone does not prove that every cell died, establish an antibiotic's mechanism, separate killing from growth inhibition, or select the best treatment for a patient. Different diffusion properties and disc contents limit between-drug comparisons. No common clinical susceptibility cutoff is applied to unknown coded samples.
-- Fleming's historical observation concerns mould and staphylococci in 1928, not an MRSA plate or an accidental drop of penicillin. MRSA belongs to the modern investigation context; the attached notes place its first formal report in 1961. Florey, Chain and their team subsequently advanced therapeutic penicillin use. Original SVG historical scenes are labelled as illustrations based on historical records.
+- Fleming's historical observation concerns mould and staphylococci in 1928, not an MRSA plate or an accidental drop of penicillin. MRSA belongs to the modern investigation context; the attached notes place its first formal report in 1961. Florey, Chain and their team subsequently advanced therapeutic penicillin use. A bilingual annotation overlay is prepared for the teacher-supplied plate photograph. Until the original PNG/JPG is available, `HISTORY_PHOTO_URL` is blank and the historical illustration is displayed with an illustration caption. The photo’s archival provenance has not been verified.
 
 ## Assessment and research limits
 
@@ -47,7 +47,7 @@ This rubric is an initial researcher's draft. Before longitudinal comparisons ac
 | agar | 瓊脂 |
 | colony | 菌落 |
 | bacterial lawn | 菌層 |
-| mould | 黴菌 |
+| Penicillium (a fungus) | 青黴菌（真菌） |
 | carrier-only control | 只含載體的對照 |
 | antibiotic resistance | 抗生素抗藥性 |
 | strain | 菌株 |

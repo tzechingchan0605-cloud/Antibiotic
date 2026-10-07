@@ -1,4 +1,5 @@
 import {language,t,setLanguage,translate} from './i18n.js';
+import {historyFigureMarkup,historyCaptionKey} from './history-figure.js';
 import {MODULE_ID,KEYS,SAMPLES,GRID,DEFAULT_POSITIONS,freshRecord,isTeacher,nowISO,clone,toPlatePoint,addCoverage,coverageFraction,placementIssue,generateResult,independentRepeat,validDecimal,validReplicates,confirmMeasurement,allMeasurements,captureOriginal,canonicalRecord} from './model.js';
 import {CLOUD_ENDPOINT} from './cloud-config.js';
 import {createCloudSync} from './cloud-sync.js';
@@ -14,8 +15,7 @@ function field(id,key,{options,type='textarea',optional=false,min,max,placeholde
 }
 const variables=[['sample','vSample'],['zone','vZone'],['strain','vStrain'],['distribution','vDistribution'],['medium','vMedium'],['disc','vDisc'],['preparation','vPreparation'],['observation','vObservation']];
 const multi=(name,options)=>`<div class="chip-grid">${options.map(([v,k])=>`<label class="choice"><input type="checkbox" data-multi="${name}" value="${v}">${span(k)}</label>`).join('')}</div>`;
-$('#orientationFields').innerHTML=field('observation','observation',{placeholder:'observationPH'})+field('inference','inference',{placeholder:'inferencePH'})+field('comparison','comparison',{placeholder:'comparisonPH'});
-$('#backgroundCards').innerHTML=[1,2,3,4].map(n=>`<article class="card"><span class="badge">0${n}</span><p data-i18n="fact${n}"></p></article>`).join('');
+$('#orientationFields').innerHTML=field('observation','observation',{placeholder:'observationPH'});
 $('#hypothesisFields').innerHTML=field('prediction','prediction',{options:[['all','all'],['some','some'],['none','none']]})+field('controlPrediction','controlPrediction')+field('reason','reason')+field('otherHypothesis','otherHypothesis',{optional:true});
 $('#variableFields').innerHTML=field('iv','iv',{options:variables})+`<p class="caption" data-i18n="ivHint"></p>`+field('dv','dv',{options:variables})+`<p class="caption" data-i18n="dvHint"></p><p class="field">${span('cv')}</p>`+multi('cv',variables)+`<p class="caption" data-i18n="cvHint"></p>`;
 $('#assumptionFields').innerHTML=multi('assumptions',[['distribution','assumptionDistribution'],['sterile','assumptionSterile'],['sameConditions','assumptionSame'],['death','assumptionDeath']]);
@@ -28,7 +28,9 @@ $('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('
 $('#graphInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('blank'):s}<input id="bar-${s}" data-bar="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" aria-label="${s} mm"></label>`).join('');
 $('#extensionFields').innerHTML=field('ext-prediction','extensionPrediction',{scope:'extension'})+field('ext-reason','reason',{scope:'extension'})+field('ext-fairComparison','fairComparison',{scope:'extension'})+`<button id="viewExtension" class="secondary" data-i18n="viewExtension"></button><div id="extensionResults"></div>`+field('ext-analysis','extensionAnalysis',{scope:'extension'});
 $('#materials').innerHTML=['Plate','Bacteria','Spreader','Discs','Tweezers','Incubator','Ruler','Flame'].map((k,i)=>`<article class="equipment"><span class="badge">0${i+1}</span><p data-i18n="material${k}"></p></article>`).join('');
-$('#historyFigure').innerHTML=`<svg viewBox="0 0 520 370" role="img" data-i18n-aria="history"><defs><radialGradient id="agarHistory"><stop stop-color="#faf3d7"/><stop offset="1" stop-color="#eadfbc"/></radialGradient></defs><ellipse cx="244" cy="181" rx="138" ry="129" fill="url(#agarHistory)" stroke="#b4c7b9" stroke-width="10"/><ellipse cx="244" cy="181" rx="126" ry="117" fill="none" stroke="#fff" stroke-width="3"/><circle cx="289" cy="174" r="52" fill="#faf4dc"/>${Array.from({length:45},(_,i)=>{const a=i*2.4,r=25+(i%8)*12,x=235+Math.cos(a)*r,y=179+Math.sin(a)*r;return Math.hypot(x-289,y-174)>57?`<circle cx="${x}" cy="${y}" r="${4+i%3}" fill="#cfb471" stroke="#b09a60"/>`:'';}).join('')}<path d="M278 153q15-17 29 1q20 2 14 18q5 22-19 21q-15 12-24-6q-18-6-10-21z" fill="#74a28a" stroke="#497d65" stroke-width="3"/><g fill="#42635b" font-size="14"><path d="M188.27 122.92L108 47H35M300 171L397 112H480M328 205L407 260H491M223 284L168 329H34" stroke="#7b9a88" fill="none"/><text x="35" y="35" data-i18n="colonies"></text><text x="394" y="99" data-i18n="mould"></text><text x="335" y="285" font-size="12"><tspan x="335" data-i18n="clearAreaLine1"></tspan><tspan x="335" dy="17" data-i18n="clearAreaLine2"></tspan></text><text x="35" y="349" data-i18n="agar"></text></g></svg>`;
+$('#historyFigure').innerHTML=historyFigureMarkup();
+$('#historyCaption').dataset.i18n=historyCaptionKey;
+$('#colonyMeaning').hidden=historyCaptionKey==='historyCaption';
 $('#neutralRuler').innerHTML=`<svg viewBox="0 0 300 100" role="img" data-i18n-aria="neutralExample"><circle cx="150" cy="45" r="28" fill="#fffaf0" stroke="#64867a"/><circle cx="150" cy="45" r="12" fill="white" stroke="#aaa"/><text x="150" y="49" text-anchor="middle" font-size="10">Q</text><path d="M122 80h56m-56-6v12m56-12v12" stroke="#087b78"/><text x="150" y="97" text-anchor="middle" font-size="12">14 mm</text></svg>`;
 translate();
 let state=null,plateIndex=0,tool=null,drawTool='pencil',gesture=null,drawing=false,drawn=false,animation=null,saveTimer=null,generation=0;
@@ -55,7 +57,7 @@ function showPhase(number){if(!state||number>state.unlocked)return;settleTime();
 $$('[data-phase]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.phase)));
 $$('[data-back]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.back)));
 function completeFields(ids){const bad=ids.find(id=>!String(state?.answers[id]??'').trim());if(bad){toast('required');$('#'+bad)?.focus();return false;}return true;}
-$('#orientationNext').onclick=()=>{if(!completeFields(['observation','inference','comparison']))return;state.unlocked=Math.max(2,state.unlocked);log('orientation_confirmed');showPhase(2);};
+$('#orientationNext').onclick=()=>{if(!completeFields(['observation']))return;state.unlocked=Math.max(2,state.unlocked);log('orientation_confirmed');showPhase(2);};
 $('#designNext').onclick=()=>{if(!completeFields(['prediction','controlPrediction','reason','iv','dv','controlPlan','repeatChoice','plannedReplicates','plannedReplicateReason']))return;if(!state.answers.cv.length||!state.answers.assumptions.length||!state.design.saved){toast('required');return;}if(!validReplicates(state.answers.plannedReplicates)){toast('required');$('#plannedReplicates').focus();return;}captureOriginal(state);state.plannedReplicates=state.original.plannedReplicates;state.plannedReplicateReason=state.original.plannedReplicateReason;state.unlocked=Math.max(3,state.unlocked);log('original_plan_saved',{plannedReplicates:state.original.plannedReplicates,actualReplicates:3});showPhase(3);};
 const canvas=$('#setupCanvas'),ctx=canvas.getContext('2d');
 function canvasPoint(e){const b=canvas.getBoundingClientRect();return{x:(e.clientX-b.left)*canvas.width/b.width,y:(e.clientY-b.top)*canvas.height/b.height};}

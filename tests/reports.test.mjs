@@ -29,17 +29,19 @@ test('local export filename cannot be confused with the complete class export',(
 test('student reports are fully bilingual, preserve original/latest evidence and do not display scores',()=>{
   const record=fixture(),before=structuredClone(record);
   const zh=renderReport(record),en=renderReport(record,'en');
-  assert.match(zh,/我的原始研究計劃/);assert.match(en,/My original research plan/);
+  assert.match(zh,/你的原始研究計劃/);assert.match(en,/Your original research plan/);
+  assert.match(zh,/學習重溫備註/);assert.match(en,/Learning review notes/);
   assert.match(zh,/原始假說|原始研究/);assert.match(en,/Independent variable/);
   assert.match(en,/Dependent variable/);assert.match(en,/Controlled variables/);
   for(const html of [zh,en]){
     for(const text of ['Original reason 原文','Latest reason 保留原文','Original repeat reason.','plate-1','plate-2','plate-3','首次備註','最後備註','反思原文'])assert.ok(html.includes(text),text);
     assert.match(html,/&lt;script&gt;alert\(1\)&lt;\/script&gt;/);assert.doesNotMatch(html,/<script>/);
+    assert.doesNotMatch(html,/My original inference\.|Compare with no mould\./);
     assert.match(html,/data:image\/png;base64/);assert.match(html,/<svg/);
     assert.doesNotMatch(html,/教師評分|整體總分|SPS 總分|0–32|overall score|SPS score/i);
   }
   assert.match(zh,/class="check correct"/);assert.match(en,/Matches reference/);
-  assert.doesNotMatch(en,/我的原始研究計劃|抑菌圈總直徑包括紙碟|學生平板位置及實驗設計圖/);
+  assert.doesNotMatch(en,/你的原始研究計劃|抑菌圈總直徑包括紙碟|學生平板位置及實驗設計圖/);
   assert.match(learningDiagram('en'),/Nucleic acid synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
   assert.deepEqual(record,before,'rendering never mutates record, images, answers, event history or timing');
 });
@@ -48,7 +50,7 @@ test('reference answers and objective marks are withheld until inquiry submissio
   const record=fixture();record.submittedAt=null;record.reflectionSubmittedAt=null;
   const html=renderReport(record,'en');
   assert.doesNotMatch(html,/class="check (correct|incorrect)"/);
-  assert.doesNotMatch(html,/Reference:|Learning points after submission|In this model, X and Z/);
+  assert.doesNotMatch(html,/Reference:|Learning points after submission|Learning review notes|In this model, X and Z/);
   record.submittedAt=at;record.answers.iv='zone';
   assert.match(renderReport(record,'en'),/class="check incorrect"/);
 });
@@ -110,8 +112,8 @@ test('actual XLSX has six Chinese sheets, twelve readings, images, snapshots, ev
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicates｜原始建議')).value,2);
   assert.equal(answers.getCell(2,headerIndex(answers,'plannedReplicateReason｜原始理由')).value,'Original repeat reason.');
   assert.equal(answers.getCell(2,headerIndex(answers,'actualReplicates｜獨立平板數')).value,3);
-  assert.equal(answers.getCell(2,headerIndex(answers,'原始｜我預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'都不會');
-  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜我預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'部分');
+  assert.equal(answers.getCell(2,headerIndex(answers,'原始｜你預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'都不會');
+  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜你預測哪些樣本會出現紙碟外的可見抑菌圈？')).value,'部分');
   assert.equal(data.getCell('F2').value,20);assert.equal(data.getCell('J2').value,18);
   assert.equal(data.getCell('M2').value,18);assert.equal(data.getCell('P2').value,18);
   const manual=SCORE_COLUMNS.filter(column=>column.manual);
