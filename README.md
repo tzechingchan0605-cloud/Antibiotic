@@ -14,9 +14,9 @@ npm run build
 npm start
 ```
 
-The static server uses port 4173; set `PORT` to choose another port. Open the server with your hosting platform's normal browser access. In this cloud workspace, `bash scripts/install.sh` uses the shared writable `/workspace/.npm-cache`. The prepared ZIP already includes `app.bundle.js`; it can also be served with `python3 -m http.server 4173` without installing Node. Serve over HTTP(S), rather than double-clicking `index.html`.
+The static server uses port 4173; set `PORT` to choose another port. Open the server with your hosting platform's normal browser access. In this cloud workspace, `bash scripts/install.sh` uses the shared writable `/workspace/.npm-cache`. The built static files can also be served with `python3 -m http.server 4173` without installing Node. Serve over HTTP(S), rather than double-clicking `index.html`.
 
-For static hosting, deploy `index.html`, `styles.css`, the `assets/` folder and the built `app.bundle.js`. The repository includes the prebuilt bundle. When changing the cloud endpoint or any JavaScript source, run `npm run build`, commit the updated bundle and republish it. Filesystem setup and a running local server do not publish the site.
+For static hosting, deploy `index.html`, `styles.css`, the `assets/` folder and the `app.bundle*.js` files. The repository includes prebuilt files. `npm run build` writes a bundle with a content hash in its filename and updates the matching import in `index.html`; this prevents cached JavaScript from being paired with newer page markup. When changing the cloud endpoint or any JavaScript source, rebuild and commit the updated HTML, versioned bundle, compatibility bundle and source map together. Keep previously published versioned bundles available for cached HTML. `.nojekyll` serves the project as static files on GitHub Pages. If startup fails, the page displays a reload button without clearing saved records. Filesystem setup and a running local server do not publish the site.
 
 ## Student workflow
 

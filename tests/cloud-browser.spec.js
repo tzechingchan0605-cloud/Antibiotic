@@ -54,7 +54,7 @@ async function installIsolatedRoutes(context, service, bundle) {
   await context.route('**/*', async route => {
     const request = route.request(), url = new URL(request.url());
     if (url.origin === APP_ORIGIN) {
-      if (url.pathname === '/app.bundle.js') {
+      if (/^\/app\.bundle(?:\.[a-f0-9]{12})?\.js$/.test(url.pathname)) {
         await route.fulfill({ status: 200, contentType: 'text/javascript; charset=utf-8', body: bundle });
       } else await route.continue();
       return;

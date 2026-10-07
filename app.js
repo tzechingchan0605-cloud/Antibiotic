@@ -29,8 +29,11 @@ $('#graphInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span(
 $('#extensionFields').innerHTML=field('ext-prediction','extensionPrediction',{scope:'extension'})+field('ext-reason','reason',{scope:'extension'})+field('ext-fairComparison','fairComparison',{scope:'extension'})+`<button id="viewExtension" class="secondary" data-i18n="viewExtension"></button><div id="extensionResults"></div>`+field('ext-analysis','extensionAnalysis',{scope:'extension'});
 $('#materials').innerHTML=['Plate','Bacteria','Spreader','Discs','Tweezers','Incubator','Ruler','Flame'].map((k,i)=>`<article class="equipment"><span class="badge">0${i+1}</span><p data-i18n="material${k}"></p></article>`).join('');
 $('#historyFigure').innerHTML=historyFigureMarkup();
-$('#historyCaption').dataset.i18n=historyCaptionKey;
-$('#colonyMeaning').hidden=historyCaptionKey==='historyCaption';
+// Older cached HTML has these paragraphs without their newer IDs.
+const historyCaption=$('#historyCaption')||$('#historyFigure + .caption');
+if(historyCaption)historyCaption.dataset.i18n=historyCaptionKey;
+const colonyMeaning=$('#colonyMeaning')||$('[data-i18n="colonyRemark"]');
+if(colonyMeaning)colonyMeaning.hidden=historyCaptionKey==='historyCaption';
 $('#neutralRuler').innerHTML=`<svg viewBox="0 0 300 100" role="img" data-i18n-aria="neutralExample"><circle cx="150" cy="45" r="28" fill="#fffaf0" stroke="#64867a"/><circle cx="150" cy="45" r="12" fill="white" stroke="#aaa"/><text x="150" y="49" text-anchor="middle" font-size="10">Q</text><path d="M122 80h56m-56-6v12m56-12v12" stroke="#087b78"/><text x="150" y="97" text-anchor="middle" font-size="12">14 mm</text></svg>`;
 translate();
 let state=null,plateIndex=0,tool=null,drawTool='pencil',gesture=null,drawing=false,drawn=false,animation=null,saveTimer=null,generation=0;

@@ -1,7 +1,21 @@
 <!doctype html>
-<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css"><script type="module" src="app.bundle.js"></script></head>
+<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css"><script type="module" data-vl4-app>
+document.getElementById('startupReload').addEventListener('click', () => {
+  const next = new URL(window.location.href);
+  next.searchParams.set('reload', Date.now());
+  window.location.replace(next.href);
+});
+import('./app.bundle.1c228412967f.js').then(() => {
+  document.getElementById('startupPanel')?.remove();
+}).catch(error => {
+  console.error('VL4 could not start', error);
+  document.getElementById('startupStatus').textContent = '載入未完成，請重新載入再試。 / Loading failed. Please reload and try again.';
+  document.getElementById('startupReload').hidden = false;
+});
+</script></head>
 <body><a class="skip-link" href="#main" data-i18n="skip">跳到探究內容</a><div class="app-shell">
 <header class="topbar"><a class="brand" href="#main"><span class="brand-mark" aria-hidden="true">✦</span><span data-i18n="brand">探究實驗室</span></a><span class="module-label" data-i18n="module">S4 生物 · 模組 4</span><div class="student-chip"><button type="button" class="language-button" data-language>中文 / English</button><span id="studentName"></span><button id="teacherBack" class="small-button" hidden data-i18n="teacherBack"></button><button id="accountButton" class="small-button" data-i18n="account"></button></div></header>
+<section id="startupPanel" class="note" aria-live="polite"><p id="startupStatus" role="status">正在載入虛擬實驗室…… / Loading the virtual laboratory…</p><button id="startupReload" type="button" class="secondary" hidden>重新載入 / Reload</button><noscript>請啟用 JavaScript 以使用虛擬實驗室。 / Enable JavaScript to use the laboratory.</noscript></section>
 <section class="cloud-strip"><p class="cloud-status" role="status" id="cloudStatus"></p><button class="secondary" id="retryCloud" data-i18n="retry"></button></section>
 <main id="main" hidden>
 <section class="hero"><div><p class="eyebrow" data-i18n="eyebrow"></p><h1><span data-i18n="title"></span><br><em data-i18n="subtitle"></em></h1><p class="hero-copy" data-i18n="intro"></p></div><aside class="mission-card"><span class="mission-icon" aria-hidden="true">⌘</span><div><strong data-i18n="task"></strong><p data-i18n="mission"></p><span class="tag" data-i18n="skills"></span></div></aside></section>
