@@ -4,7 +4,7 @@ Validation was performed in the actual cloud workspace on 7 October 2026 (Hong K
 
 Validation result: **39 Node tests + all 13 browser cases passed**, including eight workflow cases, the isolated multi-browser collector case and four startup regression cases. The complete browser run passed in 33.7 seconds. The context revision was checked in Chinese, English and at 360 px: only the initial observation is required to continue, the two removed questions are absent from the interface and reports, and the four background facts appear in the learning review notes after submission.
 
-The latest revision adopts the five numbered VL2 design panels and their answer controls. Chinese and English context/design views were inspected, including 360 px widths. The supplied photo has plain label lines with horizontal structure segments and no arrowheads; the label now reads 清晰區（沒有可見細菌生長的區域）. Current interface/report/rubric terms use 清晰區 and 菌落, and describe the same type of bacteria without the term 菌株. A carrier explanation is shown beneath the control question. The requested disclaimers, JSON download button and two extra hypothesis fields are removed. Array-based variable answers preserve original snapshots and grade correctly, while legacy scalar answers remain readable.
+The latest revision adopts the five numbered VL2 design panels and their answer controls. Chinese and English context/design views were inspected, including 360 px widths. The supplied photo has plain label lines with horizontal label ends and no arrowheads, following the teacher’s latest annotated screenshot; the label now reads 清晰區（沒有可見細菌生長的區域）. Current interface/report/rubric terms use 清晰區 and 菌落, and describe the same type of bacteria without the term 菌株. A carrier explanation is shown beneath the control question. The requested disclaimers, JSON download button and two extra hypothesis fields are removed. Array-based variable answers preserve original snapshots and grade correctly, while legacy scalar answers remain readable.
 
 ## Executed checks
 
@@ -42,3 +42,7 @@ Screenshots and PDF artifacts under `artifacts/` use generated test identities a
 ## Original repeat-plan wording follow-up
 
 Removed the yes/no repeat question from the interface, completion gate, reports and spreadsheet question columns. The count question now identifies X, Y, Z and the control; the reason question uses the requested wording. Neither answer field has the generic evidence placeholder. English wording is synchronized, and stored original counts/reasons are retained. Validation: build, all 39 Node tests and 3 targeted desktop/completion-gate/mobile browser cases passed.
+
+## Teacher-annotated photo label routing
+
+The three leader lines follow the teacher’s yellow routes in the latest screenshot: horizontal ends near the labels and direct diagonals toward the photographed features. Removed perimeter detours and moved the colony endpoint to the lower white colony (photo coordinates 141.4, 312.2). English explanatory text wraps clear of the leader line. The source photo remains unchanged. Build, bilingual visual review and the desktop inquiry/PDF plus 360 px mobile browser cases passed.

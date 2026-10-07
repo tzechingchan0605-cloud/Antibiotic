@@ -2,6 +2,6 @@
 
 `alexander-fleming-petri-dish-penicillin.jpg` is the photograph uploaded by the teacher to GitHub (352 × 347 pixels). The original image file is used unchanged.
 
-`history-figure.js` supplies separate bilingual SVG labels for Penicillium (a fungus), the clear zone (a region with no visible bacterial growth) near it, and bacterial colonies with a brief definition. These labels switch with the interface language. Plain label lines have no arrowheads and start horizontally at the fungus, clear zone and an individual colony. Their endpoints are positioned for this image; check them again if replacing the photograph.
+`history-figure.js` supplies separate bilingual SVG labels for Penicillium (a fungus), the clear zone (a region with no visible bacterial growth) near it, and bacterial colonies with a brief definition. These labels switch with the interface language. Plain label lines have no arrowheads and have horizontal label ends and diagonal segments ending at the fungus, clear zone and a lower colony, following the teacher’s annotated screenshot. Their endpoints are positioned for this image; check them again if replacing the photograph.
 
 Include the `assets/` folder when deploying the static site. The caption identifies this as the supplied photograph; its archival provenance has not been independently verified.

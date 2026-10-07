@@ -29,7 +29,7 @@ export const L={
  completePrediction:pair('完成你的預測','Complete your prediction'),
  designStep1:pair('01 · 假說建立器','01 · Hypothesis builder'),
  clearAreaTerm:pair('清晰區','Clear zone'),
- progressNav:pair('探究進度','Inquiry progress'),zoom:pair('放大量度視圖','Magnify measurement view'),zoomOut:pair('顯示整個平板','Show whole plate'),clearAreaLine1:pair('（沒有可見細菌生長','(region with no visible'),clearAreaLine2:pair('的區域）','bacterial growth)'),
+ progressNav:pair('探究進度','Inquiry progress'),zoom:pair('放大量度視圖','Magnify measurement view'),zoomOut:pair('顯示整個平板','Show whole plate'),clearAreaLine1:pair('（沒有可見細菌生長','(no visible bacterial'),clearAreaLine2:pair('的區域）','growth)'),
  imageError:pair('圖片未能讀取；請使用有效 PNG、JPEG 或 WebP 圖片（不超過 8 MB）。','The image could not be read. Use a valid PNG, JPEG or WebP image (up to 8 MB).'),
  extensionPrediction:pair('你預測同一樣本的紙碟含量增加時，清晰區總直徑會怎樣改變？','What do you predict will happen to the total zone diameter as the disc content of the same sample increases?'),
  brand:pair('探究實驗室','Inquiry Laboratory'),module:pair('S4 生物 · 模組 4','S4 Biology · Module 4'),

@@ -4,8 +4,9 @@ export const historyCaptionKey = HISTORY_PHOTO_URL ? 'historyCaption' : 'history
 export function historyFigureMarkup() {
   if (HISTORY_PHOTO_URL) {
     // Points are tied to the unchanged 352 × 347 photo at (44, 90).
-    // Each path starts on the structure with a horizontal segment; no arrowheads.
-    const leaders = ['M207 146H80L150 38', 'M252 179H417L390 82', 'M366 240H417V459H104'];
+    // Follow the teacher’s annotated routing: horizontal label ends, then a direct
+    // diagonal to the photographed structure, without arrowheads or perimeter detours.
+    const leaders = ['M86 55H140L198 143', 'M337 58H303L267 188', 'M104 459H140L185.4 402.2'];
     const paths = leaders.map(d => `<path d="${d}"/>`).join('');
     return `<svg viewBox="0 0 440 536" role="img" data-i18n-aria="historyPhotoAlt">
       <image href="${HISTORY_PHOTO_URL}" x="44" y="90" width="352" height="347" preserveAspectRatio="xMidYMid meet"/>
