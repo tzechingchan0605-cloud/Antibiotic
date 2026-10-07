@@ -1,3 +1,4 @@
+import {MC_QUESTIONS,currentAnalysis,analysisChecks} from './analysis.js';
 // Draft criteria for teaching/research review; not a validated psychometric instrument.
 import {clearZoneDiameter} from './model.js';
 export const TOLERANCES = Object.freeze({ reading: 1, mean: 0.1, graph: 0.5 });
@@ -35,7 +36,7 @@ export function graphCheck(record, sample) {
 export function objectiveChecks(record) {
   const a = record.answers || {};
   const variableCheck=(value,expected)=>Array.isArray(value)?(value.length?sameChoices(value,[expected]):null):(value?value===expected:null);
-  return { iv: variableCheck(a.iv,'sample'), dv: variableCheck(a.dv,'zone'),
+  return { ...analysisChecks(record), iv: variableCheck(a.iv,'sample'), dv: variableCheck(a.dv,'zone'),
     cv: a.cv?.length ? sameChoices(a.cv, controlVariableReference(record)) : null,
     assumptions: a.assumptions?.length ? sameChoices(a.assumptions, ASSUMPTION_REFERENCE) : null,
     analysisDeath: a.analysisDeath ? a.analysisDeath === 'cannot' : null,
@@ -86,12 +87,14 @@ export function automaticScores(record) {
   const accurate = plates.flatMap(plate => SAMPLE_IDS.map(sample => readingCheck(record, plate, sample, record.measurements?.[plate.id]?.[sample]))).filter(check => check === true).length;
   const cv = Array.isArray(a.cv) ? a.cv : [], cvReference=controlVariableReference(record);
   const validCV = cv.every(value => cvReference.includes(value)) && new Set(cv).size === cv.length;
-  return { readings: roundScore(Math.min(12, accurate) / 12 * 2), iv: checks.iv ? 1 : 0, dv: checks.dv ? 1 : 0,
+  const scores = { readings: roundScore(Math.min(12, accurate) / 12 * 2), iv: checks.iv ? 1 : 0, dv: checks.dv ? 1 : 0,
     cv: validCV ? roundScore(cvReference.filter(value => cv.includes(value)).length / cvReference.length * 2) : 0,
     assumptions: checks.assumptions ? 1 : 0,
     means: SAMPLE_IDS.filter(sample => meanCheck(record, sample) === true).length / 4,
     deathLimit: checks.analysisDeath ? 0.5 : 0, clinicalLimit: checks.analysisClinical ? 0.5 : 0,
     graph: SAMPLE_IDS.filter(sample => graphCheck(record, sample) === true).length / 2 };
+  if(currentAnalysis(record)){delete scores.deathLimit;delete scores.clinicalLimit;delete scores.graph;for(const question of MC_QUESTIONS)scores[question.id]=checks[question.id]?1:0;}
+  return scores;
 }
 
 export const RUBRIC_ROWS = [
@@ -114,4 +117,20 @@ export const RUBRIC_ROWS = [
   ['新知識｜清晰區與重複限制', 2, '教師', '說明局部可見生長受抑制，不證明全部死亡或最佳治療；重複檢查一致性，不保證可靠，擴散／紙碟含量亦影響。', '1：至少正確說明一項推論限制或重複價值，但不完整。', '0：無可評內容／把 3 次當成可靠保證。', 'knowledge'],
   ['新知識｜修訂原始解釋', 2, '教師', '比較原始假說及重複計劃，引用樣本／對照和獨立重複數據，以學習重點修訂／完善，交代仍不能確定甚麼。', '1：有修訂或判斷，但缺少數據／概念連結。', '0：只抄知識，未對照原有想法，或無可評反思。', 'knowledge'],
   ['總分及待評狀態', 32, '公式', '六項 SPS 各 4＝24，四項新知識各 2＝8；12 個必要人工評分格填完且反思已提交，才顯示整體總分。', '人工格空白＝待評，填 0＝已評零分；分數只保存於教師保存的 Excel。', '不把操作次數、速度、時間或完成率直接換算能力。此 rubric 待試教及跨 VL 校準。', 'score']
+];
+
+// Revised analysis removes chart/free-text tasks. Legacy records keep their original rubric.
+export const CURRENT_SCORE_COLUMNS = [
+  ...SCORE_COLUMNS.filter(column=>['observation','readings','iv','dv','cv','hypothesis','repeat','control','assumptions','designQuality','means'].includes(column.id)),
+  ...MC_QUESTIONS.map(question=>({id:question.id,label:`分析｜第 ${question.number} 題（自動）`,group:'inferring',max:1})),
+  {id:'selectedConclusion',label:'結論｜樣本選擇及排序（教師）',group:'communicating',max:1,manual:true},
+  {id:'reflection',label:'反思｜以證據完善原始解釋（教師）',group:'knowledge',max:2,manual:true},
+  {id:'overall',label:'新版整體總分（23）',group:'score',max:23,formula:['observation','readings','iv','dv','cv','hypothesis','repeat','control','assumptions','designQuality','means',...MC_QUESTIONS.map(question=>question.id),'selectedConclusion','reflection']},
+  {id:'marking',label:'評分狀態',group:'score'}
+];
+export const CURRENT_RUBRIC_ROWS = [
+  ...RUBRIC_ROWS.filter(row=>['觀察｜初步觀察','觀察｜直徑及紙碟外清晰區','分類｜獨立變量／因變量／控制變量','設計｜可測試假說及理由','設計｜原始重複安排理由','設計｜對照理由','設計｜探究假設','實作｜瓊脂板設計品質','推論｜平均值','新知識｜修訂原始解釋'].includes(row[0])).map(row=>row[0]==='新知識｜修訂原始解釋'?['反思｜以證據完善原始解釋',...row.slice(1)]:row),
+  ...MC_QUESTIONS.map(question=>[`分析｜第 ${question.number} 題：${question.id}`,1,'自動',`參考選項：${String.fromCharCode(65+question.options.findIndex(([value])=>value===question.correct))}。`,'本題不設部分分。','錯選或未答 0。','inferring']),
+  ['結論｜樣本選擇及排序',1,'教師','根據自己的三次觀察及平均值選擇有清晰區的樣本，合理排序，不使用的項目選不適用。只比較本次模擬條件。','0.5：樣本或排序有一項正確，另一項與自身數據不符。','0：沒有可評結論，或樣本與排序均不符自身數據。數據相同時不以未能作嚴格排序扣分。','communicating'],
+  ['新版總分及待評狀態',23,'公式','沿用設計及量度準則；新增五題各 1 分、選填結論 1 分、反思 2 分。七個人工格填完且反思已提交才顯示總分。','刪除圖表及舊分析題的評分；新版與舊版分開，不直接比較兩版總分。','此準則為試教草案，需配合題目改動校準；不把操作速度、次數或完成率換算能力。','score']
 ];

@@ -1,9 +1,10 @@
+import {MC_QUESTIONS} from '../analysis.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import ExcelJS from 'exceljs';
 import JSZip from 'jszip';
 import { buildWorkbook, renderReport, openPrintReport, reportFilename, learningDiagram, workbookFilename } from '../reports.js';
-import { automaticScores, objectiveChecks, meanCheck, graphCheck, readingCheck, SCORE_COLUMNS } from '../rubric.js';
+import { automaticScores, objectiveChecks, meanCheck, graphCheck, readingCheck, SCORE_COLUMNS, CURRENT_SCORE_COLUMNS } from '../rubric.js';
 
 const PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlS8AAAAASUVORK5CYII=';
 const at='2026-10-07T04:00:00Z';
@@ -30,7 +31,11 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   const record=fixture(),before=structuredClone(record);
   const zh=renderReport(record),en=renderReport(record,'en');
   assert.match(zh,/你的原始研究計劃/);assert.match(en,/Your original research plan/);
-  assert.match(zh,/學習重溫備註/);assert.match(en,/Learning review notes/);
+  assert.doesNotMatch(zh,/學習重溫備註/);assert.doesNotMatch(en,/Learning review notes/);
+  assert.match(zh,/實驗原理：抗生素樣本的擴散與清晰區的形成/);assert.match(en,/antibiotic diffusion and clear-zone formation/);
+  assert.match(zh,/① 紙碟承載抗生素/);assert.match(zh,/② 抗生素向瓊脂擴散/);assert.match(zh,/③ 抗生素抑制細菌生長/);
+  assert.match(zh,/離紙碟越遠，濃度通常越低/);assert.match(en,/concentration generally decreases with distance/);
+  assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic overuse or misuse/);
   assert.match(zh,/C（對照）/);assert.match(en,/C \(control\)/);
   assert.match(zh,/原始假說|原始研究/);assert.match(en,/Independent variable/);
   assert.match(en,/Dependent variable/);assert.match(en,/Controlled variables/);
@@ -164,4 +169,51 @@ test('same record exported from either UI language has identical worksheet data,
   for(const name of Object.keys(zhZip.files).filter(name=>/^xl\/(worksheets|drawings|media|sharedStrings|styles)/.test(name)&&!zhZip.files[name].dir)){
     assert.deepEqual(await zhZip.file(name).async('uint8array'),await enZip.file(name).async('uint8array'),name);
   }
+});
+
+function currentFixture(id='new-student') {
+  const record=fixture(id);record.analysisVersion=2;
+  record.answers={...record.answers,...Object.fromEntries(MC_QUESTIONS.map(question=>[question.id,question.correct])),effectiveSamples:'X_Z',rank1:'Z',rank2:'X',rank3:'na',rank4:'na'};
+  // Keep old fields as migration evidence; they must not be rendered or scored on the new version.
+  return record;
+}
+test('revised reports and XLSX retain evidence, include five MCs/conclusion, and exclude removed tasks',async()=>{
+ const record=currentFixture(),before=structuredClone(record);
+ for(const lang of ['zh','en']){
+  const report=renderReport(record,lang);
+  assert.doesNotMatch(report,/report-graph|bar chart|棒形圖|Optional extension|可選延伸|Learning review notes|學習重溫備註|Control has no outer zone/);
+  assert.match(report,/Z ＞ X ＞/);assert.match(report,/MRSA/);
+  assert.match(report,lang==='en'?/Not applicable/:/不適用/);
+  assert.match(report,lang==='en'?/selection pressure/:/選擇壓力/);
+  assert.match(report,lang==='en'?/patient factors/:/患者情況/);
+ }
+ const auto=automaticScores(record);
+ assert.equal(auto.graph,undefined);assert.equal(auto.deathLimit,undefined);
+ for(const question of MC_QUESTIONS)assert.equal(auto[question.id],1);
+ record.answers.zoneMeaning='death';assert.equal(automaticScores(record).zoneMeaning,0);
+ const workbook=await buildWorkbook([record]);
+ const data=workbook.getWorksheet('量度與計算'),scores=workbook.getWorksheet('教師評分'),answers=workbook.getWorksheet('學生探究答案');
+ assert.equal(data.columnCount,18);assert.equal(data.rowCount,13);
+ assert.doesNotMatch(JSON.stringify(answers.getRow(1).values),/延伸|最大清晰區是否|生長情況如何/);
+ const mcCell=scores.getCell(2,headerIndex(scores,'分析｜第 1 題（自動）（0–1）'));assert.equal(mcCell.value,0);
+ const overall=scores.getCell(2,headerIndex(scores,'新版整體總分（23）（0–23）'));
+ assert.match(overall.formula,/=7/);assert.match(overall.formula,/D2="已完成"/);
+ assert.equal(CURRENT_SCORE_COLUMNS.filter(column=>column.manual).length,7);
+ assert.equal(CURRENT_SCORE_COLUMNS.filter(column=>column.max!==undefined&&!column.formula).reduce((sum,column)=>sum+column.max,0),23);
+ const conclusion=scores.getCell(2,headerIndex(scores,'結論｜樣本選擇及排序（教師）（0–1）'));assert.equal(conclusion.value,null);
+ assert.equal(answers.getCell(2,headerIndex(answers,'最新｜排序第 3 項')).value,'不適用');
+ const zip=await JSZip.loadAsync(await workbook.xlsx.writeBuffer());
+ assert.ok(zip.file('xl/worksheets/sheet3.xml'));
+ record.answers.zoneMeaning='inhibition';assert.deepEqual(record,before);
+});
+test('mixed assessment versions keep separate score sheets without dropping old answers or changing records',async()=>{
+ const old=fixture('old-student'),current=currentFixture(),before=structuredClone([old,current]);
+ const workbook=await buildWorkbook([old,current]);
+ assert.equal(workbook.getWorksheet('教師評分').getCell('A2').value,'old-student');
+ assert.equal(workbook.getWorksheet('教師評分（新版）').getCell('A2').value,'new-student');
+ const answers=workbook.getWorksheet('學生探究答案');
+ assert.equal(answers.rowCount,3);
+ assert.equal(answers.getCell(2,headerIndex(answers,'最新｜C（對照）的生長情況如何？它提供甚麼比較基礎？')).value,'Control has no outer zone.');
+ assert.equal(answers.getCell(3,headerIndex(answers,'最新｜排序第 1 項')).value,'Z');
+ assert.deepEqual([old,current],before);
 });

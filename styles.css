@@ -550,3 +550,21 @@ dialog::backdrop { background: #17392dcc; backdrop-filter: blur(5px); }
 }
 
 .history-source a { overflow-wrap: anywhere; }
+
+/* Analysis choices use one stable value per answer in both languages. */
+.analysis-question{margin:1.7rem 0;padding:1.2rem;border:1px solid var(--line);border-radius:14px;min-width:0}
+.analysis-question legend{font-weight:700;padding:0 .5rem;max-width:100%;line-height:1.7}
+.question-number{display:inline-flex;justify-content:center;align-items:center;min-width:1.8rem;height:1.8rem;border-radius:50%;background:var(--teal);color:white;margin-right:.4rem}
+.mc-options{display:grid;gap:.65rem}.mc-option{display:flex;align-items:flex-start;gap:.65rem;padding:.85rem;border:1px solid var(--line);border-radius:10px;cursor:pointer;line-height:1.65}
+.mc-option:has(input:checked){background:#edf7f2;border-color:var(--teal)}.mc-option:has(input:focus-visible){outline:3px solid #e7b36b;outline-offset:2px}
+.mc-option input{flex:none;width:18px;height:18px;margin-top:.3rem;accent-color:var(--teal)}.mc-letter{font-weight:700;color:var(--teal)}
+.conclusion-sentence{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;line-height:1.8}.conclusion-sentence select{width:auto;min-width:130px;max-width:100%}
+.conclusion-ranking{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem}.conclusion-ranking select{width:auto;min-width:115px;flex:1;max-width:200px}
+@media(max-width:600px){.analysis-question{padding:.85rem}.mc-option{padding:.7rem}.conclusion-ranking{display:flex;flex-direction:column;align-items:stretch}.conclusion-ranking select{min-width:0;width:100%;max-width:none}.conclusion-ranking>span{align-self:center;transform:rotate(90deg);line-height:1}}
+.conclusion-question select{min-height:44px;padding:10px 12px;border:1px solid #c7dad0;border-radius:9px;color:var(--ink);background:#fffefa;font-size:14px}
+
+
+#learningSection [data-i18n="learning"]{font-size:1.6rem;font-weight:750;letter-spacing:0;line-height:1.4}
+
+.science-diagram{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;overflow:visible}.science-diagram svg{min-width:0;width:100%;height:auto}.learning-figure{margin:0;padding:15px;border:1px solid #bddfd8;border-radius:14px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:16px;font-weight:700;line-height:1.6;color:var(--ink)}.learning-figure:nth-child(2){background:#f4f7fc;border-color:#c8d7ea}
+@media(max-width:700px){.science-diagram{grid-template-columns:1fr}}

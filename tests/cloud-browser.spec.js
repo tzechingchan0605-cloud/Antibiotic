@@ -257,7 +257,7 @@ test('isolated Google-origin bridge collects independent desktop/mobile inquirie
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile(await download.path());
     expect(workbook.worksheets.map(sheet => sheet.name)).toEqual([
-      '學生探究答案', '量度計算與圖表', '教師評分', '評分準則', '操作事件紀錄', '裝置設計圖']);
+      '學生探究答案', '量度與計算', '教師評分', '評分準則', '操作事件紀錄', '裝置設計圖']);
     const answers = workbook.getWorksheet('學生探究答案');
     expect(answers.rowCount).toBe(4);
     expect(answers.getColumn(1).values.slice(2)).toEqual([firstId, mobileId, secondId]);

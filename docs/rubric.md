@@ -1,47 +1,38 @@
 # VL4 評分準則初稿 / Draft assessment rubric
 
-這份準則供首次試教及研究者檢閱，尚未驗證。正式比較不同 VL 前，需統一準則、配分及評分者校準。本文件與 `rubric.js` 的 Excel 評分準則同步；教師只能在匯出的 Excel 內評分，學生介面和 PDF 不顯示分數。
+這份準則供試教及研究者檢閱，尚未驗證；學生介面及 PDF 不顯示分數。改題後新版與舊版分開，不能直接比較總分。教師在匯出的 Excel 評分。
 
-This draft requires pilot teaching and calibration across VLs and assessors. It is not a validated instrument. Scores exist only in the exported teacher workbook; student pages and reports contain no scores.
+## 新版分析（analysisVersion: 2）
 
-| SPS 類別 | 4 分的組成 |
-| --- | --- |
-| 觀察 | 初步觀察（教師 2）；直徑和紙碟外有無圈（自動 2） |
-| 分類 | 獨立變量（自動 1）；因變量（自動 1）；五項控制變量（自動 2） |
-| 設計探究 | 可測試假說及理由（教師 1）；原始重複理由（教師 1）；對照理由（教師 1）；探究假設（自動 1） |
-| 進行實驗 | 瓊脂板設計品質（教師 2）；依結果檢查及改善方法（教師 2） |
-| 推論 | 自己的平均值（自動 1）；死亡及臨床限制（自動 1）；對照與獨立重複的書面證據（教師 2） |
-| 溝通 | 棒高與自己的平均值（自動 2）；書面表達（教師 2） |
+| 評分內容 | 分數 | 方式 |
+| --- | --- | --- |
+| 初步觀察 | 2 | 教師 |
+| 十二項清晰區觀察及量度 | 2 | 自動 |
+| 獨立／因／控制變量 | 1 + 1 + 2 | 自動 |
+| 原始假說及理由、重複安排理由、對照設計 | 1 + 1 + 1 | 教師 |
+| 探究假設 | 1 | 自動 |
+| 瓊脂板設計品質 | 2 | 教師 |
+| 按自己的讀數計算平均值 | 1 | 自動 |
+| 第 1、2、4、5、6 題選擇題 | 各 1，共 5 | 自動 |
+| 第 3 題樣本選擇及排序結論 | 1 | 教師 |
+| 提交後以證據完善原始解釋的反思 | 2 | 教師 |
+| 合計 | 23 | 公式 |
 
-六項 SPS 合共 24 分。新知識四項各 2 分：抗生素與細菌感染、細菌抗藥性、清晰區及重複的限制、以概念與證據修訂原始解釋；合共 8 分，整體最高 32 分。完整的逐項滿分／部分得分／零分描述在 Excel「評分準則」工作表及 `rubric.js` 的 `RUBRIC_ROWS`。
+移除棒形圖、舊分析與知識題及延伸活動後，不再因未完成這些題目扣分或阻止提交。新版總分需七個人工格均填寫數值，且反思已提交；未達條件顯示「待評／未完成」。數值 0 是已評零分，空白是待評。請保存已評分 Excel；重新匯出不會讀取先前人工分數。
+
+五題選擇題參考依次為 B、C、A、D、C；每題答對 1 分，錯選或未答 0 分，不因作答速度、操作次數或完成率給能力分。結論按學生自己的觀察及平均值評，並非再次以模型數值扣量度錯誤。同值不因未能作嚴格排序扣分。合理但未獲結果支持的原始假說不因此扣分。
 
 ## 數值檢核 / Numeric checks
 
-- **直徑**：模型使用 6 mm 紙碟，量度穿過紙碟中心的整個無可見生長區，包括紙碟。12 項最後讀數各自需符合模型參考直徑 **±1 mm**，並正確分類紙碟外有／無圈。每項滿足兩者得 `2/12` 分，再將整欄保留兩位小數。沒有外圍清晰區時記 0，並選「無」；此情況須為 0，不套用 ±1 mm 容差。6 mm 紙碟本身不代表抑菌。
-- **平均值**：以學生自己的三個最後讀數相加再除 3，不用模型直徑取代學生讀數。輸入保留一位小數，容差 **±0.1 mm**。每個正確樣本 0.25 分，共 1 分。
-- **棒形圖**：X、Y、Z、空白對照四根棒，Y 為平均總直徑（mm）。以學生自己輸入的平均值檢核，容差 **±0.5 mm**；必須按確認圖表才可檢核。每個正確棒高 0.5 分，共 2 分。類別不連成連續曲線。
-- **控制變量**：五項分別是紙碟大小、瓊脂板的成份、使用的細菌種類、初始細菌分布、各樣本預設製備條件。每項 `2/5` 分，整欄保留兩位小數；誤選非控制條件則本欄 0 分。不同抗生素的擴散特性仍可能不同。
-- **探究假設**：只選「初始分布可比較」「沒有額外污染」「相同模擬條件」得 1 分；錯選／漏選 0。不能選「沒有生長必定全部死亡」。
-- **推論選擇**：不能由無可見生長證明全部死亡、不能由最大圈判定最佳臨床治療；各 0.5 分。學生原有假說沒有獲結果支持不直接扣能力分。
+- 直徑：有可見清晰區時，十二項最後讀數須在模型參考直徑 ±1 mm 內，並正確選擇有／無清晰區。得分為符合兩項條件數目 × 2/12，整欄保留兩位小數。沒有可見清晰區時須選「沒有」且記 0，不套用 ±1 mm 容差；6 mm 紙碟本身不代表清晰區。
+- 平均值：依學生自己的三個最後讀數計算，容差 ±0.1 mm；四組各 0.25 分。Enter 會把輸入四捨五入並顯示一位小數。
+- 控制變量：紙碟大小、瓊脂板的成份、使用的細菌種類、初始細菌分布、各樣本預設製備條件。每項 2/5 分；誤選非控制條件，本欄 0 分。六項控制的舊紀錄保留原有檢核。
+- 探究假設：只選初始分布可比較、沒有額外污染、相同模擬條件得 1 分；不能假設没有可見生長代表所有細菌死亡。
 
-Readings use a ±1 mm tolerance and the correct visible-zone category. Means are checked against the student's own latest readings (±0.1 mm); bars against their entered means (±0.5 mm). This avoids deducting repeatedly for one measurement error.
+Readings use ±1 mm and the correct visible-zone category, with exactly 0 for no zone. Arithmetic is checked against the student’s own readings. Complete but incorrect choices do not block submission.
 
-## 人工評分及狀態 / Manual marking and status
+## 舊版及混合匯出 / Legacy and mixed exports
 
-12 個人工格均預設空白。Excel `COUNT` 分開空白與數字 0：空白表示待評；填 0 表示已評零分。人工格設有 0 至該項最高分的十進制驗證，可填部分分數。綠字滿分／正確，紅字零分／錯誤，橙字部分分數，中性色待評或未答。
+沒有 `analysisVersion: 2` 的舊紀錄，保留原有答案、圖表、延伸證據及 32 分準則（24 SPS + 8 knowledge，十二個人工格）。不覆寫舊紀錄，不把已刪題目的空白當作新版零分。混合匯出有「教師評分」及「教師評分（新版）」兩張表；各列使用對應版本，完整資料仍在共同答案、量度及事件工作表。
 
-分項公式有必要人工分數才產生數值。整體總分還要求**全部 12 個必要人工格填完，以及學生反思已提交**；否則顯示「待評／未完成」。新匯出的檔案不會讀取上一次 Excel 的人工分數，教師需保存已評分的 Excel。公式在 Excel／LibreOffice 開啟時重算。
-
-Blank manual cells mean pending review; zero is an actual awarded score. The 32-point total remains pending until all twelve manual fields contain numbers and reflection submission is recorded. Save the marked workbook: subsequent exports start with blank manual fields.
-
-## 評分界線 / Assessment limits
-
-不把選 3 次、次數較多、完成率、拖動精度、點擊／拖動次數、速度或有效用時直接換成 SPS 分數。操作事件只提供方法評估的背景。新的獨立瓊脂板才算獨立重複；同一圈再量度或複製圖片不算。合理但未被數據支持的假說可有滿分的設計與分析；評分看可測試性、理由及證據。三次是課堂可行安排，並非可靠性保證。新知識選擇題有客觀參考，但新知識分數由教師綜合選項及實際反思評定。
-
-Do not score motor precision, mouse speed, clicks, elapsed time, completion rate or the choice of three repeats. A sound but unsupported hypothesis can receive full design and evidence-reasoning credit. Objective knowledge choices may be annotated, but teachers judge knowledge scores using the student's explanation and reflection.
-
-全班 Excel 必須在前端完成全部中央資料讀取後才匯出；讀取失敗不得用部分本機資料代替全班。本機匯出使用「本機學習紀錄」檔名，與「全班學習紀錄」明確區分。教師示範、教師身分紀錄及非 VL4 資料均排除於匯出。
-
-獨立變量及因變量沿用 VL2 的多選按鈕作答；只選中該類的正確因素才得 1 分，多選錯誤因素得 0 分。舊紀錄的單一文字選項仍可讀取及評分。
-
-舊紀錄若曾選擇現已移除的共同培養及觀察條件，仍沿用原有六項控制的評分；原始答案不會改寫。新作答按五項控制每項 0.4 分，合共 2 分。
+新版完整準則見 `CURRENT_RUBRIC_ROWS`；舊版見 `RUBRIC_ROWS`。本次分數草案不宣稱已通過跨 VL 校準、評分者一致性或學習效果驗證。

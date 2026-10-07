@@ -243,33 +243,23 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
     const mean = (state.plates.reduce((sum, plate) =>
       sum + Number(state.measurements[plate.id][sample].value), 0) / 3).toFixed(1);
     await page.locator(`[data-mean="${sample}"]`).fill(mean);
-    await page.locator(`[data-bar="${sample}"]`).fill(mean);
   }
-  await page.locator('#confirmGraph').click();
-  await expect(page.locator('#graphStatus')).not.toBeEmpty();
-  const explanations = {
-    analysisControl: '空白對照三次均沒有紙碟外可見圈，清晰區總直徑為 0 mm，可排除載體影響。',
-    analysisConsistent: 'X 與 Z 三次均有外圍可見圈；Y 及空白對照均沒有。',
-    analysisVariation: '三片平板的數值稍有變化，但 X、Z 的可見圈趨勢一致，對照仍為 0 mm。',
-    analysisMethod: '先檢查細菌分布、污染、紙碟位置、製備及共同觀察條件，再考慮增加新平板。',
-    analysisHypothesis: '部分樣本有可見清晰區，與對照不同，支持我的可測試預測。',
-    analysisRepeatPlan: '我原定兩次，活動實做三次；多一片可檢查一致性，但三次不保證可靠。',
-    analysisRepeatValue: '新平板提供獨立結果，能看到變異；同一圈反覆讀數不算獨立重複。',
-    conclusion: '在本模型條件下，三片獨立平板的 X、Z 有可見圈，Y 與載體對照沒有，支持局部可見生長受抑制；不能確定細菌全部死亡、作用機制、臨床最佳治療或所有 MRSA 的反應。',
-  };
-  for (const [id, value] of Object.entries(explanations)) await page.locator('#' + id).fill(value);
-  await page.locator('#analysisDeath').selectOption('cannot');
-  await page.locator('#analysisClinical').selectOption('cannot');
-  await page.locator('#knowledgeBacteria').selectOption('bacteria');
-  await page.locator('#knowledgeResistance').selectOption('bacteria');
-  await page.locator('#knowledgeLimits').selectOption('limited');
+  await expect(page.locator('#studentGraph,#graphInputs,#confirmGraph,#extensionCard')).toHaveCount(0);
+  await page.locator('#submitInquiry').click();
+  await expect(page.locator('#submitDialog')).toBeHidden();
+  await expect(page.locator('#zoneMeaning input').first()).toBeFocused();
+  for(const [id,value] of Object.entries({zoneMeaning:'inhibition',zoneDiameterMeaning:'extent',repeatPurpose:'consistency',repeatVariation:'check',controlPurpose:'baseline'}))await page.locator(`input[name="${id}"][value="${value}"]`).check();
+  for(const [id,value] of Object.entries({effectiveSamples:'X_Z',rank1:'Z',rank2:'X',rank3:'na',rank4:'na'}))await page.locator('#'+id).selectOption(value);
   if (beforeSubmit) await beforeSubmit();
   await page.locator('#submitInquiry').click();
   await expect(page.locator('#submitDialog')).toBeVisible();
   await page.locator('#confirmSubmit').click();
   await expect(page.locator('#learningSection')).toBeVisible();
-  await expect(page.locator('#learningContent')).toContainText('學習重溫備註');
-  await expect(page.locator('#learningContent')).toContainText('單個細菌通常不能直接看見');
+  await expect(page.locator('#learningContent')).not.toContainText('學習重溫備註');
+  await expect(page.locator('#learningContent')).toContainText('過度或不當使用抗生素');
+  await expect(page.locator('#learningContent')).toContainText('不是人的身體');
+  await expect(page.locator('#learningContent')).toContainText('原有抗生素可能不再有效');
+  await expect(page.locator('[data-i18n="learning"]')).toHaveCSS('font-size','25.6px');
 }
 
 test('student completes an evidence-based inquiry, preserves language-independent data, and exports bilingual PDFs', async ({ page }) => {
@@ -462,18 +452,13 @@ test('completion gates reject missing data and invalid Enter readings while comp
       await expect(page.locator('[data-mean="Y"]')).toBeFocused();
       await expect.poll(async()=>(await current(page)).means.X).toBe(rounded);
     }
-    await page.locator('[data-bar="X"]').fill('6.01');
-    await page.locator('[data-bar="X"]').press('Enter');
-    await expect(page.locator('[data-bar="X"]')).toBeFocused();
-    for (const sample of SAMPLES) await page.locator(`[data-bar="${sample}"]`).fill('6.0');
-    await page.locator('[data-bar="C"]').press('Enter');
-    await expect(page.locator('#confirmGraph')).toBeFocused();
-    await page.locator('#confirmGraph').click();
-    await page.locator('#analysisDeath').selectOption('can');
-    await page.locator('#analysisClinical').selectOption('can');
-    await page.locator('#knowledgeBacteria').selectOption('viruses');
-    await page.locator('#knowledgeResistance').selectOption('body');
-    await page.locator('#knowledgeLimits').selectOption('best');
+    await page.locator('[data-mean="C"]').press('Enter');
+    await expect(page.locator('#zoneMeaning input').first()).toBeFocused();
+    await page.locator('input[name="zoneMeaning"][value="death"]').check();
+    await page.locator('input[name="zoneDiameterMeaning"][value="treatment"]').check();
+    await page.locator('input[name="repeatPurpose"][value="guarantee"]').check();
+    await page.locator('input[name="repeatVariation"][value="delete"]').check();
+    await page.locator('input[name="controlPurpose"][value="same"]').check();
   } });
   const state = await current(page);
   expect(state.submittedAt).toBeTruthy();
@@ -481,57 +466,57 @@ test('completion gates reject missing data and invalid Enter readings while comp
   expect(state.original.answers.largestPrediction).toBe('na');
   expect(state.original.answers.iv).toEqual(['zone']);
   expect(state.original.answers.assumptions).toEqual(['death']);
-  expect(state.answers.knowledgeBacteria).toBe('viruses');
+  expect(state.answers.zoneMeaning).toBe('death');
   expect(state.means.X).toBe('6.0');
-  expect(state.graph.values.X).toBe(6);
+  expect(state.graph.values).toEqual({});
   await page.locator('#accountButton').click();
   await login(page, { name: '教師', className: 'S4', email: 'tzechingchan0605@gmail.com' });
   await page.locator(`[data-view="${state.id}"]`).click();
-  await expect(page.locator('#teacherReport')).toContainText('最佳患者治療藥物及劑量');
+  await expect(page.locator('#teacherReport')).toContainText('直徑最大就是最佳治療');
 });
 
-test('graph hovering leaves confirmed answers unchanged and optional extension preserves its first prediction', async ({ page }) => {
+test('new MC questions and selected conclusion are required, bilingual, and lock after submission', async ({ page }) => {
   test.setTimeout(90000);
   await page.goto('/');
   await login(page);
   await planInvestigation(page);
   for (let i = 0; i < 3; i++) await preparePlate(page, i);
   await analyseInvestigation(page, { beforeSubmit: async () => {
-    await page.waitForTimeout(500);
-    await page.locator('#studentGraph').scrollIntoViewIfNeeded();
-    const before = await storageSnapshot(page);
-    const bars = await page.locator('[data-bar]').evaluateAll(inputs => inputs.map(input => input.value));
-    const point = await svgScreenPoint(page, 'studentGraph', 115, 200);
-    await page.mouse.move(point.x, point.y);
-    await expect(page.locator('#graphHint')).not.toBeEmpty();
-    await page.waitForTimeout(500);
-    expect(await storageSnapshot(page)).toEqual(before);
-    expect(await page.locator('[data-bar]').evaluateAll(inputs => inputs.map(input => input.value))).toEqual(bars);
-
-    await page.locator('#startExtension').click();
-    await expect(page.locator('#extensionFields')).toBeVisible();
+    await expect(page.locator('#analysisFields fieldset')).toHaveCount(6);
+    await expect(page.locator('#analysisFields textarea')).toHaveCount(0);
+    await expect(page.locator('#analysisFields .question-number')).toHaveText(['1','2','3','4','5','6']);
+    await expect(page.locator('#controlPurpose legend')).not.toContainText('生長');
+    await expect(page.locator('#rank3 option[value="na"],#rank4 option[value="na"]')).toHaveCount(2);
+    await page.locator('#rank4').selectOption('');
     await page.locator('#submitInquiry').click();
     await expect(page.locator('#submitDialog')).toBeHidden();
-    await page.locator('#ext-prediction').fill('同一样本的較高紙碟含量可能出現較大圈。');
-    await page.locator('#ext-reason').fill('擴散到瓊脂中的樣本量可能不同。');
-    await page.locator('#ext-fairComparison').fill('只改變預設紙碟含量，保持同一樣本、細菌種類、培養基、紙碟大小及觀察條件。');
-    await page.locator('#viewExtension').click();
-    let state = await current(page);
-    const original = state.extension.original;
-    const result = state.extension.results;
-    expect(result).toEqual({ low: 12, medium: 18, high: 23 });
-    await page.locator('#ext-prediction').fill('修訂的預測，但首次預測需要保留。');
-    await page.locator('#viewExtension').click();
-    state = await current(page);
-    expect(state.extension.original).toEqual(original);
-    expect(state.extension.results).toEqual(result);
-    await page.locator('#ext-analysis').fill('預設含量增加時模型圈較大；這不會轉成患者劑量或臨床治療建議。');
+    await expect(page.locator('#rank4')).toBeFocused();
+    await page.locator('#rank4').selectOption('na');
+    await page.waitForTimeout(500);
+    const before=await storageSnapshot(page);
+    await page.locator('.topbar [data-language]').click();
+    await expect(page.locator('#controlPurpose legend')).toContainText('main role of C');
+    await expect(page.locator('#rank4')).toHaveValue('na');
+    await expect(page.locator('input[name="zoneMeaning"][value="inhibition"]')).toBeChecked();
+    await page.waitForTimeout(500);
+    expect(await storageSnapshot(page)).toEqual(before);
+    await assertNoOverflow(page);
+    await screenshot(page,'artifacts/vl4-analysis-desktop-en.png');
+    await page.locator('.topbar [data-language]').click();
+    await page.setViewportSize({width:390,height:844});
+    await assertNoOverflow(page);
+    await screenshot(page,'artifacts/vl4-analysis-mobile-zh.png');
   } });
-  const state = await current(page);
+  const state=await current(page);
+  expect(state.analysisVersion).toBe(2);
   expect(state.submittedAt).toBeTruthy();
-  expect(state.extension.original.prediction).toContain('較高紙碟含量');
-  expect(state.extension.prediction).toContain('修訂');
-  await expect(page.locator('#ext-analysis')).toBeDisabled();
+  expect(state.answers.effectiveSamples).toBe('X_Z');
+  expect(state.answers.rank1).toBe('Z');
+  await expect(page.locator('#rank1')).toBeDisabled();
+  await expect(page.locator('input[name="zoneMeaning"][value="inhibition"]')).toBeDisabled();
+  await expect(page.locator('#learningContent')).toContainText('標準化敏感性測試');
+  await page.locator('#learningSection').scrollIntoViewIfNeeded();
+  await page.screenshot({path:'artifacts/vl4-learning-mobile-zh.png'});
 });
 
 test('account changes and reloads start blank inquiries without merging records for the same email', async ({ page }) => {

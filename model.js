@@ -13,7 +13,7 @@ export const nowISO=()=>new Date().toISOString();
 export const clone=value=>structuredClone(value);
 export const isTeacher=profile=>profile?.email?.toLowerCase().trim()===TEACHER_EMAIL;
 export function freshRecord(profile,demo=false){
-  return {schemaVersion:1,moduleId:MODULE_ID,id:crypto.randomUUID(),version:0,profile:clone(profile),demo,
+  return {schemaVersion:1,analysisVersion:2,moduleId:MODULE_ID,id:crypto.randomUUID(),version:0,profile:clone(profile),demo,
     createdAt:nowISO(),savedAt:nowISO(),phase:1,unlocked:1,submittedAt:null,reflectionSubmittedAt:null,
     answers:{iv:[],dv:[],cv:[],assumptions:[]},original:null,actualReplicates:3,
     experiment:{version:1,incubator:{temperature:null,hours:null},incubatedAt:null},
