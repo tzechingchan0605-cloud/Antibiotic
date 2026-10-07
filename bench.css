@@ -5,6 +5,16 @@
 #plateTabs .auto-prepare { padding: 8px 10px; font-size: 12px; min-height: 40px; }
 #plateTabs .plate-tab-group:first-child { padding-bottom: 48px; }
 #benchTools { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 8px; margin: 12px 0; }
+.forceps-tools { display: flex; justify-content: center; gap: 8px; }
+.rotation-handle-hint { position: absolute; top: 4%; right: 2%; max-width: 144px; margin: 0; padding: 3px 5px; color: var(--teal); background: #f3f6e9e6; border-radius: 5px; font-size: 12px; line-height: 1.5; pointer-events: none; }
+#sterilizationStatus { min-height: 22px; color: var(--teal); text-align: center; }
+.sterilization-animation { position: absolute; top: 27%; width: 220px; max-width: 85%; }
+.forceps-dipping { animation: forceps-dip .7s ease-in-out both; }
+.forceps-heating { animation: forceps-heat .8s ease-in-out both; }
+.lamp-flame { transform-box: fill-box; transform-origin: bottom center; animation: lamp-flicker .3s ease-in-out infinite alternate; }
+@keyframes forceps-dip { 50% { transform: translateY(24px); } }
+@keyframes forceps-heat { 50% { transform: translateX(-15px) translateY(10px); } }
+@keyframes lamp-flicker { to { transform: scale(.88,1.12); } }
 #benchTools .bench-tool { display: grid; justify-items: center; align-content: end; min-width: 86px; max-width: 135px; min-height: 110px; padding: 8px; gap: 5px; font-size: 12px; }
 .bench-tool-icon { display: grid; place-items: center; width: 65px; height: 70px; overflow: hidden; }
 .bench-tool-icon > svg { display: block; height: 68px; width: 45px; }
@@ -62,7 +72,7 @@
 .auto-preparation-animation span:nth-child(5) { animation-delay: .48s; }
 @keyframes tool-pick { 50% { transform: translateY(-5px) rotate(-4deg); } }
 @keyframes bottle-load { 50% { transform: translateY(4px) scale(.96); filter: brightness(1.12); } }
-@keyframes bench-guide-bounce { 50% { transform: translateY(6px); } }
+@keyframes bench-guide-bounce { 50% { transform: translateY(-6px); } }
 @keyframes plate-flip { 50% { transform: scaleX(.08); opacity: .75; } }
 @keyframes plate-seal { 35% { transform: translateY(4px) scale(.98); } 70% { transform: scaleX(.08); } }
 @keyframes draw-mark { to { stroke-dashoffset: 0; } }
@@ -89,5 +99,5 @@
 @media (prefers-reduced-motion: reduce) {
   .bench-guide { animation: none; }
   .plate-flipping, .plate-sealing, .cross-drawing path, .animated-marker, .suspension-droplet,
-  .animated-forceps, .animated-spreader, .incubator-plate, .auto-preparation-animation span { animation-duration: .1s; animation-delay: 0s; }
+  .forceps-dipping, .forceps-heating, .lamp-flame, .animated-forceps, .animated-spreader, .incubator-plate, .auto-preparation-animation span { animation-duration: .1s; animation-delay: 0s; }
 }

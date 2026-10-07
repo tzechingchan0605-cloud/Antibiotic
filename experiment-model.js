@@ -9,10 +9,10 @@ import {SAMPLES, GRID, PLATE_CENTER, clone, nowISO, toPlatePoint, addCoverage, c
 export const QUADRANTS=['NW','NE','SW','SE'];
 export const QUADRANT_CENTRES={NW:{x:130,y:130},NE:{x:270,y:130},SW:{x:130,y:270},SE:{x:270,y:270}};
 export const DEFAULT_QUADRANT_LABELS={NW:'X',NE:'Y',SW:'Z',SE:'C'};
-export const REQUIRED_COVERAGE=.85;
+export const REQUIRED_COVERAGE=1;
 export const SUSPENSION_TOLERANCE=30;
 export const DISC_PLACEMENT_TOLERANCE=33;
-export const SPREADER_RADIUS=36;
+export const SPREADER_RADIUS=72;
 
 const fail=code=>{throw Error(code);};
 const isPoint=point=>point&&Number.isFinite(point.x)&&Number.isFinite(point.y);
@@ -47,6 +47,9 @@ function ensurePlate(plate){
   preparation.covered=!!preparation.covered;
   preparation.inverted=!!preparation.inverted;
   preparation.ready=!!preparation.ready;
+  preparation.forcepsState=['dirty','alcohol','ready'].includes(preparation.forcepsState)?preparation.forcepsState:'dirty';
+  preparation.discInForceps=SAMPLES.includes(preparation.discInForceps)?preparation.discInForceps:null;
+  preparation.sterilizationCycles=Number.isSafeInteger(preparation.sterilizationCycles)?preparation.sterilizationCycles:0;
   if(plate.completed||plate.result){
     plate.completed=true;plate.inoculated=true;
     Object.assign(preparation,{orientation:'bottom',covered:true,inverted:true,ready:true,crossMarked:true});
@@ -144,15 +147,42 @@ export function placementForLabel(plate,sample){
   return clone(QUADRANT_CENTRES[quadrant]);
 }
 
+export function dipForceps(plate){
+  if(plateStep(plate)!==4||plate.preparation.discInForceps||plate.preparation.forcepsState!=='dirty')fail('wrong_step');
+  plate.preparation.forcepsState='alcohol';
+  operation(plate,'forceps_dipped_in_alcohol');
+  return plate;
+}
+
+export function heatForceps(plate){
+  if(plateStep(plate)!==4||plate.preparation.discInForceps)fail('wrong_step');
+  if(plate.preparation.forcepsState!=='alcohol')fail('alcohol_required');
+  plate.preparation.forcepsState='ready';plate.preparation.sterilizationCycles++;
+  operation(plate,'forceps_sterilized',{cycle:plate.preparation.sterilizationCycles});
+  return plate;
+}
+
+export function clipDisc(plate,sample){
+  if(plateStep(plate)!==4||plate.preparation.discInForceps)fail('wrong_step');
+  if(!SAMPLES.includes(sample))fail('invalid_sample');
+  if(plate.discPositions[sample])fail('disc_already_placed');
+  if(plate.preparation.forcepsState!=='ready')fail('forceps_not_sterile');
+  plate.preparation.discInForceps=sample;plate.preparation.forcepsState='dirty';
+  operation(plate,'disc_clipped',{sample,cycle:plate.preparation.sterilizationCycles});
+  return plate;
+}
+
 export function placeDisc(plate,sample,worldPoint){
   if(plateStep(plate)!==4||plate.preparation.orientation!=='top'||plate.preparation.covered)fail('wrong_step');
   if(!isPoint(worldPoint))fail('invalid_point');
   const position=placementForLabel(plate,sample),local=toPlatePoint(worldPoint,plate.rotation);
   if(plate.discPositions[sample])fail('disc_already_placed');
+  if(plate.preparation.discInForceps!==sample)fail('disc_not_held');
   if(Math.hypot(local.x-position.x,local.y-position.y)>DISC_PLACEMENT_TOLERANCE)fail('matching_quadrant_required');
   // Snap to the quadrant centre: disc comparisons share the same spatial layout.
   plate.discPositions[sample]=position;
-  operation(plate,'disc_placed',{sample,position:clone(position),sterileTweezers:true});
+  plate.preparation.discInForceps=null;
+  operation(plate,'disc_placed',{sample,position:clone(position),sterileTweezers:true,cycle:plate.preparation.sterilizationCycles});
   return plate;
 }
 
@@ -172,9 +202,14 @@ export function autoPreparePlate(record,index){
   // Each repeat uses its own plate and seed; no endpoint is copied or generated.
   const previous=record.plates[index-1];
   Object.assign(plate.preparation,{crossMarked:true,quadrantLabels:clone(previous.preparation.quadrantLabels),
-    dropperLoaded:false,covered:true,inverted:true,orientation:'bottom',ready:true});
+    dropperLoaded:false,covered:false,inverted:false,orientation:'top',ready:false,forcepsState:'dirty',discInForceps:null});
   plate.inoculated=true;plate.coverage=GRID.map((_,i)=>i);
-  plate.discPositions=Object.fromEntries(SAMPLES.map(sample=>[sample,placementForLabel(plate,sample)]));
+  plate.discPositions={};
+  for(const sample of SAMPLES){
+    dipForceps(plate);heatForceps(plate);clipDisc(plate,sample);
+    placeDisc(plate,sample,toPlatePoint(placementForLabel(plate,sample),-plate.rotation));
+  }
+  sealPlate(plate);
   operation(plate,'standardized_new_plate',{sourcePlateId:previous.id,steps:[1,2,3,4,5]});
   return plate;
 }

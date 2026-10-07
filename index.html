@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css?v=99cb0e8ad073"><link rel="stylesheet" href="bench.css?v=889b436d5fa6"><script type="module" data-vl4-app>
+<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css?v=99cb0e8ad073"><link rel="stylesheet" href="bench.css?v=ce5d3ca78ee1"><script type="module" data-vl4-app>
 document.getElementById('startupReload').addEventListener('click', () => {
   const next = new URL(window.location.href);
   next.searchParams.set('reload', Date.now());
   window.location.replace(next.href);
 });
-import('./app.bundle.948ebc3587b7.js').then(() => {
+import('./app.bundle.9ababbe532d3.js').then(() => {
   document.getElementById('startupPanel')?.remove();
 }).catch(error => {
   console.error('VL4 could not start', error);
@@ -38,21 +38,25 @@ import('./app.bundle.948ebc3587b7.js').then(() => {
  <div class="bench-layout">
   <article class="card bench-board">
    <div class="card-top"><label class="field"><span data-i18n="plateLabel"></span><input id="plateName" maxlength="32" data-i18n-placeholder="plateLabel"></label><span id="plateProgress" class="badge"></span></div>
-   <div class="plate-wrap"><svg id="plateSVG" viewBox="0 0 400 460" role="img" data-i18n-aria="plateLabelAria"></svg><div id="quadrantLabels"></div><div id="benchAnimation" hidden aria-live="polite"></div></div>
+   <div class="plate-wrap"><svg id="plateSVG" viewBox="0 0 400 460" role="img" data-i18n-aria="plateLabelAria"></svg><div id="quadrantLabels"></div><p id="rotateInstruction" class="rotation-handle-hint" data-i18n="rotationInstruction" hidden></p><div id="benchAnimation" hidden aria-live="polite"></div></div>
    <div id="stageControls" class="stage-controls">
     <button id="flipPlate" type="button" class="secondary" data-i18n="flipPlate"></button>
     <button id="sealPlate" type="button" class="primary" data-i18n="sealPlate"></button>
     <button id="assistSpread" type="button" class="secondary" data-i18n="assist"></button>
    </div>
-   <p id="rotateInstruction" class="caption" data-i18n="rotationInstruction"></p>
    <div class="bench-toolbar rotation-controls"><button id="rotateLeft" type="button" class="secondary" aria-label="Rotate left">↶</button><button id="rotateRight" type="button" class="secondary" aria-label="Rotate right">↷</button><label class="choice"><input id="showCoverage" type="checkbox" checked><span data-i18n="coverage"></span></label></div>
    <div id="benchTools" class="lab-toolbox" role="group" data-i18n-aria="toolboxLabel">
     <button id="selectMarker" type="button" class="lab-tool" data-i18n="toolMarker"></button>
     <button id="selectDropper" type="button" class="lab-tool" data-i18n="toolDropper"></button>
     <button id="bacteriaBottle" type="button" class="lab-tool" data-i18n="toolBottle"></button>
     <button id="selectSpreader" type="button" class="lab-tool" data-i18n="toolSpreader"></button>
-    <button id="selectTweezers" type="button" class="lab-tool" data-i18n="toolTweezers"></button>
+    <div class="forceps-tools" role="group" data-i18n-aria="forcepsTools">
+     <button id="selectTweezers" type="button" class="lab-tool" data-i18n="toolTweezers"></button>
+     <button id="alcoholBeaker" type="button" class="lab-tool" data-i18n="toolAlcohol"></button>
+     <button id="alcoholLamp" type="button" class="lab-tool" data-i18n="toolLamp"></button>
+    </div>
    </div>
+   <p id="sterilizationStatus" class="caption" role="status"></p>
    <div id="discTray" class="disc-tray" role="group" data-i18n-aria="discTrayLabel"></div>
    <p id="toolStatus" class="caption" role="status"></p>
    <p id="coverageStatus" class="note" role="status"></p>

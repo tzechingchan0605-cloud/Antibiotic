@@ -4,7 +4,7 @@ import {freshRecord,SAMPLES,GRID,captureOriginal,coverageFraction,generateResult
 import {
   QUADRANTS,DEFAULT_QUADRANT_LABELS,ensureExperiment,plateStep,canSelectPlate,
   flipPlate,markCross,setQuadrantLabel,loadDropper,releaseSuspension,spreadStroke,
-  placementForLabel,placeDisc,sealPlate,autoPreparePlate,assistPlateSpread,
+  placementForLabel,dipForceps,heatForceps,clipDisc,placeDisc,sealPlate,autoPreparePlate,assistPlateSpread,
   configureIncubator,canIncubate,incubateAll
 } from '../experiment-model.js';
 
@@ -24,6 +24,7 @@ const spreadManually=plate=>{
 };
 const putDiscs=plate=>{
   for(const sample of SAMPLES){
+    dipForceps(plate);heatForceps(plate);clipDisc(plate,sample);
     const local=placementForLabel(plate,sample);
     placeDisc(plate,sample,toPlatePoint(local,-plate.rotation));
   }
@@ -98,7 +99,7 @@ test('spreading follows one vertical world axis and needs rotation to reach unif
     if(plateStep(plate)!==3)break;
     plate.rotation=rotation;spreadStroke(plate,{x:200,y:50},{x:200,y:350});
   }
-  assert.ok(coverageFraction(plate)>=.85);
+  assert.equal(coverageFraction(plate),1);
   assert.equal(plateStep(plate),4);
   assert.throws(()=>spreadStroke(plate,{x:200,y:50},{x:200,y:350}),/wrong_step/);
 });
@@ -124,6 +125,7 @@ test('discs match student labels at rotated quadrant centres and covering needs 
   spreadManually(plate);
   plate.rotation=37;
   assert.deepEqual(placementForLabel(plate,'X'),{x:270,y:270});
+  dipForceps(plate);heatForceps(plate);clipDisc(plate,'X');
   assert.throws(()=>placeDisc(plate,'X',toPlatePoint({x:130,y:130},-plate.rotation)),/matching_quadrant_required/);
   assert.equal(plate.discPositions.X,undefined);
   const xWorld=toPlatePoint(placementForLabel(plate,'X'),-plate.rotation);
@@ -131,7 +133,7 @@ test('discs match student labels at rotated quadrant centres and covering needs 
   assert.deepEqual(plate.discPositions.X,{x:270,y:270});
   assert.throws(()=>placeDisc(plate,'X',xWorld),/disc_already_placed/);
   assert.throws(()=>sealPlate(plate),/wrong_step/);
-  for(const sample of ['Y','Z','C'])placeDisc(plate,sample,toPlatePoint(placementForLabel(plate,sample),-plate.rotation));
+  for(const sample of ['Y','Z','C']){dipForceps(plate);heatForceps(plate);clipDisc(plate,sample);placeDisc(plate,sample,toPlatePoint(placementForLabel(plate,sample),-plate.rotation));}
   sealPlate(plate);
   assert.equal(plate.preparation.covered,true);
   assert.equal(plate.preparation.inverted,true);
@@ -214,4 +216,26 @@ test('submitted records reject automatic preparation, spreading assistance and i
   assert.throws(()=>configureIncubator(record,{temperature:30}),/locked/);
   assert.throws(()=>incubateAll(record),/locked/);
   assert.equal(canIncubate(record),false);
+});
+
+
+test('every coverage cell is required and each disc needs a fresh alcohol and lamp cycle',()=>{
+  const plate=fresh().plates[0];startSpreading(plate);
+  plate.coverage=GRID.slice(0,-1).map((_,i)=>i);
+  assert.ok(coverageFraction(plate)>.85);assert.equal(plateStep(plate),3);
+  assert.throws(()=>dipForceps(plate),/wrong_step/);
+  plate.coverage=GRID.map((_,i)=>i);assert.equal(plateStep(plate),4);
+  assert.throws(()=>clipDisc(plate,'X'),/forceps_not_sterile/);
+  assert.throws(()=>heatForceps(plate),/alcohol_required/);
+  for(const sample of SAMPLES){
+    assert.throws(()=>clipDisc(plate,sample),/forceps_not_sterile/);
+    dipForceps(plate);assert.throws(()=>clipDisc(plate,sample),/forceps_not_sterile/);
+    heatForceps(plate);clipDisc(plate,sample);
+    assert.throws(()=>dipForceps(plate),/wrong_step/);
+    assert.throws(()=>placeDisc(plate,sample,{x:200,y:200}),/matching_quadrant_required/);
+    assert.equal(plate.preparation.discInForceps,sample);
+    placeDisc(plate,sample,placementForLabel(plate,sample));
+    assert.equal(plate.preparation.forcepsState,'dirty');
+  }
+  assert.equal(plate.preparation.sterilizationCycles,4);
 });

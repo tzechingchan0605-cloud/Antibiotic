@@ -87,7 +87,8 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
   await expect(page.locator('#repeatChoice')).toHaveCount(0);
   await expect(page.locator('#plannedReplicates')).not.toHaveAttribute('placeholder');
   await expect(page.locator('#plannedReplicateReason')).not.toHaveAttribute('placeholder');
-  await page.locator('#plannedReplicates').fill('2');
+  expect(await page.locator('#plannedReplicates option').evaluateAll(options=>options.map(o=>o.value).filter(Boolean))).toEqual(Array.from({length:20},(_,i)=>String(i+1)));
+  await page.locator('#plannedReplicates').selectOption('2');
   await page.locator('#plannedReplicateReason').fill('用兩片新平板初步比較一致性，同一圈重讀不算獨立重複。');
   if (wrongAnswers) {
     await page.locator('#prediction').selectOption('none');
@@ -181,11 +182,13 @@ async function spreadByRotation(page) {
 
 async function placeDiscs(page) {
   // Labels rotate with the plate. Convert each labelled centre to screen
-  // coordinates; each sample selection represents new sterile forceps.
+  // coordinates after the alcohol and lamp cycle for each disc.
   const rotation = Number(await page.locator('#plateSVG').getAttribute('data-rotation'));
   const angle = rotation * Math.PI / 180;
   for (const [sample, position] of Object.entries({ X: [130, 130], Y: [270, 130], Z: [130, 270], C: [270, 270] })) {
     await page.locator('#selectTweezers').click();
+    await page.locator('#alcoholBeaker').click();
+    await page.locator('#alcoholLamp').click();
     await page.locator(`#discTray [data-tray-disc="${sample}"]`).click();
     const [x, y] = position.map(coordinate => coordinate - 200);
     await clickSVG(page, 200 + x * Math.cos(angle) - y * Math.sin(angle),

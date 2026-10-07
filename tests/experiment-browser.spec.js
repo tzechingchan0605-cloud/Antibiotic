@@ -24,7 +24,7 @@ async function startExperiment(page) {
   await page.locator('#controlPlan').fill('對照紙碟不含抗生素，其餘條件相同。');
   await page.locator('#designDescription').fill('在四個分格中間放置 X、Y、Z、C 紙碟。');
   await page.locator('#saveDesign').click();
-  await page.locator('#plannedReplicates').fill('3');
+  await page.locator('#plannedReplicates').selectOption('3');
   await page.locator('#plannedReplicateReason').fill('比較新瓊脂板的結果。');
   await page.locator('#designNext').click();
   await expect(page.locator('#phase-3')).toBeVisible();
@@ -94,9 +94,21 @@ async function worldCentre(page, quadrant) {
     200 + x * Math.sin(rotation) + y * Math.cos(rotation)];
 }
 
+async function expectPlacementArrow(page,sample) {
+  const target=page.locator(`[data-disc-target="${sample}"]`);
+  await page.locator('#plateSVG').scrollIntoViewIfNeeded();
+  await expect(page.locator('#benchGuide')).toBeVisible({timeout:8000});
+  const circle=await target.boundingBox();
+  const arrow=await page.locator('#benchGuide').boundingBox();
+  expect(Math.abs(arrow.x+15-(circle.x+circle.width/2))).toBeLessThan(2);
+  expect(Math.abs(arrow.y+34-(circle.y+circle.height/2))).toBeLessThan(2);
+}
+
 async function placeLabelledDiscs(page, labels = DEFAULT_LABELS) {
   for (const [quadrant, sample] of Object.entries(labels)) {
     await page.locator('#selectTweezers').click();
+    await page.locator('#alcoholBeaker').click();
+    await page.locator('#alcoholLamp').click();
     await page.locator(`#discTray [data-tray-disc="${sample}"]`).click();
     await clickPlate(page, ...await worldCentre(page, quadrant));
     await expect(page.locator(`#discTray [data-tray-disc="${sample}"]`)).toBeDisabled();
@@ -178,7 +190,7 @@ test('stage guidance, marker labelling and loaded dropper prevent skipping prepa
 });
 
 test('vertical spreading and rotated labels require matching sterile disc placement before plate unlock', async ({ page }) => {
-  test.setTimeout(60000);
+  test.setTimeout(90000);
   await startExperiment(page);
   const labels = { NW: 'Z', NE: 'C', SW: 'X', SE: 'Y' };
   await labelPlate(page, labels);
@@ -206,10 +218,15 @@ test('vertical spreading and rotated labels require matching sterile disc placem
   expect((await current(page)).events.filter(event =>
     event.type === 'tool_selected' && event.details.tool === 'tweezers'))
     .toHaveLength(toolSelectionsBefore + 1);
+  await expect(page.locator('#discTray [data-tray-disc="X"]')).toBeDisabled();
+  await expect(page.locator('#alcoholLamp')).toBeDisabled();
+  await page.locator('#alcoholBeaker').click();
+  await page.locator('#alcoholLamp').click();
   await page.locator('#discTray [data-tray-disc="X"]').click();
   expect((await current(page)).events.filter(event =>
     event.type === 'sterile_forceps_disc_selected' && event.details.sample === 'X')).toHaveLength(1);
   await expect(page.locator('#toolCursor')).toHaveAttribute('data-loaded', 'true');
+  await expectPlacementArrow(page,'X');
   await clickPlate(page, ...await worldCentre(page, 'NW'));
   expect((await current(page)).plates[0].discPositions.X).toBeUndefined();
   await expect(page.locator('#sealPlate')).toBeDisabled();
@@ -218,7 +235,10 @@ test('vertical spreading and rotated labels require matching sterile disc placem
   expect((await current(page)).plates[0].discPositions.X).toEqual({ x: 130, y: 270 });
   for (const [quadrant, sample] of Object.entries({ NW: 'Z', NE: 'C', SE: 'Y' })) {
     await page.locator('#selectTweezers').click();
+    await page.locator('#alcoholBeaker').click();
+    await page.locator('#alcoholLamp').click();
     await page.locator(`#discTray [data-tray-disc="${sample}"]`).click();
+    await expectPlacementArrow(page,sample);
     await clickPlate(page, ...await worldCentre(page, quadrant));
   }
   await expect(page.locator('#procedureList [data-procedure-step="5"]')).toHaveClass(/current/);
@@ -230,6 +250,8 @@ test('vertical spreading and rotated labels require matching sterile disc placem
   expect(plate.operations.filter(operation => operation.type === 'disc_placed')).toHaveLength(4);
   expect(plate.operations.filter(operation => operation.type === 'disc_placed')
     .every(operation => operation.sterileTweezers)).toBe(true);
+  expect(plate.preparation.sterilizationCycles).toBe(4);
+  expect(await page.locator('#discTray .tray-disc').allTextContents()).toEqual(['','','','']);
   expect(plate.result).toBeNull();
 });
 
@@ -270,11 +292,30 @@ test('later assistance prepares independent plates and incubation waits for all 
   await expect(page.locator('#incubate')).toBeEnabled();
   await page.locator('#incubate').click();
   await expect.poll(async () => (await current(page)).plates.every(plate => plate.completed)).toBe(true);
+  expect(await page.locator('#procedureList').evaluate(list=>list.previousElementSibling.classList.contains('measurement-tools'))).toBe(true);
   state = await current(page);
   expect(state.experiment.incubator).toEqual({ temperature: 30, hours: 24 });
   expect(state.experiment.incubatedAt).toBeTruthy();
   const fixed = state.plates.map(plate => plate.result);
   await page.locator('[data-plate="0"]').click();
+  const resultBefore=(await current(page)).plates[0].result;
+  const centre=await worldCentre(page,'NW');
+  const target={x:centre[0]-resultBefore.X,y:centre[1]};
+  await stroke(page,[80,362],[target.x+20,target.y+12]);
+  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','X');
+  await stroke(page,[target.x+20,target.y+12],[target.x+24,target.y+18]);
+  const adjusted=await page.locator('[data-ruler]').getAttribute('transform');
+  const coordinates=adjusted.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);
+  expect(coordinates[0]).toBeCloseTo(target.x,1);
+  expect(coordinates[1]).toBeCloseTo(target.y+6,1);
+  await stroke(page,[target.x+20,target.y+18],[target.x+70,target.y+18]);
+  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','');
+  const freeTransform=await page.locator('[data-ruler]').getAttribute('transform');
+  const free=freeTransform.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);
+  const next=await worldCentre(page,'NE');
+  await stroke(page,[free[0]+20,free[1]+12],[next[0]-resultBefore.Y+20,next[1]+12]);
+  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','Y');
+  expect((await current(page)).plates[0].result).toEqual(resultBefore);
   await page.locator('.topbar [data-language]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('#incubate')).toBeDisabled();
