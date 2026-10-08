@@ -1,7 +1,7 @@
 import {SAMPLES,toPlatePoint,clearZoneDiameter} from './model.js';
 
-// SVG units: two units per millimetre. Attraction aligns the ruler's zero
-// with the left edge of a horizontal diameter without filling in a reading.
+// SVG units: two units per millimetre. Attraction holds the ruler at a
+// horizontal diameter's height while leaving horizontal placement manual.
 export const RULER_CAPTURE=12;
 export const RULER_RELEASE=24;
 export function rulerTargets(plate){
@@ -13,11 +13,10 @@ export function rulerTargets(plate){
 }
 export function moveMagneticRuler(plate,candidate,magnet=null,ignored=null){
   if(magnet){
-    const distance=Math.abs(candidate.x-magnet.x),closest=Math.abs(magnet.anchorX-magnet.x);
-    // Finishing an approach toward the aligned edge must not count as pulling
-    // away. Track the closest approach and release only beyond that distance.
-    if(distance<=closest+RULER_RELEASE&&Math.abs(candidate.y-magnet.y)<=RULER_RELEASE){
-      return {ruler:{x:magnet.x,y:candidate.y},magnet:distance<closest?{...magnet,anchorX:candidate.x}:magnet,ignored:null};
+    // Vertical hysteresis holds a useful height through small hand movements.
+    // Horizontal movement is always free, including while attracted.
+    if(Math.abs(candidate.y-magnet.y)<=RULER_RELEASE){
+      return {ruler:{x:candidate.x,y:magnet.y},magnet,ignored:null};
     }
     ignored=magnet.sample;magnet=null;
   }
@@ -28,6 +27,6 @@ export function moveMagneticRuler(plate,candidate,magnet=null,ignored=null){
   if(ignored&&!targets.some(target=>target.sample===ignored&&within(target)))ignored=null;
   const target=targets.filter(target=>target.sample!==ignored&&within(target))
     .sort((a,b)=>Math.hypot(candidate.x+40-a.centreX,candidate.y-a.y)-Math.hypot(candidate.x+40-b.centreX,candidate.y-b.y))[0];
-  if(target)return {ruler:{x:target.x,y:target.y},magnet:{...target,anchorX:candidate.x},ignored:null};
+  if(target)return {ruler:{x:candidate.x,y:target.y},magnet:{...target},ignored:null};
   return {ruler:candidate,magnet:null,ignored};
 }

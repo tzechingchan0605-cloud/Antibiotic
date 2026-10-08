@@ -2,7 +2,7 @@ import {MC_QUESTIONS,EFFECTIVE_OPTIONS,CONCLUSION_FIELDS,currentAnalysis} from '
 import ExcelJS from 'exceljs';
 import {clearZoneDiameter} from './model.js';
 import { L } from './i18n.js';
-import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, CURRENT_SCORE_COLUMNS, CURRENT_RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, automaticScores } from './rubric.js';
+import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, CURRENT_SCORE_COLUMNS, CURRENT_RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, conclusionChecks, automaticScores } from './rubric.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const tr = (language, zh, en) => language === 'en' ? en : zh;
@@ -99,10 +99,10 @@ function referenceFor(field, record, language) {
     knowledgeBacteria: ['抗生素針對細菌，不能治療病毒引起的傷風或流感。', 'Antibiotics act against bacteria; they do not treat viral colds or influenza.'],
     knowledgeResistance: ['抗藥性描述細菌對藥物的反應；不是人的身體習慣抗生素。', 'Resistance describes the bacterial response to a drug, not a human body becoming used to antibiotics.'],
     knowledgeLimits: ['清晰區支持局部可見生長受抑制；重複檢查一致性，不保證可靠或最佳治療。', 'A visible zone supports local inhibition of visible growth. Repeats check consistency; they do not guarantee reliability or the best treatment.'],
-    reflection: ['引用至少一項樣本／對照比較和獨立重複結果，連結原始假說及重複安排，以學習重點完善解釋及界定仍未知的事項。', 'Use at least one sample–control comparison and independent repeated results. Link these to your original hypothesis and repeat plan, using learning points to improve your explanation and identify uncertainties.']
+    reflection: ['引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。', 'Use readings for your chosen sample to support growth inhibition. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion increases as antibiotic effectiveness declines. This is a hypothetical extension, not evidence that resistance arose in this experiment.']
   };
   const question=MC_QUESTIONS.find(question=>question.id===field);
-  if(question)return answerDisplay(field,question.correct,language);
+  if(question)return answerDisplay(field,question.correct,language)+(field==='repeatPurpose'?tr(language,' A：由於系統或偶然誤差，重複實驗的數值通常會有微小落差，這才需要計算平均值與標準差。B：重複實驗是為了提升準確度，而非刻意消耗時間或湊字數。C：正確答案。D：重複實驗是為了檢驗現狀，而非人為在常規實驗中加速生物突變。',' A: Systematic or random errors can cause variation between repeats, so means and standard deviations are calculated. B: Repetition aims to improve accuracy, not consume time or pad reports. C: Correct answer. D: Repetition checks existing outcomes; it does not accelerate mutations in routine experiments.'):'');
   if(CONCLUSION_FIELDS.includes(field))return tr(language,'根據自己的觀察及平均值判斷；只比較本次模擬條件，不能由圈大小決定最佳患者治療。','Use your observations and means; compare only these simulated conditions, not the best treatment for a patient.');
   if (field === 'iv') return answerDisplay(field, VARIABLE_REFERENCE.iv, language);
   if (field === 'dv') return answerDisplay(field, VARIABLE_REFERENCE.dv, language);
@@ -135,28 +135,66 @@ export function learningDiagram(language = 'zh') {
  <p class="caption">${t('示意圖，非按比例；不能證明細菌全部死亡。','Schematic, not to scale; it does not prove complete killing.')}</p></figure>
  <figure class="learning-figure"><figcaption>${t('B. 細菌結構與可能作用位置','B. Structures and possible action sites')}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t('細菌結構與抗生素可能作用位置','Bacterial structures and possible antibiotic action sites')}">
+ <rect x="21" y="91" width="238" height="122" rx="61" fill="#eef3fa" stroke="#b8cbdc" stroke-width="2"/>
  <rect x="30" y="100" width="220" height="104" rx="52" fill="#d5e5f8" stroke="#597fb1" stroke-width="8"/><rect x="41" y="111" width="198" height="82" rx="40" fill="#f4f0d4" stroke="#8e9f82" stroke-width="4"/>
  <path d="M87 151C97 124 136 179 155 143S190 169 206 143" fill="none" stroke="#a6699c" stroke-width="4"/>
  <g fill="#cb995b"><circle cx="72" cy="142" r="4"/><circle cx="93" cy="171" r="4"/><circle cx="175" cy="176" r="4"/><circle cx="196" cy="124" r="4"/></g>
- <g fill="#15333b" font-size="16"><text x="272" y="70">${t('① 細胞壁形成','1. Cell wall formation')}</text><path d="M266 76L239 109" stroke="#597fb1" fill="none"/>
- <text x="272" y="115">${t('② 細胞膜','2. Cell membrane')}</text><path d="M266 121L235 136" stroke="#8e9f82" fill="none"/>
- <text x="272" y="164">${t('③ 蛋白質合成','3. Protein synthesis')}</text><path d="M266 170L179 176" stroke="#cb995b" fill="none"/>
- <text x="272" y="211">${t('④ 核酸合成','4. Nucleic acid synthesis')}</text><path d="M266 217H147V181L146 157" stroke="#a6699c" fill="none"/></g></svg>
- <p class="caption">${t('這些機制並非本次紙碟結果直接證明。','These mechanisms are not proved by this disc experiment.')}</p></figure></div>`;
+ <g fill="#15333b" font-size="16"><text x="272" y="70">${t('① 抑制細胞壁形成','1. Inhibit cell wall')}${language==='en'?'<tspan x="290" dy="18">formation</tspan>':''}</text><path d="M266 76L232 112" stroke="#597fb1" fill="none"/>
+ <text x="272" y="115">${t('② 破壞細胞膜','2. Disrupt cell membrane')}</text><path d="M266 121L235 136" stroke="#8e9f82" fill="none"/>
+ <text x="272" y="164">${t('③ 抑制蛋白質合成','3. Inhibit protein')}${language==='en'?'<tspan x="290" dy="18">synthesis</tspan>':''}</text><path d="M266 170L179 176" stroke="#cb995b" fill="none"/>
+ <text x="272" y="211">${t('④ 抑制核酸合成','4. Inhibit nucleic acid')}${language==='en'?'<tspan x="290" dy="18">synthesis</tspan>':''}</text><path d="M266 217H155V143" stroke="#a6699c" fill="none"/></g></svg>
+ <p class="caption">${t('外側淡色層示意莢膜（並非所有細菌都有）；藍色層為細胞壁，內側綠色層為細胞膜，紫色曲線為 DNA。這些機制並非本次紙碟結果直接證明。','The pale outer layer represents a capsule (not present in all bacteria); blue is the cell wall, green is the cell membrane, and the purple strand is DNA. These mechanisms are not proved by this disc experiment.')}</p></figure></div>`;
 }
 export function learningPointsHTML(language = 'zh') {
-  const points = [
-    ['抗生素主要用於細菌感染，不能治療病毒引起的傷風或流感。不同抗生素可能影響細胞壁、細胞膜、蛋白質或核酸合成；本次實驗不能直接證明作用機制。', 'Antibiotics mainly treat bacterial infections, not viral colds or influenza. Different antibiotics may affect cell walls, membranes, protein synthesis or nucleic acid synthesis; this experiment does not establish their mechanism.'],
-    ['本次圈大小能支持甚麼？清晰區表示本次條件下局部沒有可見細菌生長，支持樣本抑制細菌生長；不能證明區內所有細菌已死亡。清晰區的直徑亦受樣本擴散及紙碟含量等因素影響。', 'What can zone size support? A clear zone shows no visible bacterial growth locally under these test conditions, supporting inhibition by the sample. It does not prove that every bacterium has died. Diffusion, disc content and other factors also affect the diameter.'],
-    ['為甚麼有些清晰區較大，有些較小？抗生素由紙碟向外擴散，離紙碟越遠，濃度通常越低。只有濃度仍足以抑制這種細菌生長的範圍才會形成清晰區。能擴散較遠、紙碟含量較高，或細菌對該抗生素較敏感，都可能令清晰區較大；相反則可能較小或沒有清晰區。瓊脂的成份和厚度、細菌初始分布及培養／觀察條件也會影響大小。', 'Why are some clear zones larger and others smaller? Antibiotic diffuses outward from the disc, and its concentration generally decreases with distance. A clear zone forms where the concentration remains sufficient to inhibit this organism. Greater diffusion, higher disc content, or greater bacterial susceptibility can produce larger zones; the reverse can produce smaller or absent zones. Agar composition and depth, initial bacterial distribution, and incubation or observation conditions also affect size.'],
-    ['清晰區最大，是否最適合治療細菌感染？不能只憑本次圈大小判斷。實際治療還需考慮細菌種類、標準化敏感性測試、感染位置、藥物能否到達該處、患者情況及副作用；本模型的排序不能直接用來選藥。', 'Is the sample with the largest clear zone the most suitable treatment for a bacterial infection? Zone size alone cannot decide this. Treatment also depends on the organism, standardised susceptibility tests, the infection site, whether the medicine reaches it, patient factors and adverse effects. This model ranking cannot select a treatment.'],
-    ['甚麼是抗藥性？抗藥性是細菌能抵抗原本有效的抗生素，不是人的身體「習慣」藥物。細菌可能原已具有抗藥性基因，也可能因基因變異或從其他細菌取得基因而具有抗藥性，例如改變藥物的作用位置或使藥物失去活性。', 'What is antibiotic resistance? It is the ability of bacteria to withstand an antibiotic that was previously effective, not a person’s body becoming used to it. Resistance genes may already be present, arise through genetic changes, or be acquired from other bacteria, for example changing a drug target or inactivating the drug.'],
-    ['為甚麼情境中的原有抗生素會失效？抗生素使敏感細菌較難存活，抗藥細菌則較容易存活、繁殖並傳播抗藥性。當抗藥細菌所佔比例增加，原有抗生素可能不再有效。這是選擇作用，細菌不會有目的地決定適應。', 'Why can the original antibiotic in the scenario lose effectiveness? Antibiotics reduce the survival of susceptible bacteria, while resistant bacteria can survive, reproduce and spread resistance. As resistant bacteria become more common, the original antibiotic may no longer work. This is selection, not bacteria deliberately choosing to adapt.'],
-    ['過度或不當使用抗生素有甚麼後果？例如用抗生素治療病毒感染、自行加減劑量或療程、分享或使用剩餘藥物，會增加不必要的選擇壓力，促進抗藥細菌出現及傳播。感染可能更難治療，並增加副作用及醫療負擔。應按醫護指示使用。', 'What are the consequences of antibiotic overuse or misuse? Using antibiotics for viral infections, changing doses or treatment length without advice, or sharing or using leftover medicines adds unnecessary selection pressure and promotes resistance and its spread. Infections can become harder to treat, with more adverse effects and healthcare burden. Follow healthcare professionals’ instructions.'],
-    ['沒有可見清晰區只表示本次條件下未觀察到抑制作用，不能推廣至所有 MRSA。MRSA 對甲氧西林及大多數相關 β-內酰胺抗生素有抗藥性，不代表對所有抗生素都有抗藥性。', 'No visible clear zone means no inhibition was observed under these test conditions; it cannot be generalised to all MRSA. MRSA resists methicillin and most related beta-lactam antibiotics, not every antibiotic.'],
-    ['用新瓊脂板獨立重複實驗可檢查一致性及變異；重新量度同一清晰區不算獨立重複。三次不保證可靠；數據差異過大時先檢查操作及條件，再按需要增加測試。', 'Independent repeats on new plates assess consistency and variation; remeasuring the same zone is not an independent repeat. Three tests do not guarantee reliability. If results differ greatly, check methods and conditions before adding tests as needed.']
-  ];
-  return `${learningDiagram(language)}<ul class="learning-list">${points.map(point => `<li>${esc(point[language==='en'?1:0])}</li>`).join('')}</ul>`;
+  const sections = [
+  {
+    "title": [
+      "抗生素的用途",
+      "Uses of antibiotics"
+    ],
+    "points": [
+      [
+        "抗生素主要用於[細菌感染]，不能治療病毒引起的傷風或流感。",
+        "Antibiotics mainly treat [bacterial infections]; they cannot treat viral colds or influenza."
+      ]
+    ]
+  },
+  {
+    "title": [
+      "清晰區如何形成",
+      "How clear zones form"
+    ],
+    "points": [
+      [
+        "抗生素由紙碟[向外擴散]，離紙碟越遠，濃度通常越低。只有濃度仍足以抑制這種細菌生長的範圍才會形成[清晰區]。如果細菌對抗生素愈敏感（能被較低濃度抗生素抑制生長），能形成的清晰區便愈大。",
+        "Antibiotic [diffuses outward] from the disc, and its concentration generally decreases with distance. A [clear zone] forms only where the concentration remains sufficient to inhibit this bacterium. Greater susceptibility (growth inhibited at a lower antibiotic concentration) allows a larger clear zone to form."
+      ],
+      [
+        "清晰區表示該位置沒有可見細菌生長，證明該抗生素樣本能[抑制細菌生長]；不能證明區內所有細菌已死亡。",
+        "A clear zone indicates no visible bacterial growth at that location, demonstrating that the antibiotic sample can [inhibit bacterial growth]; it does not prove that all bacteria in the zone have died."
+      ]
+    ]
+  },
+  {
+    "title": [
+      "抗生素抗性與選擇作用",
+      "Antibiotic resistance and selection"
+    ],
+    "points": [
+      [
+        "為甚麼情境中的原有抗生素會失效？抗生素使不具抗生素抗性的細菌較難存活，[具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵]。當後者比例增加並佔據整個群落，原有抗生素便會失效。",
+        "Why does the original antibiotic in the scenario lose effectiveness? Antibiotics make survival harder for susceptible bacteria, while [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As resistant bacteria increase in proportion and occupy the whole population, the original antibiotic becomes ineffective."
+      ],
+      [
+        "[過度或不當使用抗生素]會增加不必要的選擇壓力，[促進抗藥細菌生存與繁殖]，使感染可能更難治療。",
+        "[Antibiotic overuse or misuse] adds unnecessary selection pressure, [promoting the survival and reproduction of resistant bacteria] and potentially making infections harder to treat."
+      ]
+    ]
+  }
+];
+  const index=language==='en'?1:0;
+  const highlight=value=>esc(value).replace(/\[([^\]]+)\]/g,'<strong class="learning-emphasis">$1</strong>');
+  return `${learningDiagram(language)}${sections.map(section=>`<section class="learning-topic"><h3>${esc(section.title[index])}</h3><ul class="learning-list">${section.points.map(point=>`<li>${highlight(point[index])}</li>`).join('')}</ul></section>`).join('')}`;
 }
 
 function reportGraph(record, language) {
@@ -174,8 +212,10 @@ function reportPlate(plate, language) {
 }
 
 function reportConclusion(record,language){
- const a=record.answers||{},i=language==='en'?1:0;
- return `<div class="answer"><h3>3. ${esc(L.resultConclusion[i])}</h3><p class="student-answer">${esc(L.conclusionContext[i])}${esc(answerDisplay('effectiveSamples',a.effectiveSamples,language))}${esc(L.conclusionEffective[i])}</p><p>${esc(L.conclusionRanking[i])}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map(field=>esc(answerDisplay(field,a[field],language))).join(' ＞ ')}</p></div>`;
+ const a=record.answers||{},i=language==='en'?1:0,checks=conclusionChecks(record),submitted=!!record.submittedAt;
+ const mark=check=>submitted?markHTML(check,language):'';
+ const reference=submitted?`<p class="reference">${tr(language,'參考有效樣本：','Reference effective samples: ')}${esc(checks.effective.join('、'))}。${tr(language,'按你的讀數計算的排序：','Ranking calculated from your readings: ')}${checks.reference?esc([...checks.reference,...Array(4-checks.reference.length).fill(L.notApplicable[i])].join(' ＞ ')):tr(language,'資料不足','Insufficient data')}。${tr(language,'平均值相同時接受任一先後次序。','Either order is accepted for equal means.')}</p>`:'';
+ return `<div class="answer"><h3>3. ${esc(L.resultConclusion[i])}</h3><p class="student-answer">${esc(L.conclusionContext[i])}${esc(answerDisplay('effectiveSamples',a.effectiveSamples,language))}${esc(L.conclusionEffective[i])} ${mark(checks.samples)}</p><p>${esc(L.conclusionRanking[i])}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map(field=>esc(answerDisplay(field,a[field],language))).join(' ＞ ')} ${mark(checks.order)}</p>${reference}</div>`;
 }
 export function renderReport(record, language = 'zh') {
   language = language === 'en' ? 'en' : 'zh';
@@ -215,7 +255,7 @@ export function renderReport(record, language = 'zh') {
   <footer class="report-footer">${t('✓／✕ 只用於有明確參考的項目；開放題附參考說明，由教師閱讀。學生原文不因語言切換而改寫。','✓/✕ apply only to items with an explicit reference. Open responses have reference notes for teacher review. Student text is preserved when the language changes.')}<br>${t('紀錄識別碼','Record ID')}：${esc(record.id)}</footer></article>`;
 }
 
-export const REPORT_CSS = `*{box-sizing:border-box}body{margin:0;color:#15333b;font-family:Arial,"Noto Sans TC",sans-serif;font-size:12px;line-height:1.65;background:#f5f9f7}.vl4-report{max-width:1000px;margin:24px auto;padding:28px;background:white}.report-cover{border-left:7px solid #087b78;padding:16px 22px;background:#edf7f3}.report-cover h1{font-size:24px;line-height:1.35;margin:8px 0}.report-brand{letter-spacing:.08em;color:#087b78}.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:15px 0}.simulation-note,.reference{color:#536d74;font-size:11px}.simulation-note{border:1px solid #dce9e7;padding:10px;border-radius:8px}.report-section{margin:20px 0}.report-section h2{font-size:17px;color:#087b78;border-bottom:2px solid #dce9e7;padding-bottom:6px;break-after:avoid}.report-card{border:1px solid #dce9e7;border-radius:12px;padding:16px;background:#fcfefc}.answer{padding:8px 0;border-bottom:1px solid #ecf2ef;break-inside:avoid}.answer h3,h3{font-size:12px;margin:0 0 4px;font-weight:700}.student-answer{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}.reference{margin:5px 0}.check{font-weight:bold;margin-left:5px}.correct{color:#167645}.incorrect{color:#ae3434}table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}th,td{padding:7px;border:1px solid #dce9e7;vertical-align:top;overflow-wrap:anywhere}th{background:#edf7f3}td small{display:block;white-space:pre-wrap}thead{display:table-header-group}tr{break-inside:avoid}.design-image{display:block;max-height:330px;max-width:100%;object-fit:contain;margin:16px auto}.science-diagram svg,.report-graph{display:block;width:100%;height:auto}.science-diagram{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}.learning-figure{margin:0;padding:12px;border:1px solid #bddfd8;border-radius:12px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:14px;font-weight:700;line-height:1.5}.learning-figure .caption{font-size:10px;color:#536d74}@media screen and (max-width:600px){.science-diagram{grid-template-columns:1fr}}.plate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.plate-figure{margin:0;break-inside:avoid}.plate-figure svg{width:100%;height:auto}.plate-figure figcaption{font-size:10px}.learning-list{padding-left:20px}.learning-list li{margin:8px 0;break-inside:avoid}.report-footer{font-size:10px;color:#658087;border-top:1px solid #dce9e7;padding-top:10px}@page{size:A4;margin:13mm}@media print{body{background:white}.vl4-report{margin:0;padding:0;max-width:none}.report-card{border-radius:8px}.report-cover{break-inside:avoid}.report-cover h1{font-size:22px}.report-section{margin:14px 0}.plate-grid{gap:8px}.report-meta{font-size:10px}a{color:inherit}}`;
+export const REPORT_CSS = `*{box-sizing:border-box}body{margin:0;color:#15333b;font-family:Arial,"Noto Sans TC",sans-serif;font-size:12px;line-height:1.65;background:#f5f9f7}.vl4-report{max-width:1000px;margin:24px auto;padding:28px;background:white}.report-cover{border-left:7px solid #087b78;padding:16px 22px;background:#edf7f3}.report-cover h1{font-size:24px;line-height:1.35;margin:8px 0}.report-brand{letter-spacing:.08em;color:#087b78}.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:15px 0}.simulation-note,.reference{color:#536d74;font-size:11px}.simulation-note{border:1px solid #dce9e7;padding:10px;border-radius:8px}.report-section{margin:20px 0}.report-section h2{font-size:17px;color:#087b78;border-bottom:2px solid #dce9e7;padding-bottom:6px;break-after:avoid}.report-card{border:1px solid #dce9e7;border-radius:12px;padding:16px;background:#fcfefc}.answer{padding:8px 0;border-bottom:1px solid #ecf2ef;break-inside:avoid}.answer h3,h3{font-size:12px;margin:0 0 4px;font-weight:700}.student-answer{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}.reference{margin:5px 0}.check{font-weight:bold;margin-left:5px}.correct{color:#167645}.incorrect{color:#ae3434}table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}th,td{padding:7px;border:1px solid #dce9e7;vertical-align:top;overflow-wrap:anywhere}th{background:#edf7f3}td small{display:block;white-space:pre-wrap}thead{display:table-header-group}tr{break-inside:avoid}.design-image{display:block;max-height:330px;max-width:100%;object-fit:contain;margin:16px auto}.science-diagram svg,.report-graph{display:block;width:100%;height:auto}.science-diagram{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}.learning-figure{margin:0;padding:12px;border:1px solid #bddfd8;border-radius:12px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:14px;font-weight:700;line-height:1.5}.learning-figure .caption{font-size:10px;color:#536d74}@media screen and (max-width:600px){.science-diagram{grid-template-columns:1fr}}.plate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.plate-figure{margin:0;break-inside:avoid}.plate-figure svg{width:100%;height:auto}.plate-figure figcaption{font-size:10px}.learning-topic h3{font-size:16px;margin:18px 0 8px;color:#15333b;break-after:avoid}.learning-emphasis{color:#b42318;font-weight:700}.learning-list{padding-left:20px}.learning-list li{margin:8px 0;break-inside:avoid}.report-footer{font-size:10px;color:#658087;border-top:1px solid #dce9e7;padding-top:10px}@page{size:A4;margin:13mm}@media print{body{background:white}.vl4-report{margin:0;padding:0;max-width:none}.report-card{border-radius:8px}.report-cover{break-inside:avoid}.report-cover h1{font-size:22px}.report-section{margin:14px 0}.plate-grid{gap:8px}.report-meta{font-size:10px}a{color:inherit}}`;
 export function reportFilename(record, language = 'zh') {
   return `${tr(language,'VL4_抗生素研究任務','VL4_Antibiotic_Investigation')}_${record.profile?.className || record.profile?.classInfo || ''}_${record.profile?.name || ''}`.replace(/[\\/:*?"<>|\u0000-\u001f]/g,'_');
 }

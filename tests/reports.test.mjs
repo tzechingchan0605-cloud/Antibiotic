@@ -35,7 +35,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   assert.match(zh,/實驗原理：抗生素樣本的擴散與清晰區的形成/);assert.match(en,/antibiotic diffusion and clear-zone formation/);
   assert.match(zh,/① 紙碟承載抗生素/);assert.match(zh,/② 抗生素向瓊脂擴散/);assert.match(zh,/③ 抗生素抑制細菌生長/);
   assert.match(zh,/離紙碟越遠，濃度通常越低/);assert.match(en,/concentration generally decreases with distance/);
-  assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic overuse or misuse/);
+  assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic overuse or misuse/i);
   assert.match(zh,/C（對照）/);assert.match(en,/C \(control\)/);
   assert.match(zh,/原始假說|原始研究/);assert.match(en,/Independent variable/);
   assert.match(en,/Dependent variable/);assert.match(en,/Controlled variables/);
@@ -48,7 +48,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   }
   assert.match(zh,/class="check correct"/);assert.match(en,/Matches reference/);
   assert.doesNotMatch(en,/你的原始研究計劃|清晰區總直徑包括紙碟|學生瓊脂板位置及實驗設計圖/);
-  assert.match(learningDiagram('en'),/Nucleic acid synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
+  assert.match(learningDiagram('en'),/Inhibit nucleic acid<tspan[^>]*>synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
   assert.deepEqual(record,before,'rendering never mutates record, images, answers, event history or timing');
 });
 
@@ -185,7 +185,7 @@ test('revised reports and XLSX retain evidence, include five MCs/conclusion, and
   assert.match(report,/Z ＞ X ＞/);assert.match(report,/MRSA/);
   assert.match(report,lang==='en'?/Not applicable/:/不適用/);
   assert.match(report,lang==='en'?/selection pressure/:/選擇壓力/);
-  assert.match(report,lang==='en'?/patient factors/:/患者情況/);
+  assert.match(report,lang==='en'?/resistance traits/:/遺傳抗藥性特徵/);
  }
  const auto=automaticScores(record);
  assert.equal(auto.graph,undefined);assert.equal(auto.deathLimit,undefined);
@@ -197,10 +197,10 @@ test('revised reports and XLSX retain evidence, include five MCs/conclusion, and
  assert.doesNotMatch(JSON.stringify(answers.getRow(1).values),/延伸|最大清晰區是否|生長情況如何/);
  const mcCell=scores.getCell(2,headerIndex(scores,'分析｜第 1 題（自動）（0–1）'));assert.equal(mcCell.value,0);
  const overall=scores.getCell(2,headerIndex(scores,'新版整體總分（23）（0–23）'));
- assert.match(overall.formula,/=7/);assert.match(overall.formula,/D2="已完成"/);
- assert.equal(CURRENT_SCORE_COLUMNS.filter(column=>column.manual).length,7);
+ assert.match(overall.formula,/=6/);assert.match(overall.formula,/D2="已完成"/);
+ assert.equal(CURRENT_SCORE_COLUMNS.filter(column=>column.manual).length,6);
  assert.equal(CURRENT_SCORE_COLUMNS.filter(column=>column.max!==undefined&&!column.formula).reduce((sum,column)=>sum+column.max,0),23);
- const conclusion=scores.getCell(2,headerIndex(scores,'結論｜樣本選擇及排序（教師）（0–1）'));assert.equal(conclusion.value,null);
+ const conclusion=scores.getCell(2,headerIndex(scores,'結論｜樣本選擇及排序（自動）（0–1）'));assert.equal(conclusion.value,1);
  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜排序第 3 項')).value,'不適用');
  const zip=await JSZip.loadAsync(await workbook.xlsx.writeBuffer());
  assert.ok(zip.file('xl/worksheets/sheet3.xml'));
@@ -216,4 +216,27 @@ test('mixed assessment versions keep separate score sheets without dropping old 
  assert.equal(answers.getCell(2,headerIndex(answers,'最新｜C（對照）的生長情況如何？它提供甚麼比較基礎？')).value,'Control has no outer zone.');
  assert.equal(answers.getCell(3,headerIndex(answers,'最新｜排序第 1 項')).value,'Z');
  assert.deepEqual([old,current],before);
+});
+
+test('conclusion scores samples and own-reading ranking separately and keeps feedback after submission',async()=>{
+ const r=currentFixture(),before=structuredClone(r);
+ assert.equal(automaticScores(r).selectedConclusion,1);
+ r.answers.effectiveSamples='all';assert.equal(automaticScores(r).selectedConclusion,0.5);
+ r.answers.rank1='X';r.answers.rank2='Z';assert.equal(automaticScores(r).selectedConclusion,0);
+ r.answers.effectiveSamples='X_Z';assert.equal(automaticScores(r).selectedConclusion,0.5);
+ // Inference follows actual student readings, not the model or a mistyped mean.
+ for(const p of r.plates){r.measurements[p.id].X.value='30';r.measurements[p.id].Z.value='20';}
+ assert.equal(automaticScores(r).selectedConclusion,1);
+ for(const p of r.plates)r.measurements[p.id].Z.value='30';
+ assert.equal(automaticScores(r).selectedConclusion,1);
+ r.answers.rank1='Z';r.answers.rank2='X';assert.equal(automaticScores(r).selectedConclusion,1);
+ r.answers.rank4='C';assert.equal(automaticScores(r).selectedConclusion,0.5);
+ r.answers.rank4='na';
+ const html=renderReport(r);assert.match(html,/參考有效樣本：X、Z/);assert.match(html,/按你的讀數計算的排序/);
+ r.submittedAt=null;assert.doesNotMatch(renderReport(r),/參考有效樣本：|按你的讀數計算的排序/);
+ r.submittedAt=before.submittedAt;r.answers.rank2='';assert.equal(automaticScores(r).selectedConclusion,0.5);
+ const wb=await buildWorkbook([r]);const zip=await JSZip.loadAsync(await wb.xlsx.writeBuffer());
+ const restored=new ExcelJS.Workbook();await restored.xlsx.load(await wb.xlsx.writeBuffer());
+ const sheet=restored.getWorksheet('教師評分');assert.equal(sheet.getCell(2,headerIndex(sheet,'結論｜樣本選擇及排序（自動）（0–1）')).value,0.5);
+ assert.ok(zip.file('xl/worksheets/sheet3.xml'));
 });

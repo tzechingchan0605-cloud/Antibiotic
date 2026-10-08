@@ -323,16 +323,16 @@ export function createExperimentBench({getRecord,getPlateIndex,setPlateIndex,sav
   bind('rulerSample','change',()=>{if(zoom)centerRuler();renderPlate();});
   function centerRuler(){
     const target=rulerTargets(current()).find(target=>target.sample===$('#rulerSample').value);
-    if(target){ruler={x:target.x,y:target.y};rulerMagnet={...target,anchorX:target.x};}
+    if(target){ruler={x:target.x,y:target.y};rulerMagnet={...target};}
     else{const p=current(),pos=p?.discPositions[$('#rulerSample').value];if(!pos)return;const centre=toPlatePoint(pos,-p.rotation);ruler={x:centre.x-40,y:centre.y};rulerMagnet=null;}
     renderPlate();
   }
   bind('centerRuler','click',centerRuler);
-  bind('rulerLeft','click',()=>{rulerMagnet=null;ruler.x=Math.max(0,ruler.x-2);renderPlate();});
-  bind('rulerRight','click',()=>{rulerMagnet=null;ruler.x=Math.min(310,ruler.x+2);renderPlate();});
+  bind('rulerLeft','click',()=>{ruler.x=Math.max(0,ruler.x-2);renderPlate();});
+  bind('rulerRight','click',()=>{ruler.x=Math.min(310,ruler.x+2);renderPlate();});
   bind('plateSVG','pointerdown',event=>{
     if(!record()||busy)return;event.preventDefault();const p=current(),world=point(event);rememberPointer(event);
-    if(event.target.closest('[data-ruler]')&&p.completed){if(rulerMagnet)rulerMagnet={...rulerMagnet,anchorX:ruler.x};gesture={mode:'ruler',start:world,ruler:{...ruler},ignored:null};}
+    if(event.target.closest('[data-ruler]')&&p.completed){gesture={mode:'ruler',start:world,ruler:{...ruler},ignored:null};}
     else if(event.target.closest('[data-rotate]')&&!locked()&&[3,4].includes(plateStep(p))){gesture={mode:'rotate',angle:Math.atan2(world.y-200,world.x-200),rotation:p.rotation};}
     else if(!locked()&&Math.hypot(world.x-200,world.y-200)<157){
       const step=plateStep(p);

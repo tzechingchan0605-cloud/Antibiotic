@@ -19,6 +19,21 @@ export function studentMean(record, sample) {
   const values = plates.map(plate => finiteNumber(record.measurements?.[plate.id]?.[sample]?.value));
   return values.every(value => value !== null) ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 }
+export function conclusionChecks(record) {
+  const a=record.answers||{},plates=record.plates||[];
+  const effective=['X','Y','Z'].filter(sample=>plates.some(plate=>clearZoneDiameter(plate,sample)>0));
+  const selected=a.effectiveSamples==='all'?['X','Y','Z']:a.effectiveSamples==='none'?[]:(a.effectiveSamples||'').split('_').filter(Boolean);
+  const samples=a.effectiveSamples?plates.length>0&&sameChoices(selected,effective):null;
+  const ranking=['rank1','rank2','rank3','rank4'].map(key=>a[key]);
+  const means=Object.fromEntries(effective.map(sample=>[sample,studentMean(record,sample)]));
+  const reference=effective.every(sample=>means[sample]!==null)?[...effective].sort((x,y)=>means[y]-means[x]):null;
+  let order=null;
+  if(ranking.every(Boolean)&&reference){
+    const ranked=ranking.slice(0,effective.length);
+    order=sameChoices(ranked,effective)&&ranking.slice(effective.length).every(value=>value==='na')&&ranked.every((sample,index)=>index===0||means[ranked[index-1]]+1e-9>=means[sample]);
+  }
+  return {samples,order,effective,reference};
+}
 export function readingCheck(record, plate, sample, reading) {
   const value = finiteNumber(reading?.value), reference = clearZoneDiameter(plate,sample);
   if (value === null || reference === null || !['yes', 'no'].includes(reading?.visible)) return null;
@@ -93,7 +108,7 @@ export function automaticScores(record) {
     means: SAMPLE_IDS.filter(sample => meanCheck(record, sample) === true).length / 4,
     deathLimit: checks.analysisDeath ? 0.5 : 0, clinicalLimit: checks.analysisClinical ? 0.5 : 0,
     graph: SAMPLE_IDS.filter(sample => graphCheck(record, sample) === true).length / 2 };
-  if(currentAnalysis(record)){delete scores.deathLimit;delete scores.clinicalLimit;delete scores.graph;for(const question of MC_QUESTIONS)scores[question.id]=checks[question.id]?1:0;}
+  if(currentAnalysis(record)){const conclusion=conclusionChecks(record);scores.selectedConclusion=(conclusion.samples===true?0.5:0)+(conclusion.order===true?0.5:0);delete scores.deathLimit;delete scores.clinicalLimit;delete scores.graph;for(const question of MC_QUESTIONS)scores[question.id]=checks[question.id]?1:0;}
   return scores;
 }
 
@@ -123,14 +138,14 @@ export const RUBRIC_ROWS = [
 export const CURRENT_SCORE_COLUMNS = [
   ...SCORE_COLUMNS.filter(column=>['observation','readings','iv','dv','cv','hypothesis','repeat','control','assumptions','designQuality','means'].includes(column.id)),
   ...MC_QUESTIONS.map(question=>({id:question.id,label:`分析｜第 ${question.number} 題（自動）`,group:'inferring',max:1})),
-  {id:'selectedConclusion',label:'結論｜樣本選擇及排序（教師）',group:'communicating',max:1,manual:true},
-  {id:'reflection',label:'反思｜以證據完善原始解釋（教師）',group:'knowledge',max:2,manual:true},
+  {id:'selectedConclusion',label:'結論｜樣本選擇及排序（自動）',group:'communicating',max:1},
+  {id:'reflection',label:'反思｜實驗證據與抗性選擇解釋（教師）',group:'knowledge',max:2,manual:true},
   {id:'overall',label:'新版整體總分（23）',group:'score',max:23,formula:['observation','readings','iv','dv','cv','hypothesis','repeat','control','assumptions','designQuality','means',...MC_QUESTIONS.map(question=>question.id),'selectedConclusion','reflection']},
   {id:'marking',label:'評分狀態',group:'score'}
 ];
 export const CURRENT_RUBRIC_ROWS = [
-  ...RUBRIC_ROWS.filter(row=>['觀察｜初步觀察','觀察｜直徑及紙碟外清晰區','分類｜獨立變量／因變量／控制變量','設計｜可測試假說及理由','設計｜原始重複安排理由','設計｜對照理由','設計｜探究假設','實作｜瓊脂板設計品質','推論｜平均值','新知識｜修訂原始解釋'].includes(row[0])).map(row=>row[0]==='新知識｜修訂原始解釋'?['反思｜以證據完善原始解釋',...row.slice(1)]:row),
+  ...RUBRIC_ROWS.filter(row=>['觀察｜初步觀察','觀察｜直徑及紙碟外清晰區','分類｜獨立變量／因變量／控制變量','設計｜可測試假說及理由','設計｜原始重複安排理由','設計｜對照理由','設計｜探究假設','實作｜瓊脂板設計品質','推論｜平均值','新知識｜修訂原始解釋'].includes(row[0])).map(row=>row[0]==='新知識｜修訂原始解釋'?['反思｜實驗證據與抗性選擇解釋',2,'教師','引用樣本讀數支持抑制生長；連結原有抗性差異、不同存活與繁殖機會、抗性特徵遺傳及群落比例改變，解釋效果減弱。','1：有合理實驗判斷或選擇作用解釋，但缺少讀數或因果連結。','0：無相關證據與合理概念解釋，或認為細菌為生存而主動產生抗性。','knowledge']:row),
   ...MC_QUESTIONS.map(question=>[`分析｜第 ${question.number} 題：${question.id}`,1,'自動',`參考選項：${String.fromCharCode(65+question.options.findIndex(([value])=>value===question.correct))}。`,'本題不設部分分。','錯選或未答 0。','inferring']),
-  ['結論｜樣本選擇及排序',1,'教師','根據自己的三次觀察及平均值選擇有清晰區的樣本，合理排序，不使用的項目選不適用。只比較本次模擬條件。','0.5：樣本或排序有一項正確，另一項與自身數據不符。','0：沒有可評結論，或樣本與排序均不符自身數據。數據相同時不以未能作嚴格排序扣分。','communicating'],
-  ['新版總分及待評狀態',23,'公式','沿用設計及量度準則；新增五題各 1 分、選填結論 1 分、反思 2 分。七個人工格填完且反思已提交才顯示總分。','刪除圖表及舊分析題的評分；新版與舊版分開，不直接比較兩版總分。','此準則為試教草案，需配合題目改動校準；不把操作速度、次數或完成率換算能力。','score']
+  ['結論｜樣本選擇及排序',1,'自動','有效樣本按模型判斷（X、Z），正確得 0.5；排序按學生讀數計算的平均值判斷，正確得 0.5，未使用的位置必須選不適用。','0.5：樣本選擇或排序其中一項正確。','0：兩項均錯或資料不足；相同平均值接受任一先後次序，不重複扣量度誤差。','communicating'],
+  ['新版總分及待評狀態',23,'公式','沿用設計及量度準則；新增五題各 1 分、選填結論 1 分、反思 2 分。六個人工格填完且反思已提交才顯示總分。','刪除圖表及舊分析題的評分；新版與舊版分開，不直接比較兩版總分。','此準則為試教草案，需配合題目改動校準；不把操作速度、次數或完成率換算能力。','score']
 ];

@@ -568,3 +568,6 @@ dialog::backdrop { background: #17392dcc; backdrop-filter: blur(5px); }
 
 .science-diagram{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;overflow:visible}.science-diagram svg{min-width:0;width:100%;height:auto}.learning-figure{margin:0;padding:15px;border:1px solid #bddfd8;border-radius:14px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:16px;font-weight:700;line-height:1.6;color:var(--ink)}.learning-figure:nth-child(2){background:#f4f7fc;border-color:#c8d7ea}
 @media(max-width:700px){.science-diagram{grid-template-columns:1fr}}
+
+.learning-topic h3 { font-size: 18px; margin: 22px 0 8px; color: #15333b; }
+.learning-emphasis { color: #b42318; font-weight: 700; }

@@ -3,7 +3,7 @@ export const ANALYSIS_VERSION = 2;
 export const MC_QUESTIONS = [
   {id:'zoneMeaning',number:1,key:'zoneMeaning',correct:'inhibition',options:[['death','zoneDeath'],['inhibition','zoneInhibition'],['resistance','zoneResistance'],['viruses','zoneViruses']]},
   {id:'zoneDiameterMeaning',number:2,key:'zoneDiameterMeaning',correct:'extent',options:[['count','diameterCount'],['treatment','diameterTreatment'],['extent','diameterExtent'],['dose','diameterDose']]},
-  {id:'repeatPurpose',number:4,key:'repeatPurpose',correct:'consistency',options:[['consistency','repeatConsistency'],['guarantee','repeatGuarantee'],['remeasure','repeatRemeasure'],['content','repeatContent']]},
+  {id:'repeatPurpose',number:4,key:'repeatPurpose',correct:'consistency',options:[['guarantee','repeatGuarantee'],['remeasure','repeatRemeasure'],['consistency','repeatConsistency'],['content','repeatContent']]},
   {id:'repeatVariation',number:5,key:'repeatVariation',correct:'check',options:[['delete','variationDelete'],['maximum','variationMaximum'],['average','variationAverage'],['check','variationCheck']]},
   {id:'controlPurpose',number:6,key:'controlPurpose',correct:'baseline',options:[['same','controlSame'],['treatment','controlTreatment'],['baseline','controlBaseline'],['increase','controlIncrease']]}
 ];

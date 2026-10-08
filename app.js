@@ -34,7 +34,7 @@ const rankSelect=(id,index)=>`<select id="${id}" data-field="${id}" data-scope="
 const conclusionMarkup=`<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span('resultConclusion')}</legend><div class="conclusion-sentence">${span('conclusionContext')}<select id="effectiveSamples" data-field="effectiveSamples" data-scope="answer" required data-i18n-aria="effectiveSamples">${option('','choose')}${EFFECTIVE_OPTIONS.map(([value,key])=>option(value,key)).join('')}</select>${span('conclusionEffective')}</div><p>${span('conclusionRanking')}</p><div class="conclusion-ranking">${[0,1,2,3].map((index)=>`${index?'<span aria-hidden="true">＞</span>':''}${rankSelect('rank'+(index+1),index)}`).join('')}</div><p class="question-hint">${span('conclusionSelectHint')}</p></fieldset>`;
 $('#analysisFields').innerHTML=MC_QUESTIONS.slice(0,2).map(mcQuestion).join('')+conclusionMarkup+MC_QUESTIONS.slice(2).map(mcQuestion).join('');
 $('#reflectionFields').innerHTML=field('reflection','reflectionQuestion');
-$('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${s==='C'?span('blank'):s}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" aria-label="${s} mm"></label>`).join('');
+$('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${span(`meanLabel${s}`)}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" data-i18n-aria="meanLabel${s}"></label>`).join('');
 const equipmentArt=[
  ['equipmentPlate',3,'<path d="M14 40v20c0 11 16 20 36 20s36-9 36-20V40" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M20 44v12c0 8 14 15 30 15s30-7 30-15V44" fill="#ddd0a6"/><ellipse cx="50" cy="40" rx="36" ry="20" fill="#f5f9f3" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="42" rx="30" ry="15" fill="#eadfbc" stroke="#c0ceb7" stroke-width="1.5"/><path d="M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>','equipmentPlateNote'],
  ['equipmentMarker',1,'<g transform="rotate(28 50 50)"><rect x="42" y="13" width="16" height="69" rx="5" fill="#24594e"/><path d="M42 82h16l-8 12z" fill="#15333b"/><rect x="42" y="10" width="16" height="15" rx="3" fill="#a5c4bc"/></g>'],
@@ -55,7 +55,6 @@ const historyCaption=$('#historyCaption')||$('[data-i18n="historyCaption"]')||$(
 if(historyCaption)historyCaption.dataset.i18n=historyCaptionKey;
 const colonyMeaning=$('#colonyMeaning')||$('[data-i18n="colonyRemark"]');
 if(colonyMeaning)colonyMeaning.hidden=historyCaptionKey==='historyCaption';
-$('#neutralRuler').innerHTML=`<svg viewBox="0 0 300 100" role="img" data-i18n-aria="neutralExample"><circle cx="150" cy="45" r="28" fill="#fffaf0" stroke="#64867a"/><circle cx="150" cy="45" r="12" fill="white" stroke="#aaa"/><text x="150" y="49" text-anchor="middle" font-size="10">Q</text><path d="M122 80h56m-56-6v12m56-12v12" stroke="#087b78"/><text x="150" y="97" text-anchor="middle" font-size="12">14 mm</text></svg>`;
 translate();
 let state=null,plateIndex=0,tool=null,drawTool='pencil',gesture=null,drawing=false,drawn=false,animation=null,saveTimer=null,generation=0;
 let teacherProfile=null,teacherPassword='',cloudRecords=null,selectedRecord=null,showCoverage=true,zoom=false,ruler={x:60,y:350},lastTime=performance.now(),cloudState={key:'unconfigured'};
@@ -113,14 +112,15 @@ function renderMeasurements(){
  $('#measurementRows').innerHTML=SAMPLES.map(s=>{const r=state.measurements[p.id]?.[s]||{};return `<tr><th>${s==='C'?span('blank'):s}</th><td><select data-visible="${s}" aria-label="${s} ${esc(t('visible'))}" ${locked?'disabled':''}>${option('','choose')}${option('yes','yes')}${option('no','no')}</select></td><td><input data-reading="${s}" aria-label="${s} ${esc(t('diameter'))}" type="number" min="0" max="40" step="0.1" placeholder="mm" value="${esc(r.value??'')}" ${locked?'disabled':''}></td></tr>`;}).join('');
  SAMPLES.forEach(s=>{$(`[data-visible="${s}"]`).value=state.measurements[p.id]?.[s]?.visible||'';});
  $('#confirmReadings').disabled=locked;$('#measurementStatus').textContent=SAMPLES.every(s=>state.measurements[p.id]?.[s]?.confirmedAt)?t('readingSaved'):'';
- for(const el of $$('[data-reading], [data-visible]'))el.addEventListener(el.tagName==='SELECT'||el.type==='radio'?'change':'input',()=>{if(state.submittedAt)return;const s=el.dataset.reading||el.dataset.visible;const group=state.measurements[p.id]??={};const row=group[s]??={};row[el.dataset.reading?'value':'visible']=el.value;row.confirmedAt=null;state.graph.confirmedAt=null;scheduleSave();});
+ for(const el of $$('[data-reading], [data-visible]'))el.addEventListener(el.tagName==='SELECT'||el.type==='radio'?'change':'input',()=>{if(state.submittedAt)return;const s=el.dataset.reading||el.dataset.visible;const group=state.measurements[p.id]??={};const row=group[s]??={};row[el.dataset.reading?'value':'visible']=el.value;if(el.dataset.visible&&el.value==='no'){row.value='0';$(`[data-reading="${s}"]`).value='0';}row.confirmedAt=null;state.graph.confirmedAt=null;scheduleSave();});
  translate($('#measurementRows'));
 }
-$('#confirmReadings').onclick=()=>{if(!state||state.submittedAt)return;const p=currentPlate();if(!p.completed)return;for(const s of SAMPLES){if(!validDecimal($(`[data-reading="${s}"]`).value,0,40)||!$(`[data-visible="${s}"]`).value){toast('invalidNumber');$(`[data-reading="${s}"]`).focus();return;}}for(const s of SAMPLES)confirmMeasurement(state,p.id,s,{value:$(`[data-reading="${s}"]`).value,visible:$(`[data-visible="${s}"]`).value,note:state.measurements[p.id]?.[s]?.note||''});log('measurements_confirmed',{plateId:p.id});save();renderMeasurements();if(state.plates.some(other=>other.id!==p.id&&!SAMPLES.every(s=>state.measurements[other.id]?.[s]?.confirmedAt)))$('#plateTabs').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};
+$('#confirmReadings').onclick=()=>{if(!state||state.submittedAt)return;const p=currentPlate();if(!p.completed)return;for(const s of SAMPLES){if(!$(`[data-visible="${s}"]`).value){toast('visibleRequired');$(`[data-visible="${s}"]`).focus();return;}if(!validDecimal($(`[data-reading="${s}"]`).value,0,40)){toast('invalidNumber');$(`[data-reading="${s}"]`).focus();return;}}for(const s of SAMPLES)confirmMeasurement(state,p.id,s,{value:$(`[data-reading="${s}"]`).value,visible:$(`[data-visible="${s}"]`).value,note:state.measurements[p.id]?.[s]?.note||''});log('measurements_confirmed',{plateId:p.id});save();renderMeasurements();if(state.plates.some(other=>other.id!==p.id&&!SAMPLES.every(s=>state.measurements[other.id]?.[s]?.confirmedAt)))$('#plateTabs').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};
 $('#experimentNext').onclick=()=>{if(!allMeasurements(state)){toast('allPlatesRequired');return;}state.unlocked=Math.max(4,state.unlocked);showPhase(4);};
 document.addEventListener('keydown',e=>{
  if(e.key!=='Enter'||e.isComposing||e.target.tagName!=='INPUT'||!e.target.matches('[data-reading],[data-mean]'))return;
  e.preventDefault();const el=e.target,isMean=el.matches('[data-mean]');
+ if(!isMean&&!$(`[data-visible="${el.dataset.reading}"]`).value){toast('visibleRequired');$(`[data-visible="${el.dataset.reading}"]`).focus();return;}
  const valid=isMean?/^\d+(\.\d+)?$/.test(el.value.trim())&&Number(el.value)<=40:validDecimal(el.value,0,40);
  if(!valid){toast('invalidNumber');return;}
  if(isMean){
@@ -134,7 +134,7 @@ document.addEventListener('keydown',e=>{
 });
 
 function renderSummary(){
- $('#resultsSummary').innerHTML=`<table><thead><tr><th>${t('sample')}</th>${state.plates.map((p,i)=>`<th>${t('plate')} ${i+1} (mm)</th>`).join('')}</tr></thead><tbody>${SAMPLES.map(s=>`<tr><th>${s==='C'?t('blank'):s}</th>${state.plates.map(p=>`<td>${esc(state.measurements[p.id]?.[s]?.value??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+ $('#resultsSummary').innerHTML=`<table><thead><tr><th scope="col">${t('plate')}</th>${SAMPLES.map(s=>`<th scope="col">${s==='C'?t('blank'):s} (mm)</th>`).join('')}</tr></thead><tbody>${state.plates.map((p,i)=>`<tr><th scope="row">${t('plate')} ${i+1}</th>${SAMPLES.map(s=>`<td>${esc(state.measurements[p.id]?.[s]?.value??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 }
 $$('[data-mean]').forEach(el=>el.oninput=()=>{if(state?.submittedAt)return;state.means[el.dataset.mean]=el.value;state.graph.confirmedAt=null;scheduleSave();});
 function submissionComplete(){
@@ -154,8 +154,7 @@ function lockInquiry(){
 }
 function renderLearning(){
  if(!state?.submittedAt)return;$('#learningSection').hidden=false;$('#learningContent').innerHTML=learningPointsHTML(language);
- const original=state.original?.answers||{};
- $('#originalSummary').innerHTML=`<b>${t('hypothesis')}</b><p>${esc(answerDisplay('prediction',original.prediction,language))}</p><p>${t('largestPrediction')} ${esc(answerDisplay('largestPrediction',original.largestPrediction,language))}</p><p>${esc(original.reason)}</p><b>${t('repeatPlan')}</b><p>${state.original?.plannedReplicates??''} ${t('counts')} · ${esc(state.original?.plannedReplicateReason||'')}</p><b>${t('classroomPlan')}</b><div class="table-wrap">${$('#resultsSummary').innerHTML}</div>`;
+ $('#originalSummary').innerHTML=`<b>${t('experimentResults')}</b><div class="table-wrap">${$('#resultsSummary').innerHTML}</div>`;
  $('#reflection').disabled=!!state.reflectionSubmittedAt;$('#saveReflection').disabled=!!state.reflectionSubmittedAt;
  $('#reflectionStatus').textContent=t(state.reflectionSubmittedAt?'reflectionDone':'reflectionPending');$('#completionStatus').textContent=t(state.reflectionSubmittedAt?'reflectionDone':'reflectionPending');$('#downloadPDF').disabled=!state.reflectionSubmittedAt;
 }

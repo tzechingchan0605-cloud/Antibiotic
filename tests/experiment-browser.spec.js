@@ -306,9 +306,15 @@ test('later assistance prepares independent plates and incubation waits for all 
   await stroke(page,[target.x+20,target.y+12],[target.x+24,target.y+18]);
   const adjusted=await page.locator('[data-ruler]').getAttribute('transform');
   const coordinates=adjusted.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);
-  expect(coordinates[0]).toBeCloseTo(target.x,1);
-  expect(coordinates[1]).toBeCloseTo(target.y+6,1);
+  expect(coordinates[0]).toBeCloseTo(target.x+4,1);
+  expect(coordinates[1]).toBeCloseTo(target.y,1);
   await stroke(page,[target.x+20,target.y+18],[target.x+70,target.y+18]);
+  await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','X');
+  const horizontal=await page.locator('[data-ruler]').getAttribute('transform');
+  const horizontalCoordinates=horizontal.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);
+  expect(horizontalCoordinates[0]).toBeCloseTo(Math.min(310,target.x+54),1);
+  expect(horizontalCoordinates[1]).toBeCloseTo(target.y,1);
+  await stroke(page,[horizontalCoordinates[0]+20,target.y+12],[horizontalCoordinates[0]+20,target.y+45]);
   await expect(page.locator('[data-ruler]')).toHaveAttribute('data-snapped','');
   const freeTransform=await page.locator('[data-ruler]').getAttribute('transform');
   const free=freeTransform.match(/translate\(([^ ]+) ([^)]+)\)/).slice(1).map(Number);

@@ -257,8 +257,14 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await expect(page.locator('#learningSection')).toBeVisible();
   await expect(page.locator('#learningContent')).not.toContainText('學習重溫備註');
   await expect(page.locator('#learningContent')).toContainText('過度或不當使用抗生素');
-  await expect(page.locator('#learningContent')).toContainText('不是人的身體');
-  await expect(page.locator('#learningContent')).toContainText('原有抗生素可能不再有效');
+  await expect(page.locator('#learningContent')).toContainText('具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵');
+  await expect(page.locator('#learningContent')).toContainText('原有抗生素便會失效');
+  await expect(page.locator('.reflection-card [data-i18n="reflection"]')).toHaveText('學習反思');
+  await expect(page.locator('#originalSummary > b')).toHaveText('你的實驗結果：');
+  await expect(page.locator('#originalSummary table tbody tr')).toHaveCount(3);
+  await expect(page.locator('#originalSummary')).not.toContainText('假說建立器');
+  await expect(page.locator('#originalSummary')).not.toContainText('原始研究');
+  await expect(page.locator('#reflectionFields')).toContainText('持續使用該抗生素後，它的效果可能如何改變？');
   await expect(page.locator('[data-i18n="learning"]')).toHaveCSS('font-size','25.6px');
 }
 
@@ -425,6 +431,19 @@ test('completion gates reject missing data and invalid Enter readings while comp
   await expect(page.locator('#phase-3')).toBeVisible();
   await expect(page.locator('[data-reading="X"]')).toBeDisabled();
   const first = await preparePlate(page, 0);
+  await expect(page.locator('[data-i18n="measureDefinition"]')).toHaveText('量度並記錄清晰區的總直徑（mm）');
+  await expect(page.locator('#neutralRuler')).toHaveCount(0);
+  await page.locator('[data-visible="Y"]').selectOption('');
+  await page.locator('[data-reading="Y"]').fill('0');
+  await page.locator('#confirmReadings').click();
+  await expect(page.locator('[data-visible="Y"]')).toBeFocused();
+  await expect(page.locator('#toast')).toHaveText('請先選擇紙碟外是否有可見清晰區（有／沒有）。');
+  await page.locator('[data-reading="Y"]').press('Enter');
+  await expect(page.locator('[data-visible="Y"]')).toBeFocused();
+  await page.locator('[data-reading="Y"]').fill('18');
+  await page.locator('[data-visible="Y"]').selectOption('no');
+  await expect(page.locator('[data-reading="Y"]')).toHaveValue('0');
+  await expect.poll(async () => (await current(page)).measurements['plate-1'].Y.value).toBe('0');
   for (const invalid of ['', '-0.1', '6.01']) {
     await page.locator('[data-reading="X"]').fill(invalid);
     await page.locator('[data-reading="X"]').press('Enter');
@@ -514,7 +533,7 @@ test('new MC questions and selected conclusion are required, bilingual, and lock
   expect(state.answers.rank1).toBe('Z');
   await expect(page.locator('#rank1')).toBeDisabled();
   await expect(page.locator('input[name="zoneMeaning"][value="inhibition"]')).toBeDisabled();
-  await expect(page.locator('#learningContent')).toContainText('標準化敏感性測試');
+  await expect(page.locator('#learningContent')).toContainText('清晰區如何形成');
   await page.locator('#learningSection').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/vl4-learning-mobile-zh.png'});
 });
