@@ -48,7 +48,7 @@ async function screenshot(page, path) {
   await page.screenshot({ path, fullPage: true });
 }
 
-async function planInvestigation(page, { wrongAnswers = false } = {}) {
+async function planInvestigation(page, { wrongAnswers = false, guidance = false } = {}) {
   await expect(page.locator('#phase-1')).toBeVisible();
   await expect(page.getByLabel('你的初步觀察', { exact: true })).toBeVisible();
   await expect(page.locator('#inference, #comparison, #backgroundCards')).toHaveCount(0);
@@ -105,6 +105,28 @@ async function planInvestigation(page, { wrongAnswers = false } = {}) {
       await page.locator(`[data-multi="assumptions"][value="${value}"]`).uncheck();
     }
     await page.locator('[data-multi="assumptions"][value="death"]').check();
+  }
+  if(guidance){
+    const description=await page.locator('#designDescription').inputValue();
+    await page.locator('#designDescription').fill('');
+    await page.locator('#saveDesign').click();
+    await expect(page.locator('#toast')).toHaveText('請先繪畫、上載圖片或填寫文字設計，再按「儲存裝置設計」。');
+    await expect(page.locator('#designDescription')).toBeFocused();
+    await page.locator('#designDescription').fill(description+' ');
+    await page.locator('#designNext').click();
+    await expect(page.locator('#toast')).toHaveText('請先按「儲存裝置設計」，再繼續。');
+    await expect(page.locator('#saveDesign')).toBeFocused();
+    const box=await page.locator('#saveDesign').boundingBox();expect(box.y).toBeGreaterThanOrEqual(0);expect(box.y+box.height).toBeLessThanOrEqual(page.viewportSize().height);
+    await page.locator('#saveDesign').click();
+    await page.locator('[data-group="iv"][data-variable="sample"]').click();
+    await page.locator('#designNext').click();
+    await expect(page.locator('#iv button').first()).toBeFocused();
+    await expect(page.locator('#toast')).toHaveText('請完成所有必填回答；不用猜中參考答案。');
+    await page.locator('[data-group="iv"][data-variable="sample"]').click();
+    for(const v of ['distribution','sterile','sameConditions'])await page.locator(`[data-multi="assumptions"][value="${v}"]`).uncheck();
+    await page.locator('#designNext').click();
+    await expect(page.locator('[data-multi="assumptions"]').first()).toBeFocused();
+    for(const v of ['distribution','sterile','sameConditions'])await page.locator(`[data-multi="assumptions"][value="${v}"]`).check();
   }
   await page.locator('#designNext').click();
   await expect(page.locator('#phase-3')).toBeVisible();
@@ -318,6 +340,9 @@ test('student completes an evidence-based inquiry, preserves language-independen
   await expect(page.locator('#observation')).toBeDisabled();
   await expect(page.locator('#downloadPDF')).toBeDisabled();
 
+  await page.locator('#saveReflection').click();
+  await expect(page.locator('#toast')).toHaveText('請先完成學習反思，再按「儲存並提交學習反思」。');
+  await expect(page.locator('#reflection')).toBeFocused();
   await page.locator('#reflection').fill('我保留部分樣本能抑制生長的假說：X、Z 三次均有圈而對照沒有。我原建議兩次，實際三次有助比較變異，但仍不能保證全部細菌死亡或最佳治療。');
   await page.locator('#saveReflection').click();
   await expect(page.locator('#reflection')).toBeDisabled();
@@ -431,6 +456,10 @@ test('completion gates reject missing data and invalid Enter readings while comp
   await expect(page.locator('#phase-3')).toBeVisible();
   await expect(page.locator('[data-reading="X"]')).toBeDisabled();
   const first = await preparePlate(page, 0);
+  await page.locator('[data-reading="X"]').fill(first.X.toFixed(1));
+  await page.locator('#experimentNext').click();
+  await expect(page.locator('#toast')).toHaveText('讀數已填寫，請按「確認／更新本瓊脂板讀數」，再繼續。');
+  await expect(page.locator('#confirmReadings')).toBeFocused();
   await expect(page.locator('[data-i18n="measureDefinition"]')).toHaveText('量度並記錄清晰區的總直徑（mm）');
   await expect(page.locator('#neutralRuler')).toHaveCount(0);
   await page.locator('[data-visible="Y"]').selectOption('');
@@ -510,6 +539,7 @@ test('new MC questions and selected conclusion are required, bilingual, and lock
     await page.locator('#submitInquiry').click();
     await expect(page.locator('#submitDialog')).toBeHidden();
     await expect(page.locator('#rank4')).toBeFocused();
+    const missingRank=await page.locator('#rank4').boundingBox();expect(missingRank.y).toBeGreaterThanOrEqual(0);expect(missingRank.y+missingRank.height).toBeLessThanOrEqual(page.viewportSize().height);
     await page.locator('#rank4').selectOption('na');
     await page.waitForTimeout(500);
     const before=await storageSnapshot(page);
@@ -642,4 +672,8 @@ test('damaged local student records are retained instead of silently overwritten
   expect(await page.evaluate(key => localStorage.getItem(key), RECORDS)).toBe(damaged);
   await expect(page.locator('#localStatus')).not.toBeEmpty();
   await expect(page.locator('#cloudStatus')).not.toHaveAttribute('data-state', 'synced');
+});
+
+test('missing design answers and unsaved setup guide students to the relevant control',async({page})=>{
+ await page.goto('/');await login(page);await planInvestigation(page,{guidance:true});
 });
