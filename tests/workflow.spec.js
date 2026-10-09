@@ -367,6 +367,7 @@ test('student completes an evidence-based inquiry, preserves language-independen
     const popup = await popupPromise;
     await expect(popup.locator('.vl4-report')).toBeVisible();
     await expect(popup.locator('html')).toHaveAttribute('lang', lang);
+    await expect(popup).toHaveTitle(`VL4_${saved.profile.className}_${saved.profile.name}`);
     await expect(popup.locator('body')).toContainText('黴菌附近少或沒有可見細菌菌落。');
     await expect(popup.locator('body')).toContainText(saved.id);
     if (name === 'en') await expect(popup.locator('body')).toContainText('Your original research plan');

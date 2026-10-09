@@ -61,16 +61,17 @@ test('reference answers and objective marks are withheld until inquiry submissio
   assert.match(renderReport(record,'en'),/class="check incorrect"/);
 });
 
-test('print/PDF unlock depends on reflection submission and language-specific filename preserves identity',async()=>{
+test('print/PDF unlock depends on reflection submission and uniform filename preserves identity in both languages',async()=>{
   const record=fixture();record.reflectionSubmittedAt=null;
   await assert.rejects(openPrintReport(record,'en'),/submit your reflection/);
-  assert.equal(reportFilename(record),'VL4_抗生素研究任務_4A 12_陳同學');
-  assert.equal(reportFilename(record,'en'),'VL4_Antibiotic_Investigation_4A 12_陳同學');
+  assert.equal(reportFilename(record),'VL4_4A 12_陳同學');
+  assert.equal(reportFilename(record,'en'),'VL4_4A 12_陳同學');
+  assert.equal(reportFilename({profile:{className:'X1',name:'Chan Siu Ming'}}),'VL4_X1_Chan Siu Ming');
   record.reflectionSubmittedAt=at;let printed=0,written='';
   const oldWindow=globalThis.window;
   globalThis.window={open:()=>({document:{write:html=>written=html,close(){},images:[],fonts:{ready:Promise.resolve()}},focus(){},print(){printed++;}})};
   try {await openPrintReport(record,'en');}finally{globalThis.window=oldWindow;}
-  assert.equal(printed,1);assert.match(written,/<!doctype html>/);assert.match(written,/@media print/);assert.match(written,/<html lang="en">/);assert.match(written,/VL4_Antibiotic_Investigation_4A 12_陳同學/);
+  assert.equal(printed,1);assert.match(written,/<!doctype html>/);assert.match(written,/@media print/);assert.match(written,/<html lang="en">/);assert.match(written,/<title>VL4_4A 12_陳同學<\/title>/);
 });
 
 test('numeric checks use declared tolerances, own data, and no zone means zero in checks and exports',()=>{
