@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
 import ExcelJS from 'exceljs';
+import { CLOUD_ENDPOINT } from '../cloud-config.js';
 
 const MODULE = 'VL_BIO_ANTIBIOTICS';
 const ENDPOINT = 'https://script.google.com/macros/s/VL4_ISOLATED_TEST/exec';
@@ -14,7 +15,7 @@ const TEACHER = 'tzechingchan0605@gmail.com';
 const READ_FAILURE = '全班讀取失敗；不能以部分本機資料匯出全班，請重試。';
 
 // This fake collector exists only in this test's Node process. Every request to
-// Google is fulfilled/aborted locally, and the checked-in endpoint stays empty.
+// Google is fulfilled/aborted locally; test records never reach the live endpoint.
 function collector() {
   return { records: new Map(), password: randomBytes(24).toString('base64url'),
     listCalls: [], authFailures: 0, saveAttempts: 0, failSaves: false,
@@ -137,11 +138,11 @@ async function assertSynced(page, service, id, answer) {
 test('isolated Google-origin bridge collects independent desktop/mobile inquiries and authenticates every class export page', async ({ browser }) => {
   test.setTimeout(60000);
   const source = await readFile(new URL('../app.bundle.js', import.meta.url), 'utf8');
-  const marker = 'var CLOUD_ENDPOINT = "";';
+  const marker = `var CLOUD_ENDPOINT = ${JSON.stringify(CLOUD_ENDPOINT)};`;
   expect(source.split(marker)).toHaveLength(2);
   const bundle = source.replace(marker, `var CLOUD_ENDPOINT = ${JSON.stringify(ENDPOINT)};`);
   const config = await readFile(new URL('../cloud-config.js', import.meta.url), 'utf8');
-  expect(config).toContain("export const CLOUD_ENDPOINT = '';");
+  expect(config).toContain(`export const CLOUD_ENDPOINT = '${CLOUD_ENDPOINT}';`);
   const service = collector(), contexts = [], errors = [];
   let releaseFirstSave;
   service.saveGate = new Promise(resolve => { releaseFirstSave = resolve; });

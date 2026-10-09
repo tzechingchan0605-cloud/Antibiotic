@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createHash, createHmac, randomUUID } from 'node:crypto';
+import { createHash, createHmac, randomUUID, randomBytes } from 'node:crypto';
 import vm from 'node:vm';
 import { setImmediate } from 'node:timers/promises';
 import { createCloudSync } from '../cloud-sync.js';
@@ -216,7 +216,8 @@ test('bridge pins origin, window, channel and request ID before accepting replie
 });
 
 const source = await readFile(new URL('../google-apps-script/Code.gs', import.meta.url), 'utf8');
-function backendMock() {
+const singleFileSource = await readFile(new URL('../google-apps-script/VL4-collector-single-file.gs', import.meta.url), 'utf8');
+function backendMock(backendSource = source) {
   class Sheet {
     rows = [];
     maxRows = 1000;
@@ -253,7 +254,7 @@ function backendMock() {
       base64DecodeWebSafe: value => Array.from(Buffer.from(value, 'base64url')),
       newBlob: value => ({ getDataAsString: () => Buffer.from(value).toString('utf8') }) }
   });
-  vm.runInContext(source, context);
+  vm.runInContext(backendSource, context);
   context.initializeVL4_();
   return { context, sheets, props, get flushes() { return flushes; } };
 }
@@ -267,6 +268,23 @@ test('isolated Apps Script initializes privately and stores no plaintext teacher
   assert.match(source, /function initializeVL4_\(/);
   assert.match(source, /function pruneOrphanChunks_\(/);
   assert.doesNotMatch(source, /SpreadsheetApp\.getUi/);
+});
+
+test('both VL4 collectors accept 12-character passwords and reject 11-character resets', () => {
+  for (const backendSource of [source, singleFileSource]) {
+    const backend = backendMock(backendSource);
+    const password = randomBytes(9).toString('base64url');
+    assert.equal(password.length, 12);
+    const oldHash = backend.props.get('TEACHER_PASSWORD_HASH');
+    backend.props.set('SETUP_TEACHER_PASSWORD', password.slice(0, 11));
+    assert.throws(() => backend.context.initializeVL4_(), /LONG_SETUP_PASSWORD_REQUIRED/);
+    assert.equal(backend.props.get('TEACHER_PASSWORD_HASH'), oldHash);
+    backend.props.set('SETUP_TEACHER_PASSWORD', password);
+    assert.equal(backend.context.initializeVL4_().ok, true);
+    assert.equal(backend.props.has('SETUP_TEACHER_PASSWORD'), false);
+    assert.equal(backend.context.listRecords(password, '', 25).records.length, 0);
+    assert.throws(() => backend.context.listRecords(password.slice(0, 11), '', 25), /TEACHER_AUTH_FAILED/);
+  }
 });
 
 test('Apps Script preserves complete images across safe chunks, deduplicates and rejects stale writes', () => {

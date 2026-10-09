@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+// Functional tests must never submit synthetic student records to production.
+test.beforeEach(async ({ context }) => {
+  await context.route('https://script.google.com/**', route => route.abort('blockedbyclient'));
+});
+
 const CURRENT = 'vl4.antibiotics.current.v1';
 const DEFAULT_LABELS = { NW: 'X', NE: 'Y', SW: 'Z', SE: 'C' };
 const CENTRES = { NW: [130, 130], NE: [270, 130], SW: [130, 270], SE: [270, 270] };

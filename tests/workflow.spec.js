@@ -1,4 +1,9 @@
 import { test, expect } from '@playwright/test';
+
+// Functional tests must never submit synthetic student records to production.
+test.beforeEach(async ({ context }) => {
+  await context.route('https://script.google.com/**', route => route.abort('blockedbyclient'));
+});
 import { mkdir, stat } from 'node:fs/promises';
 
 const RECORDS = 'vl4.antibiotics.records.v1';

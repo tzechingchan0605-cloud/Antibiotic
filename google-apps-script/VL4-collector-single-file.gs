@@ -1,4 +1,4 @@
-/** VL4 standalone Apps Script project. No VL2 data or endpoint is used. */
+/** VL4 Antibiotic collector: paste this entire file into Code.gs. */
 const VL4_MODULE = 'VL_BIO_ANTIBIOTICS';
 const VL4_TEACHER_EMAIL = 'tzechingchan0605@gmail.com';
 const VL4_RECORDS_SHEET = 'VL4_Records';
@@ -7,25 +7,53 @@ const VL4_CHUNK_SIZE = 40000; // Below Google Sheets' 50,000-character cell limi
 const VL4_MAX_PAYLOAD = 8 * 1024 * 1024;
 const VL4_HEADERS = ['Module', 'ID', 'Version', 'SavedAt', 'Email', 'Name', 'Class', 'Chunks', 'SHA256', 'Batch'];
 
-/** Run from the private editor after setting Script Properties. No spreadsheet UI. */
+/** Run setupCollector from the editor with the teacher account. */
+function setupCollector() {
+  const user = Session.getActiveUser().getEmail().trim().toLowerCase();
+  if (user !== VL4_TEACHER_EMAIL) throw new Error('OWNER_SETUP_ONLY');
+  return initializeVL4_();
+}
+
 function initializeVL4_() {
   const props = PropertiesService.getScriptProperties();
-  const spreadsheetId = props.getProperty('SPREADSHEET_ID');
-  if (!spreadsheetId) throw new Error('SPREADSHEET_ID_REQUIRED');
-  const password = props.getProperty('SETUP_TEACHER_PASSWORD');
-  if (!props.getProperty('TEACHER_PASSWORD_HASH') || password) {
-    if (!password || password.length < 12) throw new Error('LONG_SETUP_PASSWORD_REQUIRED');
-    const salt = Utilities.getUuid() + Utilities.getUuid();
-    props.setProperties({ TEACHER_PASSWORD_SALT: salt, TEACHER_PASSWORD_HASH: digest_(salt + '\u0000' + password) });
-    props.deleteProperty('SETUP_TEACHER_PASSWORD');
+  let source = String(props.getProperty('SPREADSHEET_ID') || '').trim();
+  if (!source) {
+    const active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) source = active.getId();
   }
-  if (!props.getProperty('CURSOR_SECRET')) props.setProperty('CURSOR_SECRET', Utilities.getUuid() + Utilities.getUuid());
-  if (!allowedOrigins_().length) throw new Error('ALLOWED_APP_ORIGINS_REQUIRED');
-  const ss = SpreadsheetApp.openById(spreadsheetId);
+  const match = /^https:\/\/docs\.google\.com\/spreadsheets\/d\/([A-Za-z0-9_-]+)(?:[/?#]|$)/.exec(source);
+  const id = match ? match[1] : source;
+  if (!/^[A-Za-z0-9_-]{1,200}$/.test(id)) throw new Error('SPREADSHEET_ID_REQUIRED_OR_INVALID');
+  const origins = (props.getProperty('ALLOWED_APP_ORIGINS') || 'https://tzechingchan0605-cloud.github.io')
+    .split(',').map(s => s.trim()).filter(Boolean);
+  if (!origins.length || origins.some(s => !/^https?:\/\/[A-Za-z0-9.-]+(?::[0-9]+)?$/.test(s))) {
+    throw new Error('ALLOWED_APP_ORIGINS_INVALID');
+  }
+  const password = props.getProperty('SETUP_TEACHER_PASSWORD');
+  const reset = password !== null;
+  const existingHash = props.getProperty('TEACHER_PASSWORD_HASH');
+  const existingSalt = props.getProperty('TEACHER_PASSWORD_SALT');
+  if (reset && password.length < 12) throw new Error('LONG_SETUP_PASSWORD_REQUIRED');
+  if (!reset && (!existingSalt || !/^[a-f0-9]{64}$/.test(existingHash || ''))) {
+    throw new Error('LONG_SETUP_PASSWORD_REQUIRED');
+  }
+  // Prepare sheets before changing password/configuration properties.
+  const ss = SpreadsheetApp.openById(id);
   ensureSheet_(ss, VL4_RECORDS_SHEET, VL4_HEADERS);
   ensureSheet_(ss, VL4_CHUNKS_SHEET, ['Batch', 'Index', 'Payload']);
   SpreadsheetApp.flush();
-  return { ok: true, moduleId: VL4_MODULE, initialized: true };
+  const values = {SPREADSHEET_ID: id, ALLOWED_APP_ORIGINS: origins.join(',')};
+  if (reset) {
+    const salt = Utilities.getUuid() + Utilities.getUuid();
+    values.TEACHER_PASSWORD_SALT = salt;
+    values.TEACHER_PASSWORD_HASH = digest_(salt + '\u0000' + password);
+  }
+  if (!props.getProperty('CURSOR_SECRET')) {
+    values.CURSOR_SECRET = Utilities.getUuid() + Utilities.getUuid();
+  }
+  props.setProperties(values);
+  if (reset) props.deleteProperty('SETUP_TEACHER_PASSWORD');
+  return {ok: true, moduleId: VL4_MODULE, initialized: true};
 }
 
 function ensureSheet_(ss, name, headers) {
@@ -51,18 +79,50 @@ function allowedOrigins_() {
 }
 
 function doGet(e) {
-  const params = (e && e.parameter) || {};
-  const origin = params.parentOrigin || '';
-  const tokenPattern = /^[A-Za-z0-9_-]{24,80}$/;
-  if (!allowedOrigins_().includes(origin) || !/^https?:\/\/[^/?#\s]+$/.test(origin) ||
-      !tokenPattern.test(params.channel || '') || !tokenPattern.test(params.requestId || '')) {
+  const p = (e && e.parameter) || {};
+  if (!p.channel && !p.requestId && !p.parentOrigin) {
+    return ContentService.createTextOutput(JSON.stringify({ok: true, service: 'VL4', moduleId: VL4_MODULE}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  const token = /^[A-Za-z0-9_-]{24,80}$/;
+  if (!allowedOrigins_().includes(p.parentOrigin) ||
+      !token.test(p.channel || '') || !token.test(p.requestId || '')) {
     return HtmlService.createHtmlOutput('VL4: open the configured laboratory website.');
   }
-  const template = HtmlService.createTemplateFromFile('Bridge');
-  template.parentOrigin = origin;
-  template.channel = params.channel;
-  template.requestId = params.requestId;
-  return template.evaluate().setTitle('VL4 cloud bridge')
+  const safe = value => JSON.stringify(value).replace(/</g, '\u003c');
+  const html = `<!doctype html><html><head><meta charset="utf-8"></head><body><script>
+    (() => {
+      const parentOrigin = ${safe(p.parentOrigin)};
+      const channel = ${safe(p.channel)};
+      const handshakeId = ${safe(p.requestId)};
+      const moduleId = 'VL_BIO_ANTIBIOTICS';
+      const target = window.top, active = new Set();
+      function reply(requestId, ok, result, code) {
+        target.postMessage({type:'VL4_RESPONSE', moduleId, channel, requestId,
+          ok, ...(ok ? {result} : {code:code || 'CLOUD_REQUEST_FAILED'})}, parentOrigin);
+      }
+      window.addEventListener('message', event => {
+        const m = event.data;
+        if (event.source !== target || event.origin !== parentOrigin || !m ||
+            m.type !== 'VL4_REQUEST' || m.moduleId !== moduleId || m.channel !== channel ||
+            !/^[A-Za-z0-9_-]{24,80}$/.test(m.requestId || '') || active.has(m.requestId) ||
+            (m.action !== 'save' && m.action !== 'list')) return;
+        active.add(m.requestId);
+        const done = result => {active.delete(m.requestId); reply(m.requestId, true, result);};
+        const failed = error => {
+          active.delete(m.requestId);
+          const match = String(error && error.message || '').match(/\\b[A-Z][A-Z0-9_]{4,}\\b/);
+          reply(m.requestId, false, null, match ? match[0] : 'CLOUD_REQUEST_FAILED');
+        };
+        const runner = google.script.run.withSuccessHandler(done).withFailureHandler(failed);
+        const payload = m.payload || {};
+        if (m.action === 'save') runner.saveRecord(payload.record);
+        else runner.listRecords(payload.password, payload.cursor || '', payload.limit || 25);
+      });
+      target.postMessage({type:'VL4_READY', moduleId, channel, requestId:handshakeId}, parentOrigin);
+    })();
+  </script></body></html>`;
+  return HtmlService.createHtmlOutput(html).setTitle('VL4 cloud bridge')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
