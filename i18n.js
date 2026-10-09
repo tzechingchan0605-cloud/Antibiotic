@@ -1,4 +1,5 @@
 import {glossEnglish} from './english-glossary.js';
+import {layoutHistoryLabels} from './history-figure.js';
 export let language='zh';
 export const pair=(zh,en)=>[zh,en];
 export const text=(value)=>Array.isArray(value)?(language==='en'?glossEnglish(value[1]):value[0]):String(value??'');
@@ -257,4 +258,5 @@ export function translate(root=document){
  root.querySelectorAll('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',t(el.dataset.i18nAria)));
  root.querySelectorAll('[data-i18n-title]').forEach(el=>el.setAttribute('title',t(el.dataset.i18nTitle)));
  document.title=`VL4 · ${t('title')}`;
+ layoutHistoryLabels(root);
 }
