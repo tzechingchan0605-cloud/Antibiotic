@@ -8,14 +8,14 @@ test('English glosses prefer full biological phrases and remain stable on repeat
  const supported=glossEnglish(raw);
  assert.match(supported,/Methicillin-resistant Staphylococcus aureus \(MRSA\)（耐甲氧西林金黃葡萄球菌）/);
  assert.match(supported,/Antibiotic resistance（抗生素抗性／抗藥性） and resistance traits（抗藥性特徵）/);
- assert.match(supported,/Susceptible（對抗生素敏感的） bacteria reproduce（繁殖） in agar plates\./);
+ assert.match(supported,/Susceptible（對抗生素敏感的） bacteria reproduce（繁殖） in agar plates（瓊脂板）/);
  assert.equal(glossEnglish(supported),supported);
  assert.equal(glossEnglish('Staphylococcus aureus'),'Staphylococcus aureus（金黃葡萄球菌）');
  assert.equal(glossEnglish('VL4_Antibiotic_Investigation.png'),'VL4_Antibiotic_Investigation.png');
 });
 
 test('all excluded easy terms remain untranslated',()=>{
- const excluded='Survival; Capsule; Cell wall; Cell membrane; Protein synthesis; Nucleic acid synthesis; Diffuse / diffusion; Concentration; Hypothesis; Assumptions; Independent variable; Dependent variable; Controlled variables; Control group; Evidence; Cite; Mean; Variation; Random error; Assess; Effectiveness; Proportion; Agar plate; agar plates; Bacterial suspension; suspensions; Diluted; Sterile; Sterilise / sterilisation; sterilized; Spreader; spreaders; Incubator / incubation; incubate; incubating';
+ const excluded='Survival; Capsule; Cell wall; Cell membrane; Protein synthesis; Nucleic acid synthesis; Diffuse / diffusion; Concentration; Hypothesis; Assumptions; Independent variable; Dependent variable; Controlled variables; Control group; Evidence; Cite; Mean; Variation; Random error; Assess; Effectiveness; Proportion; Invert; inverted; inverting; Nutrients; nutrient; Diameter; diameters; Contamination; Forceps';
  assert.equal(glossEnglish(excluded),excluded);
 });
 
