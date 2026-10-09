@@ -5,7 +5,7 @@ document.getElementById('startupReload').addEventListener('click', () => {
   next.searchParams.set('reload', Date.now());
   window.location.replace(next.href);
 });
-import('./app.bundle.f94ce1a4fc1b.js').then(() => {
+import('./app.bundle.b5eefe14796d.js').then(() => {
   document.getElementById('startupPanel')?.remove();
 }).catch(error => {
   console.error('VL4 could not start', error);

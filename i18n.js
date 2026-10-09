@@ -1,6 +1,7 @@
+import {glossEnglish} from './english-glossary.js';
 export let language='zh';
 export const pair=(zh,en)=>[zh,en];
-export const text=(value)=>Array.isArray(value)?value[language==='en'?1:0]:String(value??'');
+export const text=(value)=>Array.isArray(value)?(language==='en'?glossEnglish(value[1]):value[0]):String(value??'');
 export const L={
  zoneMeaning:pair('清晰區的出現代表甚麼？','What does the appearance of a clear zone indicate?'),
  zoneDeath:pair('區內所有細菌都已死亡。','All bacteria in the zone have died.'),

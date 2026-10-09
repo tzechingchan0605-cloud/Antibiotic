@@ -2,10 +2,11 @@ import {MC_QUESTIONS,EFFECTIVE_OPTIONS,CONCLUSION_FIELDS,currentAnalysis} from '
 import ExcelJS from 'exceljs';
 import {clearZoneDiameter} from './model.js';
 import { L } from './i18n.js';
+import {glossEnglish,fitEnglishDiagramLabels} from './english-glossary.js';
 import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, CURRENT_SCORE_COLUMNS, CURRENT_RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, conclusionChecks, automaticScores } from './rubric.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-const tr = (language, zh, en) => language === 'en' ? en : zh;
+const tr = (language, zh, en) => language === 'en' ? glossEnglish(en) : zh;
 const dateText = (value, language = 'zh') => {
   if (!value) return tr(language, '未提交', 'Not submitted');
   const date = new Date(value);
@@ -74,7 +75,7 @@ export function answerDisplay(field, value, language = 'zh') {
   if (value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length)) return notAnswered(language);
   if (Array.isArray(value)) return value.map(item => answerDisplay(field, item, language)).join(tr(language, '；', '; '));
   const label = L[fieldChoiceKeys[field]?.[value]] || (choiceFields.has(field) && CHOICES[value]);
-  return label ? (field==='prediction'&&['X','Y','Z','X_Y','X_Z','Y_Z'].includes(value)&&language!=='en'?label[0].replace(/的$/, ''):label[language === 'en' ? 1 : 0]) : String(value);
+  return label ? (field==='prediction'&&['X','Y','Z','X_Y','X_Z','Y_Z'].includes(value)&&language!=='en'?label[0].replace(/的$/, ''):tr(language,label[0],label[1])) : String(value);
 }
 function referenceFor(field, record, language) {
   const refs = {
@@ -108,7 +109,7 @@ function referenceFor(field, record, language) {
   if (field === 'dv') return answerDisplay(field, VARIABLE_REFERENCE.dv, language);
   if (field === 'cv') return answerDisplay(field, controlVariableReference(record), language);
   if (field === 'assumptions') return answerDisplay(field, ASSUMPTION_REFERENCE, language);
-  return refs[field]?.[language === 'en' ? 1 : 0] || '';
+  return refs[field] ? tr(language,...refs[field]) : '';
 }
 const markHTML = (check, language) => check === null || check === undefined ? '' : `<span class="check ${check ? 'correct' : 'incorrect'}" aria-label="${tr(language, check ? '符合參考' : '不符合參考', check ? 'Matches reference' : 'Does not match reference')}">${check ? '✓' : '✕'}</span>`;
 function reportAnswer(record, field, value, language, withReference = true) {
@@ -117,12 +118,12 @@ function reportAnswer(record, field, value, language, withReference = true) {
   const submitted = !!record.submittedAt;
   const checks = objectiveChecks({ ...record, answers: { ...record.answers, [field]: value } });
   const reference = submitted && withReference ? referenceFor(field, record, language) : '';
-  return `<div class="answer"><h3>${esc(definition?.[language === 'en' ? 2 : 1] || field)}</h3><p class="student-answer">${esc(shown)} ${submitted && withReference ? markHTML(checks[field], language) : ''}</p>${reference ? `<p class="reference"><strong>${tr(language, '參考說明：', 'Reference: ')}</strong>${esc(reference)}</p>` : ''}</div>`;
+  return `<div class="answer"><h3>${esc(definition?tr(language,definition[1],definition[2]):field)}</h3><p class="student-answer">${esc(shown)} ${submitted && withReference ? markHTML(checks[field], language) : ''}</p>${reference ? `<p class="reference"><strong>${tr(language, '參考說明：', 'Reference: ')}</strong>${esc(reference)}</p>` : ''}</div>`;
 }
 
 export function learningDiagram(language = 'zh') {
  const t=(zh,en)=>tr(language,zh,en);
- return `<div class="science-diagram">
+ const markup = `<div class="science-diagram">
  <figure class="learning-figure"><figcaption>${t('A. 實驗原理：抗生素樣本的擴散與清晰區的形成','A. Experimental principle: antibiotic diffusion and clear-zone formation')}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t('紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。','The disc carries antibiotic, which diffuses through agar and inhibits bacterial growth, forming a clear zone.')}">
  <defs><marker id="vl4-science-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#087b78"/></marker></defs>
@@ -144,6 +145,7 @@ export function learningDiagram(language = 'zh') {
  <text x="272" y="164">${t('③ 抑制蛋白質合成','3. Inhibit protein')}${language==='en'?'<tspan x="290" dy="18">synthesis</tspan>':''}</text><path d="M266 170L179 176" stroke="#cb995b" fill="none"/>
  <text x="272" y="211">${t('④ 抑制核酸合成','4. Inhibit nucleic acid')}${language==='en'?'<tspan x="290" dy="18">synthesis</tspan>':''}</text><path d="M266 217H155V143" stroke="#a6699c" fill="none"/></g></svg>
  <p class="caption">${t('外側淡色層示意莢膜（並非所有細菌都有）；藍色層為細胞壁，內側綠色層為細胞膜，紫色曲線為 DNA。這些機制並非本次紙碟結果直接證明。','The pale outer layer represents a capsule (not present in all bacteria); blue is the cell wall, green is the cell membrane, and the purple strand is DNA. These mechanisms are not proved by this disc experiment.')}</p></figure></div>`;
+ return language==='en'?fitEnglishDiagramLabels(markup):markup;
 }
 export function learningPointsHTML(language = 'zh') {
   const sections = [
@@ -193,8 +195,9 @@ export function learningPointsHTML(language = 'zh') {
   }
 ];
   const index=language==='en'?1:0;
-  const highlight=value=>esc(value).replace(/\[([^\]]+)\]/g,'<strong class="learning-emphasis">$1</strong>');
-  return `${learningDiagram(language)}${sections.map(section=>`<section class="learning-topic"><h3>${esc(section.title[index])}</h3><ul class="learning-list">${section.points.map(point=>`<li>${highlight(point[index])}</li>`).join('')}</ul></section>`).join('')}`;
+  const supported=value=>language==='en'?glossEnglish(value):value;
+  const highlight=value=>esc(supported(value)).replace(/\[([^\]]+)\]/g,'<strong class="learning-emphasis">$1</strong>');
+  return `${learningDiagram(language)}${sections.map(section=>`<section class="learning-topic"><h3>${esc(supported(section.title[index]))}</h3><ul class="learning-list">${section.points.map(point=>`<li>${highlight(point[index])}</li>`).join('')}</ul></section>`).join('')}`;
 }
 
 function reportGraph(record, language) {
@@ -215,7 +218,7 @@ function reportConclusion(record,language){
  const a=record.answers||{},i=language==='en'?1:0,checks=conclusionChecks(record),submitted=!!record.submittedAt;
  const mark=check=>submitted?markHTML(check,language):'';
  const reference=submitted?`<p class="reference">${tr(language,'參考有效樣本：','Reference effective samples: ')}${esc(checks.effective.join('、'))}。${tr(language,'按你的讀數計算的排序：','Ranking calculated from your readings: ')}${checks.reference?esc([...checks.reference,...Array(4-checks.reference.length).fill(L.notApplicable[i])].join(' ＞ ')):tr(language,'資料不足','Insufficient data')}。${tr(language,'平均值相同時接受任一先後次序。','Either order is accepted for equal means.')}</p>`:'';
- return `<div class="answer"><h3>3. ${esc(L.resultConclusion[i])}</h3><p class="student-answer">${esc(L.conclusionContext[i])}${esc(answerDisplay('effectiveSamples',a.effectiveSamples,language))}${esc(L.conclusionEffective[i])} ${mark(checks.samples)}</p><p>${esc(L.conclusionRanking[i])}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map(field=>esc(answerDisplay(field,a[field],language))).join(' ＞ ')} ${mark(checks.order)}</p>${reference}</div>`;
+ return `<div class="answer"><h3>3. ${esc(tr(language,...L.resultConclusion))}</h3><p class="student-answer">${esc(tr(language,...L.conclusionContext))}${esc(answerDisplay('effectiveSamples',a.effectiveSamples,language))}${esc(tr(language,...L.conclusionEffective))} ${mark(checks.samples)}</p><p>${esc(tr(language,...L.conclusionRanking))}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map(field=>esc(answerDisplay(field,a[field],language))).join(' ＞ ')} ${mark(checks.order)}</p>${reference}</div>`;
 }
 export function renderReport(record, language = 'zh') {
   language = language === 'en' ? 'en' : 'zh';

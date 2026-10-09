@@ -32,10 +32,10 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   const zh=renderReport(record),en=renderReport(record,'en');
   assert.match(zh,/你的原始研究計劃/);assert.match(en,/Your original research plan/);
   assert.doesNotMatch(zh,/學習重溫備註/);assert.doesNotMatch(en,/Learning review notes/);
-  assert.match(zh,/實驗原理：抗生素樣本的擴散與清晰區的形成/);assert.match(en,/antibiotic diffusion and clear-zone formation/);
+  assert.match(zh,/實驗原理：抗生素樣本的擴散與清晰區的形成/);assert.match(en,/antibiotic（抗生素） diffusion and clear-zone（清晰區） formation/);
   assert.match(zh,/① 紙碟承載抗生素/);assert.match(zh,/② 抗生素向瓊脂擴散/);assert.match(zh,/③ 抗生素抑制細菌生長/);
   assert.match(zh,/離紙碟越遠，濃度通常越低/);assert.match(en,/concentration generally decreases with distance/);
-  assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic overuse or misuse/i);
+  assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic（抗生素） overuse（過度使用） or misuse（不當使用）/i);
   assert.match(zh,/C（對照）/);assert.match(en,/C \(control\)/);
   assert.match(zh,/原始假說|原始研究/);assert.match(en,/Independent variable/);
   assert.match(en,/Dependent variable/);assert.match(en,/Controlled variables/);
@@ -48,7 +48,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   }
   assert.match(zh,/class="check correct"/);assert.match(en,/Matches reference/);
   assert.doesNotMatch(en,/你的原始研究計劃|清晰區總直徑包括紙碟|學生瓊脂板位置及實驗設計圖/);
-  assert.match(learningDiagram('en'),/Inhibit nucleic acid<tspan[^>]*>synthesis/);assert.doesNotMatch(learningDiagram('en'),/細胞壁|抗生素作用位置/);
+  assert.match(learningDiagram('en'),/Inhibit（抑制） nucleic acid/);assert.match(learningDiagram('en'),/>synthesis<\/tspan>/);assert.doesNotMatch(learningDiagram('en'),/细胞壁|細胞壁|蛋白質合成|核酸合成|抗生素作用位置/);
   assert.deepEqual(record,before,'rendering never mutates record, images, answers, event history or timing');
 });
 
