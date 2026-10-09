@@ -150,6 +150,7 @@ export const L={
  designStep5:pair('05 · 實驗裝置設計','05 · Experiment setup design'),
 
  controlHint:pair('（提示：此對照組與實驗組有何不同之處？）','(Hint: how does the control differ from the experimental group?)'),
+ controlPurposeHint:pair('（提示：對照組主要功能是作為比較的基準，用來確認實驗中的改變是由獨立變量所引起，而非其他外在因素的干擾，因此對照組不包含獨立變量的處理條件）','(Hint: The control group provides a baseline for comparison. It helps check whether changes in the experiment are caused by the independent variable rather than other external factors. Therefore, the control group does not receive the treatment being tested.)'),
  controlHeading:pair('探究的對照組','The investigation control'),
  designStep4:pair('04 · 對照組設計','04 · Control design'),
  assumptionNote:pair('請選出所有適用的假設，可選多於一項。','Select all applicable assumptions; you may choose more than one.'),

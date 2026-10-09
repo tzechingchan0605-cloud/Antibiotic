@@ -157,6 +157,7 @@ li { margin-bottom: 8px; }
 .field { display: block; margin: 17px 0; color: #3f615d; font-size: 13px; font-weight: 700; }
 .field > span { display: block; margin: 4px 0; }
 .question-hint { display: block; margin: 4px 0; color: var(--muted); font-size: 11px; font-weight: 400; }
+.control-purpose-hint { color: #6b7280; }
 .field input, .field textarea, .field select, .form-grid input, .form-grid select, .form-grid textarea {
   display: block;
   width: 100%;

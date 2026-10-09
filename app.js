@@ -24,7 +24,7 @@ $('#largestPrediction').addEventListener('change',refreshLargestPrediction);
 $('#reason').rows=2;$('#reason').maxLength=600;
 $('#variableFields').innerHTML=[['iv','iv','ivHint'],['dv','dv','dvHint'],['cv','cv','cvHint']].map(([group,title,hint])=>`<section id="${group}" class="variable-group"><h4>${span(title)} <span>（${span(hint)}）</span></h4><div class="variable-options">${variables.map(([value,key])=>`<button type="button" data-group="${group}" data-variable="${value}" aria-pressed="false">${span(key)}</button>`).join('')}</div></section>`).join('');
 $('#assumptionFields').innerHTML=multi('assumptions',[['distribution','assumptionDistribution'],['sterile','assumptionSterile'],['sameConditions','assumptionSame'],['death','assumptionDeath']]).replace('class="chip-grid"','class="choice-stack"').replaceAll('class="choice"','class="check-option"');
-$('#controlFields').innerHTML=field('controlPlan','controlPlan').replace('<textarea',`<span class="question-hint" data-i18n="controlHint"></span><textarea`);
+$('#controlFields').innerHTML=field('controlPlan','controlPlan').replace('<textarea',`<span class="question-hint control-purpose-hint" data-i18n="controlPurposeHint"></span><span class="question-hint" data-i18n="controlHint"></span><textarea`);
 $('#controlPlan').maxLength=1000;
 $('#designFields').innerHTML=field('designDescription','designDescription',{optional:true,placeholder:'designDescriptionPH'});
 $('#designDescription').rows=2;$('#designDescription').maxLength=1000;
