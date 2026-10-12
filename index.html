@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css?v=4d80155ab539"><link rel="stylesheet" href="bench.css?v=ce5d3ca78ee1"><script type="module" data-vl4-app>
+<html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b78"><title>VL4 · 抗生素研究任務</title><link rel="stylesheet" href="styles.css?v=cb518d47444e"><link rel="stylesheet" href="bench.css?v=ce5d3ca78ee1"><script type="module" data-vl4-app>
 document.getElementById('startupReload').addEventListener('click', () => {
   const next = new URL(window.location.href);
   next.searchParams.set('reload', Date.now());
   window.location.replace(next.href);
 });
-import('./app.bundle.5e97d18dba4e.js').then(() => {
+import('./app.bundle.3cb22ec8c26a.js').then(() => {
   document.getElementById('startupPanel')?.remove();
 }).catch(error => {
   console.error('VL4 could not start', error);
@@ -27,9 +27,9 @@ import('./app.bundle.5e97d18dba4e.js').then(() => {
 <div class="design-stack">
 <article class="card"><p class="card-kicker" data-i18n="designStep1"></p><h3 data-i18n="completePrediction"></h3><div id="hypothesisFields"></div></article>
 <article class="card"><p class="card-kicker" data-i18n="designStep2"></p><h3 data-i18n="variables"></h3><p class="muted" data-i18n="variableNote"></p><div id="variableFields"></div></article>
-<article class="card"><p class="card-kicker" data-i18n="designStep3"></p><h3 data-i18n="assumptionQuestion"></h3><p class="muted" data-i18n="assumptionNote"></p><div id="assumptionFields" class="choice-stack"></div></article>
+<article class="card"><p class="card-kicker" data-i18n="designStep3"></p><h3 data-i18n="assumptionQuestion"></h3><p class="question-hint instruction-hint" data-i18n="assumptionDefinitionHint"></p><p class="muted" data-i18n="assumptionNote"></p><div id="assumptionFields" class="choice-stack"></div></article>
 <article class="card"><p class="card-kicker" data-i18n="designStep4"></p><h3 data-i18n="controlHeading"></h3><div id="controlFields"></div></article>
-<article class="card"><p class="card-kicker" data-i18n="designStep5"></p><h3 data-i18n="design"></h3><p class="muted" data-i18n="designNote"></p><div id="equipmentBank" class="equipment-bank"></div><canvas id="setupCanvas" width="1000" height="380" data-i18n-aria="canvasLabel"></canvas><div class="drawing-tools"><button type="button" data-draw="pencil" class="selected" aria-pressed="true" data-i18n="pencil"></button><button type="button" data-draw="eraser" aria-pressed="false" data-i18n="eraser"></button><button type="button" id="clearDrawing" data-i18n="clear"></button><label class="upload-button"><span data-i18n="upload"></span><input id="setupPhoto" type="file" accept="image/png,image/jpeg,image/webp"></label></div><div id="designFields"></div><button class="secondary" id="saveDesign" data-i18n="saveDesign"></button><span id="designStatus" class="inline-status" role="status"></span><section class="repeat-planning"><h4 data-i18n="repeatPlan"></h4><p class="muted" data-i18n="repeatNote"></p><div id="replicateFields"></div></section></article>
+<article class="card"><p class="card-kicker" data-i18n="designStep5"></p><h3 data-i18n="design"></h3><p class="muted" data-i18n="designNote"></p><p class="question-hint instruction-hint" data-i18n="drawingHint"></p><div id="equipmentBank" class="equipment-bank"></div><canvas id="setupCanvas" width="1000" height="380" data-i18n-aria="canvasLabel"></canvas><div class="drawing-tools"><button type="button" data-draw="pencil" class="selected" aria-pressed="true" data-i18n="pencil"></button><button type="button" data-draw="eraser" aria-pressed="false" data-i18n="eraser"></button><button type="button" id="clearDrawing" data-i18n="clear"></button><label class="upload-button"><span data-i18n="upload"></span><input id="setupPhoto" type="file" accept="image/png,image/jpeg,image/webp"></label></div><div id="designFields"></div><button class="secondary" id="saveDesign" data-i18n="saveDesign"></button><span id="designStatus" class="inline-status" role="status"></span><section class="repeat-planning"><h4 data-i18n="repeatPlan"></h4><p class="muted" data-i18n="repeatNote"></p><div id="replicateFields"></div></section></article>
 </div><div class="action-row"><button class="secondary" data-back="1" data-i18n="backToContext"></button><button id="designNext" class="primary" data-i18n="savePlan"></button></div></section>
 <section id="phase-3" class="phase" hidden>
  <div class="phase-heading"><span class="phase-index">03</span><div><h2 tabindex="-1" data-i18n="phase3"></h2><p data-i18n="hint3"></p></div></div>
