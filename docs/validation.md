@@ -1,3 +1,13 @@
+# Current paper-material validation (12 October 2026, Hong Kong)
+
+The teacher paper feature uses the current VL4 activity, not the older activity described below. Current materials: A 3 pages, B 2, C 2, D 6; complete teacher pack 13. Both languages have five real PDF files. All 52 pages across ten PDFs passed content, glyph/font resources, pagination, exact two-line writing areas, identity location, margins and glossary checks; actual pages and grey B renderings were visually reviewed. See [paper instructions](../paperwork/README.md) and [proposal alignment](paper-research-alignment.md).
+
+`npm test`: 63 passed. Full `npx playwright test`: 20 passed (2.7 minutes), including all ten downloads/checksums, preview, mobile, stale/corrupt rejection and unchanged student storage, answers, drawings, timing/events and actual Excel ZIP contents. The blank material builder uses isolated static resources; browser tests block production Google requests. No Apps Script was added or changed.
+
+The older 7 October validation below records a prior task version and network access at that time. Its extension/chart statements and proxy limitation do not describe the current revised task or this release. Live publication of this release is checked separately after pushing the completed materials.
+
+---
+
 # Validation record
 
 Validation was performed in the actual cloud workspace on 7 October 2026 (Hong Kong time), using Node.js 24.19.0 and system Chromium 151 through Playwright. The frontend is a functioning local development application. Saving its reusable environment instructions is separate from publishing a site or a cloud environment snapshot.

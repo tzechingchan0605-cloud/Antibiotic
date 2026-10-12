@@ -1,0 +1,2866 @@
+{
+  "zh": {
+    "module": "VL4",
+    "version": 1,
+    "language": "zh",
+    "text": {
+      "account": "切換帳戶",
+      "addBacteria": "加入模擬細菌",
+      "agar": "瓊脂表面",
+      "alcohol_required": "請先使用酒精燒杯，再使用酒精燈。",
+      "all": "全部",
+      "allPlatesRequired": "請完成三個獨立瓊脂板，並確認各樣本讀數。",
+      "analysis": "分析實驗結果與結論",
+      "analysisClinical": "不同抗生素中，最大清晰區是否一定代表最佳患者治療？",
+      "analysisConsistent": "哪些樣本三次都有可見清晰區？引用你的數據。",
+      "analysisControl": "C（對照）的生長如何？它提供甚麼比較基礎？",
+      "analysisDeath": "沒有可見生長，能否證明細菌全部死亡？",
+      "analysisHypothesis": "結果如何支持或不支持你的原始假說？",
+      "analysisMethod": "若差異較大，需要檢查哪些操作或條件？",
+      "analysisRepeatPlan": "你的原始重複安排有甚麼需要修訂？",
+      "analysisRepeatValue": "重複如何幫助判斷一致性？仍不穩定時應加測或先檢查方法？",
+      "analysisVariation": "同一樣本的三次結果是否一致？引用數據比較。",
+      "animateAlcohol": "正在使用酒精燒杯……",
+      "animateDisc": "正在用鑷子放置紙碟……",
+      "animateDrop": "正在把細菌懸液滴到中央……",
+      "animateIncubate": "正在把三塊瓊脂板放入培養箱……",
+      "animateMark": "正在用標記筆畫出十字……",
+      "animateSeal": "正在蓋好瓊脂板並倒置……",
+      "animateSpread": "正在均勻塗抹……",
+      "animateSterilize": "正在使用酒精燈完成消毒……",
+      "assist": "輔助塗布",
+      "assistDiscs": "輔助放置四片紙碟",
+      "assistNote": "瓊脂板 1 請自行旋轉及塗布；瓊脂板 2、3 可選擇輔助塗布。",
+      "assumptionDeath": "若紙碟附近沒有菌落形成，這代表該位置的所有細菌已死亡。",
+      "assumptionDefinitionHint": "假設是指未經證實而被視為正確的條件，用於確保實驗結果的有效性。",
+      "assumptionDistribution": "各瓊脂板的初始細菌分布平均。",
+      "assumptionNote": "請選出所有適用的假設，可選多於一項。",
+      "assumptionQuestion": "此探究的假設是什麼？",
+      "assumptionSame": "各瓊脂板採用相同模擬觀察條件。",
+      "assumptionSterile": "器材不會帶入額外污染。",
+      "assumptions": "探究假設（可多選）",
+      "autoPrepare": "自動完成步驟 1–5",
+      "back": "← 返回",
+      "backToContext": "← 返回情境",
+      "bacteria": "細菌感染",
+      "bacteriaQuestion": "抗生素主要用於哪類感染？",
+      "bestDrug": "最佳患者治療藥物及劑量",
+      "blank": "C（對照）",
+      "brand": "探究實驗室",
+      "can": "可以確定",
+      "cancel": "返回檢查",
+      "cannot": "不能單憑本實驗確定",
+      "canvasLabel": "實驗設計繪圖區；亦可用完整文字設計",
+      "centre_required": "請把懸液滴在瓊脂板中央。",
+      "choose": "請選擇",
+      "className": "班別及學號",
+      "classPH": "例如：S4X1-05",
+      "classroomPlan": "以上是你的原始研究建議，已獨立保存。為共同比較，本課堂將統一使用 3 塊平板進行測試。你無需更改你的原始設計。",
+      "clear": "清除繪圖",
+      "clearArea": "清晰區（沒有可見細菌生長的區域）",
+      "clearAreaLine1": "（沒有可見細菌",
+      "clearAreaLine2": "生長的區域）",
+      "clearAreaTerm": "清晰區",
+      "close": "紙碟太接近，周圍區域可能互相干擾。請重新放置。",
+      "closeDialog": "關閉",
+      "cloudError": "同步失敗；本機備份仍保留，請重試。",
+      "cloudPending": "本機備份已保存，等待同步。",
+      "cloudReadFailed": "全班讀取失敗；不能以部分本機資料匯出全班，請重試。",
+      "cloudSynced": "本機佇列已獲雲端確認保存。",
+      "cloudSyncing": "正在同步本機待傳紀錄……",
+      "cloudUnconfigured": "未設定 VL4 雲端；答案只保留在本機。",
+      "colonies": "菌落",
+      "colonyMeaningLine1": "（大量細菌在瓊脂表面繁殖後",
+      "colonyMeaningLine2": "形成的可見群體，並非一個細菌。）",
+      "colonyRemark": "菌落：大量細菌在瓊脂表面繁殖後形成的可見群體，並非一個細菌。",
+      "completePrediction": "完成你的預測",
+      "conclusion": "書面結論（引用數據及推論限制）",
+      "conclusionContext": "在本次模擬條件下，",
+      "conclusionEffective": "能有效抑制 MRSA 的生長。",
+      "conclusionPH": "在本次模擬條件下，樣本＿＿在＿＿次獨立測試中呈現＿＿。這支持＿＿，但仍不能確定＿＿。",
+      "conclusionRanking": "以本次清晰區的平均總直徑比較，它們的抑制效能為：",
+      "conclusionSelectHint": "只排列有可見清晰區的樣本。",
+      "confirmGraph": "確認／更新圖表",
+      "confirmReadings": "確認／更新本瓊脂板讀數",
+      "confirmSubmit": "確認遞交",
+      "context": "研究情境",
+      "contextCopy": "一名患者的傷口感染在接受初步抗生素治療後，仍未明顯改善。醫院化驗確認，引起感染的是耐甲氧西林金黃葡萄球菌，簡稱 MRSA。你將化身「疾病對抗組」的抗生素研究員，在虛擬實驗室比較三種樣本 X、Y、Z 對這些細菌生長的影響。",
+      "contextRemark": "什麼是耐甲氧西林金黃葡萄球菌？",
+      "controlBaseline": "提供不含抗生素的比較基礎，協助判斷清晰區的形成是否與抗生素樣本有關。",
+      "controlHeading": "探究的對照組",
+      "controlHint": "（提示：此對照組與實驗組有何不同之處？）",
+      "controlIncrease": "增加 X、Y、Z 紙碟所含的樣本量，以增加實驗結果的準確性。",
+      "controlPlan": "若想知道抗生素是否影響細菌生長，你會如何設計對照組？",
+      "controlPurpose": "比較 C（對照）與 X、Y、Z 紙碟周圍的清晰區，C（對照）的主要作用是甚麼？",
+      "controlPurposeHint": "（提示：對照組主要功能是作為比較的基準，用來確認實驗中的改變是由獨立變量所引起，而非其他外在因素的干擾，因此對照組不包含獨立變量的處理條件）",
+      "controlSame": "確保所有紙碟周圍的清晰區直徑相同。",
+      "controlTreatment": "指出最適合患者使用的抗生素。",
+      "counts": "獨立測試",
+      "coverage": "覆蓋提示",
+      "coverageNote": "虛擬塗布覆蓋提示；不代表肉眼可見的細菌生長。",
+      "crossMarked": "十字分格已畫好",
+      "cv": "控制變量",
+      "cvHint": "保持相同的因素",
+      "demo": "進入示範探究",
+      "demoNote": "教師示範 · 不加入學生紀錄或評分",
+      "design": "繪畫並標示你的瓊脂板",
+      "designDescription": "裝置標示／文字設計",
+      "designDescriptionPH": "可補充繪圖標示，或以文字完整描述你的瓊脂板，作為繪圖的替代。",
+      "designNote": "參考以下材料，標示 X、Y、Z 和 C（對照）的位置，留意紙碟之間及與瓊脂板邊緣的距離。盛有酒精的燒杯和酒精燈用於為鑷子消毒，以減少夾取及放置紙碟時帶入額外污染。",
+      "designRequired": "請先繪畫、上載圖片或填寫文字設計，再按「儲存裝置設計」。",
+      "designSaveRequired": "請先按「儲存裝置設計」，再繼續。",
+      "designSaved": "設計已儲存。",
+      "designStep1": "01 · 假說建立器",
+      "designStep2": "02 · 公平測試",
+      "designStep3": "03 · 實驗前提",
+      "designStep4": "04 · 對照組設計",
+      "designStep5": "05 · 實驗裝置設計",
+      "diameter": "清晰區的總直徑",
+      "diameterCount": "瓊脂板上剩餘細菌的確實數目。",
+      "diameterDose": "患者應使用的抗生素劑量。",
+      "diameterExtent": "本次條件下，沒有可見細菌生長的區域範圍；直徑亦受樣本擴散等因素影響。",
+      "diameterTreatment": "該抗生素治療患者的效能；直徑最大就是最佳治療。",
+      "discTrayLabel": "樣本及對照組紙碟",
+      "disc_not_held": "請先用完成消毒的鑷子夾起相應紙碟。",
+      "drawingHint": "不用精緻地繪畫所有特徵，簡單繪畫並標示清楚便可。",
+      "duplicate_label": "每個分格須有不同標示：X、Y、Z、C 各用一次。",
+      "dv": "因變量",
+      "dvHint": "觀察/量度的結果",
+      "edge": "紙碟靠近邊緣，結果可能難以量度。請重新放置。",
+      "effectiveAll": "X、Y、Z",
+      "effectiveNone": "沒有樣本",
+      "effectiveSamples": "能有效抑制 MRSA 生長的樣本",
+      "email": "電郵地址",
+      "emailPH": "例如：student@school.edu.hk",
+      "emptyRecords": "未有紀錄。",
+      "endpoint": "共同觀察終點 · 固定模擬結果",
+      "enter": "進入實驗室 →",
+      "equipmentAlcohol": "盛有酒精的燒杯",
+      "equipmentBacteria": "已稀釋的細菌懸液",
+      "equipmentDiscs": "樣本及對照紙碟組",
+      "equipmentDiscsNote": "(C = control)",
+      "equipmentDropper": "滴管",
+      "equipmentIncubator": "培養箱",
+      "equipmentLamp": "酒精燈",
+      "equipmentMarker": "標記筆",
+      "equipmentPlate": "瓊脂板",
+      "equipmentPlateNote": "（含細菌生長所需的營養）",
+      "equipmentRuler": "直尺",
+      "equipmentSpreader": "無菌塗布器",
+      "equipmentTweezers": "鑷子",
+      "eraser": "橡皮擦",
+      "experimentComplete": "培養已完成；選擇瓊脂板來觀察和量度。",
+      "experimentResults": "你的實驗結果：",
+      "exportExcel": "重新讀取全班並匯出 Excel",
+      "exportLocal": "匯出本機紀錄 Excel（非全班）",
+      "extension": "可選延伸 · 紙碟含量",
+      "extensionAnalysis": "這些模擬結果支持甚麼？有甚麼限制？",
+      "extensionLimit": "僅討論模型圈大小；不能轉成患者用藥劑量。",
+      "extensionPrediction": "你預測同一樣本的紙碟含量增加時，清晰區總直徑會怎樣改變？",
+      "extensionQuestion": "同一樣本的低、中、高預設紙碟含量，圈大小會否改變？",
+      "extensionSkip": "未開始可跳過，不阻止主探究提交。",
+      "extensionStart": "開始選做延伸",
+      "eyebrow": "IBL 虛擬實驗室 · 疾病對抗組",
+      "fact1": "抗生素能殺死細菌或抑制其生長；並非所有生病都需要使用。",
+      "fact2": "細菌與病毒不同；抗生素不能治療病毒引起的傷風或流感。",
+      "fact3": "單個細菌通常不能直接看見；大量生長後可形成可見菌落或菌層。",
+      "fact4": "MRSA 對甲氧西林及大多數相關 β-內酰胺類抗生素有抗藥性，不代表對所有抗生素都有抗藥性。",
+      "fairComparison": "怎樣維持公平比較？",
+      "flipPlate": "反轉瓊脂板",
+      "footer": "用觀察提出問題，用證據建立解釋。",
+      "forcepsAlcohol": "已使用酒精；請使用酒精燈完成消毒。",
+      "forcepsDirty": "鑷子待消毒；每夾一片紙碟前須重新消毒。",
+      "forcepsHolding": "鑷子正夾著紙碟；請放到相同標示分格中央。",
+      "forcepsReady": "消毒完成；可夾取一片紙碟。",
+      "forcepsTools": "鑷子及消毒工具",
+      "forceps_not_sterile": "每夾一片紙碟前，請先使用酒精燒杯及酒精燈消毒鑷子。",
+      "fungusRemark": "（真菌）",
+      "genericPH": "寫下你的想法。",
+      "graph": "用自己的平均值建立棒形圖",
+      "graphHint": "點選或觸控設定棒高，亦可精確輸入。指標移動只顯示座標；按確認才保存圖表。",
+      "graphLabel": "學生棒形圖，可點選設定棒高",
+      "graphSaved": "圖表已確認。",
+      "graphX": "樣本類別",
+      "graphY": "平均清晰區總直徑（mm）",
+      "high": "高",
+      "hint1": "先記錄你的初步觀察，讓問題引領研究。",
+      "hint2": "提出預測，想清楚變量、假設和對照，再開始實驗。",
+      "hint3": "按右側步驟準備三塊瓊脂板，完成後一起培養，再觀察和量度。",
+      "hint4": "根據你的觀察及量度結果，回答選擇題並作出結論。",
+      "history": "抗生素的發現歷史——一次意外的觀察",
+      "historyCaption": "備註：弗萊明當年的研究對象是葡萄球菌，並非 MRSA；MRSA 首次正式報告於 1961 年。",
+      "historyCopy": "1928 年，弗萊明在培養葡萄球菌時，觀察到部分培養皿受到青黴菌污染，這種真菌附近的細菌生長受到影響。他進一步研究青黴菌產生的抗菌物質。後來，弗洛里、錢恩及其團隊推進了青黴素（抗生素）的治療應用。",
+      "historyIllustrationAlt": "青黴菌（真菌）與細菌菌落的歷史情境示意圖。",
+      "historyIllustrationCaption": "根據歷史記錄製作的情境示意圖，並非照片。弗萊明當年的研究對象是葡萄球菌，並非 MRSA；MRSA 首次正式報告於 1961 年。",
+      "historyPhotoAlt": "瓊脂板照片：青黴菌（真菌）、附近的清晰區（沒有可見細菌生長的區域）及菌落。",
+      "historySourceLabel": "圖片來源：",
+      "hypothesis": "假說建立器",
+      "hypothesisReason": "你的理由（提示：抗生素可在瓊脂板上擴散。）",
+      "imageError": "圖片未能讀取；請使用有效 PNG、JPEG 或 WebP 圖片（不超過 8 MB）。",
+      "importNote": "只能匯入本模組資料；VL2 蒸騰紀錄不會混入 VL4。",
+      "importRecords": "匯入 VL4／舊相容 JSON 紀錄",
+      "incubate": "啟動教學培養模擬",
+      "incubateAll": "三塊瓊脂板一起培養",
+      "incubating": "教學培養進度",
+      "incubation24": "設定 24 小時",
+      "incubation30": "設定 30°C",
+      "incubationReady": "三塊瓊脂板已準備好。",
+      "incubatorLabel": "培養箱設定",
+      "incubator_not_ready": "請先準備好三塊瓊脂板，並設定 30°C 和 24 小時。",
+      "intro": "從一次意外觀察出發，設計公平比較、操作虛擬瓊脂板，用自己的量度建立解釋。",
+      "invalidNumber": "請輸入 0–40 mm 範圍內的有效數值。",
+      "invalid_label": "請選擇 X、Y、Z 或 C 作為分格標示。",
+      "iv": "獨立變量",
+      "ivHint": "主動改變的因素",
+      "labelQuadrant": "分格標示",
+      "largestNASuffix": "（預測沒有清晰區）。",
+      "largestPrediction": "你預測哪種樣本的紙碟周圍清晰區最大？",
+      "largestPrefix": "而當中，",
+      "largestSuffix": "紙碟周圍的清晰區最大。",
+      "learning": "學習重點",
+      "learningReview": "學習重溫備註",
+      "limited": "本模型條件下的可見生長受到抑制",
+      "limitsQuestion": "本次圈大小能支持甚麼？",
+      "localSaved": "答案先儲存於此瀏覽器；請勿在確認備份前清除網站資料。",
+      "locked": "這項操作已鎖定。",
+      "loginIntro": "先輸入學習者資料，每次登入建立獨立探究。",
+      "loginNote": "每次重新載入返回空白登入。答案先存本機；只有收到雲端保存確認才顯示已同步。指定教師電郵只會開啟教師介面，全班資料另需密碼。",
+      "loginTitle": "開始你的研究任務",
+      "low": "低",
+      "manualRepeat": "或手動重做塗布及放置。每片瓊脂板有獨立結果和紀錄；重複量同一清晰區不算獨立實驗。",
+      "manual_first_plate": "瓊脂板 1 請自行操作；瓊脂板 2、3 才可使用輔助。",
+      "matching_quadrant_required": "請把紙碟放在相同標示分格的中央。",
+      "materialBacteria": "已稀釋的細菌懸液 ×1：用滴管加入瓊脂板中央。",
+      "materialDiscs": "X、Y、Z 紙碟及 C（對照）：樣本承載於紙碟，對照只含相同載體。",
+      "materialDropper": "滴管 ×1：吸取及滴加細菌懸液。",
+      "materialFlame": "酒精燈 ×1：配合酒精燒杯，完成虛擬鑷子消毒。",
+      "materialIncubator": "培養箱 ×1：設定 30°C 及 24 小時，共同培養三塊瓊脂板。",
+      "materialMarker": "標記筆 ×1：在瓊脂板底部畫分格及標示。",
+      "materialPlate": "瓊脂板 ×3：含細菌生長所需的營養。",
+      "materialRuler": "虛擬直尺：量度清晰區總直徑。",
+      "materialSpreader": "無菌塗布器：分布模擬細菌。",
+      "materialTweezers": "鑷子 ×4：每夾一片紙碟前，使用酒精燒杯及酒精燈完成消毒。",
+      "materials": "材料及用途",
+      "mean": "總直徑的平均值計算",
+      "meanLabelC": "C（對照）的平均值(mm)",
+      "meanLabelX": "X 的平均值(mm)",
+      "meanLabelY": "Y 的平均值(mm)",
+      "meanLabelZ": "Z 的平均值(mm)",
+      "measureDefinition": "量度並記錄清晰區的總直徑（mm）",
+      "measureSelect": "先選擇要量度的樣本",
+      "measuring": "量度與記錄",
+      "medium": "中",
+      "methicillinRemark": "一種抗生素的名稱，曾用來治療某些細菌感染。",
+      "methicillinTerm": "甲氧西林",
+      "minutes": "分鐘",
+      "mission": "比較 X、Y、Z 與 C（對照），向研究團隊提交有證據支持的報告。",
+      "module": "S4 生物 · 模組 4",
+      "mould": "青黴菌（真菌）",
+      "mouldLabel": "青黴菌",
+      "mrsaRemark": "對甲氧西林有抗藥性的金黃葡萄球菌。MRSA 並非對所有抗生素都有抗藥性。",
+      "mrsaTerm": "耐甲氧西林金黃葡萄球菌（MRSA）",
+      "name": "姓名",
+      "namePH": "例如：陳小明",
+      "neutralExample": "中性量度例（與 X、Y、Z 無關）：示意樣本 Q 的總直徑為 14 mm，包括 6 mm 紙碟。",
+      "newInquiry": "開始新探究",
+      "next": "繼續 →",
+      "no": "沒有",
+      "none": "都不會",
+      "notApplicable": "不適用",
+      "observation": "你的初步觀察",
+      "observationPH": "描述圖中可見的現象，暫時不用解釋原因。",
+      "password": "教師雲端密碼（只在目前頁面使用）",
+      "passwordPH": "在私人 Script Properties 設定的密碼",
+      "pdf": "列印／儲存學習紀錄 PDF",
+      "pencil": "鉛筆",
+      "phase1": "了解情境",
+      "phase2": "設計探究",
+      "phase3": "虛擬實驗與記錄",
+      "phase4": "分析與結論",
+      "placeDiscs": "用虛擬鑷子放置紙碟",
+      "placeHint": "選擇樣本，再點選瓊脂板位置；可重新選擇以移動。輔助放置提供可量度的位置。",
+      "plannedReplicateReason": "為甚麼你會這樣安排？",
+      "plannedReplicates": "測試樣本其有4種：X、Y、Z 及對照組。你認為每種樣本共需測試多少次？（包含第一次）",
+      "plate": "瓊脂板",
+      "plateBottom": "底部",
+      "plateLabel": "瓊脂板標示",
+      "plateLabelAria": "互動虛擬瓊脂板，支援觸控及輔助操作",
+      "plateTop": "正面",
+      "prediction": "你預測 X、Y、Z 中哪些樣本會在紙碟周圍出現沒有可見細菌生長的區域？",
+      "predictionAll": "X、Y、Z",
+      "predictionNone": "沒有任何樣本",
+      "predictionNote": "請記錄你對清晰區出現及大小的預測；合理但未獲結果支持的預測仍有研究價值。",
+      "predictionPrefix": "若在塗抹了細菌的瓊脂板上放置抗生素 X、Y、Z 樣本紙碟，",
+      "predictionSome": "部分樣本",
+      "predictionSuffix": "紙碟的周圍將會出現清晰區（沒有可見細菌生長的區域）。",
+      "predictionX": "X",
+      "predictionXY": "X、Y",
+      "predictionXZ": "X、Z",
+      "predictionY": "Y",
+      "predictionYZ": "Y、Z",
+      "predictionZ": "Z",
+      "preparationLocked": "這塊瓊脂板已準備好。",
+      "previous_plate_not_ready": "請先蓋好並倒置前一塊瓊脂板。",
+      "procedure1": "反轉瓊脂板，在底部畫十字分成四格，並標示 X、Y、Z、C。",
+      "procedure2": "反轉瓊脂板；用滴管吸取已稀釋的細菌懸液，滴到瓊脂板中央。",
+      "procedure3": "使用無菌塗布器沿上下方向塗抹，同時旋轉瓊脂板，讓細菌分布均勻。",
+      "procedure4": "選取鑷子，依次使用酒精燒杯及酒精燈完成消毒，再夾起紙碟，放在相應分格中央。每夾一片紙碟前，須重新消毒。",
+      "procedure5": "蓋好瓊脂板並倒置。",
+      "procedure6": "在瓊脂板 2 和 3 重複步驟 1–5。",
+      "procedure7": "三塊瓊脂板均準備好後，放入培養箱，設定 30°C 及 24 小時，再開始培養。",
+      "procedure8": "瓊脂板 2、3 可選擇自動完成步驟 1–5。",
+      "procedureHeading": "操作步驟",
+      "procedureHint1Flip": "先按「反轉瓊脂板」，露出底部。",
+      "procedureHint1Labels": "在四個分格邊緣的選單標示 X、Y、Z、C；每個標示只用一次。",
+      "procedureHint1Marker": "選取標記筆，再點選瓊脂板，畫出十字。",
+      "procedureHint2Bottle": "點選細菌懸液瓶，讓滴管吸取懸液。",
+      "procedureHint2Dropper": "選取滴管，準備吸取細菌懸液。",
+      "procedureHint2Flip": "底部標示完成；按「反轉瓊脂板」回到正面。",
+      "procedureHint2Release": "把已吸取懸液的滴管移到瓊脂板中央，再點選滴下。",
+      "procedureHint3": "選取塗布器，沿上下方向拉動；旋轉瓊脂板後繼續塗抹，直至分布均勻。",
+      "procedureHint4Alcohol": "先點選酒精燒杯，把鑷子浸入酒精。",
+      "procedureHint4Disc": "用鑷子選取尚未放置的樣本或對照組紙碟。",
+      "procedureHint4Lamp": "再點選酒精燈，完成鑷子消毒。",
+      "procedureHint4Place": "把夾起的紙碟放在相同標示分格的中央。",
+      "procedureHint4Tweezers": "先選取鑷子，再使用酒精燒杯及酒精燈完成消毒。",
+      "procedureHint5": "紙碟已放好；蓋好瓊脂板並倒置。",
+      "procedureHint6": "這塊瓊脂板已準備好；選擇下一塊，或使用旁邊的自動準備按鈕。",
+      "procedureHint7Duration": "選擇培養時間 24 小時。",
+      "procedureHint7Incubate": "設定已完成，按「三塊瓊脂板一起培養」。",
+      "procedureHint7Temperature": "三塊瓊脂板已準備好；選擇培養溫度 30°C。",
+      "progress": "進度",
+      "progressNav": "探究進度",
+      "question": "主要研究問題",
+      "rank1": "排序第 1 項",
+      "rank2": "排序第 2 項",
+      "rank3": "排序第 3 項",
+      "rank4": "排序第 4 項",
+      "readingSaved": "讀數已確認，請為其他瓊脂板作量度與記錄（如有）。",
+      "readingsConfirmRequired": "讀數已填寫，請按「確認／更新本瓊脂板讀數」，再繼續。",
+      "readonly": "探究答案已鎖定。",
+      "readyPlate": "已準備好",
+      "reason": "你的理由",
+      "reasonPH": "寫下你的想法；預測沒有必須猜中的答案。",
+      "recordId": "探究 ID",
+      "reflection": "學習反思",
+      "reflectionDone": "學習反思已鎖定；可列印或儲存 PDF。",
+      "reflectionPending": "提交學習反思後開放 PDF。",
+      "reflectionQuestion": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用讀數支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+      "reflectionRequired": "請先完成學習反思，再按「儲存並提交學習反思」。",
+      "refresh": "驗證並讀取全部雲端紀錄",
+      "repeatConsistency": "為了降低偶然誤差，驗證實驗結果的「可重複性」與數據的可靠性。",
+      "repeatContent": "為了透過反覆操作，促使實驗中的生物樣本在短時間內加速突變出全新性狀。",
+      "repeatGuarantee": "為了確保每一次實驗都能得到百分之百完全相同、毫無落差的絕對數值。",
+      "repeatNote": "每個獨立瓊脂板均有 X、Y、Z 及對照；多一個瓊脂板，每個樣本就多一次觀察。次數多不等於理由更好。",
+      "repeatPlan": "你的原始研究計劃",
+      "repeatPurpose": "為何需要重複進行實驗？",
+      "repeatRemeasure": "為了延長實驗時間，以便讓科學家在撰寫報告時有更多的文字可以描述。",
+      "repeatVariation": "若重複實驗的數據差異過大，你應怎樣做？為甚麼？",
+      "required": "請完成所有必填回答；不用猜中參考答案。",
+      "researchQuestion": "在指定的模擬條件下，X、Y、Z 對這些 MRSA 的可見生長有甚麼影響？",
+      "resistanceBacteria": "細菌對藥物的反應",
+      "resistanceBody": "人的身體習慣了藥物",
+      "resistanceQuestion": "「抗藥性」描述甚麼？",
+      "resistantRemark": "指細菌對某種抗生素有抗藥性，即該抗生素未能有效殺死它或抑制其生長。",
+      "resistantTerm": "耐",
+      "resultConclusion": "試根據實驗結果作出結論：",
+      "retry": "重試同步",
+      "rotate": "旋轉瓊脂板",
+      "rotateHint": "拉動弧形把手旋轉瓊脂板，再沿上下方向塗抹；鍵盤亦可用 ← / → 旋轉。",
+      "rotationInstruction": "（拉動以旋轉平板）",
+      "ruler": "拖動直尺來量度；刻度 1 mm。拖近清晰區直徑時，直尺會吸附在該高度，仍可自由左右移動；上下拉遠即可解除吸附。",
+      "rulerCenter": "把直尺移到所選紙碟中心",
+      "rulerMove": "移動量度線",
+      "sample": "樣本",
+      "save": "儲存",
+      "saveDesign": "儲存裝置設計",
+      "savePlan": "確認設計，開始實驗 →",
+      "saveReflection": "儲存並提交學習反思",
+      "sealPlate": "蓋好瓊脂板並倒置",
+      "skills": "觀察 · 設計 · 量度 · 推論",
+      "skip": "跳到探究內容",
+      "some": "部分",
+      "sourceNote": "本模型不使用臨床敏感／抗藥判定界線，不能推廣至所有 MRSA。",
+      "spreader": "選取塗布器",
+      "standardized": "在新瓊脂板重複相同標準化操作",
+      "stateAwaiting": "未提交",
+      "stateComplete": "反思已提交",
+      "stateReflection": "待反思",
+      "storageError": "本機儲存失敗（可能已滿或資料損壞）。請保留此頁面及網站資料，再重試同步。",
+      "submit": "確認遞交探究",
+      "submitNote": "遞交後探究答案不可修改；接着查看學習重點、提交反思，再列印／儲存 PDF。",
+      "submitTitle": "保存並鎖定本次探究？",
+      "submitted": "本次探究已遞交",
+      "subtitle": "哪些樣本能抑制細菌生長？",
+      "task": "本節研究任務",
+      "teacher": "教師儀表板",
+      "teacherBack": "返回教師儀表板",
+      "teacherIntro": "雲端全班紀錄必須通過教師密碼驗證；本機紀錄只代表本裝置。",
+      "time": "有效用時",
+      "title": "抗生素研究任務",
+      "toolAlcohol": "酒精燒杯",
+      "toolBottle": "已稀釋的細菌懸液",
+      "toolDropper": "滴管",
+      "toolEmpty": "請選擇目前步驟所需的工具。",
+      "toolLamp": "酒精燈",
+      "toolLoadedDisc": "鑷子夾著紙碟",
+      "toolLoadedDropper": "已吸取懸液的滴管",
+      "toolMarker": "標記筆",
+      "toolSpreader": "無菌塗布器",
+      "toolTweezers": "鑷子",
+      "toolboxLabel": "實驗工具列",
+      "uneven": "有些位置可能未均勻覆蓋。這會怎樣影響判斷？你可以補塗。",
+      "uniform": "覆蓋較均勻；培養後才會顯示可見生長。",
+      "updated": "更新時間",
+      "upload": "上載相片",
+      "vDisc": "紙碟大小",
+      "vDistribution": "初始細菌分布",
+      "vMedium": "瓊脂板的成份",
+      "vObservation": "共同培養及觀察條件",
+      "vPreparation": "各樣本預設製備條件",
+      "vSample": "紙碟所含樣本",
+      "vStrain": "使用的細菌種類",
+      "vZone": "是否有可見清晰區及其總直徑",
+      "variableNote": "在每類中選擇適合的因素。現在保存你的想法，遞交後再查看參考回饋。",
+      "variables": "辨認實驗變量",
+      "variationAverage": "直接計算平均值，因為平均值能消除所有操作問題。",
+      "variationCheck": "先檢查塗布、紙碟位置及各瓊脂板的條件，再按需要重複實驗，以找出差異來源並改善比較。",
+      "variationDelete": "刪去不符合原始假說的數據，令結果一致。",
+      "variationMaximum": "只保留最大的讀數，因為它最能反映抑制效能。",
+      "verticalSpreadHint": "上下塗抹，旋轉瓊脂板，直至全部區域均勻覆蓋。",
+      "view": "查看",
+      "viewExtension": "保存預測並觀察延伸結果",
+      "viruses": "病毒感染",
+      "visible": "紙碟外有可見清晰區？",
+      "visibleRequired": "請先選擇紙碟外是否有可見清晰區（有／沒有）。",
+      "wrong_step": "請先完成目前步驟。",
+      "yes": "有",
+      "zoneDeath": "區內所有細菌都已死亡。",
+      "zoneDiameterMeaning": "清晰區的直徑大小代表甚麼？",
+      "zoneInhibition": "在本次條件下，區內沒有可見細菌生長，表示細菌生長受到抑制。",
+      "zoneMeaning": "清晰區的出現代表甚麼？",
+      "zoneResistance": "區內細菌對所有抗生素都有抗藥性。",
+      "zoneViruses": "樣本已消滅瓊脂板上的病毒。",
+      "zoom": "放大量度視圖",
+      "zoomOut": "顯示整個瓊脂板"
+    },
+    "labels": {
+      "title": [
+        "紙本對照組工作紙",
+        "Paper control-group worksheet"
+      ],
+      "A": [
+        "情境與原始探究設計",
+        "Context and original inquiry design"
+      ],
+      "B": [
+        "實驗資料、分析與結論",
+        "Experimental data, analysis and conclusion"
+      ],
+      "C": [
+        "學習重點及反思",
+        "Learning points and reflection"
+      ],
+      "D": [
+        "教師指引、參考答案及評分準則",
+        "Teacher guide, reference answers and scoring criteria"
+      ],
+      "all": [
+        "完整教師列印套裝",
+        "Complete teacher print pack"
+      ],
+      "identity": [
+        "姓名：________________　班別：________　學號：________",
+        "Name: __________________　Class: ________　No.: ________"
+      ],
+      "circle": [
+        "每組括號選項圈選一項；保留原有作答。",
+        "Circle one option in each set of brackets. Preserve your original responses."
+      ],
+      "multi": [
+        "可選多於一項，請在方格內加上 ✓。",
+        "Tick all applicable boxes; more than one option may be selected."
+      ],
+      "original": [
+        "保存 A 冊的原始設計後，才派發 B 冊；不要改寫原始設計。",
+        "Preserve the original design in A before distributing B. Do not overwrite it."
+      ],
+      "fixed": [
+        "本冊提供三塊獨立瓊脂板的固定教學模型圖像及原始直徑資料；觀察判讀、平均值和結論由你完成。",
+        "This booklet provides fixed teaching-model images and raw diameter data for three independent plates. Complete the observations, means and conclusions yourself."
+      ],
+      "raw": [
+        "原始直徑資料（mm）",
+        "Raw diameter data (mm)"
+      ],
+      "revision": [
+        "修訂紀錄（如有，保留首次作答可讀；此欄不是新題目）",
+        "Revisions, if any (keep the first response readable; this is not an additional question)"
+      ],
+      "learningGate": [
+        "原探究答案已固定保存後，才派發本冊。",
+        "Distribute this booklet only after the original inquiry answers have been fixed and preserved."
+      ],
+      "teacher": [
+        "只供教師，切勿派發給學生",
+        "Teacher only: do not distribute to students"
+      ],
+      "guide": [
+        "派發及研究安排",
+        "Distribution and research administration"
+      ],
+      "answers": [
+        "參考答案",
+        "Reference answers"
+      ],
+      "criteria": [
+        "評分準則（現行 VL4 初稿）",
+        "Scoring criteria (current VL4 draft)"
+      ],
+      "draft": [
+        "評分準則未經效度或跨 VL 校準驗證；不可把速度、點擊、完成率或預測是否猜中當作能力。",
+        "These draft criteria have not been validated or calibrated across VLs. Speed, clicks, completion rate or a prediction matching the outcome are not measures of ability."
+      ],
+      "rawNote": [
+        "圖像與原始直徑由目前 VL4 同一結果模型產生；沒有增加菌落數、藥物濃度或患者劑量。原始數據不是平均值或結論答案。",
+        "Images and raw diameters are generated by the current VL4 result model. No colony counts, drug concentrations or patient doses have been added. Raw data are not mean or conclusion answers."
+      ],
+      "columns": [
+        [
+          "項目",
+          "分數",
+          "方式",
+          "滿分／判準",
+          "部分分",
+          "零分／限制"
+        ],
+        [
+          "Item",
+          "Marks",
+          "Method",
+          "Full-credit criterion",
+          "Partial credit",
+          "Zero credit / limits"
+        ]
+      ],
+      "steps": [
+        [
+          "先派 A，保存原始假說、理由、變量、實驗前提、對照設計、繪圖及重複安排。學生保留可讀副本，才派 B。",
+          "Distribute A first. Preserve the original hypothesis, reasons, variables, assumptions, control, drawing and repeat plan. Keep a readable student copy before distributing B."
+        ],
+        [
+          "B 使用三塊獨立瓊脂板的共同 30°C、24 小時教學條件。學生依圖及原始資料自行判讀、記錄、算平均值及完成六題分析。",
+          "B uses three independent plates under shared teaching conditions of 30°C and 24 hours. Students interpret the images and raw data, record observations, calculate means and complete the six analysis items."
+        ],
+        [
+          "收取或固定 A、B 的原探究答案後才派 C。反思需參閱學生自己的實驗結果；C 不列印參考結論或對錯。",
+          "Collect or fix the original answers in A and B before distributing C. Reflection uses the student’s own experimental results. C prints no reference conclusion or correctness marks."
+        ],
+        [
+          "D 及完整套裝只供教師；完整套裝不可一次整套派學生。相同語言、可用時間及提示安排應在兩組保持一致。",
+          "D and the complete pack are for teachers only. Do not distribute the entire pack to students at once. Keep language, available time and prompts consistent across groups."
+        ],
+        [
+          "本功能不讀取或建立學生紀錄，不改答案、繪圖、示範、計時、事件、雲端或 Excel。紙本手寫資料由研究者另行保存和評分。",
+          "This feature does not read or create student records or change answers, drawings, demonstrations, timing, events, cloud records or Excel. Researchers separately preserve and score handwritten paper data."
+        ],
+        [
+          "依已核對的 proposal §4.1、§4.3.2，兩組在正式授課前完成四週活動，使用相同情境、概念及題目；紙本組以靜態圖及預製資料表代替互動模擬。本冊對應 VL4 抗生素活動。",
+          "The supplied proposal, sections 4.1 and 4.3.2, specifies four weekly modules before formal teaching, with identical scenarios, concepts and prompts. Paper replaces interactive simulation with static diagrams and pre-rendered data tables. This booklet corresponds to VL4 antibiotics."
+        ],
+        [
+          "紙本用固定種子，VL 個別探究使用獨立種子；參數與結果模型相同，但每名學生的原始數值未必完全相同。研究者須核對這種資料變異是否符合研究設計。",
+          "Paper uses fixed seeds; individual VL inquiries use independent seeds. The parameters and result model are the same, but individual raw values may differ. The researcher must confirm that this variation fits the study design."
+        ],
+        [
+          "紙本不能測得虛擬工具操作能力；請核對跨組 SPS 題目覆蓋、23 分配重、評分者一致性及正式 SPS／概念前後測。正式使用前試印灰階 B 並核對圖文可讀性。",
+          "Paper cannot measure virtual tool operation. Review cross-group SPS coverage, the 23-mark weighting, inter-rater agreement and separate formal SPS/concept pre/post tests. Trial-print B in greyscale and check image and text readability before use."
+        ],
+        [
+          "proposal §4.2 指定兩組各 20 人，混合 X1／X2：VL 組 11／9，紙本組 12／8。§4.3.1–2 的 10 題 SPSAI、4 題 CKT 在第 0 週及第 4 週後施測，後測與前測相同；本工作紙不取代這些正式工具，也不聲稱已驗證其效度。",
+          "The proposal specifies 20 students per group, combining X1/X2: 11/9 in VL and 12/8 in paper. The separate 10-item SPSAI and 4-item CKT are administered in week 0 and after week 4, using the same pre/post tests. This worksheet does not replace those instruments or establish their validity."
+        ]
+      ]
+    },
+    "inquiryFields": [
+      "observation",
+      "prediction",
+      "largestPrediction",
+      "reason",
+      "iv",
+      "dv",
+      "cv",
+      "assumptions",
+      "controlPlan",
+      "designDescription",
+      "plannedReplicates",
+      "plannedReplicateReason"
+    ],
+    "analysisFields": [
+      "zoneMeaning",
+      "zoneDiameterMeaning",
+      "repeatPurpose",
+      "repeatVariation",
+      "controlPurpose",
+      "effectiveSamples",
+      "rank1",
+      "rank2",
+      "rank3",
+      "rank4"
+    ],
+    "variables": [
+      {
+        "id": "disc",
+        "key": "vDisc",
+        "text": "紙碟大小"
+      },
+      {
+        "id": "sample",
+        "key": "vSample",
+        "text": "紙碟所含樣本"
+      },
+      {
+        "id": "medium",
+        "key": "vMedium",
+        "text": "瓊脂板的成份"
+      },
+      {
+        "id": "zone",
+        "key": "vZone",
+        "text": "是否有可見清晰區及其總直徑"
+      },
+      {
+        "id": "strain",
+        "key": "vStrain",
+        "text": "使用的細菌種類"
+      },
+      {
+        "id": "distribution",
+        "key": "vDistribution",
+        "text": "初始細菌分布"
+      },
+      {
+        "id": "preparation",
+        "key": "vPreparation",
+        "text": "各樣本預設製備條件"
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "distribution",
+        "key": "assumptionDistribution",
+        "text": "各瓊脂板的初始細菌分布平均。"
+      },
+      {
+        "id": "sterile",
+        "key": "assumptionSterile",
+        "text": "器材不會帶入額外污染。"
+      },
+      {
+        "id": "sameConditions",
+        "key": "assumptionSame",
+        "text": "各瓊脂板採用相同模擬觀察條件。"
+      },
+      {
+        "id": "death",
+        "key": "assumptionDeath",
+        "text": "若紙碟附近沒有菌落形成，這代表該位置的所有細菌已死亡。"
+      }
+    ],
+    "prediction": [
+      {
+        "id": "X",
+        "key": "predictionX",
+        "text": "X"
+      },
+      {
+        "id": "Y",
+        "key": "predictionY",
+        "text": "Y"
+      },
+      {
+        "id": "Z",
+        "key": "predictionZ",
+        "text": "Z"
+      },
+      {
+        "id": "X_Y",
+        "key": "predictionXY",
+        "text": "X、Y"
+      },
+      {
+        "id": "X_Z",
+        "key": "predictionXZ",
+        "text": "X、Z"
+      },
+      {
+        "id": "Y_Z",
+        "key": "predictionYZ",
+        "text": "Y、Z"
+      },
+      {
+        "id": "all",
+        "key": "predictionAll",
+        "text": "X、Y、Z"
+      },
+      {
+        "id": "none",
+        "key": "predictionNone",
+        "text": "沒有任何樣本"
+      }
+    ],
+    "repeats": [
+      {
+        "id": "1",
+        "key": "1",
+        "text": "1"
+      },
+      {
+        "id": "2",
+        "key": "2",
+        "text": "2"
+      },
+      {
+        "id": "3",
+        "key": "3",
+        "text": "3"
+      },
+      {
+        "id": "4",
+        "key": "4",
+        "text": "4"
+      },
+      {
+        "id": "5",
+        "key": "5",
+        "text": "5"
+      },
+      {
+        "id": "6",
+        "key": "6",
+        "text": "6"
+      },
+      {
+        "id": "7",
+        "key": "7",
+        "text": "7"
+      },
+      {
+        "id": "8",
+        "key": "8",
+        "text": "8"
+      },
+      {
+        "id": "9",
+        "key": "9",
+        "text": "9"
+      },
+      {
+        "id": "10",
+        "key": "10",
+        "text": "10"
+      },
+      {
+        "id": "11",
+        "key": "11",
+        "text": "11"
+      },
+      {
+        "id": "12",
+        "key": "12",
+        "text": "12"
+      },
+      {
+        "id": "13",
+        "key": "13",
+        "text": "13"
+      },
+      {
+        "id": "14",
+        "key": "14",
+        "text": "14"
+      },
+      {
+        "id": "15",
+        "key": "15",
+        "text": "15"
+      },
+      {
+        "id": "16",
+        "key": "16",
+        "text": "16"
+      },
+      {
+        "id": "17",
+        "key": "17",
+        "text": "17"
+      },
+      {
+        "id": "18",
+        "key": "18",
+        "text": "18"
+      },
+      {
+        "id": "19",
+        "key": "19",
+        "text": "19"
+      },
+      {
+        "id": "20",
+        "key": "20",
+        "text": "20"
+      }
+    ],
+    "effective": [
+      {
+        "id": "X",
+        "key": "predictionX",
+        "text": "X"
+      },
+      {
+        "id": "Y",
+        "key": "predictionY",
+        "text": "Y"
+      },
+      {
+        "id": "Z",
+        "key": "predictionZ",
+        "text": "Z"
+      },
+      {
+        "id": "X_Y",
+        "key": "predictionXY",
+        "text": "X、Y"
+      },
+      {
+        "id": "X_Z",
+        "key": "predictionXZ",
+        "text": "X、Z"
+      },
+      {
+        "id": "Y_Z",
+        "key": "predictionYZ",
+        "text": "Y、Z"
+      },
+      {
+        "id": "all",
+        "key": "effectiveAll",
+        "text": "X、Y、Z"
+      },
+      {
+        "id": "none",
+        "key": "effectiveNone",
+        "text": "沒有樣本"
+      }
+    ],
+    "questions": [
+      {
+        "id": "zoneMeaning",
+        "number": 1,
+        "key": "zoneMeaning",
+        "correct": "inhibition",
+        "options": [
+          [
+            "death",
+            "zoneDeath"
+          ],
+          [
+            "inhibition",
+            "zoneInhibition"
+          ],
+          [
+            "resistance",
+            "zoneResistance"
+          ],
+          [
+            "viruses",
+            "zoneViruses"
+          ]
+        ],
+        "text": "清晰區的出現代表甚麼？",
+        "choices": [
+          {
+            "id": "death",
+            "key": "zoneDeath",
+            "text": "區內所有細菌都已死亡。"
+          },
+          {
+            "id": "inhibition",
+            "key": "zoneInhibition",
+            "text": "在本次條件下，區內沒有可見細菌生長，表示細菌生長受到抑制。"
+          },
+          {
+            "id": "resistance",
+            "key": "zoneResistance",
+            "text": "區內細菌對所有抗生素都有抗藥性。"
+          },
+          {
+            "id": "viruses",
+            "key": "zoneViruses",
+            "text": "樣本已消滅瓊脂板上的病毒。"
+          }
+        ]
+      },
+      {
+        "id": "zoneDiameterMeaning",
+        "number": 2,
+        "key": "zoneDiameterMeaning",
+        "correct": "extent",
+        "options": [
+          [
+            "count",
+            "diameterCount"
+          ],
+          [
+            "treatment",
+            "diameterTreatment"
+          ],
+          [
+            "extent",
+            "diameterExtent"
+          ],
+          [
+            "dose",
+            "diameterDose"
+          ]
+        ],
+        "text": "清晰區的直徑大小代表甚麼？",
+        "choices": [
+          {
+            "id": "count",
+            "key": "diameterCount",
+            "text": "瓊脂板上剩餘細菌的確實數目。"
+          },
+          {
+            "id": "treatment",
+            "key": "diameterTreatment",
+            "text": "該抗生素治療患者的效能；直徑最大就是最佳治療。"
+          },
+          {
+            "id": "extent",
+            "key": "diameterExtent",
+            "text": "本次條件下，沒有可見細菌生長的區域範圍；直徑亦受樣本擴散等因素影響。"
+          },
+          {
+            "id": "dose",
+            "key": "diameterDose",
+            "text": "患者應使用的抗生素劑量。"
+          }
+        ]
+      },
+      {
+        "id": "repeatPurpose",
+        "number": 4,
+        "key": "repeatPurpose",
+        "correct": "consistency",
+        "options": [
+          [
+            "guarantee",
+            "repeatGuarantee"
+          ],
+          [
+            "remeasure",
+            "repeatRemeasure"
+          ],
+          [
+            "consistency",
+            "repeatConsistency"
+          ],
+          [
+            "content",
+            "repeatContent"
+          ]
+        ],
+        "text": "為何需要重複進行實驗？",
+        "choices": [
+          {
+            "id": "guarantee",
+            "key": "repeatGuarantee",
+            "text": "為了確保每一次實驗都能得到百分之百完全相同、毫無落差的絕對數值。"
+          },
+          {
+            "id": "remeasure",
+            "key": "repeatRemeasure",
+            "text": "為了延長實驗時間，以便讓科學家在撰寫報告時有更多的文字可以描述。"
+          },
+          {
+            "id": "consistency",
+            "key": "repeatConsistency",
+            "text": "為了降低偶然誤差，驗證實驗結果的「可重複性」與數據的可靠性。"
+          },
+          {
+            "id": "content",
+            "key": "repeatContent",
+            "text": "為了透過反覆操作，促使實驗中的生物樣本在短時間內加速突變出全新性狀。"
+          }
+        ]
+      },
+      {
+        "id": "repeatVariation",
+        "number": 5,
+        "key": "repeatVariation",
+        "correct": "check",
+        "options": [
+          [
+            "delete",
+            "variationDelete"
+          ],
+          [
+            "maximum",
+            "variationMaximum"
+          ],
+          [
+            "average",
+            "variationAverage"
+          ],
+          [
+            "check",
+            "variationCheck"
+          ]
+        ],
+        "text": "若重複實驗的數據差異過大，你應怎樣做？為甚麼？",
+        "choices": [
+          {
+            "id": "delete",
+            "key": "variationDelete",
+            "text": "刪去不符合原始假說的數據，令結果一致。"
+          },
+          {
+            "id": "maximum",
+            "key": "variationMaximum",
+            "text": "只保留最大的讀數，因為它最能反映抑制效能。"
+          },
+          {
+            "id": "average",
+            "key": "variationAverage",
+            "text": "直接計算平均值，因為平均值能消除所有操作問題。"
+          },
+          {
+            "id": "check",
+            "key": "variationCheck",
+            "text": "先檢查塗布、紙碟位置及各瓊脂板的條件，再按需要重複實驗，以找出差異來源並改善比較。"
+          }
+        ]
+      },
+      {
+        "id": "controlPurpose",
+        "number": 6,
+        "key": "controlPurpose",
+        "correct": "baseline",
+        "options": [
+          [
+            "same",
+            "controlSame"
+          ],
+          [
+            "treatment",
+            "controlTreatment"
+          ],
+          [
+            "baseline",
+            "controlBaseline"
+          ],
+          [
+            "increase",
+            "controlIncrease"
+          ]
+        ],
+        "text": "比較 C（對照）與 X、Y、Z 紙碟周圍的清晰區，C（對照）的主要作用是甚麼？",
+        "choices": [
+          {
+            "id": "same",
+            "key": "controlSame",
+            "text": "確保所有紙碟周圍的清晰區直徑相同。"
+          },
+          {
+            "id": "treatment",
+            "key": "controlTreatment",
+            "text": "指出最適合患者使用的抗生素。"
+          },
+          {
+            "id": "baseline",
+            "key": "controlBaseline",
+            "text": "提供不含抗生素的比較基礎，協助判斷清晰區的形成是否與抗生素樣本有關。"
+          },
+          {
+            "id": "increase",
+            "key": "controlIncrease",
+            "text": "增加 X、Y、Z 紙碟所含的樣本量，以增加實驗結果的準確性。"
+          }
+        ]
+      }
+    ],
+    "equipment": [
+      [
+        "equipmentPlate",
+        3,
+        "<path d=\"M14 40v20c0 11 16 20 36 20s36-9 36-20V40\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M20 44v12c0 8 14 15 30 15s30-7 30-15V44\" fill=\"#ddd0a6\"/><ellipse cx=\"50\" cy=\"40\" rx=\"36\" ry=\"20\" fill=\"#f5f9f3\" stroke=\"#7faaa0\" stroke-width=\"3\"/><ellipse cx=\"50\" cy=\"42\" rx=\"30\" ry=\"15\" fill=\"#eadfbc\" stroke=\"#c0ceb7\" stroke-width=\"1.5\"/><path d=\"M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".8\"/>",
+        "equipmentPlateNote"
+      ],
+      [
+        "equipmentMarker",
+        1,
+        "<g transform=\"rotate(28 50 50)\"><rect x=\"42\" y=\"13\" width=\"16\" height=\"69\" rx=\"5\" fill=\"#24594e\"/><path d=\"M42 82h16l-8 12z\" fill=\"#15333b\"/><rect x=\"42\" y=\"10\" width=\"16\" height=\"15\" rx=\"3\" fill=\"#a5c4bc\"/></g>"
+      ],
+      [
+        "equipmentDropper",
+        1,
+        "<path d=\"M40 16q10-12 20 0v19H40z\" fill=\"#27796e\"/><path d=\"M44 35h12v38l-6 15-6-15z\" fill=\"#e0efef\" stroke=\"#7faaa0\" stroke-width=\"2\"/><path d=\"M50 91q-7 8 0 8q7 0 0-8\" fill=\"#6ea89d\"/>"
+      ],
+      [
+        "equipmentBacteria",
+        1,
+        "<path d=\"M35 22h30v12l8 50H27l8-50z\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M31 59h38l4 25H27z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M31 59H69\" stroke=\"#36534b\" stroke-width=\"2\"/><path d=\"M32 19h36\" stroke=\"#087b78\" stroke-width=\"7\"/>"
+      ],
+      [
+        "equipmentSpreader",
+        1,
+        "<g transform=\"rotate(30 50 50)\"><image href=\"assets/lab-spreader-cartoon.png\" x=\"30\" y=\"2\" width=\"40\" height=\"96\"/></g>"
+      ],
+      [
+        "equipmentTweezers",
+        4,
+        "<g transform=\"rotate(212 50 50)\"><image href=\"assets/lab-forceps-cartoon.png\" x=\"30\" y=\"2\" width=\"40\" height=\"96\"/></g>"
+      ],
+      [
+        "equipmentAlcohol",
+        1,
+        "<path d=\"M24 16h53l-5 7v60H28V16\" fill=\"#f4f8f3\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M30 53h40v28H30Z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M30 53H70\" stroke=\"#36534b\" stroke-width=\"2\"/><path d=\"M35 24v47M63 32h7M63 45h7M63 65h7\" fill=\"none\" stroke=\"#7faaa0\" stroke-width=\"2\"/>"
+      ],
+      [
+        "equipmentLamp",
+        1,
+        "<path d=\"M49 8c-13 17-13 25 1 29 12-5 13-15-1-29Z\" fill=\"#e7b36b\"/><path d=\"M46 35h8v14h-8Z\" fill=\"#24594e\"/><path d=\"M33 48h34l12 31c3 9-11 14-29 14S17 88 21 79Z\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M27 72h46l4 12H23Z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M27 72H73\" stroke=\"#36534b\" stroke-width=\"2\"/>"
+      ],
+      [
+        "equipmentDiscs",
+        3,
+        "<g fill=\"#fff\" stroke=\"#7faaa0\"><circle cx=\"28\" cy=\"30\" r=\"17\"/><text x=\"28\" y=\"34\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">X</text><circle cx=\"70\" cy=\"30\" r=\"17\"/><text x=\"70\" y=\"34\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">Y</text><circle cx=\"28\" cy=\"72\" r=\"17\"/><text x=\"28\" y=\"76\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">Z</text><circle cx=\"70\" cy=\"72\" r=\"17\"/><text x=\"70\" y=\"76\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">C</text></g>",
+        "equipmentDiscsNote"
+      ],
+      [
+        "equipmentIncubator",
+        1,
+        "<rect x=\"16\" y=\"14\" width=\"68\" height=\"74\" rx=\"5\" fill=\"#e5ede8\" stroke=\"#7faaa0\" stroke-width=\"3\"/><rect x=\"24\" y=\"24\" width=\"46\" height=\"52\" rx=\"2\" fill=\"#c9dcd4\"/><path d=\"M29 43h35M29 62h35\" stroke=\"#7faaa0\"/><path d=\"M77 43v19\" stroke=\"#087b78\" stroke-width=\"4\"/>"
+      ],
+      [
+        "equipmentRuler",
+        1,
+        "<rect x=\"9\" y=\"35\" width=\"82\" height=\"29\" rx=\"3\" fill=\"#f6e8ba\" stroke=\"#c8b582\"/><path d=\"M12 35v14\" stroke=\"#927d4a\"/><path d=\"M17 35v7\" stroke=\"#927d4a\"/><path d=\"M22 35v7\" stroke=\"#927d4a\"/><path d=\"M27 35v7\" stroke=\"#927d4a\"/><path d=\"M32 35v7\" stroke=\"#927d4a\"/><path d=\"M37 35v14\" stroke=\"#927d4a\"/><path d=\"M42 35v7\" stroke=\"#927d4a\"/><path d=\"M47 35v7\" stroke=\"#927d4a\"/><path d=\"M52 35v7\" stroke=\"#927d4a\"/><path d=\"M57 35v7\" stroke=\"#927d4a\"/><path d=\"M62 35v14\" stroke=\"#927d4a\"/><path d=\"M67 35v7\" stroke=\"#927d4a\"/><path d=\"M72 35v7\" stroke=\"#927d4a\"/><path d=\"M77 35v7\" stroke=\"#927d4a\"/><path d=\"M82 35v7\" stroke=\"#927d4a\"/><path d=\"M87 35v14\" stroke=\"#927d4a\"/>"
+      ]
+    ],
+    "history": "<svg viewBox=\"0 0 440 536\" role=\"img\" data-history-labels data-i18n-aria=\"historyPhotoAlt\">\n      <image href=\"assets/alexander-fleming-petri-dish-penicillin.jpg\" x=\"44\" y=\"90\" width=\"352\" height=\"347\" preserveAspectRatio=\"xMidYMid meet\"/>\n      <g fill=\"none\" stroke-linejoin=\"round\"><g stroke=\"#fff\" stroke-width=\"2.8\"><path data-history-leader=\"mouldLabel\" d=\"M72 28H96L192 145\"/><path data-history-leader=\"clearAreaTerm\" d=\"M295 28H337L265 165\"/><path data-history-leader=\"colonies\" d=\"M75 459H99L185.4 402.2\"/></g><g class=\"history-label-lines\" stroke=\"#15333b\" stroke-width=\"1.2\"><path data-history-leader=\"mouldLabel\" d=\"M72 28H96L192 145\"/><path data-history-leader=\"clearAreaTerm\" d=\"M295 28H337L265 165\"/><path data-history-leader=\"colonies\" d=\"M75 459H99L185.4 402.2\"/></g></g>\n      <g fill=\"#15333b\" font-weight=\"700\"><text x=\"12\" y=\"30\" font-size=\"18\" data-i18n=\"mouldLabel\"></text><text x=\"238\" y=\"28\" font-size=\"17\" data-i18n=\"clearAreaTerm\"></text><text x=\"18\" y=\"465\" font-size=\"17\" data-i18n=\"colonies\"></text></g>\n      <g fill=\"#42635b\" font-size=\"14\"><text x=\"12\" y=\"55\" data-i18n=\"fungusRemark\"></text><text x=\"214\" y=\"52\" data-i18n=\"clearAreaLine1\"></text><text x=\"214\" y=\"74\" data-i18n=\"clearAreaLine2\"></text><text x=\"18\" y=\"493\" data-i18n=\"colonyMeaningLine1\"></text><text x=\"18\" y=\"517\" data-i18n=\"colonyMeaningLine2\"></text></g>\n    </svg>",
+    "learning": "<div class=\"science-diagram\">\n <figure class=\"learning-figure\"><figcaption>A. 實驗原理：抗生素樣本的擴散與清晰區的形成</figcaption>\n <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\">① 紙碟承載抗生素</text><path d=\"M221 72L128 136\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\">② 抗生素向瓊脂擴散</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\">③ 抗生素抑制細菌生長</text><text x=\"246\" y=\"227\">並形成清晰區</text><path d=\"M221 213L152 174\" fill=\"none\" stroke=\"#698a87\"/></g></svg>\n <p class=\"caption\">示意圖，非按比例；不能證明細菌全部死亡。</p></figure>\n <figure class=\"learning-figure\"><figcaption>B. 細菌結構與可能作用位置</figcaption>\n <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"細菌結構與抗生素可能作用位置\">\n <rect x=\"21\" y=\"91\" width=\"238\" height=\"122\" rx=\"61\" fill=\"#eef3fa\" stroke=\"#b8cbdc\" stroke-width=\"2\"/>\n <rect x=\"30\" y=\"100\" width=\"220\" height=\"104\" rx=\"52\" fill=\"#d5e5f8\" stroke=\"#597fb1\" stroke-width=\"8\"/><rect x=\"41\" y=\"111\" width=\"198\" height=\"82\" rx=\"40\" fill=\"#f4f0d4\" stroke=\"#8e9f82\" stroke-width=\"4\"/>\n <path d=\"M87 151C97 124 136 179 155 143S190 169 206 143\" fill=\"none\" stroke=\"#a6699c\" stroke-width=\"4\"/>\n <g fill=\"#cb995b\"><circle cx=\"72\" cy=\"142\" r=\"4\"/><circle cx=\"93\" cy=\"171\" r=\"4\"/><circle cx=\"175\" cy=\"176\" r=\"4\"/><circle cx=\"196\" cy=\"124\" r=\"4\"/></g>\n <g fill=\"#15333b\" font-size=\"16\"><text x=\"272\" y=\"70\">① 抑制細胞壁形成</text><path d=\"M266 76L232 112\" stroke=\"#597fb1\" fill=\"none\"/>\n <text x=\"272\" y=\"115\">② 破壞細胞膜</text><path d=\"M266 121L235 136\" stroke=\"#8e9f82\" fill=\"none\"/>\n <text x=\"272\" y=\"164\">③ 抑制蛋白質合成</text><path d=\"M266 170L179 176\" stroke=\"#cb995b\" fill=\"none\"/>\n <text x=\"272\" y=\"211\">④ 抑制核酸合成</text><path d=\"M266 217H155V143\" stroke=\"#a6699c\" fill=\"none\"/></g></svg>\n <p class=\"caption\">外側淡色層示意莢膜（並非所有細菌都有）；藍色層為細胞壁，內側綠色層為細胞膜，紫色曲線為 DNA。這些機制並非本次紙碟結果直接證明。</p></figure></div><section class=\"learning-topic\"><h3>抗生素的用途</h3><ul class=\"learning-list\"><li>抗生素主要用於<strong class=\"learning-emphasis\">細菌感染</strong>，不能治療病毒引起的傷風或流感。</li></ul></section><section class=\"learning-topic\"><h3>清晰區如何形成</h3><ul class=\"learning-list\"><li>抗生素由紙碟<strong class=\"learning-emphasis\">向外擴散</strong>，離紙碟越遠，濃度通常越低。只有濃度仍足以抑制這種細菌生長的範圍才會形成<strong class=\"learning-emphasis\">清晰區</strong>。如果細菌對抗生素愈敏感（能被較低濃度抗生素抑制生長），能形成的清晰區便愈大。</li><li>清晰區表示該位置沒有可見細菌生長，證明該抗生素樣本能<strong class=\"learning-emphasis\">抑制細菌生長</strong>；不能證明區內所有細菌已死亡。</li></ul></section><section class=\"learning-topic\"><h3>抗生素抗性與選擇作用</h3><ul class=\"learning-list\"><li>為甚麼情境中的原有抗生素會失效？抗生素使不具抗生素抗性的細菌較難存活，<strong class=\"learning-emphasis\">具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵</strong>。當後者比例增加並佔據整個群落，原有抗生素便會失效。</li><li><strong class=\"learning-emphasis\">過度或不當使用抗生素</strong>會增加不必要的選擇壓力，<strong class=\"learning-emphasis\">促進抗藥細菌生存與繁殖</strong>，使感染可能更難治療。</li></ul></section>",
+    "plates": [
+      {
+        "id": "plate-1",
+        "seed": 1001,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.1,
+          "C": 0
+        },
+        "completed": true
+      },
+      {
+        "id": "plate-2",
+        "seed": 1002,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.3,
+          "C": 0
+        },
+        "completed": true
+      },
+      {
+        "id": "plate-3",
+        "seed": 1003,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.5,
+          "C": 0
+        },
+        "completed": true
+      }
+    ],
+    "conclusionReference": {
+      "samples": null,
+      "order": null,
+      "effective": [
+        "X",
+        "Z"
+      ],
+      "reference": [
+        "Z",
+        "X"
+      ]
+    },
+    "samples": [
+      "X",
+      "Y",
+      "Z",
+      "C"
+    ],
+    "discMM": 6,
+    "replicates": 3,
+    "reference": {
+      "observation": "青黴菌（真菌）附近有清晰區，即沒有可見細菌生長的區域；這是觀察，原因仍需比較。",
+      "prediction": "合理可測試的實驗前預測可以與結果不同；預測可以與結果不同；合理的推測不需猜中。",
+      "largestPrediction": "根據擴散及細菌生長提出合理預測；若預測沒有清晰區，可選不適用。預測大小不需猜中結果。",
+      "reason": "說明與細菌生長及可觀察現象相關的理由。",
+      "controlPlan": "用相同載體但不含抗生素的紙碟，排除載體／紙碟影響；其餘條件保持相同。只有所有載體都是水時才稱水對照。",
+      "designDescription": "清楚標示樣本與對照，留足間距及邊緣距離，避免清晰區互相干擾；可用圖像或文字表達。",
+      "plannedReplicates": "次數包括第一次。選三次不是標準答案；次數多不保證可靠。",
+      "plannedReplicateReason": "考慮一致性、變異、公平比較及課堂可行性。",
+      "reflection": "引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。"
+    },
+    "variableReference": {
+      "iv": "sample",
+      "dv": "zone",
+      "cv": [
+        "disc",
+        "medium",
+        "strain",
+        "distribution",
+        "preparation"
+      ]
+    },
+    "assumptionReference": [
+      "distribution",
+      "sterile",
+      "sameConditions"
+    ],
+    "rubric": [
+      [
+        "觀察｜初步觀察",
+        2,
+        "教師",
+        "指出青黴菌（真菌）附近的可見細菌生長較少，並分開觀察與推測。",
+        "1：描述相關現象但位置或觀察／推測區分不完整。",
+        "0：未提供可評答案、無關或把機制當作直接觀察。"
+      ],
+      [
+        "觀察｜直徑及紙碟外清晰區",
+        2,
+        "自動",
+        "12 個最後讀數均符合模型直徑 ±1 mm，並正確分辨紙碟外有／無可見清晰區。",
+        "2 × 符合兩項條件的讀數數目 ÷ 12，保留兩位小數。",
+        "0：沒有符合兩項條件的讀數。沒有清晰區時，總直徑須記 0，並選「無」。"
+      ],
+      [
+        "分類｜獨立變量／因變量／控制變量",
+        4,
+        "自動",
+        "紙碟所含樣本（1）；是否有清晰區及總直徑（1）；五項控制：紙碟大小、瓊脂板的成份、使用的細菌種類、初始細菌分布、各樣本預設製備條件（2）。",
+        "五項控制變量每項 2/5；全選正確得 2；整欄保留兩位小數。",
+        "選入自／因變量等不適當控制項，控制變量欄 0；未答或分類錯誤 0。"
+      ],
+      [
+        "設計｜可測試假說及理由",
+        1,
+        "教師",
+        "1：實驗前提出可用樣本與載體對照比較的預測，並給出相關理由。",
+        "0.5：可測試預測，但理由較薄弱或不清楚。",
+        "0：無可測試預測或無實驗前證據；合理但不被結果支持的假說不因此扣分。"
+      ],
+      [
+        "設計｜原始重複安排理由",
+        1,
+        "教師",
+        "1：說明獨立重複可檢查一致性／變異，次數安排有可行性理由。",
+        "0.5：提及可靠性但缺少獨立比較或安排理由。",
+        "0：只有次數或無可評理由。不以選 3 次、次數越多給分。"
+      ],
+      [
+        "設計｜對照理由",
+        1,
+        "教師",
+        "1：相同載體但不含抗生素的紙碟，解釋排除載體／紙碟影響及相同條件。",
+        "0.5：有恰當C（對照），但理由或共同條件不完整。",
+        "0：缺乏適當對照，或無可評理由。"
+      ],
+      [
+        "設計｜探究假設",
+        1,
+        "自動",
+        "只選初始分布可比較、無額外污染、相同模擬條件。",
+        "全組正確才得 1；本項無部分分。",
+        "錯選、漏選或未答；不能假設透明區所有細菌必定死亡。"
+      ],
+      [
+        "實作｜瓊脂板設計品質",
+        2,
+        "教師",
+        "清楚標示 X、Y、Z、對照；留足間距及邊緣距離；能參照圖／文字公平比較。",
+        "1：基本可行但缺少一項主要安排。",
+        "0：無法公平比較／無可評設計；可用文字取代繪圖。"
+      ],
+      [
+        "推論｜平均值",
+        1,
+        "自動",
+        "四組平均值均為自己的三個最後讀數之和 ÷3；輸入保留 1 位小數，容差 ±0.1 mm。",
+        "每組正確得 0.25。依學生自己的讀數，避免重複扣量度錯誤。",
+        "0：沒有正確平均值／無有效自身讀數。"
+      ],
+      [
+        "反思｜實驗證據與抗性選擇解釋",
+        2,
+        "教師",
+        "引用樣本讀數支持抑制生長；連結原有抗性差異、不同存活與繁殖機會、抗性特徵遺傳及群落比例改變，解釋效果減弱。",
+        "1：有合理實驗判斷或選擇作用解釋，但缺少讀數或因果連結。",
+        "0：無相關證據與合理概念解釋，或認為細菌為生存而主動產生抗性。"
+      ],
+      [
+        "分析｜第 1 題：zoneMeaning",
+        1,
+        "自動",
+        "參考選項：B。",
+        "本題不設部分分。",
+        "錯選或未答 0。"
+      ],
+      [
+        "分析｜第 2 題：zoneDiameterMeaning",
+        1,
+        "自動",
+        "參考選項：C。",
+        "本題不設部分分。",
+        "錯選或未答 0。"
+      ],
+      [
+        "分析｜第 4 題：repeatPurpose",
+        1,
+        "自動",
+        "參考選項：C。",
+        "本題不設部分分。",
+        "錯選或未答 0。"
+      ],
+      [
+        "分析｜第 5 題：repeatVariation",
+        1,
+        "自動",
+        "參考選項：D。",
+        "本題不設部分分。",
+        "錯選或未答 0。"
+      ],
+      [
+        "分析｜第 6 題：controlPurpose",
+        1,
+        "自動",
+        "參考選項：C。",
+        "本題不設部分分。",
+        "錯選或未答 0。"
+      ],
+      [
+        "結論｜樣本選擇及排序",
+        1,
+        "自動",
+        "有效樣本按模型判斷（X、Z），正確得 0.5；排序按學生讀數計算的平均值判斷，正確得 0.5，未使用的位置必須選不適用。",
+        "0.5：樣本選擇或排序其中一項正確。",
+        "0：兩項均錯或資料不足；相同平均值接受任一先後次序，不重複扣量度誤差。"
+      ],
+      [
+        "新版總分及待評狀態",
+        23,
+        "公式",
+        "沿用設計及量度準則；新增五題各 1 分、選填結論 1 分、反思 2 分。六個人工格填完且反思已提交才顯示總分。",
+        "刪除圖表及舊分析題的評分；新版與舊版分開，不直接比較兩版總分。",
+        "此準則為試教草案，需配合題目改動校準；不把操作速度、次數或完成率換算能力。"
+      ]
+    ],
+    "tolerances": {
+      "reading": 1,
+      "mean": 0.1,
+      "graph": 0.5
+    }
+  },
+  "en": {
+    "module": "VL4",
+    "version": 1,
+    "language": "en",
+    "text": {
+      "account": "Switch account",
+      "addBacteria": "Add simulated bacteria",
+      "agar": "Agar surface",
+      "alcohol_required": "Use the alcohol beaker before the lamp.",
+      "all": "All",
+      "allPlatesRequired": "Complete all three independent plates and confirm the readings for each sample.",
+      "analysis": "Analyse the results and draw a conclusion",
+      "analysisClinical": "Does the largest zone from different antibiotics（抗生素） necessarily mean the best patient treatment?",
+      "analysisConsistent": "Which samples show a visible zone in all three tests? Cite your data.",
+      "analysisControl": "What growth does C (control) show? What comparison does it provide?",
+      "analysisDeath": "Does no visible growth prove that every bacterium died?",
+      "analysisHypothesis": "How do the results support or not support your original hypothesis?",
+      "analysisMethod": "If differences are large, which methods or conditions should you check?",
+      "analysisRepeatPlan": "How would you revise your original repeat plan?",
+      "analysisRepeatValue": "How do repeats help assess consistency（一致性）? If results remain unstable, would you add tests or check the method first?",
+      "analysisVariation": "Are the three results for one sample consistent（一致的）? Compare your data.",
+      "animateAlcohol": "Using the alcohol beaker…",
+      "animateDisc": "Placing the disc with forceps…",
+      "animateDrop": "Releasing the suspension（懸液） at the centre…",
+      "animateIncubate": "Moving all three plates into the incubator（培養箱）…",
+      "animateMark": "Drawing a cross with the marker…",
+      "animateSeal": "Covering and inverting the plate…",
+      "animateSpread": "Spreading evenly…",
+      "animateSterilize": "Completing sterilisation（滅菌／消毒） with the alcohol lamp…",
+      "assist": "Assisted spreading",
+      "assistDiscs": "Assist placement of four discs",
+      "assistNote": "Rotate and spread plate 1 yourself. Assisted spreading is available for plates 2 and 3.",
+      "assumptionDeath": "If no colonies（菌落） form near a disc, this means all bacteria at that location have died.",
+      "assumptionDefinitionHint": "An assumption is a condition we have not proved but take as true, to help make the experiment results valid.",
+      "assumptionDistribution": "Bacteria are initially distributed evenly on each agar plate（瓊脂板）.",
+      "assumptionNote": "Select all applicable assumptions; you may choose more than one.",
+      "assumptionQuestion": "What are the assumptions of this investigation?",
+      "assumptionSame": "All plates use the same simulated observation conditions.",
+      "assumptionSterile": "Equipment does not introduce contamination.",
+      "assumptions": "Investigation assumptions (choose all that apply)",
+      "autoPrepare": "Auto-complete steps 1–5",
+      "back": "← Back",
+      "backToContext": "← Return to context",
+      "bacteria": "Bacterial infections",
+      "bacteriaQuestion": "Which infections are antibiotics（抗生素） mainly used for?",
+      "bestDrug": "The best treatment and dose for a patient",
+      "blank": "C (control)",
+      "brand": "Inquiry Laboratory",
+      "can": "Can conclude",
+      "cancel": "Return to check",
+      "cannot": "Cannot conclude from this experiment alone",
+      "canvasLabel": "Experiment setup drawing area; a written design is also accepted",
+      "centre_required": "Release the suspension（懸液） at the centre of the agar plate（瓊脂板）.",
+      "choose": "Choose an option",
+      "className": "Class and student number",
+      "classPH": "e.g. S4X1-05",
+      "classroomPlan": "Your original research proposal has been saved separately. For classroom comparison, this activity will use 3 agar plates（瓊脂板）. You do not need to change your original design.",
+      "clear": "Clear drawing",
+      "clearArea": "Clear zone（清晰區） (region with no visible bacterial growth)",
+      "clearAreaLine1": "(no bacterial",
+      "clearAreaLine2": "growth seen)",
+      "clearAreaTerm": "Clear zone（清晰區）",
+      "close": "The discs are too close; surrounding areas may interfere. Please reposition them.",
+      "closeDialog": "Close",
+      "cloudError": "Sync failed; local backups remain. Please retry.",
+      "cloudPending": "Local backup saved; waiting to sync.",
+      "cloudReadFailed": "Class data could not be read. Local records cannot stand in for the full class. Please retry.",
+      "cloudSynced": "The cloud acknowledged saves for this device’s queue.",
+      "cloudSyncing": "Syncing this device’s queued records…",
+      "cloudUnconfigured": "VL4 cloud is not configured; answers remain on this device.",
+      "colonies": "Colonies（菌落）",
+      "colonyMeaningLine1": "(A visible group of many bacteria",
+      "colonyMeaningLine2": "that have multiplied on the agar.)",
+      "colonyRemark": "A bacterial colony（細菌菌落） is a visible group of many bacteria that have multiplied on the agar surface, rather than a single bacterium.",
+      "completePrediction": "Complete your prediction",
+      "conclusion": "Written conclusion (include data and limits)",
+      "conclusionContext": "Under these simulated conditions, ",
+      "conclusionEffective": " can effectively inhibit（抑制） MRSA（耐甲氧西林金黃葡萄球菌） growth.",
+      "conclusionPH": "Under these simulation conditions, sample ___ showed ___ in ___ independent tests. This supports ___, but cannot establish ___.",
+      "conclusionRanking": "Comparing the mean total clear-zone（清晰區） diameters in this test, their inhibitory（抑制） effects rank as follows:",
+      "conclusionSelectHint": "Rank only samples with visible clear zones（清晰區）.",
+      "confirmGraph": "Confirm/update chart",
+      "confirmReadings": "Confirm/update plate readings",
+      "confirmSubmit": "Confirm submission",
+      "context": "Research context",
+      "contextCopy": "A patient’s wound infection has not clearly improved after initial antibiotic（抗生素） treatment. Laboratory testing identifies methicillin-resistant Staphylococcus aureus (MRSA)（耐甲氧西林金黃葡萄球菌）. As a researcher, investigate how samples X, Y and Z affect visible growth of these bacteria in a virtual laboratory.",
+      "contextRemark": "What is methicillin-resistant Staphylococcus aureus（耐甲氧西林金黃葡萄球菌）?",
+      "controlBaseline": "Provide an antibiotic（抗生素）-free comparison to help assess whether clear-zone（清晰區） formation is associated with the antibiotic（抗生素） sample.",
+      "controlHeading": "The investigation control",
+      "controlHint": "(Hint: how does the control differ from the experimental group?)",
+      "controlIncrease": "Increase the amount of sample in the X, Y and Z discs to increase the accuracy（準確度） of the experimental results.",
+      "controlPlan": "If you want to find out whether antibiotics（抗生素） affect bacterial growth, how would you design a control group?",
+      "controlPurpose": "When comparing the clear zones（清晰區） around C (control) and X, Y and Z, what is the main role of C?",
+      "controlPurposeHint": "(Hint: The control group provides a baseline for comparison. It helps check whether changes in the experiment are caused by the independent variable rather than other external factors. Therefore, the control group does not receive the treatment being tested.)",
+      "controlSame": "Ensure that all discs have clear zones（清晰區） of the same diameter.",
+      "controlTreatment": "Identify the best antibiotic（抗生素） for a patient.",
+      "counts": "Independent tests",
+      "coverage": "Coverage overlay",
+      "coverageNote": "Virtual spreading coverage overlay; it does not represent visible bacterial growth.",
+      "crossMarked": "Cross drawn",
+      "cv": "Controlled variables",
+      "cvHint": "The factors kept the same",
+      "demo": "Enter demonstration",
+      "demoNote": "Teacher demonstration · excluded from student records and scoring",
+      "design": "Draw and label your plates",
+      "designDescription": "Setup labels / written design",
+      "designDescriptionPH": "Add labels to your drawing, or give a complete written description of your plates as an alternative to drawing.",
+      "designNote": "Use the materials below as a reference. Label X, Y, Z and C (control), considering spacing between discs and from the plate edge. The beaker of alcohol and alcohol lamp are used to sterilise（滅菌／消毒） forceps, reducing contamination when picking up and placing discs.",
+      "designRequired": "Draw, upload an image or write your setup design, then click “Save setup design”.",
+      "designSaveRequired": "Click “Save setup design” before continuing.",
+      "designSaved": "Setup saved.",
+      "designStep1": "01 · Hypothesis builder",
+      "designStep2": "02 · Fair test",
+      "designStep3": "03 · Experimental assumptions",
+      "designStep4": "04 · Control design",
+      "designStep5": "05 · Experiment setup design",
+      "diameter": "Total clear-zone（清晰區） diameter",
+      "diameterCount": "The exact number of bacteria remaining on the plate.",
+      "diameterDose": "The antibiotic（抗生素） dose a patient should receive.",
+      "diameterExtent": "The extent of the area with no visible bacterial growth under these conditions; diffusion and other factors also affect the diameter.",
+      "diameterTreatment": "Its effectiveness in patients; the largest diameter identifies the best treatment.",
+      "discTrayLabel": "Sample and control discs",
+      "disc_not_held": "Sterilise（滅菌／消毒） the forceps and pick up the matching disc first.",
+      "drawingHint": "You do not need to draw every detail carefully. A simple drawing with clear labels is enough.",
+      "duplicate_label": "Use a different label in each area: X, Y, Z and C once each.",
+      "dv": "Dependent variable",
+      "dvHint": "The outcome you observe/measure",
+      "edge": "The disc is near the edge, which could make measurement difficult. Please reposition it.",
+      "effectiveAll": "X, Y and Z",
+      "effectiveNone": "No samples",
+      "effectiveSamples": "Samples that effectively inhibit（抑制） MRSA（耐甲氧西林金黃葡萄球菌） growth",
+      "email": "Email address",
+      "emailPH": "e.g. student@school.edu.hk",
+      "emptyRecords": "No records yet.",
+      "endpoint": "Common observation endpoint · fixed simulated result",
+      "enter": "Enter laboratory →",
+      "equipmentAlcohol": "Beaker of alcohol",
+      "equipmentBacteria": "Diluted（已稀釋的） bacterial suspension（細菌懸液）",
+      "equipmentDiscs": "Sample and control disc set",
+      "equipmentDiscsNote": "(C = control)",
+      "equipmentDropper": "Dropper",
+      "equipmentIncubator": "Incubator（培養箱）",
+      "equipmentLamp": "Alcohol lamp",
+      "equipmentMarker": "Marker",
+      "equipmentPlate": "Agar plate（瓊脂板）",
+      "equipmentPlateNote": "(contains nutrients needed for bacterial growth)",
+      "equipmentRuler": "Ruler",
+      "equipmentSpreader": "Sterile（無菌的） spreader（塗布器）",
+      "equipmentTweezers": "Forceps",
+      "eraser": "Eraser",
+      "experimentComplete": "Incubation（培養） is complete. Select a plate to observe and measure.",
+      "experimentResults": "Your experimental results:",
+      "exportExcel": "Reload class records and export Excel",
+      "exportLocal": "Export this device’s Excel (not the class)",
+      "extension": "Optional extension · Disc content",
+      "extensionAnalysis": "What do these simulated results support? What are the limits?",
+      "extensionLimit": "Discuss zone size in this model only; do not turn it into a patient dose recommendation.",
+      "extensionPrediction": "What do you predict will happen to the total zone diameter as the disc content of the same sample increases?",
+      "extensionQuestion": "Would low, medium and high preset disc contents of the same sample change zone size?",
+      "extensionSkip": "You may skip it before starting; it does not block the main inquiry.",
+      "extensionStart": "Start optional extension",
+      "eyebrow": "IBL VIRTUAL LAB · DISEASE RESEARCH TEAM",
+      "fact1": "Antibiotics（抗生素） can kill bacteria or inhibit（抑制） their growth. They are not needed for every illness.",
+      "fact2": "Bacteria and viruses differ. Antibiotics（抗生素） do not treat colds or flu caused by viruses.",
+      "fact3": "Individual bacteria are usually too small to see. Growth of many bacteria can form visible colonies（菌落） or a lawn.",
+      "fact4": "MRSA（耐甲氧西林金黃葡萄球菌） resists methicillin（甲氧西林） and most related beta-lactam antibiotics（抗生素）. This does not mean it resists every antibiotic（抗生素）.",
+      "fairComparison": "How would you keep the comparison fair?",
+      "flipPlate": "Flip agar plate（瓊脂板）",
+      "footer": "Ask questions through observation. Build explanations through evidence.",
+      "forcepsAlcohol": "Alcohol step complete. Use the lamp to finish sterilisation（滅菌／消毒）.",
+      "forcepsDirty": "Forceps need sterilisation（滅菌／消毒） before each disc is picked up.",
+      "forcepsHolding": "The forceps hold a disc. Place it at the matching labelled centre.",
+      "forcepsReady": "Sterilisation（滅菌／消毒） complete. Pick up one disc.",
+      "forcepsTools": "Forceps and sterilisation（滅菌／消毒） tools",
+      "forceps_not_sterile": "Use the alcohol beaker and lamp before picking up each disc.",
+      "fungusRemark": "(fungus)",
+      "genericPH": "Write your ideas.",
+      "graph": "Build a bar chart from your means",
+      "graphHint": "Click or touch to set a bar height, or type it precisely. Moving the pointer only shows coordinates; confirm to save the chart.",
+      "graphLabel": "Student bar chart; click to set heights",
+      "graphSaved": "Chart confirmed.",
+      "graphX": "Sample category",
+      "graphY": "Mean total clear zone（清晰區） diameter (mm)",
+      "high": "High",
+      "hint1": "Record your initial observations. Let your questions guide the study.",
+      "hint2": "Make a prediction and consider the variables, assumptions and control before starting the experiment.",
+      "hint3": "Follow the steps on the right to prepare three agar plates（瓊脂板）, incubate（培養） them together, then observe and measure.",
+      "hint4": "Use your observations and measurements to answer the multiple-choice questions and draw a conclusion.",
+      "history": "The history of antibiotic（抗生素） discovery—an unexpected observation",
+      "historyCaption": "Note: Fleming’s historical work involved staphylococci, not MRSA（耐甲氧西林金黃葡萄球菌）; MRSA（耐甲氧西林金黃葡萄球菌） was first formally reported in 1961.",
+      "historyCopy": "In 1928, Fleming noticed contamination by Penicillium（青黴菌） on plates growing staphylococci, with reduced bacterial growth nearby. He investigated an antibacterial substance produced by this fungus. Later, Florey, Chain and their team advanced the therapeutic use of penicillin（青黴素）, an antibiotic（抗生素）.",
+      "historyIllustrationAlt": "An illustration of the historical context showing Penicillium（青黴菌） (a fungus) and bacterial colonies（細菌菌落）.",
+      "historyIllustrationCaption": "An illustration based on historical records, not a photograph. Fleming’s historical work involved staphylococci, not MRSA（耐甲氧西林金黃葡萄球菌）; MRSA（耐甲氧西林金黃葡萄球菌） was first formally reported in 1961.",
+      "historyPhotoAlt": "Plate photograph showing Penicillium（青黴菌） (a fungus), a nearby clear zone（清晰區） with no visible bacterial growth, and bacterial colonies（細菌菌落）.",
+      "historySourceLabel": "Image source:",
+      "hypothesis": "Hypothesis builder",
+      "hypothesisReason": "Your reason (Hint: antibiotics（抗生素） can diffuse through the agar plate（瓊脂板）.)",
+      "imageError": "The image could not be read. Use a valid PNG, JPEG or WebP image (up to 8 MB).",
+      "importNote": "Only compatible records for this module can be imported; VL2 transpiration records are not mixed into VL4.",
+      "importRecords": "Import VL4/compatible legacy JSON records",
+      "incubate": "Start simulated incubation（培養）",
+      "incubateAll": "Incubate（培養） all three plates",
+      "incubating": "Teaching incubation（培養） progress",
+      "incubation24": "Set 24 hours",
+      "incubation30": "Set 30°C",
+      "incubationReady": "All three agar plates（瓊脂板） are ready.",
+      "incubatorLabel": "Incubator（培養箱） settings",
+      "incubator_not_ready": "Prepare all three plates and select 30°C and 24 hours first.",
+      "intro": "Start with an unexpected observation. Design a fair comparison, prepare virtual plates, and build an explanation from your own measurements.",
+      "invalidNumber": "Enter a valid value from 0–40 mm.",
+      "invalid_label": "Choose X, Y, Z or C as the area label.",
+      "iv": "Independent variable",
+      "ivHint": "The factor you change",
+      "labelQuadrant": "Area label",
+      "largestNASuffix": "(no clear zones（清晰區） predicted).",
+      "largestPrediction": "Which sample do you predict will have the largest clear zone（清晰區） around its disc?",
+      "largestPrefix": "Among these,",
+      "largestSuffix": "will have the largest clear zone（清晰區） around its disc.",
+      "learning": "Learning points",
+      "learningReview": "Learning review notes",
+      "limited": "Inhibition（抑制） of visible growth under the model conditions",
+      "limitsQuestion": "What can zone size support in this study?",
+      "localSaved": "Answers are saved in this browser first. Do not clear site data before confirming a backup.",
+      "locked": "This action is locked.",
+      "loginIntro": "Enter your learner details. Each login creates a separate inquiry.",
+      "loginNote": "Reloading returns to a blank login. Answers are saved locally first. “Synced” appears only after a save acknowledgement. The teacher email opens the teacher interface; class records require separate authentication.",
+      "loginTitle": "Start your research mission",
+      "low": "Low",
+      "manualRepeat": "Or prepare it manually again. Each plate has its own result and record; remeasuring one zone is not an independent experiment.",
+      "manual_first_plate": "Prepare plate 1 manually. Assistance is available for plates 2 and 3.",
+      "matching_quadrant_required": "Place the disc at the centre of the area with the matching label.",
+      "materialBacteria": "1 diluted（已稀釋的） bacterial suspension（細菌懸液）: release at the centre with the dropper.",
+      "materialDiscs": "X, Y, Z discs and a control: samples are carried on discs; the control has the same carrier alone.",
+      "materialDropper": "1 dropper: collect and release the suspension（懸液）.",
+      "materialFlame": "1 alcohol lamp: used with the alcohol beaker for virtual forceps sterilisation（滅菌／消毒）.",
+      "materialIncubator": "1 incubator（培養箱）: use the 30°C and 24-hour settings for the three plates together.",
+      "materialMarker": "1 marker: divide and label the bottom of the agar plate（瓊脂板）.",
+      "materialPlate": "3 agar plates（瓊脂板）: contain nutrients needed for bacterial growth.",
+      "materialRuler": "Virtual ruler: measures the total zone diameter.",
+      "materialSpreader": "Sterile（無菌的） spreader（塗布器）: distributes simulated bacteria.",
+      "materialTweezers": "4 forceps: use the alcohol beaker and lamp to sterilise（滅菌／消毒） them before picking up each disc.",
+      "materials": "Materials and their purpose",
+      "mean": "Mean total diameter calculation",
+      "meanLabelC": "Mean for C (control) (mm)",
+      "meanLabelX": "Mean for X (mm)",
+      "meanLabelY": "Mean for Y (mm)",
+      "meanLabelZ": "Mean for Z (mm)",
+      "measureDefinition": "Measure and record the total clear-zone（清晰區） diameter (mm).",
+      "measureSelect": "Select the sample to measure",
+      "measuring": "Measure and record",
+      "medium": "Medium",
+      "methicillinRemark": "The name of an antibiotic（抗生素） formerly used to treat some bacterial infections.",
+      "methicillinTerm": "Methicillin（甲氧西林）",
+      "minutes": "minutes",
+      "mission": "Compare X, Y and Z with C (control). Give the research team a report supported by evidence.",
+      "module": "S4 Biology · Module 4",
+      "mould": "Penicillium（青黴菌） (fungus)",
+      "mouldLabel": "Penicillium（青黴菌）",
+      "mrsaRemark": "Staphylococcus aureus（金黃葡萄球菌） bacteria that resist methicillin（甲氧西林）. MRSA（耐甲氧西林金黃葡萄球菌） does not resist every antibiotic（抗生素）.",
+      "mrsaTerm": "Methicillin-resistant Staphylococcus aureus (MRSA)（耐甲氧西林金黃葡萄球菌）",
+      "name": "Name",
+      "namePH": "e.g. Chan Siu Ming",
+      "neutralExample": "Neutral measurement example (unrelated to X, Y or Z): example Q has a 14 mm total zone diameter, including the 6 mm disc.",
+      "newInquiry": "Start a new inquiry",
+      "next": "Continue →",
+      "no": "No",
+      "none": "None",
+      "notApplicable": "Not applicable",
+      "observation": "Your initial observations",
+      "observationPH": "Describe what you can see, without explaining the cause yet.",
+      "password": "Teacher cloud password (current page only)",
+      "passwordPH": "Password set in private Script Properties",
+      "pdf": "Print/save learning record PDF",
+      "pencil": "Pencil",
+      "phase1": "Explore the context",
+      "phase2": "Design your investigation",
+      "phase3": "Experiment and record",
+      "phase4": "Analyse and conclude",
+      "placeDiscs": "Place discs with virtual forceps",
+      "placeHint": "Select a sample, then choose a position on the plate. Select it again to move it. Assisted placement provides measurable spacing.",
+      "plannedReplicateReason": "Why would you plan it this way?",
+      "plannedReplicates": "There are 4 test samples: X, Y, Z and the control. How many tests do you think each sample needs in total? (Include the first test.)",
+      "plate": "Plate",
+      "plateBottom": "Bottom",
+      "plateLabel": "Plate label",
+      "plateLabelAria": "Interactive virtual plate with touch and assisted controls",
+      "plateTop": "Top",
+      "prediction": "Which samples do you predict will have an area without visible bacterial growth around the disc?",
+      "predictionAll": "X, Y and Z",
+      "predictionNone": "none of the",
+      "predictionNote": "Record your predictions of clear-zone（清晰區） formation and size; a reasonable prediction remains useful even if the results do not support it.",
+      "predictionPrefix": "If discs containing antibiotic（抗生素） samples X, Y and Z are placed on an agar plate（瓊脂板）,",
+      "predictionSome": "some samples",
+      "predictionSuffix": "discs will have a clear zone（清晰區） (a region with no visible bacterial growth) around them.",
+      "predictionX": "X",
+      "predictionXY": "X and Y",
+      "predictionXZ": "X and Z",
+      "predictionY": "Y",
+      "predictionYZ": "Y and Z",
+      "predictionZ": "Z",
+      "preparationLocked": "This plate is already prepared.",
+      "previous_plate_not_ready": "Cover and invert the preceding plate first.",
+      "procedure1": "Flip the agar plate（瓊脂板）, divide its bottom into four areas with a cross, and label X, Y, Z and C.",
+      "procedure2": "Flip the agar plate（瓊脂板） back; use the dropper to collect diluted（已稀釋的） bacterial suspension（細菌懸液） and release it at the centre.",
+      "procedure3": "Move the sterile（無菌的） spreader（塗布器） up and down and rotate the agar plate（瓊脂板） to distribute the bacteria evenly.",
+      "procedure4": "Select the forceps and use the alcohol beaker followed by the lamp to sterilise（滅菌／消毒） them. Pick up a disc and place it at its labelled centre. Repeat sterilisation（滅菌／消毒） before picking up every disc.",
+      "procedure5": "Cover the agar plate（瓊脂板） and place it upside down.",
+      "procedure6": "Repeat steps 1–5 for agar plates（瓊脂板） 2 and 3.",
+      "procedure7": "When all three plates are ready, place them in the incubator（培養箱）, select 30°C and 24 hours, and start incubation（培養）.",
+      "procedure8": "For plates 2 and 3, you may choose to complete steps 1–5 automatically.",
+      "procedureHeading": "Procedure",
+      "procedureHint1Flip": "Select “Flip agar plate（瓊脂板）” to show its bottom.",
+      "procedureHint1Labels": "Label the four areas with X, Y, Z and C. Use each label once.",
+      "procedureHint1Marker": "Select the marker, then click the agar plate（瓊脂板） to draw a cross.",
+      "procedureHint2Bottle": "Select the suspension（懸液） bottle to load the dropper.",
+      "procedureHint2Dropper": "Select the dropper to collect the bacterial suspension（細菌懸液）.",
+      "procedureHint2Flip": "The bottom labels are complete. Flip the agar plate（瓊脂板） back to its top.",
+      "procedureHint2Release": "Move the loaded dropper to the centre of the agar plate（瓊脂板） and click to release the suspension（懸液）.",
+      "procedureHint3": "Select the spreader（塗布器） and drag up and down. Rotate the plate and repeat until coverage is uniform.",
+      "procedureHint4Alcohol": "Select the alcohol beaker to dip the forceps.",
+      "procedureHint4Disc": "Use the forceps to pick up a sample or control disc that has not been placed.",
+      "procedureHint4Lamp": "Select the alcohol lamp to complete sterilisation（滅菌／消毒）.",
+      "procedureHint4Place": "Place the held disc at the centre of the area with the matching label.",
+      "procedureHint4Tweezers": "Select the forceps, then use the alcohol beaker and lamp to sterilise（滅菌／消毒） them.",
+      "procedureHint5": "The discs are in place. Cover and invert the agar plate（瓊脂板）.",
+      "procedureHint6": "This plate is ready. Select the next plate, or use its automatic preparation button.",
+      "procedureHint7Duration": "Select an incubation（培養） time of 24 hours.",
+      "procedureHint7Incubate": "The settings are complete. Start incubation（培養） for all three plates.",
+      "procedureHint7Temperature": "All three plates are ready. Select 30°C.",
+      "progress": "Progress",
+      "progressNav": "Inquiry progress",
+      "question": "Main research question",
+      "rank1": "Rank 1",
+      "rank2": "Rank 2",
+      "rank3": "Rank 3",
+      "rank4": "Rank 4",
+      "readingSaved": "Readings confirmed. Measure and record the other agar plates（瓊脂板）, if any remain.",
+      "readingsConfirmRequired": "Your readings are entered. Click “Confirm/update plate readings” before continuing.",
+      "readonly": "Inquiry answers are locked.",
+      "readyPlate": "Ready",
+      "reason": "Your reason",
+      "reasonPH": "Write down your thinking; a prediction does not have to match the outcome.",
+      "recordId": "Inquiry ID",
+      "reflection": "Learning reflection",
+      "reflectionDone": "Reflection is locked. You can print or save a PDF.",
+      "reflectionPending": "PDF is available after reflection submission.",
+      "reflectionQuestion": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite readings to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+      "reflectionRequired": "Complete your reflection, then click “Save and submit reflection”.",
+      "refresh": "Authenticate and load all cloud records",
+      "repeatConsistency": "To reduce random error and assess the reproducibility（可重複性） of the results and the reliability（可靠性） of the data.",
+      "repeatContent": "To make biological samples rapidly mutate and develop entirely new traits through repeated procedures.",
+      "repeatGuarantee": "To ensure that every experiment produces exactly identical absolute values, with no variation whatsoever.",
+      "repeatNote": "Each independent plate has X, Y, Z and the control. One more plate gives one more observation per sample. A higher number does not automatically mean a better plan.",
+      "repeatPlan": "Your original research plan",
+      "repeatPurpose": "Why do experiments need to be repeated?",
+      "repeatRemeasure": "To prolong the experiment so scientists have more to describe when writing their reports.",
+      "repeatVariation": "If repeated results differ greatly, what should you do, and why?",
+      "required": "Please complete every required answer. You do not need to match a reference answer.",
+      "researchQuestion": "Under the stated simulation conditions, how do X, Y and Z affect visible growth of these MRSA（耐甲氧西林金黃葡萄球菌） bacteria?",
+      "resistanceBacteria": "How bacteria respond to a medicine",
+      "resistanceBody": "A person’s body getting used to a medicine",
+      "resistanceQuestion": "What does “antibiotic resistance（抗生素抗性／抗藥性）” describe?",
+      "resistantRemark": "The bacteria resist a particular antibiotic（抗生素）, so it does not effectively kill them or inhibit（抑制） their growth.",
+      "resistantTerm": "Resistant（具抗藥性的）",
+      "resultConclusion": "Draw a conclusion from your results:",
+      "retry": "Retry sync",
+      "rotate": "Rotate plate",
+      "rotateHint": "Drag the curved handle to rotate the agar plate（瓊脂板）, then spread up and down. You can also rotate with the ← / → keys.",
+      "rotationInstruction": "(Drag to rotate the agar plate（瓊脂板）)",
+      "ruler": "Drag the ruler to measure; ticks are 1 mm. Near a clear-zone（清晰區） diameter it holds that height while remaining free to move left and right. Pull farther up or down to release.",
+      "rulerCenter": "Move ruler to selected disc centre",
+      "rulerMove": "Move measurement line",
+      "sample": "Sample",
+      "save": "Save",
+      "saveDesign": "Save setup design",
+      "savePlan": "Confirm design and start experiment →",
+      "saveReflection": "Save and submit reflection",
+      "sealPlate": "Cover and invert agar plate（瓊脂板）",
+      "skills": "Observe · Design · Measure · Infer",
+      "skip": "Skip to inquiry content",
+      "some": "Some",
+      "sourceNote": "This model uses no clinical susceptibility（對抗生素的敏感性） breakpoints and cannot be generalised to all MRSA（耐甲氧西林金黃葡萄球菌）.",
+      "spreader": "Select spreader（塗布器）",
+      "standardized": "Repeat standardised preparation on a new plate",
+      "stateAwaiting": "Not submitted",
+      "stateComplete": "Reflection submitted",
+      "stateReflection": "Reflection pending",
+      "storageError": "Local saving failed (storage may be full or damaged). Keep this page and its site data, then retry syncing.",
+      "submit": "Submit inquiry",
+      "submitNote": "After submission, inquiry answers cannot be edited. Then read the learning points, submit your reflection, and print or save a PDF.",
+      "submitTitle": "Save and lock this inquiry?",
+      "submitted": "Inquiry submitted",
+      "subtitle": "Which samples inhibit（抑制） bacterial growth?",
+      "task": "Your research mission",
+      "teacher": "Teacher dashboard",
+      "teacherBack": "Return to teacher dashboard",
+      "teacherIntro": "Cloud class records require teacher password authentication. Local records represent this device only.",
+      "time": "Active time",
+      "title": "Antibiotic（抗生素） investigation",
+      "toolAlcohol": "Alcohol beaker",
+      "toolBottle": "Diluted（已稀釋的） bacterial suspension（細菌懸液）",
+      "toolDropper": "Dropper",
+      "toolEmpty": "Select the tool needed for the current step.",
+      "toolLamp": "Alcohol lamp",
+      "toolLoadedDisc": "Forceps holding a disc",
+      "toolLoadedDropper": "Loaded dropper",
+      "toolMarker": "Marker",
+      "toolSpreader": "Sterile（無菌的） spreader（塗布器）",
+      "toolTweezers": "Forceps",
+      "toolboxLabel": "Laboratory tools",
+      "uneven": "Some areas may not be covered evenly. How could that affect interpretation? You can spread again.",
+      "uniform": "Coverage is fairly uniform. Visible growth appears only after simulated incubation（培養）.",
+      "updated": "Updated",
+      "upload": "Upload photo",
+      "vDisc": "Disc size",
+      "vDistribution": "Initial bacterial distribution",
+      "vMedium": "Composition of the agar plate（瓊脂板）",
+      "vObservation": "Shared simulation and observation conditions",
+      "vPreparation": "Preset sample preparation",
+      "vSample": "Sample in the disc",
+      "vStrain": "Type of bacteria used",
+      "vZone": "Visible clear zone（清晰區） and its total diameter",
+      "variableNote": "Choose the suitable factors in each category. Save your thinking now and view reference feedback after submission.",
+      "variables": "Identify the variables",
+      "variationAverage": "Calculate the mean immediately because averaging removes all procedural problems.",
+      "variationCheck": "First check spreading, disc positions and plate conditions, then repeat as needed to identify causes of variation and improve the comparison.",
+      "variationDelete": "Delete results that disagree with the original hypothesis so the results match.",
+      "variationMaximum": "Keep only the largest reading because it best represents inhibition（抑制）.",
+      "verticalSpreadHint": "Spread vertically and rotate until the entire surface is covered.",
+      "view": "View",
+      "viewExtension": "Save prediction and observe extension results",
+      "viruses": "Viral infections",
+      "visible": "Visible zone outside the disc?",
+      "visibleRequired": "First select whether there is a visible zone outside the disc (Yes/No).",
+      "wrong_step": "Complete the current step first.",
+      "yes": "Yes",
+      "zoneDeath": "All bacteria in the zone have died.",
+      "zoneDiameterMeaning": "What does the diameter of a clear zone（清晰區） represent?",
+      "zoneInhibition": "Under these test conditions, there is no visible bacterial growth in the zone, indicating inhibition（抑制）.",
+      "zoneMeaning": "What does the appearance of a clear zone（清晰區） indicate?",
+      "zoneResistance": "Bacteria in the zone resist every antibiotic（抗生素）.",
+      "zoneViruses": "The sample has eliminated viruses on the agar plate（瓊脂板）.",
+      "zoom": "Magnify measurement view",
+      "zoomOut": "Show whole plate"
+    },
+    "labels": {
+      "title": [
+        "紙本對照組工作紙",
+        "Paper control-group worksheet"
+      ],
+      "A": [
+        "情境與原始探究設計",
+        "Context and original inquiry design"
+      ],
+      "B": [
+        "實驗資料、分析與結論",
+        "Experimental data, analysis and conclusion"
+      ],
+      "C": [
+        "學習重點及反思",
+        "Learning points and reflection"
+      ],
+      "D": [
+        "教師指引、參考答案及評分準則",
+        "Teacher guide, reference answers and scoring criteria"
+      ],
+      "all": [
+        "完整教師列印套裝",
+        "Complete teacher print pack"
+      ],
+      "identity": [
+        "姓名：________________　班別：________　學號：________",
+        "Name: __________________　Class: ________　No.: ________"
+      ],
+      "circle": [
+        "每組括號選項圈選一項；保留原有作答。",
+        "Circle one option in each set of brackets. Preserve your original responses."
+      ],
+      "multi": [
+        "可選多於一項，請在方格內加上 ✓。",
+        "Tick all applicable boxes; more than one option may be selected."
+      ],
+      "original": [
+        "保存 A 冊的原始設計後，才派發 B 冊；不要改寫原始設計。",
+        "Preserve the original design in A before distributing B. Do not overwrite it."
+      ],
+      "fixed": [
+        "本冊提供三塊獨立瓊脂板的固定教學模型圖像及原始直徑資料；觀察判讀、平均值和結論由你完成。",
+        "This booklet provides fixed teaching-model images and raw diameter data for three independent plates. Complete the observations, means and conclusions yourself."
+      ],
+      "raw": [
+        "原始直徑資料（mm）",
+        "Raw diameter data (mm)"
+      ],
+      "revision": [
+        "修訂紀錄（如有，保留首次作答可讀；此欄不是新題目）",
+        "Revisions, if any (keep the first response readable; this is not an additional question)"
+      ],
+      "learningGate": [
+        "原探究答案已固定保存後，才派發本冊。",
+        "Distribute this booklet only after the original inquiry answers have been fixed and preserved."
+      ],
+      "teacher": [
+        "只供教師，切勿派發給學生",
+        "Teacher only: do not distribute to students"
+      ],
+      "guide": [
+        "派發及研究安排",
+        "Distribution and research administration"
+      ],
+      "answers": [
+        "參考答案",
+        "Reference answers"
+      ],
+      "criteria": [
+        "評分準則（現行 VL4 初稿）",
+        "Scoring criteria (current VL4 draft)"
+      ],
+      "draft": [
+        "評分準則未經效度或跨 VL 校準驗證；不可把速度、點擊、完成率或預測是否猜中當作能力。",
+        "These draft criteria have not been validated or calibrated across VLs. Speed, clicks, completion rate or a prediction matching the outcome are not measures of ability."
+      ],
+      "rawNote": [
+        "圖像與原始直徑由目前 VL4 同一結果模型產生；沒有增加菌落數、藥物濃度或患者劑量。原始數據不是平均值或結論答案。",
+        "Images and raw diameters are generated by the current VL4 result model. No colony counts, drug concentrations or patient doses have been added. Raw data are not mean or conclusion answers."
+      ],
+      "columns": [
+        [
+          "項目",
+          "分數",
+          "方式",
+          "滿分／判準",
+          "部分分",
+          "零分／限制"
+        ],
+        [
+          "Item",
+          "Marks",
+          "Method",
+          "Full-credit criterion",
+          "Partial credit",
+          "Zero credit / limits"
+        ]
+      ],
+      "steps": [
+        [
+          "先派 A，保存原始假說、理由、變量、實驗前提、對照設計、繪圖及重複安排。學生保留可讀副本，才派 B。",
+          "Distribute A first. Preserve the original hypothesis, reasons, variables, assumptions, control, drawing and repeat plan. Keep a readable student copy before distributing B."
+        ],
+        [
+          "B 使用三塊獨立瓊脂板的共同 30°C、24 小時教學條件。學生依圖及原始資料自行判讀、記錄、算平均值及完成六題分析。",
+          "B uses three independent plates under shared teaching conditions of 30°C and 24 hours. Students interpret the images and raw data, record observations, calculate means and complete the six analysis items."
+        ],
+        [
+          "收取或固定 A、B 的原探究答案後才派 C。反思需參閱學生自己的實驗結果；C 不列印參考結論或對錯。",
+          "Collect or fix the original answers in A and B before distributing C. Reflection uses the student’s own experimental results. C prints no reference conclusion or correctness marks."
+        ],
+        [
+          "D 及完整套裝只供教師；完整套裝不可一次整套派學生。相同語言、可用時間及提示安排應在兩組保持一致。",
+          "D and the complete pack are for teachers only. Do not distribute the entire pack to students at once. Keep language, available time and prompts consistent across groups."
+        ],
+        [
+          "本功能不讀取或建立學生紀錄，不改答案、繪圖、示範、計時、事件、雲端或 Excel。紙本手寫資料由研究者另行保存和評分。",
+          "This feature does not read or create student records or change answers, drawings, demonstrations, timing, events, cloud records or Excel. Researchers separately preserve and score handwritten paper data."
+        ],
+        [
+          "依已核對的 proposal §4.1、§4.3.2，兩組在正式授課前完成四週活動，使用相同情境、概念及題目；紙本組以靜態圖及預製資料表代替互動模擬。本冊對應 VL4 抗生素活動。",
+          "The supplied proposal, sections 4.1 and 4.3.2, specifies four weekly modules before formal teaching, with identical scenarios, concepts and prompts. Paper replaces interactive simulation with static diagrams and pre-rendered data tables. This booklet corresponds to VL4 antibiotics."
+        ],
+        [
+          "紙本用固定種子，VL 個別探究使用獨立種子；參數與結果模型相同，但每名學生的原始數值未必完全相同。研究者須核對這種資料變異是否符合研究設計。",
+          "Paper uses fixed seeds; individual VL inquiries use independent seeds. The parameters and result model are the same, but individual raw values may differ. The researcher must confirm that this variation fits the study design."
+        ],
+        [
+          "紙本不能測得虛擬工具操作能力；請核對跨組 SPS 題目覆蓋、23 分配重、評分者一致性及正式 SPS／概念前後測。正式使用前試印灰階 B 並核對圖文可讀性。",
+          "Paper cannot measure virtual tool operation. Review cross-group SPS coverage, the 23-mark weighting, inter-rater agreement and separate formal SPS/concept pre/post tests. Trial-print B in greyscale and check image and text readability before use."
+        ],
+        [
+          "proposal §4.2 指定兩組各 20 人，混合 X1／X2：VL 組 11／9，紙本組 12／8。§4.3.1–2 的 10 題 SPSAI、4 題 CKT 在第 0 週及第 4 週後施測，後測與前測相同；本工作紙不取代這些正式工具，也不聲稱已驗證其效度。",
+          "The proposal specifies 20 students per group, combining X1/X2: 11/9 in VL and 12/8 in paper. The separate 10-item SPSAI and 4-item CKT are administered in week 0 and after week 4, using the same pre/post tests. This worksheet does not replace those instruments or establish their validity."
+        ]
+      ]
+    },
+    "inquiryFields": [
+      "observation",
+      "prediction",
+      "largestPrediction",
+      "reason",
+      "iv",
+      "dv",
+      "cv",
+      "assumptions",
+      "controlPlan",
+      "designDescription",
+      "plannedReplicates",
+      "plannedReplicateReason"
+    ],
+    "analysisFields": [
+      "zoneMeaning",
+      "zoneDiameterMeaning",
+      "repeatPurpose",
+      "repeatVariation",
+      "controlPurpose",
+      "effectiveSamples",
+      "rank1",
+      "rank2",
+      "rank3",
+      "rank4"
+    ],
+    "variables": [
+      {
+        "id": "disc",
+        "key": "vDisc",
+        "text": "Disc size"
+      },
+      {
+        "id": "sample",
+        "key": "vSample",
+        "text": "Sample in the disc"
+      },
+      {
+        "id": "medium",
+        "key": "vMedium",
+        "text": "Composition of the agar plate（瓊脂板）"
+      },
+      {
+        "id": "zone",
+        "key": "vZone",
+        "text": "Visible clear zone（清晰區） and its total diameter"
+      },
+      {
+        "id": "strain",
+        "key": "vStrain",
+        "text": "Type of bacteria used"
+      },
+      {
+        "id": "distribution",
+        "key": "vDistribution",
+        "text": "Initial bacterial distribution"
+      },
+      {
+        "id": "preparation",
+        "key": "vPreparation",
+        "text": "Preset sample preparation"
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "distribution",
+        "key": "assumptionDistribution",
+        "text": "Bacteria are initially distributed evenly on each agar plate（瓊脂板）."
+      },
+      {
+        "id": "sterile",
+        "key": "assumptionSterile",
+        "text": "Equipment does not introduce contamination."
+      },
+      {
+        "id": "sameConditions",
+        "key": "assumptionSame",
+        "text": "All plates use the same simulated observation conditions."
+      },
+      {
+        "id": "death",
+        "key": "assumptionDeath",
+        "text": "If no colonies（菌落） form near a disc, this means all bacteria at that location have died."
+      }
+    ],
+    "prediction": [
+      {
+        "id": "X",
+        "key": "predictionX",
+        "text": "X"
+      },
+      {
+        "id": "Y",
+        "key": "predictionY",
+        "text": "Y"
+      },
+      {
+        "id": "Z",
+        "key": "predictionZ",
+        "text": "Z"
+      },
+      {
+        "id": "X_Y",
+        "key": "predictionXY",
+        "text": "X and Y"
+      },
+      {
+        "id": "X_Z",
+        "key": "predictionXZ",
+        "text": "X and Z"
+      },
+      {
+        "id": "Y_Z",
+        "key": "predictionYZ",
+        "text": "Y and Z"
+      },
+      {
+        "id": "all",
+        "key": "predictionAll",
+        "text": "X, Y and Z"
+      },
+      {
+        "id": "none",
+        "key": "predictionNone",
+        "text": "none of the"
+      }
+    ],
+    "repeats": [
+      {
+        "id": "1",
+        "key": "1",
+        "text": "1"
+      },
+      {
+        "id": "2",
+        "key": "2",
+        "text": "2"
+      },
+      {
+        "id": "3",
+        "key": "3",
+        "text": "3"
+      },
+      {
+        "id": "4",
+        "key": "4",
+        "text": "4"
+      },
+      {
+        "id": "5",
+        "key": "5",
+        "text": "5"
+      },
+      {
+        "id": "6",
+        "key": "6",
+        "text": "6"
+      },
+      {
+        "id": "7",
+        "key": "7",
+        "text": "7"
+      },
+      {
+        "id": "8",
+        "key": "8",
+        "text": "8"
+      },
+      {
+        "id": "9",
+        "key": "9",
+        "text": "9"
+      },
+      {
+        "id": "10",
+        "key": "10",
+        "text": "10"
+      },
+      {
+        "id": "11",
+        "key": "11",
+        "text": "11"
+      },
+      {
+        "id": "12",
+        "key": "12",
+        "text": "12"
+      },
+      {
+        "id": "13",
+        "key": "13",
+        "text": "13"
+      },
+      {
+        "id": "14",
+        "key": "14",
+        "text": "14"
+      },
+      {
+        "id": "15",
+        "key": "15",
+        "text": "15"
+      },
+      {
+        "id": "16",
+        "key": "16",
+        "text": "16"
+      },
+      {
+        "id": "17",
+        "key": "17",
+        "text": "17"
+      },
+      {
+        "id": "18",
+        "key": "18",
+        "text": "18"
+      },
+      {
+        "id": "19",
+        "key": "19",
+        "text": "19"
+      },
+      {
+        "id": "20",
+        "key": "20",
+        "text": "20"
+      }
+    ],
+    "effective": [
+      {
+        "id": "X",
+        "key": "predictionX",
+        "text": "X"
+      },
+      {
+        "id": "Y",
+        "key": "predictionY",
+        "text": "Y"
+      },
+      {
+        "id": "Z",
+        "key": "predictionZ",
+        "text": "Z"
+      },
+      {
+        "id": "X_Y",
+        "key": "predictionXY",
+        "text": "X and Y"
+      },
+      {
+        "id": "X_Z",
+        "key": "predictionXZ",
+        "text": "X and Z"
+      },
+      {
+        "id": "Y_Z",
+        "key": "predictionYZ",
+        "text": "Y and Z"
+      },
+      {
+        "id": "all",
+        "key": "effectiveAll",
+        "text": "X, Y and Z"
+      },
+      {
+        "id": "none",
+        "key": "effectiveNone",
+        "text": "No samples"
+      }
+    ],
+    "questions": [
+      {
+        "id": "zoneMeaning",
+        "number": 1,
+        "key": "zoneMeaning",
+        "correct": "inhibition",
+        "options": [
+          [
+            "death",
+            "zoneDeath"
+          ],
+          [
+            "inhibition",
+            "zoneInhibition"
+          ],
+          [
+            "resistance",
+            "zoneResistance"
+          ],
+          [
+            "viruses",
+            "zoneViruses"
+          ]
+        ],
+        "text": "What does the appearance of a clear zone（清晰區） indicate?",
+        "choices": [
+          {
+            "id": "death",
+            "key": "zoneDeath",
+            "text": "All bacteria in the zone have died."
+          },
+          {
+            "id": "inhibition",
+            "key": "zoneInhibition",
+            "text": "Under these test conditions, there is no visible bacterial growth in the zone, indicating inhibition（抑制）."
+          },
+          {
+            "id": "resistance",
+            "key": "zoneResistance",
+            "text": "Bacteria in the zone resist every antibiotic（抗生素）."
+          },
+          {
+            "id": "viruses",
+            "key": "zoneViruses",
+            "text": "The sample has eliminated viruses on the agar plate（瓊脂板）."
+          }
+        ]
+      },
+      {
+        "id": "zoneDiameterMeaning",
+        "number": 2,
+        "key": "zoneDiameterMeaning",
+        "correct": "extent",
+        "options": [
+          [
+            "count",
+            "diameterCount"
+          ],
+          [
+            "treatment",
+            "diameterTreatment"
+          ],
+          [
+            "extent",
+            "diameterExtent"
+          ],
+          [
+            "dose",
+            "diameterDose"
+          ]
+        ],
+        "text": "What does the diameter of a clear zone（清晰區） represent?",
+        "choices": [
+          {
+            "id": "count",
+            "key": "diameterCount",
+            "text": "The exact number of bacteria remaining on the plate."
+          },
+          {
+            "id": "treatment",
+            "key": "diameterTreatment",
+            "text": "Its effectiveness in patients; the largest diameter identifies the best treatment."
+          },
+          {
+            "id": "extent",
+            "key": "diameterExtent",
+            "text": "The extent of the area with no visible bacterial growth under these conditions; diffusion and other factors also affect the diameter."
+          },
+          {
+            "id": "dose",
+            "key": "diameterDose",
+            "text": "The antibiotic（抗生素） dose a patient should receive."
+          }
+        ]
+      },
+      {
+        "id": "repeatPurpose",
+        "number": 4,
+        "key": "repeatPurpose",
+        "correct": "consistency",
+        "options": [
+          [
+            "guarantee",
+            "repeatGuarantee"
+          ],
+          [
+            "remeasure",
+            "repeatRemeasure"
+          ],
+          [
+            "consistency",
+            "repeatConsistency"
+          ],
+          [
+            "content",
+            "repeatContent"
+          ]
+        ],
+        "text": "Why do experiments need to be repeated?",
+        "choices": [
+          {
+            "id": "guarantee",
+            "key": "repeatGuarantee",
+            "text": "To ensure that every experiment produces exactly identical absolute values, with no variation whatsoever."
+          },
+          {
+            "id": "remeasure",
+            "key": "repeatRemeasure",
+            "text": "To prolong the experiment so scientists have more to describe when writing their reports."
+          },
+          {
+            "id": "consistency",
+            "key": "repeatConsistency",
+            "text": "To reduce random error and assess the reproducibility（可重複性） of the results and the reliability（可靠性） of the data."
+          },
+          {
+            "id": "content",
+            "key": "repeatContent",
+            "text": "To make biological samples rapidly mutate and develop entirely new traits through repeated procedures."
+          }
+        ]
+      },
+      {
+        "id": "repeatVariation",
+        "number": 5,
+        "key": "repeatVariation",
+        "correct": "check",
+        "options": [
+          [
+            "delete",
+            "variationDelete"
+          ],
+          [
+            "maximum",
+            "variationMaximum"
+          ],
+          [
+            "average",
+            "variationAverage"
+          ],
+          [
+            "check",
+            "variationCheck"
+          ]
+        ],
+        "text": "If repeated results differ greatly, what should you do, and why?",
+        "choices": [
+          {
+            "id": "delete",
+            "key": "variationDelete",
+            "text": "Delete results that disagree with the original hypothesis so the results match."
+          },
+          {
+            "id": "maximum",
+            "key": "variationMaximum",
+            "text": "Keep only the largest reading because it best represents inhibition（抑制）."
+          },
+          {
+            "id": "average",
+            "key": "variationAverage",
+            "text": "Calculate the mean immediately because averaging removes all procedural problems."
+          },
+          {
+            "id": "check",
+            "key": "variationCheck",
+            "text": "First check spreading, disc positions and plate conditions, then repeat as needed to identify causes of variation and improve the comparison."
+          }
+        ]
+      },
+      {
+        "id": "controlPurpose",
+        "number": 6,
+        "key": "controlPurpose",
+        "correct": "baseline",
+        "options": [
+          [
+            "same",
+            "controlSame"
+          ],
+          [
+            "treatment",
+            "controlTreatment"
+          ],
+          [
+            "baseline",
+            "controlBaseline"
+          ],
+          [
+            "increase",
+            "controlIncrease"
+          ]
+        ],
+        "text": "When comparing the clear zones（清晰區） around C (control) and X, Y and Z, what is the main role of C?",
+        "choices": [
+          {
+            "id": "same",
+            "key": "controlSame",
+            "text": "Ensure that all discs have clear zones（清晰區） of the same diameter."
+          },
+          {
+            "id": "treatment",
+            "key": "controlTreatment",
+            "text": "Identify the best antibiotic（抗生素） for a patient."
+          },
+          {
+            "id": "baseline",
+            "key": "controlBaseline",
+            "text": "Provide an antibiotic（抗生素）-free comparison to help assess whether clear-zone（清晰區） formation is associated with the antibiotic（抗生素） sample."
+          },
+          {
+            "id": "increase",
+            "key": "controlIncrease",
+            "text": "Increase the amount of sample in the X, Y and Z discs to increase the accuracy（準確度） of the experimental results."
+          }
+        ]
+      }
+    ],
+    "equipment": [
+      [
+        "equipmentPlate",
+        3,
+        "<path d=\"M14 40v20c0 11 16 20 36 20s36-9 36-20V40\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M20 44v12c0 8 14 15 30 15s30-7 30-15V44\" fill=\"#ddd0a6\"/><ellipse cx=\"50\" cy=\"40\" rx=\"36\" ry=\"20\" fill=\"#f5f9f3\" stroke=\"#7faaa0\" stroke-width=\"3\"/><ellipse cx=\"50\" cy=\"42\" rx=\"30\" ry=\"15\" fill=\"#eadfbc\" stroke=\"#c0ceb7\" stroke-width=\"1.5\"/><path d=\"M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".8\"/>",
+        "equipmentPlateNote"
+      ],
+      [
+        "equipmentMarker",
+        1,
+        "<g transform=\"rotate(28 50 50)\"><rect x=\"42\" y=\"13\" width=\"16\" height=\"69\" rx=\"5\" fill=\"#24594e\"/><path d=\"M42 82h16l-8 12z\" fill=\"#15333b\"/><rect x=\"42\" y=\"10\" width=\"16\" height=\"15\" rx=\"3\" fill=\"#a5c4bc\"/></g>"
+      ],
+      [
+        "equipmentDropper",
+        1,
+        "<path d=\"M40 16q10-12 20 0v19H40z\" fill=\"#27796e\"/><path d=\"M44 35h12v38l-6 15-6-15z\" fill=\"#e0efef\" stroke=\"#7faaa0\" stroke-width=\"2\"/><path d=\"M50 91q-7 8 0 8q7 0 0-8\" fill=\"#6ea89d\"/>"
+      ],
+      [
+        "equipmentBacteria",
+        1,
+        "<path d=\"M35 22h30v12l8 50H27l8-50z\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M31 59h38l4 25H27z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M31 59H69\" stroke=\"#36534b\" stroke-width=\"2\"/><path d=\"M32 19h36\" stroke=\"#087b78\" stroke-width=\"7\"/>"
+      ],
+      [
+        "equipmentSpreader",
+        1,
+        "<g transform=\"rotate(30 50 50)\"><image href=\"assets/lab-spreader-cartoon.png\" x=\"30\" y=\"2\" width=\"40\" height=\"96\"/></g>"
+      ],
+      [
+        "equipmentTweezers",
+        4,
+        "<g transform=\"rotate(212 50 50)\"><image href=\"assets/lab-forceps-cartoon.png\" x=\"30\" y=\"2\" width=\"40\" height=\"96\"/></g>"
+      ],
+      [
+        "equipmentAlcohol",
+        1,
+        "<path d=\"M24 16h53l-5 7v60H28V16\" fill=\"#f4f8f3\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M30 53h40v28H30Z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M30 53H70\" stroke=\"#36534b\" stroke-width=\"2\"/><path d=\"M35 24v47M63 32h7M63 45h7M63 65h7\" fill=\"none\" stroke=\"#7faaa0\" stroke-width=\"2\"/>"
+      ],
+      [
+        "equipmentLamp",
+        1,
+        "<path d=\"M49 8c-13 17-13 25 1 29 12-5 13-15-1-29Z\" fill=\"#e7b36b\"/><path d=\"M46 35h8v14h-8Z\" fill=\"#24594e\"/><path d=\"M33 48h34l12 31c3 9-11 14-29 14S17 88 21 79Z\" fill=\"#e4eee5\" stroke=\"#7faaa0\" stroke-width=\"3\"/><path d=\"M27 72h46l4 12H23Z\" fill=\"#adc7ad\"/><path data-liquid-surface d=\"M27 72H73\" stroke=\"#36534b\" stroke-width=\"2\"/>"
+      ],
+      [
+        "equipmentDiscs",
+        3,
+        "<g fill=\"#fff\" stroke=\"#7faaa0\"><circle cx=\"28\" cy=\"30\" r=\"17\"/><text x=\"28\" y=\"34\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">X</text><circle cx=\"70\" cy=\"30\" r=\"17\"/><text x=\"70\" y=\"34\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">Y</text><circle cx=\"28\" cy=\"72\" r=\"17\"/><text x=\"28\" y=\"76\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">Z</text><circle cx=\"70\" cy=\"72\" r=\"17\"/><text x=\"70\" y=\"76\" text-anchor=\"middle\" fill=\"#15333b\" stroke=\"none\" font-size=\"14\">C</text></g>",
+        "equipmentDiscsNote"
+      ],
+      [
+        "equipmentIncubator",
+        1,
+        "<rect x=\"16\" y=\"14\" width=\"68\" height=\"74\" rx=\"5\" fill=\"#e5ede8\" stroke=\"#7faaa0\" stroke-width=\"3\"/><rect x=\"24\" y=\"24\" width=\"46\" height=\"52\" rx=\"2\" fill=\"#c9dcd4\"/><path d=\"M29 43h35M29 62h35\" stroke=\"#7faaa0\"/><path d=\"M77 43v19\" stroke=\"#087b78\" stroke-width=\"4\"/>"
+      ],
+      [
+        "equipmentRuler",
+        1,
+        "<rect x=\"9\" y=\"35\" width=\"82\" height=\"29\" rx=\"3\" fill=\"#f6e8ba\" stroke=\"#c8b582\"/><path d=\"M12 35v14\" stroke=\"#927d4a\"/><path d=\"M17 35v7\" stroke=\"#927d4a\"/><path d=\"M22 35v7\" stroke=\"#927d4a\"/><path d=\"M27 35v7\" stroke=\"#927d4a\"/><path d=\"M32 35v7\" stroke=\"#927d4a\"/><path d=\"M37 35v14\" stroke=\"#927d4a\"/><path d=\"M42 35v7\" stroke=\"#927d4a\"/><path d=\"M47 35v7\" stroke=\"#927d4a\"/><path d=\"M52 35v7\" stroke=\"#927d4a\"/><path d=\"M57 35v7\" stroke=\"#927d4a\"/><path d=\"M62 35v14\" stroke=\"#927d4a\"/><path d=\"M67 35v7\" stroke=\"#927d4a\"/><path d=\"M72 35v7\" stroke=\"#927d4a\"/><path d=\"M77 35v7\" stroke=\"#927d4a\"/><path d=\"M82 35v7\" stroke=\"#927d4a\"/><path d=\"M87 35v14\" stroke=\"#927d4a\"/>"
+      ]
+    ],
+    "history": "<svg viewBox=\"0 0 440 536\" role=\"img\" data-history-labels data-i18n-aria=\"historyPhotoAlt\">\n      <image href=\"assets/alexander-fleming-petri-dish-penicillin.jpg\" x=\"44\" y=\"90\" width=\"352\" height=\"347\" preserveAspectRatio=\"xMidYMid meet\"/>\n      <g fill=\"none\" stroke-linejoin=\"round\"><g stroke=\"#fff\" stroke-width=\"2.8\"><path data-history-leader=\"mouldLabel\" d=\"M72 28H96L192 145\"/><path data-history-leader=\"clearAreaTerm\" d=\"M295 28H337L265 165\"/><path data-history-leader=\"colonies\" d=\"M75 459H99L185.4 402.2\"/></g><g class=\"history-label-lines\" stroke=\"#15333b\" stroke-width=\"1.2\"><path data-history-leader=\"mouldLabel\" d=\"M72 28H96L192 145\"/><path data-history-leader=\"clearAreaTerm\" d=\"M295 28H337L265 165\"/><path data-history-leader=\"colonies\" d=\"M75 459H99L185.4 402.2\"/></g></g>\n      <g fill=\"#15333b\" font-weight=\"700\"><text x=\"12\" y=\"30\" font-size=\"18\" data-i18n=\"mouldLabel\"></text><text x=\"238\" y=\"28\" font-size=\"17\" data-i18n=\"clearAreaTerm\"></text><text x=\"18\" y=\"465\" font-size=\"17\" data-i18n=\"colonies\"></text></g>\n      <g fill=\"#42635b\" font-size=\"14\"><text x=\"12\" y=\"55\" data-i18n=\"fungusRemark\"></text><text x=\"214\" y=\"52\" data-i18n=\"clearAreaLine1\"></text><text x=\"214\" y=\"74\" data-i18n=\"clearAreaLine2\"></text><text x=\"18\" y=\"493\" data-i18n=\"colonyMeaningLine1\"></text><text x=\"18\" y=\"517\" data-i18n=\"colonyMeaningLine2\"></text></g>\n    </svg>",
+    "learning": "<div class=\"science-diagram\">\n <figure class=\"learning-figure\"><figcaption>A. Experimental principle: antibiotic（抗生素） diffusion and clear-zone（清晰區） formation</figcaption>\n <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">1. Disc carries antibiotic（抗生素）</tspan></text><path d=\"M221 72L128 136\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">2. Antibiotic（抗生素） diffuses</tspan></text><text x=\"246\" y=\"146\">through agar</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">3. Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"246\" y=\"227\">bacterial growth, forming</text><text x=\"246\" y=\"250\">a clear zone</text><path d=\"M221 213L152 174\" fill=\"none\" stroke=\"#698a87\"/></g></svg>\n <p class=\"caption\">Schematic, not to scale; it does not prove complete killing.</p></figure>\n <figure class=\"learning-figure\"><figcaption>B. Structures and possible action sites</figcaption>\n <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"Bacterial structures and possible antibiotic（抗生素） action sites\">\n <rect x=\"21\" y=\"91\" width=\"238\" height=\"122\" rx=\"61\" fill=\"#eef3fa\" stroke=\"#b8cbdc\" stroke-width=\"2\"/>\n <rect x=\"30\" y=\"100\" width=\"220\" height=\"104\" rx=\"52\" fill=\"#d5e5f8\" stroke=\"#597fb1\" stroke-width=\"8\"/><rect x=\"41\" y=\"111\" width=\"198\" height=\"82\" rx=\"40\" fill=\"#f4f0d4\" stroke=\"#8e9f82\" stroke-width=\"4\"/>\n <path d=\"M87 151C97 124 136 179 155 143S190 169 206 143\" fill=\"none\" stroke=\"#a6699c\" stroke-width=\"4\"/>\n <g fill=\"#cb995b\"><circle cx=\"72\" cy=\"142\" r=\"4\"/><circle cx=\"93\" cy=\"171\" r=\"4\"/><circle cx=\"175\" cy=\"176\" r=\"4\"/><circle cx=\"196\" cy=\"124\" r=\"4\"/></g>\n <g fill=\"#15333b\" font-size=\"16\"><text x=\"272\" y=\"70\"><tspan textLength=\"176\" lengthAdjust=\"spacingAndGlyphs\">1. Inhibit（抑制） cell wall</tspan><tspan x=\"290\" dy=\"18\">formation</tspan></text><path d=\"M266 76L232 112\" stroke=\"#597fb1\" fill=\"none\"/>\n <text x=\"272\" y=\"115\"><tspan textLength=\"176\" lengthAdjust=\"spacingAndGlyphs\">2. Disrupt cell membrane</tspan></text><path d=\"M266 121L235 136\" stroke=\"#8e9f82\" fill=\"none\"/>\n <text x=\"272\" y=\"164\"><tspan textLength=\"176\" lengthAdjust=\"spacingAndGlyphs\">3. Inhibit（抑制） protein</tspan><tspan x=\"290\" dy=\"18\">synthesis</tspan></text><path d=\"M266 170L179 176\" stroke=\"#cb995b\" fill=\"none\"/>\n <text x=\"272\" y=\"211\"><tspan textLength=\"176\" lengthAdjust=\"spacingAndGlyphs\">4. Inhibit（抑制） nucleic acid</tspan><tspan x=\"290\" dy=\"18\">synthesis</tspan></text><path d=\"M266 217H155V143\" stroke=\"#a6699c\" fill=\"none\"/></g></svg>\n <p class=\"caption\">The pale outer layer represents a capsule (not present in all bacteria); blue is the cell wall, green is the cell membrane, and the purple strand is DNA. These mechanisms are not proved by this disc experiment.</p></figure></div><section class=\"learning-topic\"><h3>Uses of antibiotics（抗生素）</h3><ul class=\"learning-list\"><li>Antibiotics（抗生素） mainly treat <strong class=\"learning-emphasis\">bacterial infections</strong>; they cannot treat viral colds or influenza.</li></ul></section><section class=\"learning-topic\"><h3>How clear zones（清晰區） form</h3><ul class=\"learning-list\"><li>Antibiotic（抗生素） <strong class=\"learning-emphasis\">diffuses outward</strong> from the disc, and its concentration generally decreases with distance. A <strong class=\"learning-emphasis\">clear zone（清晰區）</strong> forms only where the concentration remains sufficient to inhibit（抑制） this bacterium. Greater susceptibility（對抗生素的敏感性） (growth inhibited（抑制） at a lower antibiotic（抗生素） concentration) allows a larger clear zone（清晰區） to form.</li><li>A clear zone（清晰區） indicates no visible bacterial growth at that location, demonstrating that the antibiotic（抗生素） sample can <strong class=\"learning-emphasis\">inhibit（抑制） bacterial growth</strong>; it does not prove that all bacteria in the zone have died.</li></ul></section><section class=\"learning-topic\"><h3>Antibiotic resistance（抗生素抗性／抗藥性） and selection</h3><ul class=\"learning-list\"><li>Why does the original antibiotic（抗生素） in the scenario lose effectiveness? Antibiotics（抗生素） make survival harder for susceptible（對抗生素敏感的） bacteria, while <strong class=\"learning-emphasis\">resistant（具抗藥性的） bacteria are more likely to survive, reproduce（繁殖） and pass on resistance traits（抗藥性特徵）</strong>. As resistant（具抗藥性的） bacteria increase in proportion and occupy the whole population, the original antibiotic（抗生素） becomes ineffective.</li><li><strong class=\"learning-emphasis\">Antibiotic（抗生素） overuse（過度使用） or misuse（不當使用）</strong> adds unnecessary selection pressure（選擇壓力）, <strong class=\"learning-emphasis\">promoting the survival and reproduction（繁殖） of resistant（具抗藥性的） bacteria</strong> and potentially making infections harder to treat.</li></ul></section>",
+    "plates": [
+      {
+        "id": "plate-1",
+        "seed": 1001,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.1,
+          "C": 0
+        },
+        "completed": true
+      },
+      {
+        "id": "plate-2",
+        "seed": 1002,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.3,
+          "C": 0
+        },
+        "completed": true
+      },
+      {
+        "id": "plate-3",
+        "seed": 1003,
+        "discPositions": {
+          "X": {
+            "x": 130,
+            "y": 130
+          },
+          "Y": {
+            "x": 270,
+            "y": 130
+          },
+          "Z": {
+            "x": 130,
+            "y": 270
+          },
+          "C": {
+            "x": 270,
+            "y": 270
+          }
+        },
+        "result": {
+          "X": 18.7,
+          "Y": 0,
+          "Z": 26.5,
+          "C": 0
+        },
+        "completed": true
+      }
+    ],
+    "conclusionReference": {
+      "samples": null,
+      "order": null,
+      "effective": [
+        "X",
+        "Z"
+      ],
+      "reference": [
+        "Z",
+        "X"
+      ]
+    },
+    "samples": [
+      "X",
+      "Y",
+      "Z",
+      "C"
+    ],
+    "discMM": 6,
+    "replicates": 3,
+    "reference": {
+      "observation": "A clear zone（清晰區） with no visible bacterial growth is present near Penicillium（青黴菌） (a fungus). This is an observation; its cause needs testing.",
+      "prediction": "A reasonable testable prediction may differ from the results. A reasoned prediction does not have to match the outcome.",
+      "largestPrediction": "Give a reasoned prediction based on diffusion and bacterial growth. Choose not applicable if you predict no clear zones（清晰區）. The prediction need not match the result.",
+      "reason": "Explain a reason related to bacterial growth and observable evidence.",
+      "controlPlan": "Use a matching carrier-only disc without antibiotic（抗生素） to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water.",
+      "designDescription": "Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable.",
+      "plannedReplicates": "Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability（可靠性）.",
+      "plannedReplicateReason": "Consider consistency（一致性）, variation, fair comparisons and practical feasibility.",
+      "reflection": "Use readings for your chosen sample to support growth inhibition（抑制）. Explain how pre-existing resistance（抗藥性） affects survival and reproduction（繁殖）, how resistance traits（抗藥性特徵） are inherited（遺傳）, and how the resistant（具抗藥性的） proportion increases as antibiotic（抗生素） effectiveness declines. This is a hypothetical extension, not evidence that resistance（抗藥性） arose in this experiment."
+    },
+    "variableReference": {
+      "iv": "sample",
+      "dv": "zone",
+      "cv": [
+        "disc",
+        "medium",
+        "strain",
+        "distribution",
+        "preparation"
+      ]
+    },
+    "assumptionReference": [
+      "distribution",
+      "sterile",
+      "sameConditions"
+    ],
+    "rubric": [
+      [
+        "Initial observation",
+        2,
+        "Teacher",
+        "Distinguish visible colonies（菌落） and the clear area near the fungus; describe observations without assuming a cause.",
+        "1: relevant description, but location or observation/inference distinction is incomplete.",
+        "No relevant observation, or only an unsupported causal claim."
+      ],
+      [
+        "Visible zones and diameters",
+        2,
+        "Shared check",
+        "For each of 12 readings, use the correct Yes/No classification and a total diameter within ±1 mm; no visible zone requires exactly 0. Score matched readings × 2/12, rounded to two decimal places.",
+        "Proportional credit for matched readings.",
+        "No matching evidence; a 6 mm disc alone is not a clear zone（清晰區）."
+      ],
+      [
+        "Independent, dependent and controlled variables",
+        4,
+        "Shared check",
+        "Select only sample for IV, zone for DV; controls are disc size, agar composition, strain, initial distribution and preset preparation.",
+        "IV: 1; DV: 1. Each correct control earns 2/5, rounded to two decimal places; an unrelated control choice gives 0 for the control item.",
+        "IV/DV must match the exact set."
+      ],
+      [
+        "Testable hypothesis and reason",
+        1,
+        "Teacher",
+        "A testable prediction linked to bacterial growth and observable evidence.",
+        "0.5: a testable prediction with a weak or unclear reason.",
+        "No testable prediction or relevant reason. An unsupported prediction is not automatically wrong."
+      ],
+      [
+        "Original repeat-plan reason",
+        1,
+        "Teacher",
+        "Explain repeats through consistency（一致性）, variation, fair comparison and feasibility.",
+        "0.5: mentions reliability（可靠性） but lacks independent comparison or a rationale for the number.",
+        "Only a number or no relevant reason; choosing three is not a required answer."
+      ],
+      [
+        "Control design and reason",
+        1,
+        "Teacher",
+        "Use a matching carrier-only disc without antibiotic（抗生素）; hold other conditions constant and explain the comparison.",
+        "0.5: suitable C, but the reason or shared conditions are incomplete.",
+        "No useful comparison or confounded treatment."
+      ],
+      [
+        "Assumptions",
+        1,
+        "Shared check",
+        "Select only even initial distribution, no added contamination and shared observation conditions.",
+        "No partial credit.",
+        "Any missing or additional choice, including assuming all bacteria died."
+      ],
+      [
+        "Plate-design quality",
+        2,
+        "Teacher",
+        "Label X, Y, Z and C clearly; allow space between discs and from the edge. A drawing or complete written design is acceptable.",
+        "1: basically feasible but missing one important arrangement.",
+        "No assessable design; artistic quality is not a criterion."
+      ],
+      [
+        "Means",
+        1,
+        "Shared check",
+        "Use the student’s own three latest readings; ±0.1 mm tolerance; 0.25 per sample.",
+        "Proportional credit across four samples.",
+        "Do not penalise the same measurement error again through arithmetic."
+      ],
+      [
+        "Reflection: evidence and resistance（抗藥性） selection",
+        2,
+        "Teacher",
+        "Cite sample readings to support inhibition（抑制）; link prior resistance（抗藥性） differences, survival and reproduction（繁殖）, inherited（遺傳） traits and changing population proportions to loss of effectiveness.",
+        "1: a reasonable experimental judgment or selection explanation, but missing readings or causal links.",
+        "No relevant evidence/concept, or bacteria purposefully developing resistance（抗藥性） to survive."
+      ],
+      [
+        "Analysis 1: What does the appearance of a clear zone（清晰區） indicate?",
+        1,
+        "Shared check",
+        "Correct option: B.",
+        "No partial credit.",
+        "Incorrect or missing response: 0."
+      ],
+      [
+        "Analysis 2: What does the diameter of a clear zone（清晰區） represent?",
+        1,
+        "Shared check",
+        "Correct option: C.",
+        "No partial credit.",
+        "Incorrect or missing response: 0."
+      ],
+      [
+        "Analysis 4: Why do experiments need to be repeated?",
+        1,
+        "Shared check",
+        "Correct option: C.",
+        "No partial credit.",
+        "Incorrect or missing response: 0."
+      ],
+      [
+        "Analysis 5: If repeated results differ greatly, what should you do, and why?",
+        1,
+        "Shared check",
+        "Correct option: D.",
+        "No partial credit.",
+        "Incorrect or missing response: 0."
+      ],
+      [
+        "Analysis 6: When comparing the clear zones（清晰區） around C (control) and X, Y and Z, what is the main role of C?",
+        1,
+        "Shared check",
+        "Correct option: C.",
+        "No partial credit.",
+        "Incorrect or missing response: 0."
+      ],
+      [
+        "Selected conclusion",
+        1,
+        "Shared check",
+        "X and Z: 0.5. Rank effective samples by the student’s own means: 0.5. Unused ranks are Not applicable.",
+        "0.5 if either component is correct.",
+        "Either order is accepted for equal means; do not penalise measurement error again."
+      ],
+      [
+        "Current total / pending marks",
+        23,
+        "Formula",
+        "Total 23. All six manual fields must be scored and reflection submitted before a total is reported.",
+        "Blank manual marks mean pending; 0 means marked zero.",
+        "Do not compare directly with the legacy 32-mark rubric. Draft calibration is required."
+      ]
+    ],
+    "tolerances": {
+      "reading": 1,
+      "mean": 0.1,
+      "graph": 0.5
+    }
+  }
+}

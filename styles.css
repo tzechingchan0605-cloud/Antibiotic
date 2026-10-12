@@ -572,3 +572,13 @@ dialog::backdrop { background: #17392dcc; backdrop-filter: blur(5px); }
 
 .learning-topic h3 { font-size: 18px; margin: 22px 0 8px; color: #15333b; }
 .learning-emphasis { color: #b42318; font-weight: 700; }
+
+/* Blank paper materials live only within the teacher dashboard. */
+.paper-panel { margin: 20px 0; padding: 16px; border: 1px solid #c5d9d2; border-radius: 12px; background: #f8fbf9; }
+.paper-heading { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.paper-files { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.paper-file { padding: 12px; border: 1px solid #d1dfd9; border-radius: 8px; background: white; min-width: 0; }
+.paper-file h4 { margin: 0; overflow-wrap: anywhere; }
+.paper-file .record-actions { flex-wrap: wrap; }
+#paperPreview { width: 100%; height: 65vh; border: 1px solid #c5d9d2; background: white; }
+@media (max-width: 600px) { .paper-files { grid-template-columns: 1fr; } .paper-heading { align-items: flex-start; flex-direction: column; } }

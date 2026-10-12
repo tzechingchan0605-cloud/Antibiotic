@@ -77,7 +77,7 @@ export function answerDisplay(field, value, language = 'zh') {
   const label = L[fieldChoiceKeys[field]?.[value]] || (choiceFields.has(field) && CHOICES[value]);
   return label ? (field==='prediction'&&['X','Y','Z','X_Y','X_Z','Y_Z'].includes(value)&&language!=='en'?label[0].replace(/的$/, ''):tr(language,label[0],label[1])) : String(value);
 }
-function referenceFor(field, record, language) {
+export function referenceFor(field, record, language) {
   const refs = {
     observation: ['青黴菌（真菌）附近有清晰區，即沒有可見細菌生長的區域；這是觀察，原因仍需比較。', 'A clear zone with no visible bacterial growth is present near Penicillium (a fungus). This is an observation; its cause needs testing.'],
     prediction: ['合理可測試的實驗前預測可以與結果不同；預測可以與結果不同；合理的推測不需猜中。', 'A reasonable testable prediction may differ from the results. A reasoned prediction does not have to match the outcome.'],

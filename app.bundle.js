@@ -23701,21 +23701,6 @@ var require_exceljs_min = __commonJS({
   }
 });
 
-// analysis.js
-var ANALYSIS_VERSION = 2;
-var MC_QUESTIONS = [
-  { id: "zoneMeaning", number: 1, key: "zoneMeaning", correct: "inhibition", options: [["death", "zoneDeath"], ["inhibition", "zoneInhibition"], ["resistance", "zoneResistance"], ["viruses", "zoneViruses"]] },
-  { id: "zoneDiameterMeaning", number: 2, key: "zoneDiameterMeaning", correct: "extent", options: [["count", "diameterCount"], ["treatment", "diameterTreatment"], ["extent", "diameterExtent"], ["dose", "diameterDose"]] },
-  { id: "repeatPurpose", number: 4, key: "repeatPurpose", correct: "consistency", options: [["guarantee", "repeatGuarantee"], ["remeasure", "repeatRemeasure"], ["consistency", "repeatConsistency"], ["content", "repeatContent"]] },
-  { id: "repeatVariation", number: 5, key: "repeatVariation", correct: "check", options: [["delete", "variationDelete"], ["maximum", "variationMaximum"], ["average", "variationAverage"], ["check", "variationCheck"]] },
-  { id: "controlPurpose", number: 6, key: "controlPurpose", correct: "baseline", options: [["same", "controlSame"], ["treatment", "controlTreatment"], ["baseline", "controlBaseline"], ["increase", "controlIncrease"]] }
-];
-var EFFECTIVE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "effectiveAll"], ["none", "effectiveNone"]];
-var CONCLUSION_FIELDS = ["effectiveSamples", "rank1", "rank2", "rank3", "rank4"];
-var ANALYSIS_FIELDS = [...MC_QUESTIONS.map((question) => question.id), ...CONCLUSION_FIELDS];
-var currentAnalysis = (record) => record.analysisVersion === ANALYSIS_VERSION;
-var analysisChecks = (record) => Object.fromEntries(MC_QUESTIONS.map((question) => [question.id, record.answers?.[question.id] ? record.answers[question.id] === question.correct : null]));
-
 // english-glossary.js
 var entries = [
   ["methicillin-resistant\\s+Staphylococcus\\s+aureus(?:\\s*\\(MRSA\\))?", "\u8010\u7532\u6C27\u897F\u6797\u91D1\u9EC3\u8461\u8404\u7403\u83CC"],
@@ -23781,7 +23766,7 @@ var historyCaptionKey = HISTORY_PHOTO_URL ? "historyCaption" : "historyIllustrat
 function historyFigureMarkup() {
   if (HISTORY_PHOTO_URL) {
     const leaders = [["mouldLabel", "M72 28H96L192 145"], ["clearAreaTerm", "M295 28H337L265 165"], ["colonies", "M75 459H99L185.4 402.2"]];
-    const paths = leaders.map(([label, d]) => `<path data-history-leader="${label}" d="${d}"/>`).join("");
+    const paths = leaders.map(([label2, d]) => `<path data-history-leader="${label2}" d="${d}"/>`).join("");
     return `<svg viewBox="0 0 440 536" role="img" data-history-labels data-i18n-aria="historyPhotoAlt">
       <image href="${HISTORY_PHOTO_URL}" x="44" y="90" width="352" height="347" preserveAspectRatio="xMidYMid meet"/>
       <g fill="none" stroke-linejoin="round"><g stroke="#fff" stroke-width="2.8">${paths}</g><g class="history-label-lines" stroke="#15333b" stroke-width="1.2">${paths}</g></g>
@@ -23796,7 +23781,7 @@ function historyFigureMarkup() {
 }
 function layoutHistoryLabels(root = document) {
   for (const svg of root.querySelectorAll("svg[data-history-labels]")) {
-    const label = (key) => svg.querySelector(`[data-i18n="${key}"]`);
+    const label2 = (key) => svg.querySelector(`[data-i18n="${key}"]`);
     const rightEdge = (element) => {
       let width = element.getComputedTextLength();
       if (!width) {
@@ -23807,16 +23792,16 @@ function layoutHistoryLabels(root = document) {
       }
       return Number(element.getAttribute("x")) + width;
     };
-    const clearEnglish = /[A-Za-z]/.test(label("clearAreaTerm").textContent);
+    const clearEnglish = /[A-Za-z]/.test(label2("clearAreaTerm").textContent);
     for (const key of ["clearAreaLine1", "clearAreaLine2"]) {
-      label(key).setAttribute("x", clearEnglish ? "238" : "214");
+      label2(key).setAttribute("x", clearEnglish ? "238" : "214");
     }
     for (const [key, y, targetX, targetY] of [
       ["mouldLabel", 28, 192, 145],
       ["clearAreaTerm", 28, 265, 165],
       ["colonies", 459, 185.4, 402.2]
     ]) {
-      const start = Math.ceil(rightEdge(label(key))) + 7;
+      const start = Math.ceil(rightEdge(label2(key))) + 7;
       const elbow = Math.min(start + (key === "clearAreaTerm" ? 42 : 24), key === "mouldLabel" ? 224 : 426);
       const d = `M${start} ${y}H${elbow}L${targetX} ${targetY}`;
       for (const path of svg.querySelectorAll(`[data-history-leader="${key}"]`)) path.setAttribute("d", d);
@@ -23982,13 +23967,13 @@ var L = {
   backToContext: pair("\u2190 \u8FD4\u56DE\u60C5\u5883", "\u2190 Return to context"),
   designDescriptionPH: pair("\u53EF\u88DC\u5145\u7E6A\u5716\u6A19\u793A\uFF0C\u6216\u4EE5\u6587\u5B57\u5B8C\u6574\u63CF\u8FF0\u4F60\u7684\u74CA\u8102\u677F\uFF0C\u4F5C\u70BA\u7E6A\u5716\u7684\u66FF\u4EE3\u3002", "Add labels to your drawing, or give a complete written description of your plates as an alternative to drawing."),
   designStep5: pair("05 \xB7 \u5BE6\u9A57\u88DD\u7F6E\u8A2D\u8A08", "05 \xB7 Experiment setup design"),
-  drawingHint: pair("\u4E0D\u7528\u7CBE\u7DFB\u5730\u7E6A\u756B\u6240\u6709\u7279\u5FB5\uFF0C\u7C21\u55AE\u7E6A\u756B\u4E26\u6A19\u793A\u6E05\u695A\u4FBF\u53EF\u3002", "You do not need to draw every feature in detail. A simple drawing with clear labels is sufficient."),
+  drawingHint: pair("\u4E0D\u7528\u7CBE\u7DFB\u5730\u7E6A\u756B\u6240\u6709\u7279\u5FB5\uFF0C\u7C21\u55AE\u7E6A\u756B\u4E26\u6A19\u793A\u6E05\u695A\u4FBF\u53EF\u3002", "You do not need to draw every detail carefully. A simple drawing with clear labels is enough."),
   controlHint: pair("\uFF08\u63D0\u793A\uFF1A\u6B64\u5C0D\u7167\u7D44\u8207\u5BE6\u9A57\u7D44\u6709\u4F55\u4E0D\u540C\u4E4B\u8655\uFF1F\uFF09", "(Hint: how does the control differ from the experimental group?)"),
   controlPurposeHint: pair("\uFF08\u63D0\u793A\uFF1A\u5C0D\u7167\u7D44\u4E3B\u8981\u529F\u80FD\u662F\u4F5C\u70BA\u6BD4\u8F03\u7684\u57FA\u6E96\uFF0C\u7528\u4F86\u78BA\u8A8D\u5BE6\u9A57\u4E2D\u7684\u6539\u8B8A\u662F\u7531\u7368\u7ACB\u8B8A\u91CF\u6240\u5F15\u8D77\uFF0C\u800C\u975E\u5176\u4ED6\u5916\u5728\u56E0\u7D20\u7684\u5E72\u64FE\uFF0C\u56E0\u6B64\u5C0D\u7167\u7D44\u4E0D\u5305\u542B\u7368\u7ACB\u8B8A\u91CF\u7684\u8655\u7406\u689D\u4EF6\uFF09", "(Hint: The control group provides a baseline for comparison. It helps check whether changes in the experiment are caused by the independent variable rather than other external factors. Therefore, the control group does not receive the treatment being tested.)"),
   controlHeading: pair("\u63A2\u7A76\u7684\u5C0D\u7167\u7D44", "The investigation control"),
   designStep4: pair("04 \xB7 \u5C0D\u7167\u7D44\u8A2D\u8A08", "04 \xB7 Control design"),
   assumptionNote: pair("\u8ACB\u9078\u51FA\u6240\u6709\u9069\u7528\u7684\u5047\u8A2D\uFF0C\u53EF\u9078\u591A\u65BC\u4E00\u9805\u3002", "Select all applicable assumptions; you may choose more than one."),
-  assumptionDefinitionHint: pair("\u5047\u8A2D\u662F\u6307\u672A\u7D93\u8B49\u5BE6\u800C\u88AB\u8996\u70BA\u6B63\u78BA\u7684\u689D\u4EF6\uFF0C\u7528\u65BC\u78BA\u4FDD\u5BE6\u9A57\u7D50\u679C\u7684\u6709\u6548\u6027\u3002", "Assumptions are conditions accepted as true without verification, used to ensure the validity of experimental results."),
+  assumptionDefinitionHint: pair("\u5047\u8A2D\u662F\u6307\u672A\u7D93\u8B49\u5BE6\u800C\u88AB\u8996\u70BA\u6B63\u78BA\u7684\u689D\u4EF6\uFF0C\u7528\u65BC\u78BA\u4FDD\u5BE6\u9A57\u7D50\u679C\u7684\u6709\u6548\u6027\u3002", "An assumption is a condition we have not proved but take as true, to help make the experiment results valid."),
   assumptionQuestion: pair("\u6B64\u63A2\u7A76\u7684\u5047\u8A2D\u662F\u4EC0\u9EBC\uFF1F", "What are the assumptions of this investigation?"),
   designStep3: pair("03 \xB7 \u5BE6\u9A57\u524D\u63D0", "03 \xB7 Experimental assumptions"),
   variableNote: pair("\u5728\u6BCF\u985E\u4E2D\u9078\u64C7\u9069\u5408\u7684\u56E0\u7D20\u3002\u73FE\u5728\u4FDD\u5B58\u4F60\u7684\u60F3\u6CD5\uFF0C\u905E\u4EA4\u5F8C\u518D\u67E5\u770B\u53C3\u8003\u56DE\u994B\u3002", "Choose the suitable factors in each category. Save your thinking now and view reference feedback after submission."),
@@ -24286,13 +24271,50 @@ function translate(root = document) {
   layoutHistoryLabels(root);
 }
 
+// inquiry-content.js
+var VARIABLE_OPTIONS = [["disc", "vDisc"], ["sample", "vSample"], ["medium", "vMedium"], ["zone", "vZone"], ["strain", "vStrain"], ["distribution", "vDistribution"], ["preparation", "vPreparation"]];
+var ASSUMPTION_OPTIONS = [["distribution", "assumptionDistribution"], ["sterile", "assumptionSterile"], ["sameConditions", "assumptionSame"], ["death", "assumptionDeath"]];
+var PREDICTION_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "predictionAll"], ["none", "predictionNone"]];
+var REPEAT_OPTIONS = Array.from({ length: 20 }, (_, i) => [String(i + 1), String(i + 1)]);
+var INQUIRY_FIELDS = ["observation", "prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"];
+var EQUIPMENT_ART = [
+  ["equipmentPlate", 3, '<path d="M14 40v20c0 11 16 20 36 20s36-9 36-20V40" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M20 44v12c0 8 14 15 30 15s30-7 30-15V44" fill="#ddd0a6"/><ellipse cx="50" cy="40" rx="36" ry="20" fill="#f5f9f3" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="42" rx="30" ry="15" fill="#eadfbc" stroke="#c0ceb7" stroke-width="1.5"/><path d="M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>', "equipmentPlateNote"],
+  ["equipmentMarker", 1, '<g transform="rotate(28 50 50)"><rect x="42" y="13" width="16" height="69" rx="5" fill="#24594e"/><path d="M42 82h16l-8 12z" fill="#15333b"/><rect x="42" y="10" width="16" height="15" rx="3" fill="#a5c4bc"/></g>'],
+  ["equipmentDropper", 1, '<path d="M40 16q10-12 20 0v19H40z" fill="#27796e"/><path d="M44 35h12v38l-6 15-6-15z" fill="#e0efef" stroke="#7faaa0" stroke-width="2"/><path d="M50 91q-7 8 0 8q7 0 0-8" fill="#6ea89d"/>'],
+  ["equipmentBacteria", 1, '<path d="M35 22h30v12l8 50H27l8-50z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M31 59h38l4 25H27z" fill="#adc7ad"/><path data-liquid-surface d="M31 59H69" stroke="#36534b" stroke-width="2"/><path d="M32 19h36" stroke="#087b78" stroke-width="7"/>'],
+  ["equipmentSpreader", 1, '<g transform="rotate(30 50 50)"><image href="assets/lab-spreader-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
+  ["equipmentTweezers", 4, '<g transform="rotate(212 50 50)"><image href="assets/lab-forceps-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
+  ["equipmentAlcohol", 1, '<path d="M24 16h53l-5 7v60H28V16" fill="#f4f8f3" stroke="#7faaa0" stroke-width="3"/><path d="M30 53h40v28H30Z" fill="#adc7ad"/><path data-liquid-surface d="M30 53H70" stroke="#36534b" stroke-width="2"/><path d="M35 24v47M63 32h7M63 45h7M63 65h7" fill="none" stroke="#7faaa0" stroke-width="2"/>'],
+  ["equipmentLamp", 1, '<path d="M49 8c-13 17-13 25 1 29 12-5 13-15-1-29Z" fill="#e7b36b"/><path d="M46 35h8v14h-8Z" fill="#24594e"/><path d="M33 48h34l12 31c3 9-11 14-29 14S17 88 21 79Z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M27 72h46l4 12H23Z" fill="#adc7ad"/><path data-liquid-surface d="M27 72H73" stroke="#36534b" stroke-width="2"/>'],
+  ["equipmentDiscs", 3, '<g fill="#fff" stroke="#7faaa0">' + [[28, 30, "X"], [70, 30, "Y"], [28, 72, "Z"], [70, 72, "C"]].map(([x, y, label2]) => `<circle cx="${x}" cy="${y}" r="17"/><text x="${x}" y="${y + 4}" text-anchor="middle" fill="#15333b" stroke="none" font-size="14">${label2}</text>`).join("") + "</g>", "equipmentDiscsNote"],
+  ["equipmentIncubator", 1, '<rect x="16" y="14" width="68" height="74" rx="5" fill="#e5ede8" stroke="#7faaa0" stroke-width="3"/><rect x="24" y="24" width="46" height="52" rx="2" fill="#c9dcd4"/><path d="M29 43h35M29 62h35" stroke="#7faaa0"/><path d="M77 43v19" stroke="#087b78" stroke-width="4"/>'],
+  ["equipmentRuler", 1, '<rect x="9" y="35" width="82" height="29" rx="3" fill="#f6e8ba" stroke="#c8b582"/>' + Array.from({ length: 16 }, (_, i) => `<path d="M${12 + i * 5} 35v${i % 5 === 0 ? 14 : 7}" stroke="#927d4a"/>`).join("")]
+];
+
+// analysis.js
+var ANALYSIS_VERSION = 2;
+var MC_QUESTIONS = [
+  { id: "zoneMeaning", number: 1, key: "zoneMeaning", correct: "inhibition", options: [["death", "zoneDeath"], ["inhibition", "zoneInhibition"], ["resistance", "zoneResistance"], ["viruses", "zoneViruses"]] },
+  { id: "zoneDiameterMeaning", number: 2, key: "zoneDiameterMeaning", correct: "extent", options: [["count", "diameterCount"], ["treatment", "diameterTreatment"], ["extent", "diameterExtent"], ["dose", "diameterDose"]] },
+  { id: "repeatPurpose", number: 4, key: "repeatPurpose", correct: "consistency", options: [["guarantee", "repeatGuarantee"], ["remeasure", "repeatRemeasure"], ["consistency", "repeatConsistency"], ["content", "repeatContent"]] },
+  { id: "repeatVariation", number: 5, key: "repeatVariation", correct: "check", options: [["delete", "variationDelete"], ["maximum", "variationMaximum"], ["average", "variationAverage"], ["check", "variationCheck"]] },
+  { id: "controlPurpose", number: 6, key: "controlPurpose", correct: "baseline", options: [["same", "controlSame"], ["treatment", "controlTreatment"], ["baseline", "controlBaseline"], ["increase", "controlIncrease"]] }
+];
+var EFFECTIVE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "effectiveAll"], ["none", "effectiveNone"]];
+var CONCLUSION_FIELDS = ["effectiveSamples", "rank1", "rank2", "rank3", "rank4"];
+var ANALYSIS_FIELDS = [...MC_QUESTIONS.map((question) => question.id), ...CONCLUSION_FIELDS];
+var currentAnalysis = (record) => record.analysisVersion === ANALYSIS_VERSION;
+var analysisChecks = (record) => Object.fromEntries(MC_QUESTIONS.map((question) => [question.id, record.answers?.[question.id] ? record.answers[question.id] === question.correct : null]));
+
 // model.js
 var MODULE_ID = "VL_BIO_ANTIBIOTICS";
 var TEACHER_EMAIL = "tzechingchan0605@gmail.com";
 var KEYS = { records: "vl4.antibiotics.records.v1", current: "vl4.antibiotics.current.v1" };
 var SAMPLES = ["X", "Y", "Z", "C"];
 var DISC_MM = 6;
+var ACTUAL_REPLICATES = 3;
 var PLATE_CENTER = 200;
+var DEFAULT_POSITIONS = { X: { x: 130, y: 130 }, Y: { x: 270, y: 130 }, Z: { x: 130, y: 270 }, C: { x: 270, y: 270 } };
 var GRID = [];
 for (let y = 56; y <= 344; y += 12) for (let x = 56; x <= 344; x += 12) if (Math.hypot(x - 200, y - 200) < 146) GRID.push({ x, y });
 var nowISO = () => (/* @__PURE__ */ new Date()).toISOString();
@@ -24400,6 +24422,884 @@ function canonicalRecord(value) {
   copy.version ??= 1;
   copy.demo ??= false;
   return copy;
+}
+
+// reports.js
+var import_exceljs = __toESM(require_exceljs_min(), 1);
+
+// rubric.js
+var TOLERANCES = Object.freeze({ reading: 1, mean: 0.1, graph: 0.5 });
+var SAMPLE_IDS = Object.freeze(["X", "Y", "Z", "C"]);
+var VARIABLE_REFERENCE = Object.freeze({ iv: "sample", dv: "zone", cv: ["disc", "medium", "strain", "distribution", "preparation"] });
+var LEGACY_CV = Object.freeze([...VARIABLE_REFERENCE.cv, "observation"]);
+var controlVariableReference = (record) => record.answers?.cv?.includes("observation") ? LEGACY_CV : VARIABLE_REFERENCE.cv;
+var ASSUMPTION_REFERENCE = Object.freeze(["distribution", "sterile", "sameConditions"]);
+var numeric = (value) => value !== "" && value !== null && value !== void 0 && Number.isFinite(Number(value));
+var finiteNumber = (value) => numeric(value) ? Number(value) : null;
+var roundScore = (value) => Math.round(value * 100) / 100;
+var sameChoices = (actual, expected) => Array.isArray(actual) && actual.length === expected.length && new Set(actual).size === expected.length && expected.every((item) => actual.includes(item));
+function actualReplicates(record) {
+  return (record.plates || []).filter((plate) => plate.result && plate.completed).length;
+}
+function studentMean(record, sample) {
+  const plates = record.plates || [];
+  if (!plates.length) return null;
+  const values = plates.map((plate) => finiteNumber(record.measurements?.[plate.id]?.[sample]?.value));
+  return values.every((value) => value !== null) ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+}
+function conclusionChecks(record) {
+  const a = record.answers || {}, plates = record.plates || [];
+  const effective = ["X", "Y", "Z"].filter((sample) => plates.some((plate) => clearZoneDiameter(plate, sample) > 0));
+  const selected = a.effectiveSamples === "all" ? ["X", "Y", "Z"] : a.effectiveSamples === "none" ? [] : (a.effectiveSamples || "").split("_").filter(Boolean);
+  const samples = a.effectiveSamples ? plates.length > 0 && sameChoices(selected, effective) : null;
+  const ranking = ["rank1", "rank2", "rank3", "rank4"].map((key) => a[key]);
+  const means = Object.fromEntries(effective.map((sample) => [sample, studentMean(record, sample)]));
+  const reference = effective.every((sample) => means[sample] !== null) ? [...effective].sort((x, y) => means[y] - means[x]) : null;
+  let order = null;
+  if (ranking.every(Boolean) && reference) {
+    const ranked = ranking.slice(0, effective.length);
+    order = sameChoices(ranked, effective) && ranking.slice(effective.length).every((value) => value === "na") && ranked.every((sample, index) => index === 0 || means[ranked[index - 1]] + 1e-9 >= means[sample]);
+  }
+  return { samples, order, effective, reference };
+}
+function readingCheck(record, plate, sample, reading) {
+  const value = finiteNumber(reading?.value), reference = clearZoneDiameter(plate, sample);
+  if (value === null || reference === null || !["yes", "no"].includes(reading?.visible)) return null;
+  if (reference === 0) return value === 0 && reading.visible === "no";
+  return Math.abs(value - reference) <= TOLERANCES.reading + 1e-9 && reading.visible === "yes";
+}
+function meanCheck(record, sample) {
+  const value = finiteNumber(record.means?.[sample]), expected = studentMean(record, sample);
+  return value === null || expected === null ? null : Math.abs(value - expected) <= TOLERANCES.mean + 1e-9;
+}
+function graphCheck(record, sample) {
+  const value = finiteNumber(record.graph?.values?.[sample]), expected = finiteNumber(record.means?.[sample]);
+  return value === null || expected === null || !record.graph?.confirmedAt ? null : Math.abs(value - expected) <= TOLERANCES.graph + 1e-9;
+}
+function objectiveChecks(record) {
+  const a = record.answers || {};
+  const variableCheck = (value, expected) => Array.isArray(value) ? value.length ? sameChoices(value, [expected]) : null : value ? value === expected : null;
+  return {
+    ...analysisChecks(record),
+    iv: variableCheck(a.iv, "sample"),
+    dv: variableCheck(a.dv, "zone"),
+    cv: a.cv?.length ? sameChoices(a.cv, controlVariableReference(record)) : null,
+    assumptions: a.assumptions?.length ? sameChoices(a.assumptions, ASSUMPTION_REFERENCE) : null,
+    analysisDeath: a.analysisDeath ? a.analysisDeath === "cannot" : null,
+    analysisClinical: a.analysisClinical ? a.analysisClinical === "cannot" : null,
+    knowledgeBacteria: a.knowledgeBacteria ? a.knowledgeBacteria === "bacteria" : null,
+    knowledgeResistance: a.knowledgeResistance ? a.knowledgeResistance === "bacteria" : null,
+    knowledgeLimits: a.knowledgeLimits ? a.knowledgeLimits === "limited" : null
+  };
+}
+var SCORE_COLUMNS = [
+  { id: "observation", label: "\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF\uFF08\u6559\u5E2B\uFF09", group: "observing", max: 2, manual: true },
+  { id: "readings", label: "\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340\uFF08\u81EA\u52D5\uFF09", group: "observing", max: 2 },
+  { id: "observing", label: "SPS \u89C0\u5BDF", group: "observing", max: 4, formula: ["observation", "readings"] },
+  { id: "iv", label: "\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 1 },
+  { id: "dv", label: "\u5206\u985E\uFF5C\u56E0\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 1 },
+  { id: "cv", label: "\u5206\u985E\uFF5C\u63A7\u5236\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 2 },
+  { id: "classifying", label: "SPS \u5206\u985E", group: "classifying", max: 4, formula: ["iv", "dv", "cv"] },
+  { id: "hypothesis", label: "\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
+  { id: "repeat", label: "\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
+  { id: "control", label: "\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
+  { id: "assumptions", label: "\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D\uFF08\u81EA\u52D5\uFF09", group: "designing", max: 1 },
+  { id: "designing", label: "SPS \u8A2D\u8A08\u63A2\u7A76", group: "designing", max: 4, formula: ["hypothesis", "repeat", "control", "assumptions"] },
+  { id: "designQuality", label: "\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA\uFF08\u6559\u5E2B\uFF09", group: "conducting", max: 2, manual: true },
+  { id: "methodEvaluation", label: "\u5BE6\u4F5C\uFF5C\u6AA2\u67E5\u53CA\u6539\u5584\u65B9\u6CD5\uFF08\u6559\u5E2B\uFF09", group: "conducting", max: 2, manual: true },
+  { id: "conducting", label: "SPS \u9032\u884C\u5BE6\u9A57", group: "conducting", max: 4, formula: ["designQuality", "methodEvaluation"] },
+  { id: "means", label: "\u63A8\u8AD6\uFF5C\u4F9D\u81EA\u5DF1\u7684\u8B80\u6578\u8A08\u7B97\u5E73\u5747\u503C\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 1 },
+  { id: "deathLimit", label: "\u63A8\u8AD6\uFF5C\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 0.5 },
+  { id: "clinicalLimit", label: "\u63A8\u8AD6\uFF5C\u4E0D\u80FD\u5224\u5B9A\u6700\u4F73\u6CBB\u7642\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 0.5 },
+  { id: "evidenceAnalysis", label: "\u63A8\u8AD6\uFF5C\u4EE5\u5C0D\u7167\u53CA\u91CD\u8907\u7D50\u679C\u8AD6\u8B49\uFF08\u6559\u5E2B\uFF09", group: "inferring", max: 2, manual: true },
+  { id: "inferring", label: "SPS \u63A8\u8AD6", group: "inferring", max: 4, formula: ["means", "deathLimit", "clinicalLimit", "evidenceAnalysis"] },
+  { id: "graph", label: "\u6E9D\u901A\uFF5C\u68D2\u9AD8\u8207\u81EA\u5DF1\u7684\u5E73\u5747\u503C\uFF08\u81EA\u52D5\uFF09", group: "communicating", max: 2 },
+  { id: "writtenExpression", label: "\u6E9D\u901A\uFF5C\u66F8\u9762\u8868\u9054\uFF08\u6559\u5E2B\uFF09", group: "communicating", max: 2, manual: true },
+  { id: "communicating", label: "SPS \u6E9D\u901A", group: "communicating", max: 4, formula: ["graph", "writtenExpression"] },
+  { id: "sps", label: "SPS \u7E3D\u5206\uFF0824\uFF09", group: "score", max: 24, formula: ["observing", "classifying", "designing", "conducting", "inferring", "communicating"] },
+  { id: "knowledgeBacteria", label: "\u65B0\u77E5\u8B58\uFF5C\u6297\u751F\u7D20\u8207\u7D30\u83CC\u611F\u67D3\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
+  { id: "knowledgeResistance", label: "\u65B0\u77E5\u8B58\uFF5C\u7D30\u83CC\u6297\u85E5\u6027\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
+  { id: "knowledgeLimits", label: "\u65B0\u77E5\u8B58\uFF5C\u6E05\u6670\u5340\u53CA\u91CD\u8907\u7684\u9650\u5236\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
+  { id: "knowledgeRevision", label: "\u65B0\u77E5\u8B58\uFF5C\u4EE5\u8B49\u64DA\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
+  { id: "knowledge", label: "\u65B0\u77E5\u8B58\u7E3D\u5206\uFF088\uFF09", group: "knowledge", max: 8, formula: ["knowledgeBacteria", "knowledgeResistance", "knowledgeLimits", "knowledgeRevision"] },
+  { id: "overall", label: "\u6574\u9AD4\u7E3D\u5206\uFF0832\uFF09", group: "score", max: 32, formula: ["sps", "knowledge"] },
+  { id: "marking", label: "\u8A55\u5206\u72C0\u614B", group: "score" }
+];
+function automaticScores(record) {
+  const checks = objectiveChecks(record), a = record.answers || {};
+  const plates = record.plates || [];
+  const accurate = plates.flatMap((plate) => SAMPLE_IDS.map((sample) => readingCheck(record, plate, sample, record.measurements?.[plate.id]?.[sample]))).filter((check) => check === true).length;
+  const cv = Array.isArray(a.cv) ? a.cv : [], cvReference = controlVariableReference(record);
+  const validCV = cv.every((value) => cvReference.includes(value)) && new Set(cv).size === cv.length;
+  const scores = {
+    readings: roundScore(Math.min(12, accurate) / 12 * 2),
+    iv: checks.iv ? 1 : 0,
+    dv: checks.dv ? 1 : 0,
+    cv: validCV ? roundScore(cvReference.filter((value) => cv.includes(value)).length / cvReference.length * 2) : 0,
+    assumptions: checks.assumptions ? 1 : 0,
+    means: SAMPLE_IDS.filter((sample) => meanCheck(record, sample) === true).length / 4,
+    deathLimit: checks.analysisDeath ? 0.5 : 0,
+    clinicalLimit: checks.analysisClinical ? 0.5 : 0,
+    graph: SAMPLE_IDS.filter((sample) => graphCheck(record, sample) === true).length / 2
+  };
+  if (currentAnalysis(record)) {
+    const conclusion = conclusionChecks(record);
+    scores.selectedConclusion = (conclusion.samples === true ? 0.5 : 0) + (conclusion.order === true ? 0.5 : 0);
+    delete scores.deathLimit;
+    delete scores.clinicalLimit;
+    delete scores.graph;
+    for (const question of MC_QUESTIONS) scores[question.id] = checks[question.id] ? 1 : 0;
+  }
+  return scores;
+}
+var RUBRIC_ROWS = [
+  ["\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF", 2, "\u6559\u5E2B", "\u6307\u51FA\u9752\u9EF4\u83CC\uFF08\u771F\u83CC\uFF09\u9644\u8FD1\u7684\u53EF\u898B\u7D30\u83CC\u751F\u9577\u8F03\u5C11\uFF0C\u4E26\u5206\u958B\u89C0\u5BDF\u8207\u63A8\u6E2C\u3002", "1\uFF1A\u63CF\u8FF0\u76F8\u95DC\u73FE\u8C61\u4F46\u4F4D\u7F6E\u6216\u89C0\u5BDF\uFF0F\u63A8\u6E2C\u5340\u5206\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u672A\u63D0\u4F9B\u53EF\u8A55\u7B54\u6848\u3001\u7121\u95DC\u6216\u628A\u6A5F\u5236\u7576\u4F5C\u76F4\u63A5\u89C0\u5BDF\u3002", "observing"],
+  ["\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u7D19\u789F\u5916\u6E05\u6670\u5340", 2, "\u81EA\u52D5", "12 \u500B\u6700\u5F8C\u8B80\u6578\u5747\u7B26\u5408\u6A21\u578B\u76F4\u5F91 \xB11 mm\uFF0C\u4E26\u6B63\u78BA\u5206\u8FA8\u7D19\u789F\u5916\u6709\uFF0F\u7121\u53EF\u898B\u6E05\u6670\u5340\u3002", "2 \xD7 \u7B26\u5408\u5169\u9805\u689D\u4EF6\u7684\u8B80\u6578\u6578\u76EE \xF7 12\uFF0C\u4FDD\u7559\u5169\u4F4D\u5C0F\u6578\u3002", "0\uFF1A\u6C92\u6709\u7B26\u5408\u5169\u9805\u689D\u4EF6\u7684\u8B80\u6578\u3002\u6C92\u6709\u6E05\u6670\u5340\u6642\uFF0C\u7E3D\u76F4\u5F91\u9808\u8A18 0\uFF0C\u4E26\u9078\u300C\u7121\u300D\u3002", "observing"],
+  ["\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF0F\u56E0\u8B8A\u91CF\uFF0F\u63A7\u5236\u8B8A\u91CF", 4, "\u81EA\u52D5", "\u7D19\u789F\u6240\u542B\u6A23\u672C\uFF081\uFF09\uFF1B\u662F\u5426\u6709\u6E05\u6670\u5340\u53CA\u7E3D\u76F4\u5F91\uFF081\uFF09\uFF1B\u4E94\u9805\u63A7\u5236\uFF1A\u7D19\u789F\u5927\u5C0F\u3001\u74CA\u8102\u677F\u7684\u6210\u4EFD\u3001\u4F7F\u7528\u7684\u7D30\u83CC\u7A2E\u985E\u3001\u521D\u59CB\u7D30\u83CC\u5206\u5E03\u3001\u5404\u6A23\u672C\u9810\u8A2D\u88FD\u5099\u689D\u4EF6\uFF082\uFF09\u3002", "\u4E94\u9805\u63A7\u5236\u8B8A\u91CF\u6BCF\u9805 2/5\uFF1B\u5168\u9078\u6B63\u78BA\u5F97 2\uFF1B\u6574\u6B04\u4FDD\u7559\u5169\u4F4D\u5C0F\u6578\u3002", "\u9078\u5165\u81EA\uFF0F\u56E0\u8B8A\u91CF\u7B49\u4E0D\u9069\u7576\u63A7\u5236\u9805\uFF0C\u63A7\u5236\u8B8A\u91CF\u6B04 0\uFF1B\u672A\u7B54\u6216\u5206\u985E\u932F\u8AA4 0\u3002", "classifying"],
+  ["\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u5BE6\u9A57\u524D\u63D0\u51FA\u53EF\u7528\u6A23\u672C\u8207\u8F09\u9AD4\u5C0D\u7167\u6BD4\u8F03\u7684\u9810\u6E2C\uFF0C\u4E26\u7D66\u51FA\u76F8\u95DC\u7406\u7531\u3002", "0.5\uFF1A\u53EF\u6E2C\u8A66\u9810\u6E2C\uFF0C\u4F46\u7406\u7531\u8F03\u8584\u5F31\u6216\u4E0D\u6E05\u695A\u3002", "0\uFF1A\u7121\u53EF\u6E2C\u8A66\u9810\u6E2C\u6216\u7121\u5BE6\u9A57\u524D\u8B49\u64DA\uFF1B\u5408\u7406\u4F46\u4E0D\u88AB\u7D50\u679C\u652F\u6301\u7684\u5047\u8AAA\u4E0D\u56E0\u6B64\u6263\u5206\u3002", "designing"],
+  ["\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u8AAA\u660E\u7368\u7ACB\u91CD\u8907\u53EF\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0F\u8B8A\u7570\uFF0C\u6B21\u6578\u5B89\u6392\u6709\u53EF\u884C\u6027\u7406\u7531\u3002", "0.5\uFF1A\u63D0\u53CA\u53EF\u9760\u6027\u4F46\u7F3A\u5C11\u7368\u7ACB\u6BD4\u8F03\u6216\u5B89\u6392\u7406\u7531\u3002", "0\uFF1A\u53EA\u6709\u6B21\u6578\u6216\u7121\u53EF\u8A55\u7406\u7531\u3002\u4E0D\u4EE5\u9078 3 \u6B21\u3001\u6B21\u6578\u8D8A\u591A\u7D66\u5206\u3002", "designing"],
+  ["\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u76F8\u540C\u8F09\u9AD4\u4F46\u4E0D\u542B\u6297\u751F\u7D20\u7684\u7D19\u789F\uFF0C\u89E3\u91CB\u6392\u9664\u8F09\u9AD4\uFF0F\u7D19\u789F\u5F71\u97FF\u53CA\u76F8\u540C\u689D\u4EF6\u3002", "0.5\uFF1A\u6709\u6070\u7576C\uFF08\u5C0D\u7167\uFF09\uFF0C\u4F46\u7406\u7531\u6216\u5171\u540C\u689D\u4EF6\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7F3A\u4E4F\u9069\u7576\u5C0D\u7167\uFF0C\u6216\u7121\u53EF\u8A55\u7406\u7531\u3002", "designing"],
+  ["\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D", 1, "\u81EA\u52D5", "\u53EA\u9078\u521D\u59CB\u5206\u5E03\u53EF\u6BD4\u8F03\u3001\u7121\u984D\u5916\u6C61\u67D3\u3001\u76F8\u540C\u6A21\u64EC\u689D\u4EF6\u3002", "\u5168\u7D44\u6B63\u78BA\u624D\u5F97 1\uFF1B\u672C\u9805\u7121\u90E8\u5206\u5206\u3002", "\u932F\u9078\u3001\u6F0F\u9078\u6216\u672A\u7B54\uFF1B\u4E0D\u80FD\u5047\u8A2D\u900F\u660E\u5340\u6240\u6709\u7D30\u83CC\u5FC5\u5B9A\u6B7B\u4EA1\u3002", "designing"],
+  ["\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA", 2, "\u6559\u5E2B", "\u6E05\u695A\u6A19\u793A X\u3001Y\u3001Z\u3001\u5C0D\u7167\uFF1B\u7559\u8DB3\u9593\u8DDD\u53CA\u908A\u7DE3\u8DDD\u96E2\uFF1B\u80FD\u53C3\u7167\u5716\uFF0F\u6587\u5B57\u516C\u5E73\u6BD4\u8F03\u3002", "1\uFF1A\u57FA\u672C\u53EF\u884C\u4F46\u7F3A\u5C11\u4E00\u9805\u4E3B\u8981\u5B89\u6392\u3002", "0\uFF1A\u7121\u6CD5\u516C\u5E73\u6BD4\u8F03\uFF0F\u7121\u53EF\u8A55\u8A2D\u8A08\uFF1B\u53EF\u7528\u6587\u5B57\u53D6\u4EE3\u7E6A\u5716\u3002", "conducting"],
+  ["\u5BE6\u4F5C\uFF5C\u6AA2\u67E5\u53CA\u6539\u5584\u65B9\u6CD5", 2, "\u6559\u5E2B", "\u4F9D\u81EA\u5DF1\u7684\u7D50\u679C\u53CA\u64CD\u4F5C\u7D00\u9304\uFF0C\u5408\u7406\u6AA2\u67E5\u5206\u5E03\u3001\u6C61\u67D3\u3001\u7D19\u789F\u4F4D\u7F6E\u6216\u5171\u540C\u689D\u4EF6\uFF0C\u8AAA\u660E\u5148\u67E5\u65B9\u6CD5\u6216\u518D\u6E2C\u8A66\u3002", "1\uFF1A\u63D0\u51FA\u76F8\u95DC\u6AA2\u67E5\uFF0C\u4F46\u672A\u9023\u7D50\u7D50\u679C\u6216\u6539\u5584\u7406\u7531\u3002", "0\uFF1A\u7121\u53EF\u8A55\u65B9\u6CD5\u8A55\u4F30\u3002\u4E0D\u8A55\u6ED1\u9F20\u7CBE\u5EA6\u3001\u62D6\u52D5\uFF0F\u9EDE\u64CA\u6578\u3001\u901F\u5EA6\u3001\u7528\u6642\u6216\u5B8C\u6210\u7387\u3002", "conducting"],
+  ["\u63A8\u8AD6\uFF5C\u5E73\u5747\u503C", 1, "\u81EA\u52D5", "\u56DB\u7D44\u5E73\u5747\u503C\u5747\u70BA\u81EA\u5DF1\u7684\u4E09\u500B\u6700\u5F8C\u8B80\u6578\u4E4B\u548C \xF73\uFF1B\u8F38\u5165\u4FDD\u7559 1 \u4F4D\u5C0F\u6578\uFF0C\u5BB9\u5DEE \xB10.1 mm\u3002", "\u6BCF\u7D44\u6B63\u78BA\u5F97 0.25\u3002\u4F9D\u5B78\u751F\u81EA\u5DF1\u7684\u8B80\u6578\uFF0C\u907F\u514D\u91CD\u8907\u6263\u91CF\u5EA6\u932F\u8AA4\u3002", "0\uFF1A\u6C92\u6709\u6B63\u78BA\u5E73\u5747\u503C\uFF0F\u7121\u6709\u6548\u81EA\u8EAB\u8B80\u6578\u3002", "inferring"],
+  ["\u63A8\u8AD6\uFF5C\u6B7B\u4EA1\u53CA\u81E8\u5E8A\u9650\u5236", 1, "\u81EA\u52D5", "\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\uFF080.5\uFF09\uFF1B\u6700\u5927\u5708\u4E0D\u80FD\u5224\u5B9A\u6700\u4F73\u81E8\u5E8A\u6CBB\u7642\uFF080.5\uFF09\u3002", "\u6BCF\u500B\u6B63\u78BA\u9078\u9805 0.5\u3002", "\u932F\u8AA4\u6216\u672A\u7B54 0\uFF1B\u672A\u77E5\u6A23\u672C\u4E0D\u4EE5\u5171\u7528\u754C\u7DDA\u5224\u5B9A\u654F\u611F\uFF0F\u6297\u85E5\u3002", "inferring"],
+  ["\u63A8\u8AD6\uFF5C\u5C0D\u7167\u53CA\u91CD\u8907\u8B49\u64DA", 2, "\u6559\u5E2B", "\u4EE5\u6A23\u672C\uFF0F\u5C0D\u7167\u3001\u4E09\u7247\u7368\u7ACB\u74CA\u8102\u677F\u6578\u64DA\u89E3\u91CB\u5047\u8AAA\u652F\u6301\u7A0B\u5EA6\u53CA\u8B8A\u7570\uFF0C\u4E26\u63D0\u51FA\u6709\u754C\u7DDA\u7684\u7D50\u8AD6\u3002", "1\uFF1A\u6709\u76F8\u95DC\u6578\u64DA\u6216\u5224\u65B7\uFF0C\u4F46\u5C0D\u7167\u3001\u91CD\u8907\u6216\u63A8\u8AD6\u754C\u7DDA\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7121\u6578\u64DA\u652F\u6301\uFF0F\u6838\u5FC3\u63A8\u8AD6\u932F\u8AA4\u3002\u539F\u59CB\u5047\u8AAA\u672A\u7372\u652F\u6301\u4ECD\u53EF\u5F97\u6EFF\u5206\u3002", "inferring"],
+  ["\u6E9D\u901A\uFF5C\u68D2\u5F62\u5716", 2, "\u81EA\u52D5", "X\u3001Y\u3001Z\u3001C\uFF08\u5C0D\u7167\uFF09\u56DB\u68D2\u8207\u81EA\u5DF1\u7684\u5DF2\u8F38\u5165\u5E73\u5747\u503C\u76F8\u7B26\uFF08\xB10.5 mm\uFF09\uFF1B\u985E\u5225\u4E0D\u9023\u7DDA\u3002", "\u6BCF\u7D44\u6B63\u78BA\u5F97 0.5\uFF1B\u5FC5\u9808\u78BA\u8A8D\u5716\u8868\u3002", "0\uFF1A\u7121\u7B26\u5408\u68D2\u9AD8\uFF1B\u4E0D\u518D\u4EE5\u6A21\u578B\u8B80\u6578\u6263\u5E73\u5747\u503C\uFF0F\u91CF\u5EA6\u932F\u8AA4\u3002", "communicating"],
+  ["\u6E9D\u901A\uFF5C\u66F8\u9762\u8868\u9054", 2, "\u6559\u5E2B", "\u7528\u6E05\u6670\u7684\u6A23\u672C\u540D\u7A31\u3001\u6578\u64DA\u3001\u55AE\u4F4D\u53CA\u6BD4\u8F03\u8A9E\u53E5\u50B3\u9054\u8A2D\u8A08\u3001\u5206\u6790\u53CA\u7D50\u8AD6\u3002", "1\uFF1A\u53EF\u7406\u89E3\uFF0C\u4F46\u7F3A\u5C11\u5FC5\u8981\u6A19\u793A\u6216\u8868\u8FF0\u542B\u7CCA\u3002", "0\uFF1A\u6C92\u6709\u53EF\u8A55\u8868\u9054\u6216\u7121\u6CD5\u7406\u89E3\uFF1B\u8207\u6982\u5FF5\u6B63\u78BA\u6027\u5206\u958B\u8A55\u3002", "communicating"],
+  ["\u65B0\u77E5\u8B58\uFF5C\u6297\u751F\u7D20\u8207\u7D30\u83CC", 2, "\u6559\u5E2B", "\u6B63\u78BA\u8AAA\u660E\u6297\u751F\u7D20\u6291\u5236\uFF0F\u6BBA\u6B7B\u7D30\u83CC\uFF0C\u5C0D\u75C5\u6BD2\u611F\u67D3\u7121\u6548\uFF0C\u4F5C\u7528\u6A5F\u5236\u662F\u88DC\u5145\u77E5\u8B58\u800C\u975E\u672C\u5BE6\u9A57\u76F4\u63A5\u8B49\u660E\u3002", "1\uFF1A\u6B63\u78BA\u63D0\u53CA\u7D30\u83CC\uFF0F\u75C5\u6BD2\u5340\u5225\u6216\u4F5C\u7528\uFF0C\u4F46\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u6838\u5FC3\u6982\u5FF5\u932F\u8AA4\u6216\u7121\u53EF\u8A55\u5167\u5BB9\u3002", "knowledge"],
+  ["\u65B0\u77E5\u8B58\uFF5C\u7D30\u83CC\u6297\u85E5\u6027", 2, "\u6559\u5E2B", "\u6297\u85E5\u6027\u662F\u7D30\u83CC\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1B\u539F\u6709\u6297\u85E5\u7D30\u83CC\u8F03\u6613\u5B58\u6D3B\u53CA\u7E41\u6B96\uFF1B\u4E0D\u8AAA\u4EBA\u7684\u8EAB\u9AD4\u7FD2\u6163\u85E5\u7269\uFF0F\u7D30\u83CC\u6709\u76EE\u7684\u9069\u61C9\u3002", "1\uFF1A\u57FA\u672C\u63CF\u8FF0\u6B63\u78BA\uFF0C\u9078\u64C7\uFF0F\u7E41\u6B96\u9023\u7D50\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u6838\u5FC3\u6982\u5FF5\u932F\u8AA4\u6216\u7121\u53EF\u8A55\u5167\u5BB9\u3002", "knowledge"],
+  ["\u65B0\u77E5\u8B58\uFF5C\u6E05\u6670\u5340\u8207\u91CD\u8907\u9650\u5236", 2, "\u6559\u5E2B", "\u8AAA\u660E\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF0C\u4E0D\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\u6216\u6700\u4F73\u6CBB\u7642\uFF1B\u91CD\u8907\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0C\u4E0D\u4FDD\u8B49\u53EF\u9760\uFF0C\u64F4\u6563\uFF0F\u7D19\u789F\u542B\u91CF\u4EA6\u5F71\u97FF\u3002", "1\uFF1A\u81F3\u5C11\u6B63\u78BA\u8AAA\u660E\u4E00\u9805\u63A8\u8AD6\u9650\u5236\u6216\u91CD\u8907\u50F9\u503C\uFF0C\u4F46\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7121\u53EF\u8A55\u5167\u5BB9\uFF0F\u628A 3 \u6B21\u7576\u6210\u53EF\u9760\u4FDD\u8B49\u3002", "knowledge"],
+  ["\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB", 2, "\u6559\u5E2B", "\u6BD4\u8F03\u539F\u59CB\u5047\u8AAA\u53CA\u91CD\u8907\u8A08\u5283\uFF0C\u5F15\u7528\u6A23\u672C\uFF0F\u5C0D\u7167\u548C\u7368\u7ACB\u91CD\u8907\u6578\u64DA\uFF0C\u4EE5\u5B78\u7FD2\u91CD\u9EDE\u4FEE\u8A02\uFF0F\u5B8C\u5584\uFF0C\u4EA4\u4EE3\u4ECD\u4E0D\u80FD\u78BA\u5B9A\u751A\u9EBC\u3002", "1\uFF1A\u6709\u4FEE\u8A02\u6216\u5224\u65B7\uFF0C\u4F46\u7F3A\u5C11\u6578\u64DA\uFF0F\u6982\u5FF5\u9023\u7D50\u3002", "0\uFF1A\u53EA\u6284\u77E5\u8B58\uFF0C\u672A\u5C0D\u7167\u539F\u6709\u60F3\u6CD5\uFF0C\u6216\u7121\u53EF\u8A55\u53CD\u601D\u3002", "knowledge"],
+  ["\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B", 32, "\u516C\u5F0F", "\u516D\u9805 SPS \u5404 4\uFF1D24\uFF0C\u56DB\u9805\u65B0\u77E5\u8B58\u5404 2\uFF1D8\uFF1B12 \u500B\u5FC5\u8981\u4EBA\u5DE5\u8A55\u5206\u683C\u586B\u5B8C\u4E14\u53CD\u601D\u5DF2\u63D0\u4EA4\uFF0C\u624D\u986F\u793A\u6574\u9AD4\u7E3D\u5206\u3002", "\u4EBA\u5DE5\u683C\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF0C\u586B 0\uFF1D\u5DF2\u8A55\u96F6\u5206\uFF1B\u5206\u6578\u53EA\u4FDD\u5B58\u65BC\u6559\u5E2B\u4FDD\u5B58\u7684 Excel\u3002", "\u4E0D\u628A\u64CD\u4F5C\u6B21\u6578\u3001\u901F\u5EA6\u3001\u6642\u9593\u6216\u5B8C\u6210\u7387\u76F4\u63A5\u63DB\u7B97\u80FD\u529B\u3002\u6B64 rubric \u5F85\u8A66\u6559\u53CA\u8DE8 VL \u6821\u6E96\u3002", "score"]
+];
+var CURRENT_SCORE_COLUMNS = [
+  ...SCORE_COLUMNS.filter((column) => ["observation", "readings", "iv", "dv", "cv", "hypothesis", "repeat", "control", "assumptions", "designQuality", "means"].includes(column.id)),
+  ...MC_QUESTIONS.map((question) => ({ id: question.id, label: `\u5206\u6790\uFF5C\u7B2C ${question.number} \u984C\uFF08\u81EA\u52D5\uFF09`, group: "inferring", max: 1 })),
+  { id: "selectedConclusion", label: "\u7D50\u8AD6\uFF5C\u6A23\u672C\u9078\u64C7\u53CA\u6392\u5E8F\uFF08\u81EA\u52D5\uFF09", group: "communicating", max: 1 },
+  { id: "reflection", label: "\u53CD\u601D\uFF5C\u5BE6\u9A57\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7\u89E3\u91CB\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
+  { id: "overall", label: "\u65B0\u7248\u6574\u9AD4\u7E3D\u5206\uFF0823\uFF09", group: "score", max: 23, formula: ["observation", "readings", "iv", "dv", "cv", "hypothesis", "repeat", "control", "assumptions", "designQuality", "means", ...MC_QUESTIONS.map((question) => question.id), "selectedConclusion", "reflection"] },
+  { id: "marking", label: "\u8A55\u5206\u72C0\u614B", group: "score" }
+];
+var CURRENT_RUBRIC_ROWS = [
+  ...RUBRIC_ROWS.filter((row) => ["\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF", "\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF0F\u56E0\u8B8A\u91CF\uFF0F\u63A7\u5236\u8B8A\u91CF", "\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531", "\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531", "\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531", "\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D", "\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA", "\u63A8\u8AD6\uFF5C\u5E73\u5747\u503C", "\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB"].includes(row[0])).map((row) => row[0] === "\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB" ? ["\u53CD\u601D\uFF5C\u5BE6\u9A57\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7\u89E3\u91CB", 2, "\u6559\u5E2B", "\u5F15\u7528\u6A23\u672C\u8B80\u6578\u652F\u6301\u6291\u5236\u751F\u9577\uFF1B\u9023\u7D50\u539F\u6709\u6297\u6027\u5DEE\u7570\u3001\u4E0D\u540C\u5B58\u6D3B\u8207\u7E41\u6B96\u6A5F\u6703\u3001\u6297\u6027\u7279\u5FB5\u907A\u50B3\u53CA\u7FA4\u843D\u6BD4\u4F8B\u6539\u8B8A\uFF0C\u89E3\u91CB\u6548\u679C\u6E1B\u5F31\u3002", "1\uFF1A\u6709\u5408\u7406\u5BE6\u9A57\u5224\u65B7\u6216\u9078\u64C7\u4F5C\u7528\u89E3\u91CB\uFF0C\u4F46\u7F3A\u5C11\u8B80\u6578\u6216\u56E0\u679C\u9023\u7D50\u3002", "0\uFF1A\u7121\u76F8\u95DC\u8B49\u64DA\u8207\u5408\u7406\u6982\u5FF5\u89E3\u91CB\uFF0C\u6216\u8A8D\u70BA\u7D30\u83CC\u70BA\u751F\u5B58\u800C\u4E3B\u52D5\u7522\u751F\u6297\u6027\u3002", "knowledge"] : row),
+  ...MC_QUESTIONS.map((question) => [`\u5206\u6790\uFF5C\u7B2C ${question.number} \u984C\uFF1A${question.id}`, 1, "\u81EA\u52D5", `\u53C3\u8003\u9078\u9805\uFF1A${String.fromCharCode(65 + question.options.findIndex(([value]) => value === question.correct))}\u3002`, "\u672C\u984C\u4E0D\u8A2D\u90E8\u5206\u5206\u3002", "\u932F\u9078\u6216\u672A\u7B54 0\u3002", "inferring"]),
+  ["\u7D50\u8AD6\uFF5C\u6A23\u672C\u9078\u64C7\u53CA\u6392\u5E8F", 1, "\u81EA\u52D5", "\u6709\u6548\u6A23\u672C\u6309\u6A21\u578B\u5224\u65B7\uFF08X\u3001Z\uFF09\uFF0C\u6B63\u78BA\u5F97 0.5\uFF1B\u6392\u5E8F\u6309\u5B78\u751F\u8B80\u6578\u8A08\u7B97\u7684\u5E73\u5747\u503C\u5224\u65B7\uFF0C\u6B63\u78BA\u5F97 0.5\uFF0C\u672A\u4F7F\u7528\u7684\u4F4D\u7F6E\u5FC5\u9808\u9078\u4E0D\u9069\u7528\u3002", "0.5\uFF1A\u6A23\u672C\u9078\u64C7\u6216\u6392\u5E8F\u5176\u4E2D\u4E00\u9805\u6B63\u78BA\u3002", "0\uFF1A\u5169\u9805\u5747\u932F\u6216\u8CC7\u6599\u4E0D\u8DB3\uFF1B\u76F8\u540C\u5E73\u5747\u503C\u63A5\u53D7\u4EFB\u4E00\u5148\u5F8C\u6B21\u5E8F\uFF0C\u4E0D\u91CD\u8907\u6263\u91CF\u5EA6\u8AA4\u5DEE\u3002", "communicating"],
+  ["\u65B0\u7248\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B", 23, "\u516C\u5F0F", "\u6CBF\u7528\u8A2D\u8A08\u53CA\u91CF\u5EA6\u6E96\u5247\uFF1B\u65B0\u589E\u4E94\u984C\u5404 1 \u5206\u3001\u9078\u586B\u7D50\u8AD6 1 \u5206\u3001\u53CD\u601D 2 \u5206\u3002\u516D\u500B\u4EBA\u5DE5\u683C\u586B\u5B8C\u4E14\u53CD\u601D\u5DF2\u63D0\u4EA4\u624D\u986F\u793A\u7E3D\u5206\u3002", "\u522A\u9664\u5716\u8868\u53CA\u820A\u5206\u6790\u984C\u7684\u8A55\u5206\uFF1B\u65B0\u7248\u8207\u820A\u7248\u5206\u958B\uFF0C\u4E0D\u76F4\u63A5\u6BD4\u8F03\u5169\u7248\u7E3D\u5206\u3002", "\u6B64\u6E96\u5247\u70BA\u8A66\u6559\u8349\u6848\uFF0C\u9700\u914D\u5408\u984C\u76EE\u6539\u52D5\u6821\u6E96\uFF1B\u4E0D\u628A\u64CD\u4F5C\u901F\u5EA6\u3001\u6B21\u6578\u6216\u5B8C\u6210\u7387\u63DB\u7B97\u80FD\u529B\u3002", "score"]
+];
+
+// reports.js
+var esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+var tr = (language2, zh, en) => language2 === "en" ? glossEnglish(en) : zh;
+var dateText = (value, language2 = "zh") => {
+  if (!value) return tr(language2, "\u672A\u63D0\u4EA4", "Not submitted");
+  const date = new Date(value);
+  return Number.isFinite(date.getTime()) ? date.toLocaleString(language2 === "en" ? "en-GB" : "zh-HK", { timeZone: "Asia/Hong_Kong", hour12: false }) : String(value);
+};
+var imagePattern = /^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+/=]+$/;
+var sampleName = (sample, language2) => sample === "C" ? tr(language2, "C\uFF08\u5C0D\u7167\uFF09", "C (control)") : sample;
+var notAnswered = (language2) => tr(language2, "\u672A\u56DE\u7B54", "Not answered");
+var ANSWER_FIELDS = [
+  ["observation", ...L.observation, "observing"],
+  ["prediction", "\u4F60\u9810\u6E2C\u54EA\u4E9B\u6A23\u672C\u6703\u51FA\u73FE\u7D19\u789F\u5916\u7684\u53EF\u898B\u6E05\u6670\u5340\uFF1F", "Which samples do you predict will have a visible zone outside the disc?", "designing"],
+  ["largestPrediction", ...L.largestPrediction, "designing"],
+  ["reason", ...L.hypothesisReason, "designing"],
+  ["iv", "\u7368\u7ACB\u8B8A\u91CF\uFF1A\u672C\u6B21\u6539\u8B8A\u751A\u9EBC\uFF1F", "Independent variable: what do we change?", "classifying"],
+  ["dv", "\u56E0\u8B8A\u91CF\uFF1A\u672C\u6B21\u89C0\u5BDF\u53CA\u91CF\u5EA6\u751A\u9EBC\uFF1F", "Dependent variable: what do we observe and measure?", "classifying"],
+  ["cv", "\u63A7\u5236\u8B8A\u91CF\uFF1A\u54EA\u4E9B\u689D\u4EF6\u4FDD\u6301\u76F8\u540C\uFF1F", "Controlled variables: what stays the same?", "classifying"],
+  ["assumptions", "\u63A2\u7A76\u5047\u8A2D", "Assumptions for a fair investigation", "designing"],
+  ["controlPlan", ...L.controlPlan, "designing"],
+  ["designDescription", "\u74CA\u8102\u677F\u4F4D\u7F6E\u53CA\u5BE6\u9A57\u8A2D\u8A08\u6587\u5B57", "Plate positions and experiment setup", "conducting"],
+  ["plannedReplicates", ...L.plannedReplicates, "designing"],
+  ["plannedReplicateReason", ...L.plannedReplicateReason, "designing"],
+  ["analysisControl", "C\uFF08\u5C0D\u7167\uFF09\u7684\u751F\u9577\u60C5\u6CC1\u5982\u4F55\uFF1F\u5B83\u63D0\u4F9B\u751A\u9EBC\u6BD4\u8F03\u57FA\u790E\uFF1F", "What growth is visible around C (control)? What comparison does it provide?", "inferring"],
+  ["analysisConsistent", "\u54EA\u4E9B\u6A23\u672C\u5728\u4E09\u6B21\u6E2C\u8A66\u5747\u51FA\u73FE\u53EF\u898B\u6E05\u6670\u5340\uFF1F", "Which samples show a visible zone in all three tests?", "inferring"],
+  ["analysisVariation", "\u540C\u4E00\u6A23\u672C\u7684\u4E09\u6B21\u7D50\u679C\u662F\u5426\u4E00\u81F4\uFF1F\u8ACB\u5F15\u7528\u6578\u64DA\u3002", "Are the three results for each sample consistent? Use your data.", "inferring"],
+  ["analysisMethod", "\u5982\u679C\u5DEE\u7570\u8F03\u5927\uFF0C\u9700\u8981\u6AA2\u67E5\u54EA\u4E9B\u64CD\u4F5C\u6216\u689D\u4EF6\uFF1F", "If the results vary greatly, which methods or conditions should you check?", "conducting"],
+  ["analysisHypothesis", "\u7D50\u679C\u5982\u4F55\u652F\u6301\u6216\u4E0D\u652F\u6301\u4F60\u7684\u5047\u8AAA\uFF1F", "How do the results support or challenge your hypothesis?", "inferring"],
+  ["analysisRepeatPlan", "\u539F\u59CB\u91CD\u8907\u5B89\u6392\u8207\u672C\u6B21\u4E09\u6B21\u6E2C\u8A66\u76F8\u6BD4\uFF0C\u6709\u4F55\u9700\u8981\u4FEE\u8A02\uFF1F", "How would you revise your original repeat plan after these three tests?", "inferring"],
+  ["analysisRepeatValue", "\u91CD\u8907\u600E\u6A23\u5E6B\u52A9\u5224\u65B7\u4E00\u81F4\u6027\uFF1F\u4E0D\u7A69\u5B9A\u6642\u5148\u6AA2\u67E5\u65B9\u6CD5\u9084\u662F\u518D\u6E2C\u8A66\uFF1F", "How do repeats help you judge consistency? If results remain unstable, should you check the method or do more tests?", "inferring"],
+  ["analysisDeath", "\u6C92\u6709\u53EF\u898B\u751F\u9577\uFF0C\u80FD\u5426\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\uFF1F", "Does no visible growth prove that all the bacteria are dead?", "inferring"],
+  ["analysisClinical", "\u6700\u5927\u6E05\u6670\u5340\u662F\u5426\u4E00\u5B9A\u4EE3\u8868\u81E8\u5E8A\u6CBB\u7642\u6700\u4F73\uFF1F", "Does the largest zone necessarily indicate the best clinical treatment?", "inferring"],
+  ["conclusion", "\u4F60\u7684\u7D50\u8AD6\uFF1A\u689D\u4EF6\u3001\u7368\u7ACB\u6B21\u6578\u3001\u8B49\u64DA\u8207\u63A8\u8AD6\u754C\u7DDA", "Your conclusion: conditions, independent tests, evidence and limits", "communicating"],
+  ["knowledgeBacteria", "\u6297\u751F\u7D20\u4E3B\u8981\u91DD\u5C0D\u751A\u9EBC\uFF1F", "What do antibiotics act against?", "knowledge"],
+  ["knowledgeResistance", "\u6297\u85E5\u6027\u63CF\u8FF0\u8AB0\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1F", "Whose response to a drug does resistance describe?", "knowledge"],
+  ["knowledgeLimits", "\u6E05\u6670\u5340\u53CA\u91CD\u8907\u6E2C\u8A66\u80FD\u652F\u6301\u751A\u9EBC\uFF1F", "What can zones and repeated tests support?", "knowledge"],
+  ["reflection", ...L.reflectionQuestion, "knowledge"]
+];
+var CURRENT_ANSWER_FIELDS = [
+  ...ANSWER_FIELDS.filter(([field2]) => !field2.startsWith("analysis") && !field2.startsWith("knowledge") && field2 !== "conclusion" && field2 !== "reflection"),
+  ...MC_QUESTIONS.map((question) => [question.id, ...L[question.key], "inferring"]),
+  ...CONCLUSION_FIELDS.map((field2) => [field2, ...L[field2], "communicating"]),
+  ANSWER_FIELDS.find(([field2]) => field2 === "reflection")
+];
+var CHOICES = {
+  sample: ["\u7D19\u789F\u6240\u542B\u6A23\u672C", "The sample carried by each disc"],
+  zone: ["\u6709\u7121\u53EF\u898B\u6E05\u6670\u5340\u53CA\u6E05\u6670\u5340\u7E3D\u76F4\u5F91", "Visible zone presence and total zone diameter"],
+  strain: ["\u540C\u4E00\u7A2E\u6A21\u64EC\u7D30\u83CC", "The same simulated bacterial strain"],
+  distribution: ["\u53EF\u6BD4\u8F03\u7684\u521D\u59CB\u7D30\u83CC\u5206\u5E03", "Comparable initial bacterial distribution"],
+  medium: ["\u76F8\u540C\u57F9\u990A\u57FA\u689D\u4EF6", "The same agar conditions"],
+  disc: ["\u76F8\u540C\u7D19\u789F\u5927\u5C0F", "The same disc size"],
+  preparation: ["\u5404\u6A23\u672C\u9810\u8A2D\u88FD\u5099\u689D\u4EF6", "Preset sample preparation conditions"],
+  observation: ["\u76F8\u540C\u6A21\u64EC\u57F9\u990A\u53CA\u89C0\u5BDF\u689D\u4EF6", "The same simulated incubation and observation conditions"],
+  sterile: ["\u5668\u6750\u4E0D\u6703\u5E36\u5165\u984D\u5916\u6C61\u67D3", "Equipment does not add contamination"],
+  sameConditions: ["\u5404\u74CA\u8102\u677F\u63A1\u7528\u76F8\u540C\u6A21\u64EC\u689D\u4EF6", "The plates use the same simulated conditions"],
+  death: ["\u6CA1\u6709\u53EF\u898B\u751F\u9577\u5FC5\u5B9A\u4EE3\u8868\u5168\u90E8\u6B7B\u4EA1", "No visible growth must mean all bacteria are dead"],
+  all: ["\u5168\u90E8\u6A23\u672C", "All samples"],
+  some: ["\u90E8\u5206\u6A23\u672C", "Some samples"],
+  none: ["\u90FD\u4E0D\u6703", "No samples"],
+  yes: ["\u6703", "Yes"],
+  no: ["\u4E0D\u6703", "No"],
+  cannot: ["\u4E0D\u80FD", "Cannot"],
+  can: ["\u80FD", "Can"],
+  bacteria: ["\u7D30\u83CC", "Bacteria"],
+  viruses: ["\u75C5\u6BD2", "Viruses"],
+  body: ["\u4EBA\u7684\u8EAB\u9AD4", "The human body"],
+  limited: ["\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u5230\u6291\u5236\uFF0C\u91CD\u8907\u53EF\u6AA2\u67E5\u4E00\u81F4\u6027\uFF1B\u4ECD\u6709\u63A8\u8AD6\u9650\u5236", "Local visible growth is inhibited; repeats check consistency, with limits on inference"],
+  guaranteed: ["\u6700\u5927\u6E05\u6670\u5340\u53CA\u4E09\u6B21\u6E2C\u8A66\u4FDD\u8B49\u6700\u4F73\u6CBB\u7642", "The largest zone and three repeats guarantee the best treatment"]
+};
+var choiceFields = /* @__PURE__ */ new Set(["prediction", "largestPrediction", "iv", "dv", "cv", "assumptions", "analysisDeath", "analysisClinical", "knowledgeBacteria", "knowledgeResistance", "knowledgeLimits"]);
+var variableKeys = { sample: "vSample", zone: "vZone", strain: "vStrain", distribution: "vDistribution", medium: "vMedium", disc: "vDisc", preparation: "vPreparation", observation: "vObservation" };
+var fieldChoiceKeys = {
+  prediction: { X: "predictionX", Y: "predictionY", Z: "predictionZ", X_Y: "predictionXY", X_Z: "predictionXZ", Y_Z: "predictionYZ", all: "all", some: "some", none: "none" },
+  largestPrediction: { na: "notApplicable" },
+  iv: variableKeys,
+  dv: variableKeys,
+  cv: variableKeys,
+  assumptions: { distribution: "assumptionDistribution", sterile: "assumptionSterile", sameConditions: "assumptionSame", death: "assumptionDeath" },
+  analysisDeath: { can: "can", cannot: "cannot" },
+  analysisClinical: { can: "can", cannot: "cannot" },
+  knowledgeBacteria: { bacteria: "bacteria", viruses: "viruses" },
+  knowledgeResistance: { bacteria: "resistanceBacteria", body: "resistanceBody" },
+  knowledgeLimits: { limited: "limited", best: "bestDrug" }
+};
+for (const question of MC_QUESTIONS) fieldChoiceKeys[question.id] = Object.fromEntries(question.options);
+fieldChoiceKeys.effectiveSamples = Object.fromEntries(EFFECTIVE_OPTIONS);
+for (const field2 of CONCLUSION_FIELDS.slice(1)) fieldChoiceKeys[field2] = { na: "notApplicable", C: "blank" };
+function answerDisplay(field2, value, language2 = "zh") {
+  if (value === null || value === void 0 || value === "" || Array.isArray(value) && !value.length) return notAnswered(language2);
+  if (Array.isArray(value)) return value.map((item) => answerDisplay(field2, item, language2)).join(tr(language2, "\uFF1B", "; "));
+  const label2 = L[fieldChoiceKeys[field2]?.[value]] || choiceFields.has(field2) && CHOICES[value];
+  return label2 ? field2 === "prediction" && ["X", "Y", "Z", "X_Y", "X_Z", "Y_Z"].includes(value) && language2 !== "en" ? label2[0].replace(/的$/, "") : tr(language2, label2[0], label2[1]) : String(value);
+}
+function referenceFor(field2, record, language2) {
+  const refs = {
+    observation: ["\u9752\u9EF4\u83CC\uFF08\u771F\u83CC\uFF09\u9644\u8FD1\u6709\u6E05\u6670\u5340\uFF0C\u5373\u6C92\u6709\u53EF\u898B\u7D30\u83CC\u751F\u9577\u7684\u5340\u57DF\uFF1B\u9019\u662F\u89C0\u5BDF\uFF0C\u539F\u56E0\u4ECD\u9700\u6BD4\u8F03\u3002", "A clear zone with no visible bacterial growth is present near Penicillium (a fungus). This is an observation; its cause needs testing."],
+    prediction: ["\u5408\u7406\u53EF\u6E2C\u8A66\u7684\u5BE6\u9A57\u524D\u9810\u6E2C\u53EF\u4EE5\u8207\u7D50\u679C\u4E0D\u540C\uFF1B\u9810\u6E2C\u53EF\u4EE5\u8207\u7D50\u679C\u4E0D\u540C\uFF1B\u5408\u7406\u7684\u63A8\u6E2C\u4E0D\u9700\u731C\u4E2D\u3002", "A reasonable testable prediction may differ from the results. A reasoned prediction does not have to match the outcome."],
+    largestPrediction: ["\u6839\u64DA\u64F4\u6563\u53CA\u7D30\u83CC\u751F\u9577\u63D0\u51FA\u5408\u7406\u9810\u6E2C\uFF1B\u82E5\u9810\u6E2C\u6C92\u6709\u6E05\u6670\u5340\uFF0C\u53EF\u9078\u4E0D\u9069\u7528\u3002\u9810\u6E2C\u5927\u5C0F\u4E0D\u9700\u731C\u4E2D\u7D50\u679C\u3002", "Give a reasoned prediction based on diffusion and bacterial growth. Choose not applicable if you predict no clear zones. The prediction need not match the result."],
+    reason: ["\u8AAA\u660E\u8207\u7D30\u83CC\u751F\u9577\u53CA\u53EF\u89C0\u5BDF\u73FE\u8C61\u76F8\u95DC\u7684\u7406\u7531\u3002", "Explain a reason related to bacterial growth and observable evidence."],
+    controlPlan: ["\u7528\u76F8\u540C\u8F09\u9AD4\u4F46\u4E0D\u542B\u6297\u751F\u7D20\u7684\u7D19\u789F\uFF0C\u6392\u9664\u8F09\u9AD4\uFF0F\u7D19\u789F\u5F71\u97FF\uFF1B\u5176\u9918\u689D\u4EF6\u4FDD\u6301\u76F8\u540C\u3002\u53EA\u6709\u6240\u6709\u8F09\u9AD4\u90FD\u662F\u6C34\u6642\u624D\u7A31\u6C34\u5C0D\u7167\u3002", "Use a matching carrier-only disc without antibiotic to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water."],
+    designDescription: ["\u6E05\u695A\u6A19\u793A\u6A23\u672C\u8207\u5C0D\u7167\uFF0C\u7559\u8DB3\u9593\u8DDD\u53CA\u908A\u7DE3\u8DDD\u96E2\uFF0C\u907F\u514D\u6E05\u6670\u5340\u4E92\u76F8\u5E72\u64FE\uFF1B\u53EF\u7528\u5716\u50CF\u6216\u6587\u5B57\u8868\u9054\u3002", "Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable."],
+    plannedReplicates: ["\u6B21\u6578\u5305\u62EC\u7B2C\u4E00\u6B21\u3002\u9078\u4E09\u6B21\u4E0D\u662F\u6A19\u6E96\u7B54\u6848\uFF1B\u6B21\u6578\u591A\u4E0D\u4FDD\u8B49\u53EF\u9760\u3002", "Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability."],
+    plannedReplicateReason: ["\u8003\u616E\u4E00\u81F4\u6027\u3001\u8B8A\u7570\u3001\u516C\u5E73\u6BD4\u8F03\u53CA\u8AB2\u5802\u53EF\u884C\u6027\u3002", "Consider consistency, variation, fair comparisons and practical feasibility."],
+    analysisControl: ["\u672C\u6A21\u578B\u7684 C\uFF08\u5C0D\u7167\uFF09\u6C92\u6709\u7D19\u789F\u5916\u6E05\u6670\u5340\uFF1B\u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u8A18\u70BA 0 mm\u3002\u5B83\u63D0\u4F9B\u4E0D\u542B\u6297\u751F\u7D20\u7684\u6BD4\u8F03\u57FA\u790E\u3002", "The model C (control) has no visible zone outside the disc. Its clear-zone diameter is recorded as 0 mm. It provides an antibiotic-free comparison."],
+    analysisConsistent: ["\u4F9D\u4E09\u7247\u74CA\u8102\u677F\u5BE6\u969B\u8CC7\u6599\u5224\u65B7\u3002\u672C\u6A21\u578B X\u3001Z \u5404\u6B21\u6709\u5916\u570D\u6E05\u6670\u5340\uFF0CY \u53CA C\uFF08\u5C0D\u7167\uFF09\u6C92\u6709\u3002", "Use all three plate records. In this model, X and Z have visible zones in each test; Y and C (control) do not."],
+    analysisVariation: ["\u5F15\u7528\u81EA\u5DF1\u7684\u4E09\u6B21\u8B80\u6578\uFF0C\u5206\u958B\u7D50\u679C\u8DA8\u52E2\u8207\u74CA\u8102\u677F\u9593\u8B8A\u7570\u3002", "Quote your three readings and distinguish a consistent pattern from variation between plates."],
+    analysisMethod: ["\u53EF\u6AA2\u67E5\u521D\u59CB\u5206\u5E03\u3001\u6C61\u67D3\u3001\u7D19\u789F\u4F4D\u7F6E\u3001\u88FD\u5099\u53CA\u5171\u540C\u89C0\u5BDF\u689D\u4EF6\uFF1B\u7D50\u679C\u4E0D\u7A69\u5B9A\u6642\u5148\u67E5\u65B9\u6CD5\uFF0C\u518D\u8003\u616E\u984D\u5916\u6E2C\u8A66\u3002", "Check initial distribution, contamination, disc positions, preparation and shared observation conditions. Investigate unstable methods before considering more tests."],
+    analysisHypothesis: ["\u4EE5\u81EA\u5DF1\u7684\u6A23\u672C\uFF0F\u5C0D\u7167\u53CA\u91CD\u8907\u7D50\u679C\u8A55\u4F30\u539F\u59CB\u5047\u8AAA\u3002\u672A\u7372\u652F\u6301\u4ECD\u53EF\u4F5C\u6709\u8B49\u64DA\u7684\u4FEE\u8A02\u3002", "Evaluate your original hypothesis using your sample\u2013control and repeated results. An unsupported hypothesis can still lead to an evidence-based revision."],
+    analysisRepeatPlan: ["\u5C0D\u7167\u81EA\u5DF1\u539F\u59CB\u5B89\u6392\uFF0C\u8AAA\u660E\u4FDD\u7559\u6216\u4FEE\u8A02\u7684\u7406\u7531\u3002", "Compare your original plan and explain why you would keep or revise it."],
+    analysisRepeatValue: ["\u7368\u7ACB\u91CD\u8907\u53EF\u8A55\u4F30\u4E00\u81F4\u6027\u53CA\u8B8A\u7570\uFF1B\u4E09\u6B21\u662F\u8AB2\u5802\u5B89\u6392\uFF0C\u4E0D\u662F\u53EF\u9760\u6027\u4FDD\u8B49\u3002", "Independent repeats help assess consistency and variation. Three tests are a classroom arrangement, not a guarantee of reliability."],
+    analysisDeath: ["\u4E0D\u80FD\u3002\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u80FD\u5340\u5206\u6BBA\u83CC\u8207\u6291\u83CC\uFF0C\u4E5F\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u7D30\u83CC\u6B7B\u4EA1\u3002", "Cannot. No visible growth cannot distinguish killing from growth inhibition or prove that all bacteria are dead."],
+    analysisClinical: ["\u4E0D\u80FD\u3002\u64F4\u6563\u7279\u6027\u3001\u7D19\u789F\u542B\u91CF\u3001\u7279\u5B9A\u7A2E\u985E\u7684\u7D30\u83CC\u53CA\u6E2C\u8A66\u689D\u4EF6\u6703\u5F71\u97FF\u7D50\u679C\uFF1B\u4E0D\u80FD\u5F9E\u6700\u5927\u6E05\u6670\u5340\u9078\u6700\u4F73\u60A3\u8005\u6CBB\u7642\u3002", "Cannot. Diffusion, disc content, the strain and test conditions affect the result. The largest zone cannot identify the best treatment for a patient."],
+    conclusion: ["\u5728\u672C\u6A21\u64EC\u689D\u4EF6\u4E0B\u4EE5\u6578\u64DA\u6BD4\u8F03\u6A23\u672C\u8207\u5C0D\u7167\uFF1B\u53EF\u652F\u6301\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF0C\u4E0D\u80FD\u78BA\u5B9A\u5168\u90E8\u6B7B\u4EA1\u3001\u4F5C\u7528\u6A5F\u5236\u6216\u6700\u4F73\u6CBB\u7642\uFF0C\u4E5F\u4E0D\u80FD\u63A8\u5EE3\u81F3\u6240\u6709 MRSA\u3002", "Compare samples with the control under these simulated conditions. Evidence may support local inhibition of visible growth, but not complete killing, a mechanism, the best treatment or a generalisation to all MRSA."],
+    knowledgeBacteria: ["\u6297\u751F\u7D20\u91DD\u5C0D\u7D30\u83CC\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u5F15\u8D77\u7684\u50B7\u98A8\u6216\u6D41\u611F\u3002", "Antibiotics act against bacteria; they do not treat viral colds or influenza."],
+    knowledgeResistance: ["\u6297\u85E5\u6027\u63CF\u8FF0\u7D30\u83CC\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1B\u4E0D\u662F\u4EBA\u7684\u8EAB\u9AD4\u7FD2\u6163\u6297\u751F\u7D20\u3002", "Resistance describes the bacterial response to a drug, not a human body becoming used to antibiotics."],
+    knowledgeLimits: ["\u6E05\u6670\u5340\u652F\u6301\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF1B\u91CD\u8907\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0C\u4E0D\u4FDD\u8B49\u53EF\u9760\u6216\u6700\u4F73\u6CBB\u7642\u3002", "A visible zone supports local inhibition of visible growth. Repeats check consistency; they do not guarantee reliability or the best treatment."],
+    reflection: ["\u5F15\u7528\u6240\u9078\u6A23\u672C\u7684\u8B80\u6578\u652F\u6301\u6291\u5236\u751F\u9577\u7684\u5224\u65B7\uFF1B\u89E3\u91CB\u539F\u6709\u6297\u6027\u5DEE\u7570\u5982\u4F55\u5F71\u97FF\u5B58\u6D3B\u53CA\u7E41\u6B96\uFF0C\u6297\u6027\u7279\u5FB5\u5982\u4F55\u907A\u50B3\uFF0C\u4E26\u4F7F\u5177\u6297\u6027\u7684\u7D30\u83CC\u6BD4\u4F8B\u589E\u52A0\u3001\u6297\u751F\u7D20\u6548\u679C\u6E1B\u5F31\u3002\u9019\u662F\u5EF6\u4F38\u60C5\u5883\uFF0C\u4E26\u975E\u672C\u6B21\u5BE6\u9A57\u5DF2\u8B49\u660E\u6297\u6027\u5F62\u6210\u3002", "Use readings for your chosen sample to support growth inhibition. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion increases as antibiotic effectiveness declines. This is a hypothetical extension, not evidence that resistance arose in this experiment."]
+  };
+  const question = MC_QUESTIONS.find((question2) => question2.id === field2);
+  if (question) return answerDisplay(field2, question.correct, language2) + (field2 === "repeatPurpose" ? tr(language2, " A\uFF1A\u7531\u65BC\u7CFB\u7D71\u6216\u5076\u7136\u8AA4\u5DEE\uFF0C\u91CD\u8907\u5BE6\u9A57\u7684\u6578\u503C\u901A\u5E38\u6703\u6709\u5FAE\u5C0F\u843D\u5DEE\uFF0C\u9019\u624D\u9700\u8981\u8A08\u7B97\u5E73\u5747\u503C\u8207\u6A19\u6E96\u5DEE\u3002B\uFF1A\u91CD\u8907\u5BE6\u9A57\u662F\u70BA\u4E86\u63D0\u5347\u6E96\u78BA\u5EA6\uFF0C\u800C\u975E\u523B\u610F\u6D88\u8017\u6642\u9593\u6216\u6E4A\u5B57\u6578\u3002C\uFF1A\u6B63\u78BA\u7B54\u6848\u3002D\uFF1A\u91CD\u8907\u5BE6\u9A57\u662F\u70BA\u4E86\u6AA2\u9A57\u73FE\u72C0\uFF0C\u800C\u975E\u4EBA\u70BA\u5728\u5E38\u898F\u5BE6\u9A57\u4E2D\u52A0\u901F\u751F\u7269\u7A81\u8B8A\u3002", " A: Systematic or random errors can cause variation between repeats, so means and standard deviations are calculated. B: Repetition aims to improve accuracy, not consume time or pad reports. C: Correct answer. D: Repetition checks existing outcomes; it does not accelerate mutations in routine experiments.") : "");
+  if (CONCLUSION_FIELDS.includes(field2)) return tr(language2, "\u6839\u64DA\u81EA\u5DF1\u7684\u89C0\u5BDF\u53CA\u5E73\u5747\u503C\u5224\u65B7\uFF1B\u53EA\u6BD4\u8F03\u672C\u6B21\u6A21\u64EC\u689D\u4EF6\uFF0C\u4E0D\u80FD\u7531\u5708\u5927\u5C0F\u6C7A\u5B9A\u6700\u4F73\u60A3\u8005\u6CBB\u7642\u3002", "Use your observations and means; compare only these simulated conditions, not the best treatment for a patient.");
+  if (field2 === "iv") return answerDisplay(field2, VARIABLE_REFERENCE.iv, language2);
+  if (field2 === "dv") return answerDisplay(field2, VARIABLE_REFERENCE.dv, language2);
+  if (field2 === "cv") return answerDisplay(field2, controlVariableReference(record), language2);
+  if (field2 === "assumptions") return answerDisplay(field2, ASSUMPTION_REFERENCE, language2);
+  return refs[field2] ? tr(language2, ...refs[field2]) : "";
+}
+var markHTML = (check, language2) => check === null || check === void 0 ? "" : `<span class="check ${check ? "correct" : "incorrect"}" aria-label="${tr(language2, check ? "\u7B26\u5408\u53C3\u8003" : "\u4E0D\u7B26\u5408\u53C3\u8003", check ? "Matches reference" : "Does not match reference")}">${check ? "\u2713" : "\u2715"}</span>`;
+function reportAnswer(record, field2, value, language2, withReference = true) {
+  const definition = [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS].find((item) => item[0] === field2);
+  const shown = answerDisplay(field2, value, language2);
+  const submitted = !!record.submittedAt;
+  const checks = objectiveChecks({ ...record, answers: { ...record.answers, [field2]: value } });
+  const reference = submitted && withReference ? referenceFor(field2, record, language2) : "";
+  return `<div class="answer"><h3>${esc(definition ? tr(language2, definition[1], definition[2]) : field2)}</h3><p class="student-answer">${esc(shown)} ${submitted && withReference ? markHTML(checks[field2], language2) : ""}</p>${reference ? `<p class="reference"><strong>${tr(language2, "\u53C3\u8003\u8AAA\u660E\uFF1A", "Reference: ")}</strong>${esc(reference)}</p>` : ""}</div>`;
+}
+function learningDiagram(language2 = "zh") {
+  const t2 = (zh, en) => tr(language2, zh, en);
+  const markup = `<div class="science-diagram">
+ <figure class="learning-figure"><figcaption>${t2("A. \u5BE6\u9A57\u539F\u7406\uFF1A\u6297\u751F\u7D20\u6A23\u672C\u7684\u64F4\u6563\u8207\u6E05\u6670\u5340\u7684\u5F62\u6210", "A. Experimental principle: antibiotic diffusion and clear-zone formation")}</figcaption>
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20\uFF0C\u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563\u4E26\u6291\u5236\u7D30\u83CC\u751F\u9577\uFF0C\u5F62\u6210\u6E05\u6670\u5340\u3002", "The disc carries antibiotic, which diffuses through agar and inhibits bacterial growth, forming a clear zone.")}">
+ <defs><marker id="vl4-science-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#087b78"/></marker></defs>
+ <circle cx="115" cy="142" r="91" fill="#ddd9ae" stroke="#6e897b"/><circle cx="115" cy="142" r="54" fill="#f8faec" stroke="#b4bda3" stroke-dasharray="4 4"/>
+ <g fill="#79815c">${[[60, 86], [173, 99], [46, 158], [169, 195], [91, 213], [175, 157], [104, 69], [75, 186]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g><circle cx="115" cy="142" r="12" fill="#fff" stroke="#5e7475"/>
+ <g fill="none" stroke="#087b78" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
+ <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path d="M221 72L128 136" fill="none" stroke="#698a87"/>
+ <text x="225" y="126">${t2("\u2461 \u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563", "2. Antibiotic diffuses")}</text>${language2 === "en" ? '<text x="246" y="146">through agar</text>' : ""}<path d="M221 151L159 142" fill="none" stroke="#698a87"/>
+ <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path d="M221 213L152 174" fill="none" stroke="#698a87"/></g></svg>
+ <p class="caption">${t2("\u793A\u610F\u5716\uFF0C\u975E\u6309\u6BD4\u4F8B\uFF1B\u4E0D\u80FD\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\u3002", "Schematic, not to scale; it does not prove complete killing.")}</p></figure>
+ <figure class="learning-figure"><figcaption>${t2("B. \u7D30\u83CC\u7D50\u69CB\u8207\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "B. Structures and possible action sites")}</figcaption>
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D30\u83CC\u7D50\u69CB\u8207\u6297\u751F\u7D20\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "Bacterial structures and possible antibiotic action sites")}">
+ <rect x="21" y="91" width="238" height="122" rx="61" fill="#eef3fa" stroke="#b8cbdc" stroke-width="2"/>
+ <rect x="30" y="100" width="220" height="104" rx="52" fill="#d5e5f8" stroke="#597fb1" stroke-width="8"/><rect x="41" y="111" width="198" height="82" rx="40" fill="#f4f0d4" stroke="#8e9f82" stroke-width="4"/>
+ <path d="M87 151C97 124 136 179 155 143S190 169 206 143" fill="none" stroke="#a6699c" stroke-width="4"/>
+ <g fill="#cb995b"><circle cx="72" cy="142" r="4"/><circle cx="93" cy="171" r="4"/><circle cx="175" cy="176" r="4"/><circle cx="196" cy="124" r="4"/></g>
+ <g fill="#15333b" font-size="16"><text x="272" y="70">${t2("\u2460 \u6291\u5236\u7D30\u80DE\u58C1\u5F62\u6210", "1. Inhibit cell wall")}${language2 === "en" ? '<tspan x="290" dy="18">formation</tspan>' : ""}</text><path d="M266 76L232 112" stroke="#597fb1" fill="none"/>
+ <text x="272" y="115">${t2("\u2461 \u7834\u58DE\u7D30\u80DE\u819C", "2. Disrupt cell membrane")}</text><path d="M266 121L235 136" stroke="#8e9f82" fill="none"/>
+ <text x="272" y="164">${t2("\u2462 \u6291\u5236\u86CB\u767D\u8CEA\u5408\u6210", "3. Inhibit protein")}${language2 === "en" ? '<tspan x="290" dy="18">synthesis</tspan>' : ""}</text><path d="M266 170L179 176" stroke="#cb995b" fill="none"/>
+ <text x="272" y="211">${t2("\u2463 \u6291\u5236\u6838\u9178\u5408\u6210", "4. Inhibit nucleic acid")}${language2 === "en" ? '<tspan x="290" dy="18">synthesis</tspan>' : ""}</text><path d="M266 217H155V143" stroke="#a6699c" fill="none"/></g></svg>
+ <p class="caption">${t2("\u5916\u5074\u6DE1\u8272\u5C64\u793A\u610F\u83A2\u819C\uFF08\u4E26\u975E\u6240\u6709\u7D30\u83CC\u90FD\u6709\uFF09\uFF1B\u85CD\u8272\u5C64\u70BA\u7D30\u80DE\u58C1\uFF0C\u5167\u5074\u7DA0\u8272\u5C64\u70BA\u7D30\u80DE\u819C\uFF0C\u7D2B\u8272\u66F2\u7DDA\u70BA DNA\u3002\u9019\u4E9B\u6A5F\u5236\u4E26\u975E\u672C\u6B21\u7D19\u789F\u7D50\u679C\u76F4\u63A5\u8B49\u660E\u3002", "The pale outer layer represents a capsule (not present in all bacteria); blue is the cell wall, green is the cell membrane, and the purple strand is DNA. These mechanisms are not proved by this disc experiment.")}</p></figure></div>`;
+  return language2 === "en" ? fitEnglishDiagramLabels(markup) : markup;
+}
+function learningPointsHTML(language2 = "zh") {
+  const sections = [
+    {
+      "title": [
+        "\u6297\u751F\u7D20\u7684\u7528\u9014",
+        "Uses of antibiotics"
+      ],
+      "points": [
+        [
+          "\u6297\u751F\u7D20\u4E3B\u8981\u7528\u65BC[\u7D30\u83CC\u611F\u67D3]\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u5F15\u8D77\u7684\u50B7\u98A8\u6216\u6D41\u611F\u3002",
+          "Antibiotics mainly treat [bacterial infections]; they cannot treat viral colds or influenza."
+        ]
+      ]
+    },
+    {
+      "title": [
+        "\u6E05\u6670\u5340\u5982\u4F55\u5F62\u6210",
+        "How clear zones form"
+      ],
+      "points": [
+        [
+          "\u6297\u751F\u7D20\u7531\u7D19\u789F[\u5411\u5916\u64F4\u6563]\uFF0C\u96E2\u7D19\u789F\u8D8A\u9060\uFF0C\u6FC3\u5EA6\u901A\u5E38\u8D8A\u4F4E\u3002\u53EA\u6709\u6FC3\u5EA6\u4ECD\u8DB3\u4EE5\u6291\u5236\u9019\u7A2E\u7D30\u83CC\u751F\u9577\u7684\u7BC4\u570D\u624D\u6703\u5F62\u6210[\u6E05\u6670\u5340]\u3002\u5982\u679C\u7D30\u83CC\u5C0D\u6297\u751F\u7D20\u6108\u654F\u611F\uFF08\u80FD\u88AB\u8F03\u4F4E\u6FC3\u5EA6\u6297\u751F\u7D20\u6291\u5236\u751F\u9577\uFF09\uFF0C\u80FD\u5F62\u6210\u7684\u6E05\u6670\u5340\u4FBF\u6108\u5927\u3002",
+          "Antibiotic [diffuses outward] from the disc, and its concentration generally decreases with distance. A [clear zone] forms only where the concentration remains sufficient to inhibit this bacterium. Greater susceptibility (growth inhibited at a lower antibiotic concentration) allows a larger clear zone to form."
+        ],
+        [
+          "\u6E05\u6670\u5340\u8868\u793A\u8A72\u4F4D\u7F6E\u6C92\u6709\u53EF\u898B\u7D30\u83CC\u751F\u9577\uFF0C\u8B49\u660E\u8A72\u6297\u751F\u7D20\u6A23\u672C\u80FD[\u6291\u5236\u7D30\u83CC\u751F\u9577]\uFF1B\u4E0D\u80FD\u8B49\u660E\u5340\u5167\u6240\u6709\u7D30\u83CC\u5DF2\u6B7B\u4EA1\u3002",
+          "A clear zone indicates no visible bacterial growth at that location, demonstrating that the antibiotic sample can [inhibit bacterial growth]; it does not prove that all bacteria in the zone have died."
+        ]
+      ]
+    },
+    {
+      "title": [
+        "\u6297\u751F\u7D20\u6297\u6027\u8207\u9078\u64C7\u4F5C\u7528",
+        "Antibiotic resistance and selection"
+      ],
+      "points": [
+        [
+          "\u70BA\u751A\u9EBC\u60C5\u5883\u4E2D\u7684\u539F\u6709\u6297\u751F\u7D20\u6703\u5931\u6548\uFF1F\u6297\u751F\u7D20\u4F7F\u4E0D\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\u8F03\u96E3\u5B58\u6D3B\uFF0C[\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u5247\u8F03\u5BB9\u6613\u5B58\u6D3B\u3001\u7E41\u6B96\u4E26\u907A\u50B3\u6297\u85E5\u6027\u7279\u5FB5]\u3002\u7576\u5F8C\u8005\u6BD4\u4F8B\u589E\u52A0\u4E26\u4F54\u64DA\u6574\u500B\u7FA4\u843D\uFF0C\u539F\u6709\u6297\u751F\u7D20\u4FBF\u6703\u5931\u6548\u3002",
+          "Why does the original antibiotic in the scenario lose effectiveness? Antibiotics make survival harder for susceptible bacteria, while [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As resistant bacteria increase in proportion and occupy the whole population, the original antibiotic becomes ineffective."
+        ],
+        [
+          "[\u904E\u5EA6\u6216\u4E0D\u7576\u4F7F\u7528\u6297\u751F\u7D20]\u6703\u589E\u52A0\u4E0D\u5FC5\u8981\u7684\u9078\u64C7\u58D3\u529B\uFF0C[\u4FC3\u9032\u6297\u85E5\u7D30\u83CC\u751F\u5B58\u8207\u7E41\u6B96]\uFF0C\u4F7F\u611F\u67D3\u53EF\u80FD\u66F4\u96E3\u6CBB\u7642\u3002",
+          "[Antibiotic overuse or misuse] adds unnecessary selection pressure, [promoting the survival and reproduction of resistant bacteria] and potentially making infections harder to treat."
+        ]
+      ]
+    }
+  ];
+  const index = language2 === "en" ? 1 : 0;
+  const supported = (value) => language2 === "en" ? glossEnglish(value) : value;
+  const highlight = (value) => esc(supported(value)).replace(/\[([^\]]+)\]/g, '<strong class="learning-emphasis">$1</strong>');
+  return `${learningDiagram(language2)}${sections.map((section) => `<section class="learning-topic"><h3>${esc(supported(section.title[index]))}</h3><ul class="learning-list">${section.points.map((point) => `<li>${highlight(point[index])}</li>`).join("")}</ul></section>`).join("")}`;
+}
+function reportGraph(record, language2) {
+  const max = 40, height = 160, base = 210;
+  const bars = SAMPLE_IDS.map((sample, index) => {
+    const value = finiteNumber(record.graph?.values?.[sample]), x = 108 + index * 118;
+    const safe = value === null ? 0 : Math.max(0, Math.min(max, value));
+    return `<rect x="${x}" y="${base - safe / max * height}" width="60" height="${safe / max * height}" fill="${sample === "C" ? "#8f9fa5" : "#3a9690"}"/><text x="${x + 30}" y="${base - safe / max * height - 9}" text-anchor="middle" font-size="13">${value === null ? "\u2014" : esc(value)}</text><text x="${x + 30}" y="235" text-anchor="middle" font-size="12">${esc(sampleName(sample, language2))}</text>`;
+  }).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="report-graph" viewBox="0 0 630 275" role="img" aria-label="${tr(language2, "\u5B78\u751F\u78BA\u8A8D\u7684\u5E73\u5747\u6E05\u6670\u5340\u7E3D\u76F4\u5F91\u68D2\u5F62\u5716", "Student-confirmed bar chart of mean total zone diameter")}"><text x="26" y="20" font-size="13">${tr(language2, "\u5E73\u5747\u6E05\u6670\u5340\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "Mean total zone diameter (mm)")}</text>${[0, 10, 20, 30, 40].map((value) => `<line x1="65" y1="${base - value / max * height}" x2="594" y2="${base - value / max * height}" stroke="#dce9e7"/><text x="54" y="${base - value / max * height + 4}" text-anchor="end" font-size="12">${value}</text>`).join("")}<path d="M65 45V210H595" fill="none" stroke="#45656c"/>${bars}<text x="330" y="264" text-anchor="middle" font-size="13">${tr(language2, "\u7D19\u789F\u6240\u542B\u6A23\u672C", "Sample carried by the disc")}</text></svg>`;
+}
+function reportPlate(plate, language2) {
+  const positions = { X: { x: 126, y: 126 }, Y: { x: 274, y: 126 }, Z: { x: 126, y: 274 }, C: { x: 274, y: 274 }, ...plate.discPositions };
+  return `<figure class="plate-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${esc(tr(language2, `\u74CA\u8102\u677F ${plate.id} \u7684\u56FA\u5B9A\u6A21\u64EC\u89C0\u5BDF`, `Fixed simulated observation for plate ${plate.id}`))}"><circle cx="200" cy="200" r="160" fill="#d8d5a6" stroke="#839976" stroke-width="4"/>${SAMPLE_IDS.map((sample) => {
+    const pos = positions[sample], diameter = clearZoneDiameter(plate, sample) ?? 0;
+    return `<circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="${diameter}" fill="#f8faed"/><circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="6" fill="#fff" stroke="#52726d"/><text x="${Number(pos.x)}" y="${Number(pos.y) + 4}" text-anchor="middle" font-size="10">${sample}</text>`;
+  }).join("")}</svg><figcaption>${esc(plate.id)} \xB7 ${tr(language2, "\u56FA\u5B9A\u6559\u5B78\u6A21\u64EC\u89C0\u5BDF\uFF0C\u975E\u81E8\u5E8A\u6821\u6E96\u5716", "Fixed teaching-model observation; not clinically calibrated")}</figcaption></figure>`;
+}
+function reportConclusion(record, language2) {
+  const a = record.answers || {}, i = language2 === "en" ? 1 : 0, checks = conclusionChecks(record), submitted = !!record.submittedAt;
+  const mark = (check) => submitted ? markHTML(check, language2) : "";
+  const reference = submitted ? `<p class="reference">${tr(language2, "\u53C3\u8003\u6709\u6548\u6A23\u672C\uFF1A", "Reference effective samples: ")}${esc(checks.effective.join("\u3001"))}\u3002${tr(language2, "\u6309\u4F60\u7684\u8B80\u6578\u8A08\u7B97\u7684\u6392\u5E8F\uFF1A", "Ranking calculated from your readings: ")}${checks.reference ? esc([...checks.reference, ...Array(4 - checks.reference.length).fill(L.notApplicable[i])].join(" \uFF1E ")) : tr(language2, "\u8CC7\u6599\u4E0D\u8DB3", "Insufficient data")}\u3002${tr(language2, "\u5E73\u5747\u503C\u76F8\u540C\u6642\u63A5\u53D7\u4EFB\u4E00\u5148\u5F8C\u6B21\u5E8F\u3002", "Either order is accepted for equal means.")}</p>` : "";
+  return `<div class="answer"><h3>3. ${esc(tr(language2, ...L.resultConclusion))}</h3><p class="student-answer">${esc(tr(language2, ...L.conclusionContext))}${esc(answerDisplay("effectiveSamples", a.effectiveSamples, language2))}${esc(tr(language2, ...L.conclusionEffective))} ${mark(checks.samples)}</p><p>${esc(tr(language2, ...L.conclusionRanking))}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map((field2) => esc(answerDisplay(field2, a[field2], language2))).join(" \uFF1E ")} ${mark(checks.order)}</p>${reference}</div>`;
+}
+function renderReport(record, language2 = "zh") {
+  language2 = language2 === "en" ? "en" : "zh";
+  const a = record.answers || {}, original = record.original || {}, first = { ...original.answers, plannedReplicates: original.plannedReplicates ?? original.answers?.plannedReplicates, plannedReplicateReason: original.plannedReplicateReason ?? original.answers?.plannedReplicateReason };
+  const t2 = (zh, en) => tr(language2, zh, en);
+  const submitted = !!record.submittedAt, current = currentAnalysis(record);
+  const section = (title, content) => `<section class="report-section"><h2>${esc(title)}</h2><div class="report-card">${content}</div></section>`;
+  const fields = (keys) => keys.map((field2) => reportAnswer(record, field2, a[field2], language2)).join("");
+  const originalFields = ["observation", "prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"];
+  const rows = (record.plates || []).flatMap((plate) => SAMPLE_IDS.map((sample) => {
+    const reading = record.measurements?.[plate.id]?.[sample] || {}, start = reading.first || {}, last = reading.last || reading;
+    const check = readingCheck(record, plate, sample, reading);
+    const presence = (value) => value === "yes" ? t2("\u6709", "Yes") : value === "no" ? t2("\u7121", "No") : "\u2014";
+    const numeric2 = (value) => finiteNumber(value) === null ? "\u2014" : esc(value);
+    return `<tr><td>${esc(plate.id)}</td><td>${esc(sampleName(sample, language2))}</td><td>${presence(start.visible)} / ${numeric2(start.value)}<small>${esc(start.note || "")}</small></td><td>${presence(last.visible)} / ${numeric2(last.value)}<small>${esc(last.note || "")}</small></td><td>${presence(reading.visible)} / ${numeric2(reading.value)} ${submitted ? markHTML(check, language2) : ""}<small>${esc(reading.note || "")}</small></td><td>${submitted ? esc(clearZoneDiameter(plate, sample) ?? "\u2014") : "\u2014"}</td><td>${(reading.revisions || []).length}</td></tr>`;
+  })).join("");
+  const readingsTable = `<p>${t2("\u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u4EE5 mm \u8A18\u9304\uFF1B\u6C92\u6709\u53EF\u898B\u6E05\u6670\u5340\u6642\u8A18\u70BA 0\u3002", "Record total clear-zone diameter in mm; record 0 when no clear zone is visible.")}</p><div class="table-wrap"><table><thead><tr>${[t2("\u74CA\u8102\u677F", "Plate"), t2("\u6A23\u672C", "Sample"), t2("\u9996\u6B21\uFF1A\u5708\uFF0Fmm", "First: zone/mm"), t2("\u6700\u5F8C\u5FEB\u7167\uFF1A\u5708\uFF0Fmm", "Latest snapshot: zone/mm"), t2("\u76EE\u524D\u8B80\u6578\uFF1A\u5708\uFF0Fmm", "Current: zone/mm"), t2("\u53C3\u8003 mm", "Reference mm"), t2("\u4FEE\u8A02\u6B21\u6578", "Revisions")].map((label2) => `<th>${label2}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div><p class="reference">${t2("\u91CF\u5EA6\u6AA2\u6838\u5BB9\u5DEE \xB11 mm\uFF1B\u9996\u6B21\u53CA\u6700\u5F8C\u8B80\u6578\u4FDD\u7559\uFF0C\u4E0D\u6703\u81EA\u52D5\u6539\u5BEB\u3002", "Reading tolerance: \xB11 mm. First and latest readings are retained and never automatically replaced.")}</p>`;
+  const meansTable = `<table><thead><tr>${[t2("\u6A23\u672C", "Sample"), t2("\u5B78\u751F\u5E73\u5747\u503C\uFF08mm\uFF09", "Student mean (mm)"), t2("\u4F9D\u81EA\u5DF1\u7684\u8B80\u6578\u8A08\u7B97", "Calculated from own readings"), ...current ? [] : [t2("\u78BA\u8A8D\u68D2\u9AD8\uFF08mm\uFF09", "Confirmed bar height (mm)")]].map((label2) => `<th>${label2}</th>`).join("")}</tr></thead><tbody>${SAMPLE_IDS.map((sample) => `<tr><td>${esc(sampleName(sample, language2))}</td><td>${esc(a.means?.[sample] ?? record.means?.[sample] ?? "\u2014")} ${submitted ? markHTML(meanCheck(record, sample), language2) : ""}</td><td>${submitted && studentMean(record, sample) !== null ? studentMean(record, sample).toFixed(1) : "\u2014"}</td>${current ? "" : `<td>${esc(record.graph?.values?.[sample] ?? "\u2014")} ${submitted ? markHTML(graphCheck(record, sample), language2) : ""}</td>`}</tr>`).join("")}</tbody></table><p class="reference">${current ? t2("\u5E73\u5747\u503C\u6309\u81EA\u5DF1\u7684\u6700\u5F8C\u8B80\u6578\u6AA2\u6838\uFF08\xB10.1 mm\uFF09\u3002", "Means are checked against your own latest readings (\xB10.1 mm).") : t2("\u5E73\u5747\u503C\u6309\u81EA\u5DF1\u7684\u6700\u5F8C\u8B80\u6578\u6AA2\u6838\uFF08\xB10.1 mm\uFF09\uFF1B\u5716\u8868\u6309\u81EA\u5DF1\u7684\u5DF2\u8F38\u5165\u5E73\u5747\u503C\u6AA2\u6838\uFF08\xB10.5 mm\uFF09\uFF0C\u907F\u514D\u540C\u4E00\u91CF\u5EA6\u932F\u8AA4\u91CD\u8907\u6263\u6838\u3002", "Means are checked against your own latest readings (\xB10.1 mm). Bars are checked against your entered means (\xB10.5 mm), avoiding repeated penalties for one reading error.")}</p>`;
+  const designImage = imagePattern.test(record.design?.image || "") ? `<img class="design-image" src="${esc(record.design.image)}" alt="${t2("\u5B78\u751F\u74CA\u8102\u677F\u4F4D\u7F6E\u53CA\u5BE6\u9A57\u8A2D\u8A08\u5716", "Student drawing of disc positions and experiment setup")}">` : "";
+  const originalDesignImage = imagePattern.test(original.design?.image || "") ? `<img class="design-image" src="${esc(original.design.image)}" alt="${t2("\u9996\u6B21\u78BA\u8A8D\u7684\u5B78\u751F\u5BE6\u9A57\u8A2D\u8A08\u5716", "First-confirmed student experiment setup drawing")}">` : "";
+  const extension = record.extension || {};
+  const extensionLabels = { prediction: ["\u9810\u6E2C", "Prediction"], reason: ["\u7406\u7531", "Reason"], fairComparison: ["\u516C\u5E73\u6BD4\u8F03", "Fair comparison"], results: ["\u5BE6\u969B\u6A21\u64EC\u7D50\u679C", "Simulated results"], analysis: ["\u5206\u6790\u53CA\u754C\u7DDA", "Analysis and limits"] };
+  const extensionHTML = extension.started ? Object.entries(extensionLabels).map(([field2, label2]) => `<h3>${label2[language2 === "en" ? 1 : 0]}</h3><p class="student-answer">${esc(typeof extension[field2] === "object" ? JSON.stringify(extension[field2]) : extension[field2] || notAnswered(language2))}</p>`).join("") + `<p class="reference">${t2("\u53EA\u6BD4\u8F03\u540C\u4E00\u6A23\u672C\u9810\u8A2D\u4F4E\uFF0F\u4E2D\uFF0F\u9AD8\u7D19\u789F\u542B\u91CF\u7684\u6A21\u578B\u5708\u5927\u5C0F\uFF1B\u4E0D\u80FD\u8F49\u6210\u60A3\u8005\u7528\u85E5\u5291\u91CF\u5EFA\u8B70\u3002", "This compares model zones for preset low/medium/high disc contents of one sample. It cannot provide patient dosing advice.")}</p>` : `<p>${t2("\u672A\u958B\u59CB\uFF1B\u9078\u505A\u5EF6\u4F38\u4E0D\u5F71\u97FF\u4E3B\u63A2\u7A76\u905E\u4EA4\u3002", "Not started. This optional extension does not affect submission of the main inquiry.")}</p>`;
+  const totalSeconds = Math.round(Object.values(record.timing || {}).reduce((sum, value) => sum + (Number(value) || 0), 0));
+  return `<article class="vl4-report" lang="${language2 === "en" ? "en" : "zh-Hant-HK"}"><header class="report-cover"><div class="report-brand">IBL \xB7 VL4 \xB7 ${t2("\u751F\u7269", "Biology")}</div><h1>${t2("\u6297\u751F\u7D20\u7814\u7A76\u4EFB\u52D9\uFF1A\u54EA\u4E9B\u6A23\u672C\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\uFF1F", "Antibiotic investigation: which samples inhibit bacterial growth?")}</h1><p>${t2("\u500B\u4EBA\u5B78\u7FD2\u7D00\u9304", "Personal learning record")}${record.demo ? ` \xB7 ${t2("\u6559\u5E2B\u793A\u7BC4", "Teacher demonstration")}` : ""}</p></header>
+  <div class="report-meta"><span>${t2("\u59D3\u540D", "Name")}\uFF1A${esc(record.profile?.name || "\u2014")}</span><span>${t2("\u73ED\u5225\u53CA\u5B78\u865F", "Class and number")}\uFF1A${esc(record.profile?.className || record.profile?.classInfo || "\u2014")}</span><span>${t2("\u96FB\u90F5", "Email")}\uFF1A${esc(record.profile?.email || "\u2014")}</span><span>${t2("\u63A2\u7A76\u905E\u4EA4", "Inquiry submitted")}\uFF1A${esc(dateText(record.submittedAt, language2))}</span><span>${t2("\u53CD\u601D\u63D0\u4EA4", "Reflection submitted")}\uFF1A${esc(dateText(record.reflectionSubmittedAt, language2))}</span><span>${t2("\u6709\u6548\u64CD\u4F5C\u6642\u9593", "Active time")}\uFF1A${Math.floor(totalSeconds / 60)} ${t2("\u5206", "min")} ${totalSeconds % 60} ${t2("\u79D2", "s")}</span></div>
+  <p class="simulation-note">${t2("\u6240\u6709\u5716\u50CF\u8207\u7D50\u679C\u5747\u70BA\u865B\u64EC\u6559\u5B78\u6A21\u64EC\uFF0C\u4E0D\u80FD\u7528\u4F5C\u60A3\u8005\u6CBB\u7642\u6216\u81E8\u5E8A\u654F\u611F\u6027\u5224\u5B9A\u3002\u6B77\u53F2\u89C0\u5BDF\u662F\u8461\u8404\u7403\u83CC\uFF0C\u4E0D\u662F MRSA\uFF1BMRSA \u9996\u6B21\u6B63\u5F0F\u5831\u544A\u65BC 1961 \u5E74\u3002", "All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming\u2019s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.")}</p>
+  ${section(t2("01 \u4E86\u89E3\u60C5\u5883\uFF1A\u4F60\u7684\u521D\u6B65\u89C0\u5BDF", "01 Context: your initial observations"), fields(["observation"]))}
+  ${section(t2("02 \u4F60\u7684\u539F\u59CB\u7814\u7A76\u8A08\u5283\uFF08\u9996\u6B21\u78BA\u8A8D\u5FEB\u7167\uFF09", "02 Your original research plan (first confirmed snapshot)"), `<p>${t2("\u4FDD\u5B58\u6642\u9593", "Captured")}\uFF1A${esc(dateText(original.capturedAt, language2))}</p>${originalFields.map((field2) => reportAnswer(record, field2, first[field2], language2, false)).join("")}${originalDesignImage}<p>${t2("\u5BE6\u969B\u8AB2\u5802\u5B89\u6392\uFF1A3 \u7247\u5206\u5225\u6E96\u5099\u7684\u74CA\u8102\u677F\uFF0C\u6BCF\u7247\u542B X\u3001Y\u3001Z \u53CA C\uFF08\u5C0D\u7167\uFF09\u3002\u5B78\u751F\u539F\u59CB\u5EFA\u8B70\u8207\u8AB2\u5802\u5B89\u6392\u5206\u958B\u4FDD\u7559\uFF1B3 \u6B21\u4E0D\u4FDD\u8B49\u53EF\u9760\u3002", "Classroom arrangement: three separately prepared plates, each with X, Y, Z and a C (control). The original proposal is retained separately; three tests do not guarantee reliability.")}</p>`)}
+  ${section(t2("02 \u6700\u65B0\u8A2D\u8A08\u3001\u5047\u8AAA\u53CA\u5C0D\u7167", "02 Latest setup, hypothesis and control"), fields(["prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"]) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ""))}
+  ${section(t2("03 \u4E09\u7247\u7368\u7ACB\u74CA\u8102\u677F\u7684\u89C0\u5BDF\u53CA\u91CF\u5EA6", "03 Observations and readings from independent plates"), `<p>${t2("\u5DF2\u7522\u751F\u7D50\u679C\u7684\u7368\u7ACB\u74CA\u8102\u677F\u6578", "Independent plates with generated results")}\uFF1A${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter((plate) => plate.result).map((plate) => reportPlate(plate, language2)).join("")}</div>${readingsTable}`)}
+  ${section(current ? t2("04 \u7E3D\u76F4\u5F91\u7684\u5E73\u5747\u503C\u8A08\u7B97", "04 Mean total diameter calculation") : t2("04 \u4F60\u7684\u5E73\u5747\u503C\u53CA\u5716\u8868", "04 Your means and chart"), meansTable + (current ? "" : reportGraph(record, language2) + `<p>${t2("\u5716\u8868\u78BA\u8A8D\u6642\u9593", "Chart confirmed")}\uFF1A${esc(dateText(record.graph?.confirmedAt, language2))}</p>`))}
+  ${section(t2("04 \u5206\u6790\u53CA\u7D50\u8AD6", "04 Analysis and conclusion"), current ? MC_QUESTIONS.slice(0, 2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") + reportConclusion(record, language2) + MC_QUESTIONS.slice(2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") : fields(["analysisControl", "analysisConsistent", "analysisVariation", "analysisMethod", "analysisHypothesis", "analysisRepeatPlan", "analysisRepeatValue", "analysisDeath", "analysisClinical", "conclusion"]))}
+  ${current ? "" : section(t2("\u53EF\u9078\u5EF6\u4F38\uFF1A\u540C\u4E00\u6A23\u672C\u7684\u7D19\u789F\u542B\u91CF", "Optional extension: disc content of one sample"), extensionHTML)}
+  ${submitted ? section(t2("\u905E\u4EA4\u5F8C\u7684\u5B78\u7FD2\u91CD\u9EDE", "Learning points after submission"), learningPointsHTML(language2) + (current ? "" : fields(["knowledgeBacteria", "knowledgeResistance", "knowledgeLimits"]))) : ""}
+  ${section(t2("\u5B78\u7FD2\u53CD\u601D", "Learning reflection"), reportAnswer(record, "reflection", a.reflection, language2))}
+  <footer class="report-footer">${t2("\u2713\uFF0F\u2715 \u53EA\u7528\u65BC\u6709\u660E\u78BA\u53C3\u8003\u7684\u9805\u76EE\uFF1B\u958B\u653E\u984C\u9644\u53C3\u8003\u8AAA\u660E\uFF0C\u7531\u6559\u5E2B\u95B1\u8B80\u3002\u5B78\u751F\u539F\u6587\u4E0D\u56E0\u8A9E\u8A00\u5207\u63DB\u800C\u6539\u5BEB\u3002", "\u2713/\u2715 apply only to items with an explicit reference. Open responses have reference notes for teacher review. Student text is preserved when the language changes.")}<br>${t2("\u7D00\u9304\u8B58\u5225\u78BC", "Record ID")}\uFF1A${esc(record.id)}</footer></article>`;
+}
+var REPORT_CSS = `*{box-sizing:border-box}body{margin:0;color:#15333b;font-family:Arial,"Noto Sans TC",sans-serif;font-size:12px;line-height:1.65;background:#f5f9f7}.vl4-report{max-width:1000px;margin:24px auto;padding:28px;background:white}.report-cover{border-left:7px solid #087b78;padding:16px 22px;background:#edf7f3}.report-cover h1{font-size:24px;line-height:1.35;margin:8px 0}.report-brand{letter-spacing:.08em;color:#087b78}.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:15px 0}.simulation-note,.reference{color:#536d74;font-size:11px}.simulation-note{border:1px solid #dce9e7;padding:10px;border-radius:8px}.report-section{margin:20px 0}.report-section h2{font-size:17px;color:#087b78;border-bottom:2px solid #dce9e7;padding-bottom:6px;break-after:avoid}.report-card{border:1px solid #dce9e7;border-radius:12px;padding:16px;background:#fcfefc}.answer{padding:8px 0;border-bottom:1px solid #ecf2ef;break-inside:avoid}.answer h3,h3{font-size:12px;margin:0 0 4px;font-weight:700}.student-answer{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}.reference{margin:5px 0}.check{font-weight:bold;margin-left:5px}.correct{color:#167645}.incorrect{color:#ae3434}table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}th,td{padding:7px;border:1px solid #dce9e7;vertical-align:top;overflow-wrap:anywhere}th{background:#edf7f3}td small{display:block;white-space:pre-wrap}thead{display:table-header-group}tr{break-inside:avoid}.design-image{display:block;max-height:330px;max-width:100%;object-fit:contain;margin:16px auto}.science-diagram svg,.report-graph{display:block;width:100%;height:auto}.science-diagram{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}.learning-figure{margin:0;padding:12px;border:1px solid #bddfd8;border-radius:12px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:14px;font-weight:700;line-height:1.5}.learning-figure .caption{font-size:10px;color:#536d74}@media screen and (max-width:600px){.science-diagram{grid-template-columns:1fr}}.plate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.plate-figure{margin:0;break-inside:avoid}.plate-figure svg{width:100%;height:auto}.plate-figure figcaption{font-size:10px}.learning-topic h3{font-size:16px;margin:18px 0 8px;color:#15333b;break-after:avoid}.learning-emphasis{color:#b42318;font-weight:700}.learning-list{padding-left:20px}.learning-list li{margin:8px 0;break-inside:avoid}.report-footer{font-size:10px;color:#658087;border-top:1px solid #dce9e7;padding-top:10px}@page{size:A4;margin:13mm}@media print{body{background:white}.vl4-report{margin:0;padding:0;max-width:none}.report-card{border-radius:8px}.report-cover{break-inside:avoid}.report-cover h1{font-size:22px}.report-section{margin:14px 0}.plate-grid{gap:8px}.report-meta{font-size:10px}a{color:inherit}}`;
+function reportFilename(record) {
+  return `VL4_${record.profile?.className || record.profile?.classInfo || ""}_${record.profile?.name || ""}`.replace(/[\\/:*?"<>|\u0000-\u001f]/g, "_");
+}
+async function openPrintReport(record, language2 = "zh") {
+  if (!record.reflectionSubmittedAt) throw new Error(tr(language2, "\u8ACB\u5148\u5132\u5B58\u4E26\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D\uFF0C\u624D\u53EF\u5217\u5370\uFF0F\u5132\u5B58 PDF\u3002", "Save and submit your reflection before printing or saving a PDF."));
+  const reportWindow = window.open("", "_blank");
+  if (!reportWindow) throw new Error(tr(language2, "\u8ACB\u5141\u8A31\u6B64\u7DB2\u7AD9\u958B\u555F\u5217\u5370\u8996\u7A97\u3002", "Allow this site to open the print window."));
+  reportWindow.document.write(`<!doctype html><html lang="${language2 === "en" ? "en" : "zh-Hant-HK"}"><head><meta charset="UTF-8"><title>${esc(reportFilename(record))}</title><style>${REPORT_CSS}</style></head><body>${renderReport(record, language2)}</body></html>`);
+  reportWindow.document.close();
+  await Promise.all([...reportWindow.document.images].map((image) => image.complete ? Promise.resolve() : new Promise((resolve) => {
+    image.onload = resolve;
+    image.onerror = resolve;
+  })));
+  if (reportWindow.document.fonts?.ready) await reportWindow.document.fonts.ready;
+  reportWindow.focus();
+  reportWindow.print();
+  return reportWindow;
+}
+var GROUP_COLORS = { identity: "EEF2F4", observing: "E9F5E9", classifying: "EAF3FD", designing: "FCF0E5", conducting: "F3ECFA", inferring: "FFF8DD", communicating: "E5F6F4", knowledge: "F9E8F0", score: "E1E9EE", reference: "F2F3F4" };
+var FONT_COLORS = { good: "167645", bad: "AD3434", partial: "B97314", neutral: "536D74" };
+function styleCell(cell, group = "identity", check = null) {
+  cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF" + (GROUP_COLORS[group] || GROUP_COLORS.identity) } };
+  cell.font = { name: "Arial", size: 10, color: { argb: "FF" + (check === true ? FONT_COLORS.good : check === false ? FONT_COLORS.bad : FONT_COLORS.neutral) } };
+  cell.alignment = { vertical: "top", wrapText: true };
+  cell.border = { bottom: { style: "hair", color: { argb: "FFDCE9E7" } } };
+}
+function createSheet(workbook, name, headings, groups = []) {
+  const sheet = workbook.addWorksheet(name, { views: [{ state: "frozen", xSplit: 2, ySplit: 1 }] });
+  sheet.addRow(headings);
+  sheet.getRow(1).height = 42;
+  sheet.getRow(1).eachCell((cell, index) => {
+    styleCell(cell, groups[index - 1] || "identity");
+    cell.font = { ...cell.font, bold: true };
+  });
+  sheet.columns.forEach((column, index) => {
+    column.width = index < 4 ? 22 : 30;
+  });
+  return sheet;
+}
+function finishSheet(sheet) {
+  sheet.autoFilter = { from: { row: 1, column: 1 }, to: { row: Math.max(1, sheet.rowCount), column: sheet.columnCount } };
+}
+function addDataRow(sheet, values, groups = [], checks = {}) {
+  const row = sheet.addRow(values.map((value) => value ?? ""));
+  row.eachCell({ includeEmpty: true }, (cell, index) => styleCell(cell, groups[index - 1] || "identity", checks[index - 1] ?? null));
+  return row;
+}
+function addScoreColor(sheet, cell, max) {
+  sheet.addConditionalFormatting({ ref: cell.address, rules: [
+    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}=${max})`], style: { font: { color: { argb: "FF" + FONT_COLORS.good } } } },
+    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}=0)`], style: { font: { color: { argb: "FF" + FONT_COLORS.bad } } } },
+    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}>0,${cell.address}<${max})`], style: { font: { color: { argb: "FF" + FONT_COLORS.partial } } } }
+  ] });
+}
+function safeEventDetails(value) {
+  if (!value || typeof value !== "object") return value;
+  if (Array.isArray(value)) return value.map(safeEventDetails);
+  return Object.fromEntries(Object.entries(value).filter(([key]) => !/password|secret|token|authorization/i.test(key)).map(([key, item]) => [key, safeEventDetails(item)]));
+}
+async function workbookImage(data) {
+  if (!imagePattern.test(data || "")) return null;
+  const match = data.match(/^data:image\/(png|jpe?g|webp);base64,/);
+  if (match[1] !== "webp") return { base64: data, extension: match[1] === "png" ? "png" : "jpeg" };
+  if (typeof document === "undefined") return null;
+  const image = new Image();
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = reject;
+    image.src = data;
+  });
+  const canvas2 = document.createElement("canvas");
+  canvas2.width = image.naturalWidth;
+  canvas2.height = image.naturalHeight;
+  canvas2.getContext("2d").drawImage(image, 0, 0);
+  return { base64: canvas2.toDataURL("image/png"), extension: "png" };
+}
+async function buildWorkbook(inputRecords) {
+  const records = inputRecords.filter((record) => !record.demo && record.moduleId === "VL_BIO_ANTIBIOTICS" && record.profile?.email?.trim().toLowerCase() !== "tzechingchan0605@gmail.com");
+  const workbook = new import_exceljs.default.Workbook();
+  workbook.creator = "VL4";
+  workbook.subject = "\u6297\u751F\u7D20\u865B\u64EC\u63A2\u7A76\u5168\u73ED\u7D00\u9304";
+  workbook.created = /* @__PURE__ */ new Date("2026-01-01T00:00:00Z");
+  workbook.modified = /* @__PURE__ */ new Date("2026-01-01T00:00:00Z");
+  workbook.calcProperties.fullCalcOnLoad = true;
+  const hasLegacy = records.some((record) => !currentAnalysis(record)), hasCurrent = records.some(currentAnalysis);
+  const exportFields = hasLegacy ? hasCurrent ? [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS.filter(([id]) => !ANSWER_FIELDS.some(([field2]) => field2 === id))] : ANSWER_FIELDS : CURRENT_ANSWER_FIELDS;
+  const legacyExtension = hasLegacy ? ["\u5EF6\u4F38\u9810\u6E2C", "\u5EF6\u4F38\u7406\u7531", "\u5EF6\u4F38\u516C\u5E73\u6BD4\u8F03", "\u5EF6\u4F38\u7D50\u679C", "\u5EF6\u4F38\u5206\u6790"] : [];
+  const originalFields = ANSWER_FIELDS.filter(([field2]) => !field2.startsWith("analysis") && !field2.startsWith("knowledge") && field2 !== "reflection" && field2 !== "conclusion");
+  const headings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u72C0\u614B", "\u7248\u672C", "\u63A2\u7A76\u905E\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u53CD\u601D\u63D0\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u539F\u59CB\u5FEB\u7167\u6642\u9593\uFF08\u9999\u6E2F\uFF09", ...originalFields.map(([, label2]) => "\u539F\u59CB\uFF5C" + label2), ...exportFields.map(([, label2]) => "\u6700\u65B0\uFF5C" + label2), "plannedReplicates\uFF5C\u539F\u59CB\u5EFA\u8B70", "plannedReplicateReason\uFF5C\u539F\u59CB\u7406\u7531", "actualReplicates\uFF5C\u7368\u7ACB\u74CA\u8102\u677F\u6578", "\u8A2D\u8A08\u6587\u5B57", ...legacyExtension, "\u6709\u6548\u7528\u6642\u7E3D\u79D2\u6578", ...["\u4E00", "\u4E8C", "\u4E09", "\u56DB"].map((stage) => "\u968E\u6BB5" + stage + "\u6709\u6548\u79D2\u6578")];
+  const answerGroups = [...Array(9).fill("identity"), ...originalFields.map((field2) => field2[3]), ...exportFields.map((field2) => field2[3]), ...Array(3).fill("designing"), "conducting", ...Array(legacyExtension.length).fill("inferring"), ...Array(5).fill("identity")];
+  const answers = createSheet(workbook, "\u5B78\u751F\u63A2\u7A76\u7B54\u6848", headings, answerGroups);
+  const dataHeadings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u74CA\u8102\u677F\u8B58\u5225\u78BC", "\u6A23\u672C", "\u9996\u6B21\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u9996\u6B21\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u9996\u6B21\u5099\u8A3B", "\u9996\u6B21\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6700\u5F8C\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u6700\u5F8C\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u6700\u5F8C\u5099\u8A3B", "\u6700\u5F8C\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6A21\u578B\u53C3\u8003\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u76F4\u5F91\uFF0F\u7D19\u789F\u5916\u6E05\u6670\u5340\u6AA2\u6838", "\u4FEE\u8A02\u7D00\u9304", "\u5B78\u751F\u5E73\u5747\u503C\uFF08mm\uFF09", "\u4F9D\u5B78\u751F\u6700\u5F8C\u8B80\u6578\u8A08\u7B97\u5E73\u5747\u503C", "\u5E73\u5747\u503C\u6AA2\u6838", ...hasLegacy ? ["\u78BA\u8A8D\u68D2\u9AD8\uFF08mm\uFF09", "\u5716\u8868\u6AA2\u6838", "\u5716\u8868\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09"] : []];
+  const dataGroups = dataHeadings.map((_, index) => index < 4 ? "identity" : index < 15 ? "observing" : index < 18 ? "inferring" : "communicating");
+  const data = createSheet(workbook, hasLegacy ? "\u91CF\u5EA6\u8A08\u7B97\u8207\u5716\u8868" : "\u91CF\u5EA6\u8207\u8A08\u7B97", dataHeadings, dataGroups);
+  const makeScores = (columns, name) => ({ columns, sheet: createSheet(workbook, name, ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u5B8C\u6210\u72C0\u614B", ...columns.map((column) => column.label + (column.max !== void 0 ? `\uFF080\u2013${column.max}\uFF09` : ""))], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]), index: Object.fromEntries(columns.map((column, index) => [column.id, index + 5])) });
+  const legacyScores = hasLegacy ? makeScores(SCORE_COLUMNS, "\u6559\u5E2B\u8A55\u5206") : null;
+  const currentScores = hasCurrent || !hasLegacy ? makeScores(CURRENT_SCORE_COLUMNS, hasLegacy ? "\u6559\u5E2B\u8A55\u5206\uFF08\u65B0\u7248\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
+  const rubric = createSheet(workbook, "\u8A55\u5206\u6E96\u5247", ["\u985E\u5225\uFF0F\u984C\u76EE", "\u6700\u9AD8\u5206", "\u8A55\u5206\u65B9\u5F0F", "\u6EFF\u5206\u6E96\u5247", "\u90E8\u5206\u5F97\u5206\u6E96\u5247", "\u96F6\u5206\u6E96\u5247"]);
+  for (const row of [...hasLegacy ? RUBRIC_ROWS : [], ...hasCurrent || !hasLegacy ? CURRENT_RUBRIC_ROWS : []]) {
+    addDataRow(rubric, row.slice(0, 6), Array(6).fill(row[6]));
+  }
+  rubric.columns.forEach((column, index) => {
+    column.width = index === 1 ? 10 : index === 2 ? 12 : 60;
+  });
+  const events = createSheet(workbook, "\u64CD\u4F5C\u4E8B\u4EF6\u7D00\u9304", ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u4F86\u6E90", "\u4E8B\u4EF6\u985E\u578B", "\u6642\u9593\uFF08\u9999\u6E2F\uFF09", "\u968E\u6BB5", "\u4E8B\u4EF6\u8A73\u60C5\uFF08JSON\uFF09"]);
+  events.getColumn(7).width = 80;
+  const designs = createSheet(workbook, "\u88DD\u7F6E\u8A2D\u8A08\u5716", ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u5FEB\u7167\u985E\u5225", "\u8A2D\u8A08\u6587\u5B57", "\u5B78\u751F\u8A2D\u8A08\u5716"]);
+  designs.getColumn(5).width = 22;
+  designs.getColumn(6).width = 55;
+  designs.getColumn(7).width = 70;
+  for (const record of records) {
+    const a = record.answers || {}, original = record.original || {}, initial = { ...original.answers, plannedReplicates: original.plannedReplicates ?? original.answers?.plannedReplicates, plannedReplicateReason: original.plannedReplicateReason ?? original.answers?.plannedReplicateReason };
+    const status = record.reflectionSubmittedAt ? "\u5DF2\u5B8C\u6210" : record.submittedAt ? "\u5F85\u63D0\u4EA4\u53CD\u601D" : "\u9032\u884C\u4E2D", profile = record.profile || {}, extension = record.extension || {};
+    const objectText = (value) => typeof value === "object" && value !== null ? JSON.stringify(value) : value ?? "";
+    const values = [record.id, profile.name, profile.className || profile.classInfo, profile.email, status, record.version, dateText(record.submittedAt), dateText(record.reflectionSubmittedAt), dateText(original.capturedAt), ...originalFields.map(([field2]) => answerDisplay(field2, initial[field2])), ...exportFields.map(([field2]) => answerDisplay(field2, a[field2])), initial.plannedReplicates ?? "", initial.plannedReplicateReason ?? "", actualReplicates(record), record.design?.description || a.designDescription || "", ...hasLegacy ? ["prediction", "reason", "fairComparison", "results", "analysis"].map((field2) => extension.started ? objectText(extension[field2]) : "") : [], Math.round(Object.values(record.timing || {}).reduce((sum, time) => sum + (Number(time) || 0), 0)), ...[1, 2, 3, 4].map((phase) => Math.round(record.timing?.[phase] || 0))];
+    const checks = objectiveChecks(record), answerChecks = {};
+    exportFields.forEach(([field2], index) => {
+      if (field2 in checks) answerChecks[9 + originalFields.length + index] = checks[field2];
+    });
+    addDataRow(answers, values, answerGroups, answerChecks);
+    for (const plate of record.plates || []) for (const sample of SAMPLE_IDS) {
+      const reading = record.measurements?.[plate.id]?.[sample] || {}, first = reading.first || {}, last = reading.last || reading;
+      const check = readingCheck(record, plate, sample, reading), mean = studentMean(record, sample), meanCorrect = meanCheck(record, sample), graphCorrect = graphCheck(record, sample);
+      const label2 = (check2) => check2 === null ? "\u672A\u7B54\uFF0F\u8CC7\u6599\u4E0D\u8DB3" : check2 ? "\u7B26\u5408" : "\u4E0D\u7B26\u5408";
+      const presence = (value) => value === "yes" ? "\u6709" : value === "no" ? "\u7121" : "\u672A\u7B54";
+      addDataRow(data, [record.id, profile.name, plate.id, sampleName(sample, "zh"), presence(first.visible), finiteNumber(first.value) ?? "", first.note || "", first.at ? dateText(first.at) : "", presence(last.visible), finiteNumber(last.value) ?? "", last.note || "", last.at ? dateText(last.at) : "", clearZoneDiameter(plate, sample) ?? "", label2(check), JSON.stringify(reading.revisions || []), finiteNumber(record.means?.[sample]) ?? "", mean === null ? "" : Math.round(mean * 1e4) / 1e4, label2(meanCorrect), ...hasLegacy ? [finiteNumber(record.graph?.values?.[sample]) ?? "", label2(graphCorrect), record.graph?.confirmedAt ? dateText(record.graph.confirmedAt) : ""] : []], dataGroups, { 5: readingCheck(record, plate, sample, first), 9: check, 13: check, 15: meanCorrect, 17: meanCorrect, 18: graphCorrect, 19: graphCorrect });
+      for (const revision of reading.revisions || []) addDataRow(events, [record.id, profile.name, `${plate.id}/${sample}`, "reading_revision", dateText(revision.at || revision.next?.at), 3, JSON.stringify(safeEventDetails(revision))]);
+    }
+    const auto = automaticScores(record), { columns, sheet: scores, index: scoreIndex } = currentAnalysis(record) ? currentScores : legacyScores;
+    const scoreRow = addDataRow(scores, [record.id, profile.name, profile.className || profile.classInfo, status, ...columns.map((column) => column.manual ? null : auto[column.id] ?? "")], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]);
+    const cell = (id) => scoreRow.getCell(scoreIndex[id]), ref = (id) => cell(id).address;
+    const manual = columns.filter((column) => column.manual).map((column) => ref(column.id));
+    for (const column of columns) {
+      const current = cell(column.id);
+      if (column.manual) {
+        current.value = null;
+        current.dataValidation = { type: "decimal", operator: "between", allowBlank: true, formulae: [0, column.max], showInputMessage: true, promptTitle: "\u6559\u5E2B\u4EBA\u5DE5\u8A55\u5206", prompt: `\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF1B\u6709\u6548\u7BC4\u570D 0\u2013${column.max}\u3002`, showErrorMessage: true, errorStyle: "stop", errorTitle: "\u5206\u6578\u8D85\u51FA\u7BC4\u570D", error: `\u8ACB\u8F38\u5165 0\u2013${column.max} \u7684\u6578\u503C\uFF0C\u6216\u4FDD\u6301\u7A7A\u767D\u3002` };
+      }
+      if (column.formula) {
+        const dependencies = column.formula.map(ref);
+        let formula = `IF(COUNT(${dependencies.join(",")})=${dependencies.length},ROUND(SUM(${dependencies.join(",")}),2),"\u5F85\u8A55")`;
+        if (column.id === "overall") formula = `IF(AND(COUNT(${manual.join(",")})=${manual.length},COUNT(${dependencies.join(",")})=${dependencies.length},D${scoreRow.number}="\u5DF2\u5B8C\u6210"),ROUND(SUM(${dependencies.join(",")}),2),"\u5F85\u8A55\uFF0F\u672A\u5B8C\u6210")`;
+        current.value = { formula, result: column.id === "classifying" ? auto.iv + auto.dv + auto.cv : column.id === "overall" ? "\u5F85\u8A55\uFF0F\u672A\u5B8C\u6210" : "\u5F85\u8A55" };
+      }
+      if (column.id === "marking") current.value = { formula: `IF(AND(COUNT(${manual.join(",")})=${manual.length},D${scoreRow.number}="\u5DF2\u5B8C\u6210"),"\u8A55\u5206\u5B8C\u6210","\u5F85\u6559\u5E2B\u8A55\u5206\uFF0F\u5B78\u751F\u672A\u5B8C\u6210")`, result: "\u5F85\u6559\u5E2B\u8A55\u5206\uFF0F\u5B78\u751F\u672A\u5B8C\u6210" };
+      if (column.max !== void 0) addScoreColor(scores, current, column.max);
+    }
+    for (const event of record.events || []) addDataRow(events, [record.id, profile.name, "\u63A2\u7A76", event.type, dateText(event.at), event.phase ?? "", JSON.stringify(safeEventDetails(event.details ?? event))]);
+    for (const plate of record.plates || []) for (const event of plate.operations || []) addDataRow(events, [record.id, profile.name, plate.id, event.type || "plate_operation", event.at ? dateText(event.at) : "", 3, JSON.stringify(safeEventDetails(event))]);
+    const snapshots = [...original.design ? [{ kind: "\u539F\u59CB\u8A2D\u8A08", design: original.design, description: initial.designDescription }] : [], { kind: "\u6700\u5F8C\u8A2D\u8A08", design: record.design || {}, description: a.designDescription }];
+    for (const snapshot of snapshots) {
+      const image = await workbookImage(snapshot.design.image);
+      const imageRow = addDataRow(designs, [record.id, profile.name, profile.className || profile.classInfo, profile.email, snapshot.kind, snapshot.design.description || snapshot.description || "", image ? "\u5D4C\u5165\u5716\u7247" : snapshot.design.image ? "\u5716\u7247\u683C\u5F0F\u9700\u8F49\u63DB\uFF1B\u539F\u5716\u4ECD\u4FDD\u7559\u65BC\u5B8C\u6574\u63A2\u7A76\u7D00\u9304" : "\u6587\u5B57\u8A2D\u8A08"]);
+      if (image) {
+        imageRow.height = 175;
+        const imageId = workbook.addImage(image);
+        designs.addImage(imageId, { tl: { col: 6.05, row: imageRow.number - 1 + 0.05 }, ext: { width: 450, height: 220 }, editAs: "oneCell" });
+      }
+    }
+  }
+  for (const sheet of workbook.worksheets) finishSheet(sheet);
+  return workbook;
+}
+function workbookFilename({ scope = "class" } = {}) {
+  if (!["class", "local"].includes(scope)) throw new Error("Unknown workbook export scope");
+  return `VL4_\u6297\u751F\u7D20\u7814\u7A76\u4EFB\u52D9_${scope === "local" ? "\u672C\u6A5F\u5B78\u7FD2\u7D00\u9304" : "\u5168\u73ED\u5B78\u7FD2\u7D00\u9304"}.xlsx`;
+}
+async function downloadWorkbook(records, options = {}) {
+  const filename = workbookFilename(options);
+  const workbook = await buildWorkbook(records);
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  const link = document.createElement("a"), url = URL.createObjectURL(blob);
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1e3);
+  return workbook;
+}
+
+// paperwork/texts.js
+var LABELS = {
+  title: ["\u7D19\u672C\u5C0D\u7167\u7D44\u5DE5\u4F5C\u7D19", "Paper control-group worksheet"],
+  A: ["\u60C5\u5883\u8207\u539F\u59CB\u63A2\u7A76\u8A2D\u8A08", "Context and original inquiry design"],
+  B: ["\u5BE6\u9A57\u8CC7\u6599\u3001\u5206\u6790\u8207\u7D50\u8AD6", "Experimental data, analysis and conclusion"],
+  C: ["\u5B78\u7FD2\u91CD\u9EDE\u53CA\u53CD\u601D", "Learning points and reflection"],
+  D: ["\u6559\u5E2B\u6307\u5F15\u3001\u53C3\u8003\u7B54\u6848\u53CA\u8A55\u5206\u6E96\u5247", "Teacher guide, reference answers and scoring criteria"],
+  all: ["\u5B8C\u6574\u6559\u5E2B\u5217\u5370\u5957\u88DD", "Complete teacher print pack"],
+  identity: ["\u59D3\u540D\uFF1A________________\u3000\u73ED\u5225\uFF1A________\u3000\u5B78\u865F\uFF1A________", "Name: __________________\u3000Class: ________\u3000No.: ________"],
+  circle: ["\u6BCF\u7D44\u62EC\u865F\u9078\u9805\u5708\u9078\u4E00\u9805\uFF1B\u4FDD\u7559\u539F\u6709\u4F5C\u7B54\u3002", "Circle one option in each set of brackets. Preserve your original responses."],
+  multi: ["\u53EF\u9078\u591A\u65BC\u4E00\u9805\uFF0C\u8ACB\u5728\u65B9\u683C\u5167\u52A0\u4E0A \u2713\u3002", "Tick all applicable boxes; more than one option may be selected."],
+  original: ["\u4FDD\u5B58 A \u518A\u7684\u539F\u59CB\u8A2D\u8A08\u5F8C\uFF0C\u624D\u6D3E\u767C B \u518A\uFF1B\u4E0D\u8981\u6539\u5BEB\u539F\u59CB\u8A2D\u8A08\u3002", "Preserve the original design in A before distributing B. Do not overwrite it."],
+  fixed: ["\u672C\u518A\u63D0\u4F9B\u4E09\u584A\u7368\u7ACB\u74CA\u8102\u677F\u7684\u56FA\u5B9A\u6559\u5B78\u6A21\u578B\u5716\u50CF\u53CA\u539F\u59CB\u76F4\u5F91\u8CC7\u6599\uFF1B\u89C0\u5BDF\u5224\u8B80\u3001\u5E73\u5747\u503C\u548C\u7D50\u8AD6\u7531\u4F60\u5B8C\u6210\u3002", "This booklet provides fixed teaching-model images and raw diameter data for three independent plates. Complete the observations, means and conclusions yourself."],
+  raw: ["\u539F\u59CB\u76F4\u5F91\u8CC7\u6599\uFF08mm\uFF09", "Raw diameter data (mm)"],
+  revision: ["\u4FEE\u8A02\u7D00\u9304\uFF08\u5982\u6709\uFF0C\u4FDD\u7559\u9996\u6B21\u4F5C\u7B54\u53EF\u8B80\uFF1B\u6B64\u6B04\u4E0D\u662F\u65B0\u984C\u76EE\uFF09", "Revisions, if any (keep the first response readable; this is not an additional question)"],
+  learningGate: ["\u539F\u63A2\u7A76\u7B54\u6848\u5DF2\u56FA\u5B9A\u4FDD\u5B58\u5F8C\uFF0C\u624D\u6D3E\u767C\u672C\u518A\u3002", "Distribute this booklet only after the original inquiry answers have been fixed and preserved."],
+  teacher: ["\u53EA\u4F9B\u6559\u5E2B\uFF0C\u5207\u52FF\u6D3E\u767C\u7D66\u5B78\u751F", "Teacher only: do not distribute to students"],
+  guide: ["\u6D3E\u767C\u53CA\u7814\u7A76\u5B89\u6392", "Distribution and research administration"],
+  answers: ["\u53C3\u8003\u7B54\u6848", "Reference answers"],
+  criteria: ["\u8A55\u5206\u6E96\u5247\uFF08\u73FE\u884C VL4 \u521D\u7A3F\uFF09", "Scoring criteria (current VL4 draft)"],
+  draft: ["\u8A55\u5206\u6E96\u5247\u672A\u7D93\u6548\u5EA6\u6216\u8DE8 VL \u6821\u6E96\u9A57\u8B49\uFF1B\u4E0D\u53EF\u628A\u901F\u5EA6\u3001\u9EDE\u64CA\u3001\u5B8C\u6210\u7387\u6216\u9810\u6E2C\u662F\u5426\u731C\u4E2D\u7576\u4F5C\u80FD\u529B\u3002", "These draft criteria have not been validated or calibrated across VLs. Speed, clicks, completion rate or a prediction matching the outcome are not measures of ability."],
+  rawNote: ["\u5716\u50CF\u8207\u539F\u59CB\u76F4\u5F91\u7531\u76EE\u524D VL4 \u540C\u4E00\u7D50\u679C\u6A21\u578B\u7522\u751F\uFF1B\u6C92\u6709\u589E\u52A0\u83CC\u843D\u6578\u3001\u85E5\u7269\u6FC3\u5EA6\u6216\u60A3\u8005\u5291\u91CF\u3002\u539F\u59CB\u6578\u64DA\u4E0D\u662F\u5E73\u5747\u503C\u6216\u7D50\u8AD6\u7B54\u6848\u3002", "Images and raw diameters are generated by the current VL4 result model. No colony counts, drug concentrations or patient doses have been added. Raw data are not mean or conclusion answers."],
+  columns: [["\u9805\u76EE", "\u5206\u6578", "\u65B9\u5F0F", "\u6EFF\u5206\uFF0F\u5224\u6E96", "\u90E8\u5206\u5206", "\u96F6\u5206\uFF0F\u9650\u5236"], ["Item", "Marks", "Method", "Full-credit criterion", "Partial credit", "Zero credit / limits"]],
+  steps: [
+    ["\u5148\u6D3E A\uFF0C\u4FDD\u5B58\u539F\u59CB\u5047\u8AAA\u3001\u7406\u7531\u3001\u8B8A\u91CF\u3001\u5BE6\u9A57\u524D\u63D0\u3001\u5C0D\u7167\u8A2D\u8A08\u3001\u7E6A\u5716\u53CA\u91CD\u8907\u5B89\u6392\u3002\u5B78\u751F\u4FDD\u7559\u53EF\u8B80\u526F\u672C\uFF0C\u624D\u6D3E B\u3002", "Distribute A first. Preserve the original hypothesis, reasons, variables, assumptions, control, drawing and repeat plan. Keep a readable student copy before distributing B."],
+    ["B \u4F7F\u7528\u4E09\u584A\u7368\u7ACB\u74CA\u8102\u677F\u7684\u5171\u540C 30\xB0C\u300124 \u5C0F\u6642\u6559\u5B78\u689D\u4EF6\u3002\u5B78\u751F\u4F9D\u5716\u53CA\u539F\u59CB\u8CC7\u6599\u81EA\u884C\u5224\u8B80\u3001\u8A18\u9304\u3001\u7B97\u5E73\u5747\u503C\u53CA\u5B8C\u6210\u516D\u984C\u5206\u6790\u3002", "B uses three independent plates under shared teaching conditions of 30\xB0C and 24 hours. Students interpret the images and raw data, record observations, calculate means and complete the six analysis items."],
+    ["\u6536\u53D6\u6216\u56FA\u5B9A A\u3001B \u7684\u539F\u63A2\u7A76\u7B54\u6848\u5F8C\u624D\u6D3E C\u3002\u53CD\u601D\u9700\u53C3\u95B1\u5B78\u751F\u81EA\u5DF1\u7684\u5BE6\u9A57\u7D50\u679C\uFF1BC \u4E0D\u5217\u5370\u53C3\u8003\u7D50\u8AD6\u6216\u5C0D\u932F\u3002", "Collect or fix the original answers in A and B before distributing C. Reflection uses the student\u2019s own experimental results. C prints no reference conclusion or correctness marks."],
+    ["D \u53CA\u5B8C\u6574\u5957\u88DD\u53EA\u4F9B\u6559\u5E2B\uFF1B\u5B8C\u6574\u5957\u88DD\u4E0D\u53EF\u4E00\u6B21\u6574\u5957\u6D3E\u5B78\u751F\u3002\u76F8\u540C\u8A9E\u8A00\u3001\u53EF\u7528\u6642\u9593\u53CA\u63D0\u793A\u5B89\u6392\u61C9\u5728\u5169\u7D44\u4FDD\u6301\u4E00\u81F4\u3002", "D and the complete pack are for teachers only. Do not distribute the entire pack to students at once. Keep language, available time and prompts consistent across groups."],
+    ["\u672C\u529F\u80FD\u4E0D\u8B80\u53D6\u6216\u5EFA\u7ACB\u5B78\u751F\u7D00\u9304\uFF0C\u4E0D\u6539\u7B54\u6848\u3001\u7E6A\u5716\u3001\u793A\u7BC4\u3001\u8A08\u6642\u3001\u4E8B\u4EF6\u3001\u96F2\u7AEF\u6216 Excel\u3002\u7D19\u672C\u624B\u5BEB\u8CC7\u6599\u7531\u7814\u7A76\u8005\u53E6\u884C\u4FDD\u5B58\u548C\u8A55\u5206\u3002", "This feature does not read or create student records or change answers, drawings, demonstrations, timing, events, cloud records or Excel. Researchers separately preserve and score handwritten paper data."],
+    ["\u4F9D\u5DF2\u6838\u5C0D\u7684 proposal \xA74.1\u3001\xA74.3.2\uFF0C\u5169\u7D44\u5728\u6B63\u5F0F\u6388\u8AB2\u524D\u5B8C\u6210\u56DB\u9031\u6D3B\u52D5\uFF0C\u4F7F\u7528\u76F8\u540C\u60C5\u5883\u3001\u6982\u5FF5\u53CA\u984C\u76EE\uFF1B\u7D19\u672C\u7D44\u4EE5\u975C\u614B\u5716\u53CA\u9810\u88FD\u8CC7\u6599\u8868\u4EE3\u66FF\u4E92\u52D5\u6A21\u64EC\u3002\u672C\u518A\u5C0D\u61C9 VL4 \u6297\u751F\u7D20\u6D3B\u52D5\u3002", "The supplied proposal, sections 4.1 and 4.3.2, specifies four weekly modules before formal teaching, with identical scenarios, concepts and prompts. Paper replaces interactive simulation with static diagrams and pre-rendered data tables. This booklet corresponds to VL4 antibiotics."],
+    ["\u7D19\u672C\u7528\u56FA\u5B9A\u7A2E\u5B50\uFF0CVL \u500B\u5225\u63A2\u7A76\u4F7F\u7528\u7368\u7ACB\u7A2E\u5B50\uFF1B\u53C3\u6578\u8207\u7D50\u679C\u6A21\u578B\u76F8\u540C\uFF0C\u4F46\u6BCF\u540D\u5B78\u751F\u7684\u539F\u59CB\u6578\u503C\u672A\u5FC5\u5B8C\u5168\u76F8\u540C\u3002\u7814\u7A76\u8005\u9808\u6838\u5C0D\u9019\u7A2E\u8CC7\u6599\u8B8A\u7570\u662F\u5426\u7B26\u5408\u7814\u7A76\u8A2D\u8A08\u3002", "Paper uses fixed seeds; individual VL inquiries use independent seeds. The parameters and result model are the same, but individual raw values may differ. The researcher must confirm that this variation fits the study design."],
+    ["\u7D19\u672C\u4E0D\u80FD\u6E2C\u5F97\u865B\u64EC\u5DE5\u5177\u64CD\u4F5C\u80FD\u529B\uFF1B\u8ACB\u6838\u5C0D\u8DE8\u7D44 SPS \u984C\u76EE\u8986\u84CB\u300123 \u5206\u914D\u91CD\u3001\u8A55\u5206\u8005\u4E00\u81F4\u6027\u53CA\u6B63\u5F0F SPS\uFF0F\u6982\u5FF5\u524D\u5F8C\u6E2C\u3002\u6B63\u5F0F\u4F7F\u7528\u524D\u8A66\u5370\u7070\u968E B \u4E26\u6838\u5C0D\u5716\u6587\u53EF\u8B80\u6027\u3002", "Paper cannot measure virtual tool operation. Review cross-group SPS coverage, the 23-mark weighting, inter-rater agreement and separate formal SPS/concept pre/post tests. Trial-print B in greyscale and check image and text readability before use."],
+    ["proposal \xA74.2 \u6307\u5B9A\u5169\u7D44\u5404 20 \u4EBA\uFF0C\u6DF7\u5408 X1\uFF0FX2\uFF1AVL \u7D44 11\uFF0F9\uFF0C\u7D19\u672C\u7D44 12\uFF0F8\u3002\xA74.3.1\u20132 \u7684 10 \u984C SPSAI\u30014 \u984C CKT \u5728\u7B2C 0 \u9031\u53CA\u7B2C 4 \u9031\u5F8C\u65BD\u6E2C\uFF0C\u5F8C\u6E2C\u8207\u524D\u6E2C\u76F8\u540C\uFF1B\u672C\u5DE5\u4F5C\u7D19\u4E0D\u53D6\u4EE3\u9019\u4E9B\u6B63\u5F0F\u5DE5\u5177\uFF0C\u4E5F\u4E0D\u8072\u7A31\u5DF2\u9A57\u8B49\u5176\u6548\u5EA6\u3002", "The proposal specifies 20 students per group, combining X1/X2: 11/9 in VL and 12/8 in paper. The separate 10-item SPSAI and 4-item CKT are administered in week 0 and after week 4, using the same pre/post tests. This worksheet does not replace those instruments or establish their validity."]
+  ]
+};
+var label = (key, language2) => language2 === "en" ? glossEnglish(LABELS[key][1]) : LABELS[key][0];
+var RUBRIC_EN = [
+  ["Initial observation", "Teacher", "Distinguish visible colonies and the clear area near the fungus; describe observations without assuming a cause.", "1: relevant description, but location or observation/inference distinction is incomplete.", "No relevant observation, or only an unsupported causal claim."],
+  ["Visible zones and diameters", "Shared check", "For each of 12 readings, use the correct Yes/No classification and a total diameter within \xB11 mm; no visible zone requires exactly 0. Score matched readings \xD7 2/12, rounded to two decimal places.", "Proportional credit for matched readings.", "No matching evidence; a 6 mm disc alone is not a clear zone."],
+  ["Independent, dependent and controlled variables", "Shared check", "Select only sample for IV, zone for DV; controls are disc size, agar composition, strain, initial distribution and preset preparation.", "IV: 1; DV: 1. Each correct control earns 2/5, rounded to two decimal places; an unrelated control choice gives 0 for the control item.", "IV/DV must match the exact set."],
+  ["Testable hypothesis and reason", "Teacher", "A testable prediction linked to bacterial growth and observable evidence.", "0.5: a testable prediction with a weak or unclear reason.", "No testable prediction or relevant reason. An unsupported prediction is not automatically wrong."],
+  ["Original repeat-plan reason", "Teacher", "Explain repeats through consistency, variation, fair comparison and feasibility.", "0.5: mentions reliability but lacks independent comparison or a rationale for the number.", "Only a number or no relevant reason; choosing three is not a required answer."],
+  ["Control design and reason", "Teacher", "Use a matching carrier-only disc without antibiotic; hold other conditions constant and explain the comparison.", "0.5: suitable C, but the reason or shared conditions are incomplete.", "No useful comparison or confounded treatment."],
+  ["Assumptions", "Shared check", "Select only even initial distribution, no added contamination and shared observation conditions.", "No partial credit.", "Any missing or additional choice, including assuming all bacteria died."],
+  ["Plate-design quality", "Teacher", "Label X, Y, Z and C clearly; allow space between discs and from the edge. A drawing or complete written design is acceptable.", "1: basically feasible but missing one important arrangement.", "No assessable design; artistic quality is not a criterion."],
+  ["Means", "Shared check", "Use the student\u2019s own three latest readings; \xB10.1 mm tolerance; 0.25 per sample.", "Proportional credit across four samples.", "Do not penalise the same measurement error again through arithmetic."],
+  ["Reflection: evidence and resistance selection", "Teacher", "Cite sample readings to support inhibition; link prior resistance differences, survival and reproduction, inherited traits and changing population proportions to loss of effectiveness.", "1: a reasonable experimental judgment or selection explanation, but missing readings or causal links.", "No relevant evidence/concept, or bacteria purposefully developing resistance to survive."]
+];
+
+// paperwork/source.js
+var PAPER_VERSION = 1;
+var PAPER_SEEDS = Object.freeze([1001, 1002, 1003]);
+var translated = (key, language2) => {
+  const value = L[key] || [key, key];
+  return language2 === "en" ? glossEnglish(value[1]) : value[0];
+};
+function getPaperSource(language2 = "zh") {
+  if (!["zh", "en"].includes(language2)) throw Error("Invalid paper language");
+  const t2 = (key) => translated(key, language2), choices = (options) => options.map(([id, key]) => ({ id, key, text: t2(key) }));
+  const plates = PAPER_SEEDS.map((seed, i) => {
+    const plate = { id: `plate-${i + 1}`, seed, discPositions: structuredClone(DEFAULT_POSITIONS) };
+    generateResult(plate);
+    return plate;
+  });
+  const rawMeasurements = Object.fromEntries(plates.map((plate) => [plate.id, Object.fromEntries(SAMPLES.map((sample) => [sample, { value: String(plate.result[sample]) }]))]));
+  const conclusionReference = conclusionChecks({ plates, measurements: rawMeasurements });
+  const openFields = ["observation", "prediction", "largestPrediction", "reason", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason", "reflection"];
+  const reference = Object.fromEntries(openFields.map((field2) => [field2, referenceFor(field2, { plates }, language2)]));
+  if (RUBRIC_EN.length !== CURRENT_RUBRIC_ROWS.length - 7) throw Error("Update shared English rubric translations");
+  const rubric = language2 === "zh" ? CURRENT_RUBRIC_ROWS.map((row) => row.slice(0, 6)) : CURRENT_RUBRIC_ROWS.map((row, i) => {
+    if (i < 10) {
+      const [name, method, full, partial, zero] = RUBRIC_EN[i];
+      return [name, row[1], method, full, partial, zero].map((v) => typeof v === "string" ? glossEnglish(v) : v);
+    }
+    if (i < 15) {
+      const q = MC_QUESTIONS[i - 10], letter = String.fromCharCode(65 + q.options.findIndex(([id]) => id === q.correct));
+      return [`Analysis ${q.number}: ${t2(q.key)}`, row[1], "Shared check", `Correct option: ${letter}.`, "No partial credit.", "Incorrect or missing response: 0."];
+    }
+    if (i === 15) return ["Selected conclusion", row[1], "Shared check", "X and Z: 0.5. Rank effective samples by the student\u2019s own means: 0.5. Unused ranks are Not applicable.", "0.5 if either component is correct.", "Either order is accepted for equal means; do not penalise measurement error again."];
+    return ["Current total / pending marks", row[1], "Formula", "Total 23. All six manual fields must be scored and reflection submitted before a total is reported.", "Blank manual marks mean pending; 0 means marked zero.", "Do not compare directly with the legacy 32-mark rubric. Draft calibration is required."];
+  });
+  return {
+    module: "VL4",
+    version: PAPER_VERSION,
+    language: language2,
+    text: Object.fromEntries(Object.keys(L).sort().map((key) => [key, t2(key)])),
+    labels: LABELS,
+    inquiryFields: INQUIRY_FIELDS,
+    analysisFields: ANALYSIS_FIELDS,
+    variables: choices(VARIABLE_OPTIONS),
+    assumptions: choices(ASSUMPTION_OPTIONS),
+    prediction: choices(PREDICTION_OPTIONS),
+    repeats: choices(REPEAT_OPTIONS),
+    effective: choices(EFFECTIVE_OPTIONS),
+    questions: MC_QUESTIONS.map((q) => ({ ...q, text: t2(q.key), choices: choices(q.options) })),
+    equipment: EQUIPMENT_ART,
+    history: historyFigureMarkup(),
+    learning: learningPointsHTML(language2),
+    plates,
+    conclusionReference,
+    samples: SAMPLES,
+    discMM: DISC_MM,
+    replicates: ACTUAL_REPLICATES,
+    reference,
+    variableReference: VARIABLE_REFERENCE,
+    assumptionReference: ASSUMPTION_REFERENCE,
+    rubric,
+    tolerances: TOLERANCES
+  };
+}
+var paperSources = () => ({ zh: getPaperSource("zh"), en: getPaperSource("en") });
+
+// paperwork/client.js
+var sha = async (bytes) => [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))].map((b) => b.toString(16).padStart(2, "0")).join("");
+var words = { open: ["\u4E0B\u8F09\u7D19\u672C\u5C0D\u7167\u7D44\u5DE5\u4F5C\u7D19 PDF", "Download paper control-group worksheets PDF"], close: ["\u95DC\u9589\u6750\u6599\u9762\u677F", "Close materials panel"], language: ["\u6750\u6599\u8A9E\u8A00", "Material language"], preview: ["\u9810\u89BD", "Preview"], download: ["\u4E0B\u8F09 PDF", "Download PDF"], loading: ["\u6B63\u5728\u6838\u5C0D\u7D19\u672C\u7248\u672C\u2026\u2026", "Checking paper material version\u2026"], ready: ["\u8ACB\u6309 A \u2192 B \u2192 C \u6B21\u5E8F\u6D3E\u767C\uFF1BD \u53CA\u5B8C\u6574\u5957\u88DD\u53EA\u4F9B\u6559\u5E2B\u3002", "Distribute A \u2192 B \u2192 C in order. D and the complete pack are for teachers only."], failed: ["\u6750\u6599\u672A\u80FD\u8F09\u5165\u6216\u5DF2\u904E\u671F\uFF0C\u8ACB\u91CD\u65B0\u8F09\u5165\u7DB2\u7AD9\uFF1B\u82E5\u4ECD\u5931\u6557\uFF0C\u8ACB\u91CD\u65B0\u7522\u751F\u7D19\u672C\u6750\u6599\u3002", "Materials could not be loaded or are outdated. Reload the site; if this persists, rebuild the paper materials."], downloaded: ["PDF \u5DF2\u4E0B\u8F09\u3002", "PDF downloaded."], previewed: ["\u9810\u89BD\u5DF2\u958B\u555F\uFF1B\u624B\u6A5F\u672A\u80FD\u986F\u793A\u6642\u53EF\u76F4\u63A5\u4E0B\u8F09 PDF\u3002", "Preview is open. If it is not displayed on mobile, download the PDF directly."], error: ["PDF \u4E0B\u8F09\u5931\u6557\u6216\u6821\u9A57\u4E0D\u7B26\uFF0C\u8ACB\u91CD\u8A66\uFF1B\u5B78\u751F\u7D00\u9304\u4E0D\u53D7\u5F71\u97FF\u3002", "PDF download failed or its checksum does not match. Retry; student records are unaffected."] };
+function createPaperworkPanel({ host, isAuthorised, getLanguage }) {
+  let manifest = null, request = 0, previewURL = null, statusKey = "ready";
+  const text2 = (key) => {
+    const pair2 = words[key];
+    return getLanguage() === "en" ? glossEnglish(pair2[1]) : pair2[0];
+  };
+  const button = document.createElement("button");
+  button.id = "openPaperwork";
+  button.type = "button";
+  button.className = "secondary";
+  button.textContent = text2("open");
+  host.querySelector(".record-actions").append(button);
+  const panel = document.createElement("section");
+  panel.id = "paperPanel";
+  panel.className = "paper-panel";
+  panel.hidden = true;
+  panel.innerHTML = `<div class="paper-heading"><h3 id="paperTitle"></h3><button type="button" id="closePaperwork" class="secondary"></button></div><label class="field"><span id="paperLanguageLabel"></span><select id="paperLanguage"><option value="zh">\u7E41\u9AD4\u4E2D\u6587</option><option value="en">English</option></select></label><p id="paperContentVersion" class="caption"></p><div class="paper-files">${["A", "B", "C", "D", "all"].map((part) => `<article class="paper-file"><h4 id="paperName${part}"></h4><p id="paperPages${part}" class="caption"></p><div class="record-actions"><button type="button" class="secondary" data-paper-preview="${part}"></button><button type="button" class="primary" data-paper-download="${part}"></button></div></article>`).join("")}</div><p id="paperStatus" class="caption" role="status"></p><iframe id="paperPreview" title="PDF preview" hidden></iframe>`;
+  host.querySelector(".record-actions").after(panel);
+  const $2 = (id) => panel.querySelector("#" + id);
+  const setStatus = (key) => {
+    statusKey = key;
+    $2("paperStatus").textContent = text2(key);
+  };
+  const clearPreview = () => {
+    if (previewURL) URL.revokeObjectURL(previewURL);
+    previewURL = null;
+    $2("paperPreview").removeAttribute("src");
+    $2("paperPreview").hidden = true;
+  };
+  function refresh() {
+    button.textContent = text2("open");
+    $2("paperTitle").textContent = text2("open");
+    $2("closePaperwork").textContent = text2("close");
+    $2("paperLanguageLabel").textContent = text2("language");
+    const lang = $2("paperLanguage").value;
+    panel.querySelectorAll("[data-paper-preview]").forEach((el) => el.textContent = text2("preview"));
+    panel.querySelectorAll("[data-paper-download]").forEach((el) => el.textContent = text2("download"));
+    for (const part of ["A", "B", "C", "D", "all"]) {
+      $2("paperName" + part).textContent = `${part === "all" ? "" : part + "\uFF1A"}${label(part, lang)}`;
+      const file = manifest?.languages[lang].files[part], range = manifest?.languages[lang].ranges[part];
+      $2("paperPages" + part).textContent = file ? `${file.pages} ${getLanguage() === "en" ? "pages" : "\u9801"}${range ? ` \xB7 ${getLanguage() === "en" ? "pack pages" : "\u5957\u88DD\u7B2C"} ${range[0]}\u2013${range[1]}` : ""}` : "";
+    }
+    $2("paperContentVersion").textContent = manifest ? `VL4 \xB7 v${manifest.materialVersion} \xB7 ${manifest.contentVersion}` : "";
+    panel.querySelectorAll("[data-paper-download],[data-paper-preview]").forEach((el) => el.disabled = !manifest);
+    setStatus(statusKey);
+  }
+  function close() {
+    request++;
+    manifest = null;
+    panel.hidden = true;
+    clearPreview();
+  }
+  async function open() {
+    if (!isAuthorised()) return false;
+    const token = ++request;
+    manifest = null;
+    clearPreview();
+    panel.hidden = false;
+    $2("paperLanguage").value = getLanguage();
+    setStatus("loading");
+    refresh();
+    try {
+      const response = await fetch("paperwork/generated/manifest.json", { cache: "no-store" });
+      if (!response.ok) throw Error("manifest");
+      const data = await response.json();
+      const sources = paperSources();
+      if (!/^[a-f0-9]{12}$/.test(data.contentVersion) || data.module !== "VL4" || data.materialVersion !== sources.zh.version || data.sourceDigest !== await sha(new TextEncoder().encode(JSON.stringify(sources)))) throw Error("stale");
+      for (const lang of ["zh", "en"]) for (const part of ["A", "B", "C", "D", "all"]) {
+        const file = data.languages?.[lang]?.files?.[part];
+        if (!file || !new RegExp(`^paperwork/generated/VL4_${part}_${lang}_v${data.materialVersion}_${data.contentVersion}\\.pdf$`).test(file.path) || !Number.isInteger(file.pages) || file.pages < 1 || !Number.isInteger(file.bytes) || !/^[a-f0-9]{64}$/.test(file.sha256) || !/^[\w.-]+\.pdf$/.test(file.name)) throw Error("invalid");
+      }
+      if (token !== request || !isAuthorised()) return false;
+      manifest = data;
+      setStatus("ready");
+      refresh();
+      return true;
+    } catch {
+      if (token === request && isAuthorised()) {
+        setStatus("failed");
+        refresh();
+      }
+      return false;
+    }
+  }
+  async function fileBlob(part) {
+    if (!isAuthorised() || !manifest || !["A", "B", "C", "D", "all"].includes(part)) return null;
+    const token = request, file = manifest.languages[$2("paperLanguage").value].files[part];
+    const response = await fetch(file.path, { cache: "no-cache" });
+    if (!response.ok) throw Error("file");
+    const bytes = await response.arrayBuffer();
+    if (new TextDecoder().decode(bytes.slice(0, 5)) !== "%PDF-" || bytes.byteLength !== file.bytes || await sha(bytes) !== file.sha256) throw Error("checksum");
+    if (token !== request || !isAuthorised()) return null;
+    return { blob: new Blob([bytes], { type: "application/pdf" }), name: file.name };
+  }
+  async function download(part) {
+    try {
+      const file = await fileBlob(part);
+      if (!file) return false;
+      const url = URL.createObjectURL(file.blob), a = document.createElement("a");
+      a.href = url;
+      a.download = file.name;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 6e4);
+      setStatus("downloaded");
+      return true;
+    } catch {
+      if (isAuthorised()) setStatus("error");
+      return false;
+    }
+  }
+  async function preview(part) {
+    try {
+      const file = await fileBlob(part);
+      if (!file) return false;
+      clearPreview();
+      previewURL = URL.createObjectURL(file.blob);
+      $2("paperPreview").src = previewURL;
+      $2("paperPreview").hidden = false;
+      setStatus("previewed");
+      return true;
+    } catch {
+      if (isAuthorised()) setStatus("error");
+      return false;
+    }
+  }
+  button.addEventListener("click", open);
+  $2("closePaperwork").onclick = close;
+  $2("paperLanguage").onchange = () => {
+    if (!isAuthorised()) return;
+    request++;
+    clearPreview();
+    setStatus("ready");
+    refresh();
+  };
+  panel.querySelectorAll("[data-paper-download]").forEach((el) => el.onclick = () => download(el.dataset.paperDownload));
+  panel.querySelectorAll("[data-paper-preview]").forEach((el) => el.onclick = () => preview(el.dataset.paperPreview));
+  refresh();
+  return { close, refresh };
 }
 
 // ruler-model.js
@@ -25070,10 +25970,10 @@ function createExperimentBench({ getRecord, getPlateIndex, setPlateIndex, save: 
     const container = $2("#quadrantLabels");
     if (!container || container.hidden || !current()) return;
     const parent = container.getBoundingClientRect();
-    container.querySelectorAll("[data-quadrant-box]").forEach((label) => {
-      const location = screenPoint(toPlatePoint(labelPoints[label.dataset.quadrantBox], -current().rotation));
-      label.style.left = `${location.x - parent.left}px`;
-      label.style.top = `${location.y - parent.top}px`;
+    container.querySelectorAll("[data-quadrant-box]").forEach((label2) => {
+      const location = screenPoint(toPlatePoint(labelPoints[label2.dataset.quadrantBox], -current().rotation));
+      label2.style.left = `${location.x - parent.left}px`;
+      label2.style.top = `${location.y - parent.top}px`;
     });
   }
   function renderPlate() {
@@ -25096,8 +25996,8 @@ function createExperimentBench({ getRecord, getPlateIndex, setPlateIndex, save: 
     const coverage = showCoverage2 && !p.completed ? coverageFraction(p) >= REQUIRED_COVERAGE ? '<circle class="uniform-coverage" cx="200" cy="200" r="157" fill="#55ad9d" opacity=".15"/>' : p.coverage.map((i) => GRID[i] ? `<circle cx="${GRID[i].x}" cy="${GRID[i].y}" r="10" fill="#55ad9d" opacity=".15"/>` : "").join("") : "";
     const cross = p.preparation.crossMarked || animationKind === "mark" ? `<g class="${animationKind === "mark" ? "cross-drawing" : ""}" stroke="#203d42" stroke-width="2.5" stroke-linecap="round"><path class="cross-horizontal" d="M45 200H355"/><path class="cross-vertical" d="M200 45V355"/></g>` : "";
     const labels = p.preparation.crossMarked ? QUADRANTS.map((slot) => {
-      const pos = labelPoints[slot], label = p.preparation.quadrantLabels[slot];
-      return label ? `<text x="${pos.x}" y="${pos.y + 5}" font-size="18" font-weight="700" text-anchor="middle">${label}</text>` : "";
+      const pos = labelPoints[slot], label2 = p.preparation.quadrantLabels[slot];
+      return label2 ? `<text x="${pos.x}" y="${pos.y + 5}" font-size="18" font-weight="700" text-anchor="middle">${label2}</text>` : "";
     }).join("") : "";
     const targets = step === 4 ? SAMPLES.map((sample) => {
       const q = placementForLabel(p, sample);
@@ -25708,627 +26608,6 @@ function createCloudSync({
   };
 }
 
-// reports.js
-var import_exceljs = __toESM(require_exceljs_min(), 1);
-
-// rubric.js
-var TOLERANCES = Object.freeze({ reading: 1, mean: 0.1, graph: 0.5 });
-var SAMPLE_IDS = Object.freeze(["X", "Y", "Z", "C"]);
-var VARIABLE_REFERENCE = Object.freeze({ iv: "sample", dv: "zone", cv: ["disc", "medium", "strain", "distribution", "preparation"] });
-var LEGACY_CV = Object.freeze([...VARIABLE_REFERENCE.cv, "observation"]);
-var controlVariableReference = (record) => record.answers?.cv?.includes("observation") ? LEGACY_CV : VARIABLE_REFERENCE.cv;
-var ASSUMPTION_REFERENCE = Object.freeze(["distribution", "sterile", "sameConditions"]);
-var numeric = (value) => value !== "" && value !== null && value !== void 0 && Number.isFinite(Number(value));
-var finiteNumber = (value) => numeric(value) ? Number(value) : null;
-var roundScore = (value) => Math.round(value * 100) / 100;
-var sameChoices = (actual, expected) => Array.isArray(actual) && actual.length === expected.length && new Set(actual).size === expected.length && expected.every((item) => actual.includes(item));
-function actualReplicates(record) {
-  return (record.plates || []).filter((plate) => plate.result && plate.completed).length;
-}
-function studentMean(record, sample) {
-  const plates = record.plates || [];
-  if (!plates.length) return null;
-  const values = plates.map((plate) => finiteNumber(record.measurements?.[plate.id]?.[sample]?.value));
-  return values.every((value) => value !== null) ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
-}
-function conclusionChecks(record) {
-  const a = record.answers || {}, plates = record.plates || [];
-  const effective = ["X", "Y", "Z"].filter((sample) => plates.some((plate) => clearZoneDiameter(plate, sample) > 0));
-  const selected = a.effectiveSamples === "all" ? ["X", "Y", "Z"] : a.effectiveSamples === "none" ? [] : (a.effectiveSamples || "").split("_").filter(Boolean);
-  const samples = a.effectiveSamples ? plates.length > 0 && sameChoices(selected, effective) : null;
-  const ranking = ["rank1", "rank2", "rank3", "rank4"].map((key) => a[key]);
-  const means = Object.fromEntries(effective.map((sample) => [sample, studentMean(record, sample)]));
-  const reference = effective.every((sample) => means[sample] !== null) ? [...effective].sort((x, y) => means[y] - means[x]) : null;
-  let order = null;
-  if (ranking.every(Boolean) && reference) {
-    const ranked = ranking.slice(0, effective.length);
-    order = sameChoices(ranked, effective) && ranking.slice(effective.length).every((value) => value === "na") && ranked.every((sample, index) => index === 0 || means[ranked[index - 1]] + 1e-9 >= means[sample]);
-  }
-  return { samples, order, effective, reference };
-}
-function readingCheck(record, plate, sample, reading) {
-  const value = finiteNumber(reading?.value), reference = clearZoneDiameter(plate, sample);
-  if (value === null || reference === null || !["yes", "no"].includes(reading?.visible)) return null;
-  if (reference === 0) return value === 0 && reading.visible === "no";
-  return Math.abs(value - reference) <= TOLERANCES.reading + 1e-9 && reading.visible === "yes";
-}
-function meanCheck(record, sample) {
-  const value = finiteNumber(record.means?.[sample]), expected = studentMean(record, sample);
-  return value === null || expected === null ? null : Math.abs(value - expected) <= TOLERANCES.mean + 1e-9;
-}
-function graphCheck(record, sample) {
-  const value = finiteNumber(record.graph?.values?.[sample]), expected = finiteNumber(record.means?.[sample]);
-  return value === null || expected === null || !record.graph?.confirmedAt ? null : Math.abs(value - expected) <= TOLERANCES.graph + 1e-9;
-}
-function objectiveChecks(record) {
-  const a = record.answers || {};
-  const variableCheck = (value, expected) => Array.isArray(value) ? value.length ? sameChoices(value, [expected]) : null : value ? value === expected : null;
-  return {
-    ...analysisChecks(record),
-    iv: variableCheck(a.iv, "sample"),
-    dv: variableCheck(a.dv, "zone"),
-    cv: a.cv?.length ? sameChoices(a.cv, controlVariableReference(record)) : null,
-    assumptions: a.assumptions?.length ? sameChoices(a.assumptions, ASSUMPTION_REFERENCE) : null,
-    analysisDeath: a.analysisDeath ? a.analysisDeath === "cannot" : null,
-    analysisClinical: a.analysisClinical ? a.analysisClinical === "cannot" : null,
-    knowledgeBacteria: a.knowledgeBacteria ? a.knowledgeBacteria === "bacteria" : null,
-    knowledgeResistance: a.knowledgeResistance ? a.knowledgeResistance === "bacteria" : null,
-    knowledgeLimits: a.knowledgeLimits ? a.knowledgeLimits === "limited" : null
-  };
-}
-var SCORE_COLUMNS = [
-  { id: "observation", label: "\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF\uFF08\u6559\u5E2B\uFF09", group: "observing", max: 2, manual: true },
-  { id: "readings", label: "\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340\uFF08\u81EA\u52D5\uFF09", group: "observing", max: 2 },
-  { id: "observing", label: "SPS \u89C0\u5BDF", group: "observing", max: 4, formula: ["observation", "readings"] },
-  { id: "iv", label: "\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 1 },
-  { id: "dv", label: "\u5206\u985E\uFF5C\u56E0\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 1 },
-  { id: "cv", label: "\u5206\u985E\uFF5C\u63A7\u5236\u8B8A\u91CF\uFF08\u81EA\u52D5\uFF09", group: "classifying", max: 2 },
-  { id: "classifying", label: "SPS \u5206\u985E", group: "classifying", max: 4, formula: ["iv", "dv", "cv"] },
-  { id: "hypothesis", label: "\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
-  { id: "repeat", label: "\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
-  { id: "control", label: "\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531\uFF08\u6559\u5E2B\uFF09", group: "designing", max: 1, manual: true },
-  { id: "assumptions", label: "\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D\uFF08\u81EA\u52D5\uFF09", group: "designing", max: 1 },
-  { id: "designing", label: "SPS \u8A2D\u8A08\u63A2\u7A76", group: "designing", max: 4, formula: ["hypothesis", "repeat", "control", "assumptions"] },
-  { id: "designQuality", label: "\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA\uFF08\u6559\u5E2B\uFF09", group: "conducting", max: 2, manual: true },
-  { id: "methodEvaluation", label: "\u5BE6\u4F5C\uFF5C\u6AA2\u67E5\u53CA\u6539\u5584\u65B9\u6CD5\uFF08\u6559\u5E2B\uFF09", group: "conducting", max: 2, manual: true },
-  { id: "conducting", label: "SPS \u9032\u884C\u5BE6\u9A57", group: "conducting", max: 4, formula: ["designQuality", "methodEvaluation"] },
-  { id: "means", label: "\u63A8\u8AD6\uFF5C\u4F9D\u81EA\u5DF1\u7684\u8B80\u6578\u8A08\u7B97\u5E73\u5747\u503C\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 1 },
-  { id: "deathLimit", label: "\u63A8\u8AD6\uFF5C\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 0.5 },
-  { id: "clinicalLimit", label: "\u63A8\u8AD6\uFF5C\u4E0D\u80FD\u5224\u5B9A\u6700\u4F73\u6CBB\u7642\uFF08\u81EA\u52D5\uFF09", group: "inferring", max: 0.5 },
-  { id: "evidenceAnalysis", label: "\u63A8\u8AD6\uFF5C\u4EE5\u5C0D\u7167\u53CA\u91CD\u8907\u7D50\u679C\u8AD6\u8B49\uFF08\u6559\u5E2B\uFF09", group: "inferring", max: 2, manual: true },
-  { id: "inferring", label: "SPS \u63A8\u8AD6", group: "inferring", max: 4, formula: ["means", "deathLimit", "clinicalLimit", "evidenceAnalysis"] },
-  { id: "graph", label: "\u6E9D\u901A\uFF5C\u68D2\u9AD8\u8207\u81EA\u5DF1\u7684\u5E73\u5747\u503C\uFF08\u81EA\u52D5\uFF09", group: "communicating", max: 2 },
-  { id: "writtenExpression", label: "\u6E9D\u901A\uFF5C\u66F8\u9762\u8868\u9054\uFF08\u6559\u5E2B\uFF09", group: "communicating", max: 2, manual: true },
-  { id: "communicating", label: "SPS \u6E9D\u901A", group: "communicating", max: 4, formula: ["graph", "writtenExpression"] },
-  { id: "sps", label: "SPS \u7E3D\u5206\uFF0824\uFF09", group: "score", max: 24, formula: ["observing", "classifying", "designing", "conducting", "inferring", "communicating"] },
-  { id: "knowledgeBacteria", label: "\u65B0\u77E5\u8B58\uFF5C\u6297\u751F\u7D20\u8207\u7D30\u83CC\u611F\u67D3\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
-  { id: "knowledgeResistance", label: "\u65B0\u77E5\u8B58\uFF5C\u7D30\u83CC\u6297\u85E5\u6027\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
-  { id: "knowledgeLimits", label: "\u65B0\u77E5\u8B58\uFF5C\u6E05\u6670\u5340\u53CA\u91CD\u8907\u7684\u9650\u5236\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
-  { id: "knowledgeRevision", label: "\u65B0\u77E5\u8B58\uFF5C\u4EE5\u8B49\u64DA\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
-  { id: "knowledge", label: "\u65B0\u77E5\u8B58\u7E3D\u5206\uFF088\uFF09", group: "knowledge", max: 8, formula: ["knowledgeBacteria", "knowledgeResistance", "knowledgeLimits", "knowledgeRevision"] },
-  { id: "overall", label: "\u6574\u9AD4\u7E3D\u5206\uFF0832\uFF09", group: "score", max: 32, formula: ["sps", "knowledge"] },
-  { id: "marking", label: "\u8A55\u5206\u72C0\u614B", group: "score" }
-];
-function automaticScores(record) {
-  const checks = objectiveChecks(record), a = record.answers || {};
-  const plates = record.plates || [];
-  const accurate = plates.flatMap((plate) => SAMPLE_IDS.map((sample) => readingCheck(record, plate, sample, record.measurements?.[plate.id]?.[sample]))).filter((check) => check === true).length;
-  const cv = Array.isArray(a.cv) ? a.cv : [], cvReference = controlVariableReference(record);
-  const validCV = cv.every((value) => cvReference.includes(value)) && new Set(cv).size === cv.length;
-  const scores = {
-    readings: roundScore(Math.min(12, accurate) / 12 * 2),
-    iv: checks.iv ? 1 : 0,
-    dv: checks.dv ? 1 : 0,
-    cv: validCV ? roundScore(cvReference.filter((value) => cv.includes(value)).length / cvReference.length * 2) : 0,
-    assumptions: checks.assumptions ? 1 : 0,
-    means: SAMPLE_IDS.filter((sample) => meanCheck(record, sample) === true).length / 4,
-    deathLimit: checks.analysisDeath ? 0.5 : 0,
-    clinicalLimit: checks.analysisClinical ? 0.5 : 0,
-    graph: SAMPLE_IDS.filter((sample) => graphCheck(record, sample) === true).length / 2
-  };
-  if (currentAnalysis(record)) {
-    const conclusion = conclusionChecks(record);
-    scores.selectedConclusion = (conclusion.samples === true ? 0.5 : 0) + (conclusion.order === true ? 0.5 : 0);
-    delete scores.deathLimit;
-    delete scores.clinicalLimit;
-    delete scores.graph;
-    for (const question of MC_QUESTIONS) scores[question.id] = checks[question.id] ? 1 : 0;
-  }
-  return scores;
-}
-var RUBRIC_ROWS = [
-  ["\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF", 2, "\u6559\u5E2B", "\u6307\u51FA\u9752\u9EF4\u83CC\uFF08\u771F\u83CC\uFF09\u9644\u8FD1\u7684\u53EF\u898B\u7D30\u83CC\u751F\u9577\u8F03\u5C11\uFF0C\u4E26\u5206\u958B\u89C0\u5BDF\u8207\u63A8\u6E2C\u3002", "1\uFF1A\u63CF\u8FF0\u76F8\u95DC\u73FE\u8C61\u4F46\u4F4D\u7F6E\u6216\u89C0\u5BDF\uFF0F\u63A8\u6E2C\u5340\u5206\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u672A\u63D0\u4F9B\u53EF\u8A55\u7B54\u6848\u3001\u7121\u95DC\u6216\u628A\u6A5F\u5236\u7576\u4F5C\u76F4\u63A5\u89C0\u5BDF\u3002", "observing"],
-  ["\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u7D19\u789F\u5916\u6E05\u6670\u5340", 2, "\u81EA\u52D5", "12 \u500B\u6700\u5F8C\u8B80\u6578\u5747\u7B26\u5408\u6A21\u578B\u76F4\u5F91 \xB11 mm\uFF0C\u4E26\u6B63\u78BA\u5206\u8FA8\u7D19\u789F\u5916\u6709\uFF0F\u7121\u53EF\u898B\u6E05\u6670\u5340\u3002", "2 \xD7 \u7B26\u5408\u5169\u9805\u689D\u4EF6\u7684\u8B80\u6578\u6578\u76EE \xF7 12\uFF0C\u4FDD\u7559\u5169\u4F4D\u5C0F\u6578\u3002", "0\uFF1A\u6C92\u6709\u7B26\u5408\u5169\u9805\u689D\u4EF6\u7684\u8B80\u6578\u3002\u6C92\u6709\u6E05\u6670\u5340\u6642\uFF0C\u7E3D\u76F4\u5F91\u9808\u8A18 0\uFF0C\u4E26\u9078\u300C\u7121\u300D\u3002", "observing"],
-  ["\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF0F\u56E0\u8B8A\u91CF\uFF0F\u63A7\u5236\u8B8A\u91CF", 4, "\u81EA\u52D5", "\u7D19\u789F\u6240\u542B\u6A23\u672C\uFF081\uFF09\uFF1B\u662F\u5426\u6709\u6E05\u6670\u5340\u53CA\u7E3D\u76F4\u5F91\uFF081\uFF09\uFF1B\u4E94\u9805\u63A7\u5236\uFF1A\u7D19\u789F\u5927\u5C0F\u3001\u74CA\u8102\u677F\u7684\u6210\u4EFD\u3001\u4F7F\u7528\u7684\u7D30\u83CC\u7A2E\u985E\u3001\u521D\u59CB\u7D30\u83CC\u5206\u5E03\u3001\u5404\u6A23\u672C\u9810\u8A2D\u88FD\u5099\u689D\u4EF6\uFF082\uFF09\u3002", "\u4E94\u9805\u63A7\u5236\u8B8A\u91CF\u6BCF\u9805 2/5\uFF1B\u5168\u9078\u6B63\u78BA\u5F97 2\uFF1B\u6574\u6B04\u4FDD\u7559\u5169\u4F4D\u5C0F\u6578\u3002", "\u9078\u5165\u81EA\uFF0F\u56E0\u8B8A\u91CF\u7B49\u4E0D\u9069\u7576\u63A7\u5236\u9805\uFF0C\u63A7\u5236\u8B8A\u91CF\u6B04 0\uFF1B\u672A\u7B54\u6216\u5206\u985E\u932F\u8AA4 0\u3002", "classifying"],
-  ["\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u5BE6\u9A57\u524D\u63D0\u51FA\u53EF\u7528\u6A23\u672C\u8207\u8F09\u9AD4\u5C0D\u7167\u6BD4\u8F03\u7684\u9810\u6E2C\uFF0C\u4E26\u7D66\u51FA\u76F8\u95DC\u7406\u7531\u3002", "0.5\uFF1A\u53EF\u6E2C\u8A66\u9810\u6E2C\uFF0C\u4F46\u7406\u7531\u8F03\u8584\u5F31\u6216\u4E0D\u6E05\u695A\u3002", "0\uFF1A\u7121\u53EF\u6E2C\u8A66\u9810\u6E2C\u6216\u7121\u5BE6\u9A57\u524D\u8B49\u64DA\uFF1B\u5408\u7406\u4F46\u4E0D\u88AB\u7D50\u679C\u652F\u6301\u7684\u5047\u8AAA\u4E0D\u56E0\u6B64\u6263\u5206\u3002", "designing"],
-  ["\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u8AAA\u660E\u7368\u7ACB\u91CD\u8907\u53EF\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0F\u8B8A\u7570\uFF0C\u6B21\u6578\u5B89\u6392\u6709\u53EF\u884C\u6027\u7406\u7531\u3002", "0.5\uFF1A\u63D0\u53CA\u53EF\u9760\u6027\u4F46\u7F3A\u5C11\u7368\u7ACB\u6BD4\u8F03\u6216\u5B89\u6392\u7406\u7531\u3002", "0\uFF1A\u53EA\u6709\u6B21\u6578\u6216\u7121\u53EF\u8A55\u7406\u7531\u3002\u4E0D\u4EE5\u9078 3 \u6B21\u3001\u6B21\u6578\u8D8A\u591A\u7D66\u5206\u3002", "designing"],
-  ["\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531", 1, "\u6559\u5E2B", "1\uFF1A\u76F8\u540C\u8F09\u9AD4\u4F46\u4E0D\u542B\u6297\u751F\u7D20\u7684\u7D19\u789F\uFF0C\u89E3\u91CB\u6392\u9664\u8F09\u9AD4\uFF0F\u7D19\u789F\u5F71\u97FF\u53CA\u76F8\u540C\u689D\u4EF6\u3002", "0.5\uFF1A\u6709\u6070\u7576C\uFF08\u5C0D\u7167\uFF09\uFF0C\u4F46\u7406\u7531\u6216\u5171\u540C\u689D\u4EF6\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7F3A\u4E4F\u9069\u7576\u5C0D\u7167\uFF0C\u6216\u7121\u53EF\u8A55\u7406\u7531\u3002", "designing"],
-  ["\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D", 1, "\u81EA\u52D5", "\u53EA\u9078\u521D\u59CB\u5206\u5E03\u53EF\u6BD4\u8F03\u3001\u7121\u984D\u5916\u6C61\u67D3\u3001\u76F8\u540C\u6A21\u64EC\u689D\u4EF6\u3002", "\u5168\u7D44\u6B63\u78BA\u624D\u5F97 1\uFF1B\u672C\u9805\u7121\u90E8\u5206\u5206\u3002", "\u932F\u9078\u3001\u6F0F\u9078\u6216\u672A\u7B54\uFF1B\u4E0D\u80FD\u5047\u8A2D\u900F\u660E\u5340\u6240\u6709\u7D30\u83CC\u5FC5\u5B9A\u6B7B\u4EA1\u3002", "designing"],
-  ["\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA", 2, "\u6559\u5E2B", "\u6E05\u695A\u6A19\u793A X\u3001Y\u3001Z\u3001\u5C0D\u7167\uFF1B\u7559\u8DB3\u9593\u8DDD\u53CA\u908A\u7DE3\u8DDD\u96E2\uFF1B\u80FD\u53C3\u7167\u5716\uFF0F\u6587\u5B57\u516C\u5E73\u6BD4\u8F03\u3002", "1\uFF1A\u57FA\u672C\u53EF\u884C\u4F46\u7F3A\u5C11\u4E00\u9805\u4E3B\u8981\u5B89\u6392\u3002", "0\uFF1A\u7121\u6CD5\u516C\u5E73\u6BD4\u8F03\uFF0F\u7121\u53EF\u8A55\u8A2D\u8A08\uFF1B\u53EF\u7528\u6587\u5B57\u53D6\u4EE3\u7E6A\u5716\u3002", "conducting"],
-  ["\u5BE6\u4F5C\uFF5C\u6AA2\u67E5\u53CA\u6539\u5584\u65B9\u6CD5", 2, "\u6559\u5E2B", "\u4F9D\u81EA\u5DF1\u7684\u7D50\u679C\u53CA\u64CD\u4F5C\u7D00\u9304\uFF0C\u5408\u7406\u6AA2\u67E5\u5206\u5E03\u3001\u6C61\u67D3\u3001\u7D19\u789F\u4F4D\u7F6E\u6216\u5171\u540C\u689D\u4EF6\uFF0C\u8AAA\u660E\u5148\u67E5\u65B9\u6CD5\u6216\u518D\u6E2C\u8A66\u3002", "1\uFF1A\u63D0\u51FA\u76F8\u95DC\u6AA2\u67E5\uFF0C\u4F46\u672A\u9023\u7D50\u7D50\u679C\u6216\u6539\u5584\u7406\u7531\u3002", "0\uFF1A\u7121\u53EF\u8A55\u65B9\u6CD5\u8A55\u4F30\u3002\u4E0D\u8A55\u6ED1\u9F20\u7CBE\u5EA6\u3001\u62D6\u52D5\uFF0F\u9EDE\u64CA\u6578\u3001\u901F\u5EA6\u3001\u7528\u6642\u6216\u5B8C\u6210\u7387\u3002", "conducting"],
-  ["\u63A8\u8AD6\uFF5C\u5E73\u5747\u503C", 1, "\u81EA\u52D5", "\u56DB\u7D44\u5E73\u5747\u503C\u5747\u70BA\u81EA\u5DF1\u7684\u4E09\u500B\u6700\u5F8C\u8B80\u6578\u4E4B\u548C \xF73\uFF1B\u8F38\u5165\u4FDD\u7559 1 \u4F4D\u5C0F\u6578\uFF0C\u5BB9\u5DEE \xB10.1 mm\u3002", "\u6BCF\u7D44\u6B63\u78BA\u5F97 0.25\u3002\u4F9D\u5B78\u751F\u81EA\u5DF1\u7684\u8B80\u6578\uFF0C\u907F\u514D\u91CD\u8907\u6263\u91CF\u5EA6\u932F\u8AA4\u3002", "0\uFF1A\u6C92\u6709\u6B63\u78BA\u5E73\u5747\u503C\uFF0F\u7121\u6709\u6548\u81EA\u8EAB\u8B80\u6578\u3002", "inferring"],
-  ["\u63A8\u8AD6\uFF5C\u6B7B\u4EA1\u53CA\u81E8\u5E8A\u9650\u5236", 1, "\u81EA\u52D5", "\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\uFF080.5\uFF09\uFF1B\u6700\u5927\u5708\u4E0D\u80FD\u5224\u5B9A\u6700\u4F73\u81E8\u5E8A\u6CBB\u7642\uFF080.5\uFF09\u3002", "\u6BCF\u500B\u6B63\u78BA\u9078\u9805 0.5\u3002", "\u932F\u8AA4\u6216\u672A\u7B54 0\uFF1B\u672A\u77E5\u6A23\u672C\u4E0D\u4EE5\u5171\u7528\u754C\u7DDA\u5224\u5B9A\u654F\u611F\uFF0F\u6297\u85E5\u3002", "inferring"],
-  ["\u63A8\u8AD6\uFF5C\u5C0D\u7167\u53CA\u91CD\u8907\u8B49\u64DA", 2, "\u6559\u5E2B", "\u4EE5\u6A23\u672C\uFF0F\u5C0D\u7167\u3001\u4E09\u7247\u7368\u7ACB\u74CA\u8102\u677F\u6578\u64DA\u89E3\u91CB\u5047\u8AAA\u652F\u6301\u7A0B\u5EA6\u53CA\u8B8A\u7570\uFF0C\u4E26\u63D0\u51FA\u6709\u754C\u7DDA\u7684\u7D50\u8AD6\u3002", "1\uFF1A\u6709\u76F8\u95DC\u6578\u64DA\u6216\u5224\u65B7\uFF0C\u4F46\u5C0D\u7167\u3001\u91CD\u8907\u6216\u63A8\u8AD6\u754C\u7DDA\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7121\u6578\u64DA\u652F\u6301\uFF0F\u6838\u5FC3\u63A8\u8AD6\u932F\u8AA4\u3002\u539F\u59CB\u5047\u8AAA\u672A\u7372\u652F\u6301\u4ECD\u53EF\u5F97\u6EFF\u5206\u3002", "inferring"],
-  ["\u6E9D\u901A\uFF5C\u68D2\u5F62\u5716", 2, "\u81EA\u52D5", "X\u3001Y\u3001Z\u3001C\uFF08\u5C0D\u7167\uFF09\u56DB\u68D2\u8207\u81EA\u5DF1\u7684\u5DF2\u8F38\u5165\u5E73\u5747\u503C\u76F8\u7B26\uFF08\xB10.5 mm\uFF09\uFF1B\u985E\u5225\u4E0D\u9023\u7DDA\u3002", "\u6BCF\u7D44\u6B63\u78BA\u5F97 0.5\uFF1B\u5FC5\u9808\u78BA\u8A8D\u5716\u8868\u3002", "0\uFF1A\u7121\u7B26\u5408\u68D2\u9AD8\uFF1B\u4E0D\u518D\u4EE5\u6A21\u578B\u8B80\u6578\u6263\u5E73\u5747\u503C\uFF0F\u91CF\u5EA6\u932F\u8AA4\u3002", "communicating"],
-  ["\u6E9D\u901A\uFF5C\u66F8\u9762\u8868\u9054", 2, "\u6559\u5E2B", "\u7528\u6E05\u6670\u7684\u6A23\u672C\u540D\u7A31\u3001\u6578\u64DA\u3001\u55AE\u4F4D\u53CA\u6BD4\u8F03\u8A9E\u53E5\u50B3\u9054\u8A2D\u8A08\u3001\u5206\u6790\u53CA\u7D50\u8AD6\u3002", "1\uFF1A\u53EF\u7406\u89E3\uFF0C\u4F46\u7F3A\u5C11\u5FC5\u8981\u6A19\u793A\u6216\u8868\u8FF0\u542B\u7CCA\u3002", "0\uFF1A\u6C92\u6709\u53EF\u8A55\u8868\u9054\u6216\u7121\u6CD5\u7406\u89E3\uFF1B\u8207\u6982\u5FF5\u6B63\u78BA\u6027\u5206\u958B\u8A55\u3002", "communicating"],
-  ["\u65B0\u77E5\u8B58\uFF5C\u6297\u751F\u7D20\u8207\u7D30\u83CC", 2, "\u6559\u5E2B", "\u6B63\u78BA\u8AAA\u660E\u6297\u751F\u7D20\u6291\u5236\uFF0F\u6BBA\u6B7B\u7D30\u83CC\uFF0C\u5C0D\u75C5\u6BD2\u611F\u67D3\u7121\u6548\uFF0C\u4F5C\u7528\u6A5F\u5236\u662F\u88DC\u5145\u77E5\u8B58\u800C\u975E\u672C\u5BE6\u9A57\u76F4\u63A5\u8B49\u660E\u3002", "1\uFF1A\u6B63\u78BA\u63D0\u53CA\u7D30\u83CC\uFF0F\u75C5\u6BD2\u5340\u5225\u6216\u4F5C\u7528\uFF0C\u4F46\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u6838\u5FC3\u6982\u5FF5\u932F\u8AA4\u6216\u7121\u53EF\u8A55\u5167\u5BB9\u3002", "knowledge"],
-  ["\u65B0\u77E5\u8B58\uFF5C\u7D30\u83CC\u6297\u85E5\u6027", 2, "\u6559\u5E2B", "\u6297\u85E5\u6027\u662F\u7D30\u83CC\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1B\u539F\u6709\u6297\u85E5\u7D30\u83CC\u8F03\u6613\u5B58\u6D3B\u53CA\u7E41\u6B96\uFF1B\u4E0D\u8AAA\u4EBA\u7684\u8EAB\u9AD4\u7FD2\u6163\u85E5\u7269\uFF0F\u7D30\u83CC\u6709\u76EE\u7684\u9069\u61C9\u3002", "1\uFF1A\u57FA\u672C\u63CF\u8FF0\u6B63\u78BA\uFF0C\u9078\u64C7\uFF0F\u7E41\u6B96\u9023\u7D50\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u6838\u5FC3\u6982\u5FF5\u932F\u8AA4\u6216\u7121\u53EF\u8A55\u5167\u5BB9\u3002", "knowledge"],
-  ["\u65B0\u77E5\u8B58\uFF5C\u6E05\u6670\u5340\u8207\u91CD\u8907\u9650\u5236", 2, "\u6559\u5E2B", "\u8AAA\u660E\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF0C\u4E0D\u8B49\u660E\u5168\u90E8\u6B7B\u4EA1\u6216\u6700\u4F73\u6CBB\u7642\uFF1B\u91CD\u8907\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0C\u4E0D\u4FDD\u8B49\u53EF\u9760\uFF0C\u64F4\u6563\uFF0F\u7D19\u789F\u542B\u91CF\u4EA6\u5F71\u97FF\u3002", "1\uFF1A\u81F3\u5C11\u6B63\u78BA\u8AAA\u660E\u4E00\u9805\u63A8\u8AD6\u9650\u5236\u6216\u91CD\u8907\u50F9\u503C\uFF0C\u4F46\u4E0D\u5B8C\u6574\u3002", "0\uFF1A\u7121\u53EF\u8A55\u5167\u5BB9\uFF0F\u628A 3 \u6B21\u7576\u6210\u53EF\u9760\u4FDD\u8B49\u3002", "knowledge"],
-  ["\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB", 2, "\u6559\u5E2B", "\u6BD4\u8F03\u539F\u59CB\u5047\u8AAA\u53CA\u91CD\u8907\u8A08\u5283\uFF0C\u5F15\u7528\u6A23\u672C\uFF0F\u5C0D\u7167\u548C\u7368\u7ACB\u91CD\u8907\u6578\u64DA\uFF0C\u4EE5\u5B78\u7FD2\u91CD\u9EDE\u4FEE\u8A02\uFF0F\u5B8C\u5584\uFF0C\u4EA4\u4EE3\u4ECD\u4E0D\u80FD\u78BA\u5B9A\u751A\u9EBC\u3002", "1\uFF1A\u6709\u4FEE\u8A02\u6216\u5224\u65B7\uFF0C\u4F46\u7F3A\u5C11\u6578\u64DA\uFF0F\u6982\u5FF5\u9023\u7D50\u3002", "0\uFF1A\u53EA\u6284\u77E5\u8B58\uFF0C\u672A\u5C0D\u7167\u539F\u6709\u60F3\u6CD5\uFF0C\u6216\u7121\u53EF\u8A55\u53CD\u601D\u3002", "knowledge"],
-  ["\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B", 32, "\u516C\u5F0F", "\u516D\u9805 SPS \u5404 4\uFF1D24\uFF0C\u56DB\u9805\u65B0\u77E5\u8B58\u5404 2\uFF1D8\uFF1B12 \u500B\u5FC5\u8981\u4EBA\u5DE5\u8A55\u5206\u683C\u586B\u5B8C\u4E14\u53CD\u601D\u5DF2\u63D0\u4EA4\uFF0C\u624D\u986F\u793A\u6574\u9AD4\u7E3D\u5206\u3002", "\u4EBA\u5DE5\u683C\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF0C\u586B 0\uFF1D\u5DF2\u8A55\u96F6\u5206\uFF1B\u5206\u6578\u53EA\u4FDD\u5B58\u65BC\u6559\u5E2B\u4FDD\u5B58\u7684 Excel\u3002", "\u4E0D\u628A\u64CD\u4F5C\u6B21\u6578\u3001\u901F\u5EA6\u3001\u6642\u9593\u6216\u5B8C\u6210\u7387\u76F4\u63A5\u63DB\u7B97\u80FD\u529B\u3002\u6B64 rubric \u5F85\u8A66\u6559\u53CA\u8DE8 VL \u6821\u6E96\u3002", "score"]
-];
-var CURRENT_SCORE_COLUMNS = [
-  ...SCORE_COLUMNS.filter((column) => ["observation", "readings", "iv", "dv", "cv", "hypothesis", "repeat", "control", "assumptions", "designQuality", "means"].includes(column.id)),
-  ...MC_QUESTIONS.map((question) => ({ id: question.id, label: `\u5206\u6790\uFF5C\u7B2C ${question.number} \u984C\uFF08\u81EA\u52D5\uFF09`, group: "inferring", max: 1 })),
-  { id: "selectedConclusion", label: "\u7D50\u8AD6\uFF5C\u6A23\u672C\u9078\u64C7\u53CA\u6392\u5E8F\uFF08\u81EA\u52D5\uFF09", group: "communicating", max: 1 },
-  { id: "reflection", label: "\u53CD\u601D\uFF5C\u5BE6\u9A57\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7\u89E3\u91CB\uFF08\u6559\u5E2B\uFF09", group: "knowledge", max: 2, manual: true },
-  { id: "overall", label: "\u65B0\u7248\u6574\u9AD4\u7E3D\u5206\uFF0823\uFF09", group: "score", max: 23, formula: ["observation", "readings", "iv", "dv", "cv", "hypothesis", "repeat", "control", "assumptions", "designQuality", "means", ...MC_QUESTIONS.map((question) => question.id), "selectedConclusion", "reflection"] },
-  { id: "marking", label: "\u8A55\u5206\u72C0\u614B", group: "score" }
-];
-var CURRENT_RUBRIC_ROWS = [
-  ...RUBRIC_ROWS.filter((row) => ["\u89C0\u5BDF\uFF5C\u521D\u6B65\u89C0\u5BDF", "\u89C0\u5BDF\uFF5C\u76F4\u5F91\u53CA\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u5206\u985E\uFF5C\u7368\u7ACB\u8B8A\u91CF\uFF0F\u56E0\u8B8A\u91CF\uFF0F\u63A7\u5236\u8B8A\u91CF", "\u8A2D\u8A08\uFF5C\u53EF\u6E2C\u8A66\u5047\u8AAA\u53CA\u7406\u7531", "\u8A2D\u8A08\uFF5C\u539F\u59CB\u91CD\u8907\u5B89\u6392\u7406\u7531", "\u8A2D\u8A08\uFF5C\u5C0D\u7167\u7406\u7531", "\u8A2D\u8A08\uFF5C\u63A2\u7A76\u5047\u8A2D", "\u5BE6\u4F5C\uFF5C\u74CA\u8102\u677F\u8A2D\u8A08\u54C1\u8CEA", "\u63A8\u8AD6\uFF5C\u5E73\u5747\u503C", "\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB"].includes(row[0])).map((row) => row[0] === "\u65B0\u77E5\u8B58\uFF5C\u4FEE\u8A02\u539F\u59CB\u89E3\u91CB" ? ["\u53CD\u601D\uFF5C\u5BE6\u9A57\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7\u89E3\u91CB", 2, "\u6559\u5E2B", "\u5F15\u7528\u6A23\u672C\u8B80\u6578\u652F\u6301\u6291\u5236\u751F\u9577\uFF1B\u9023\u7D50\u539F\u6709\u6297\u6027\u5DEE\u7570\u3001\u4E0D\u540C\u5B58\u6D3B\u8207\u7E41\u6B96\u6A5F\u6703\u3001\u6297\u6027\u7279\u5FB5\u907A\u50B3\u53CA\u7FA4\u843D\u6BD4\u4F8B\u6539\u8B8A\uFF0C\u89E3\u91CB\u6548\u679C\u6E1B\u5F31\u3002", "1\uFF1A\u6709\u5408\u7406\u5BE6\u9A57\u5224\u65B7\u6216\u9078\u64C7\u4F5C\u7528\u89E3\u91CB\uFF0C\u4F46\u7F3A\u5C11\u8B80\u6578\u6216\u56E0\u679C\u9023\u7D50\u3002", "0\uFF1A\u7121\u76F8\u95DC\u8B49\u64DA\u8207\u5408\u7406\u6982\u5FF5\u89E3\u91CB\uFF0C\u6216\u8A8D\u70BA\u7D30\u83CC\u70BA\u751F\u5B58\u800C\u4E3B\u52D5\u7522\u751F\u6297\u6027\u3002", "knowledge"] : row),
-  ...MC_QUESTIONS.map((question) => [`\u5206\u6790\uFF5C\u7B2C ${question.number} \u984C\uFF1A${question.id}`, 1, "\u81EA\u52D5", `\u53C3\u8003\u9078\u9805\uFF1A${String.fromCharCode(65 + question.options.findIndex(([value]) => value === question.correct))}\u3002`, "\u672C\u984C\u4E0D\u8A2D\u90E8\u5206\u5206\u3002", "\u932F\u9078\u6216\u672A\u7B54 0\u3002", "inferring"]),
-  ["\u7D50\u8AD6\uFF5C\u6A23\u672C\u9078\u64C7\u53CA\u6392\u5E8F", 1, "\u81EA\u52D5", "\u6709\u6548\u6A23\u672C\u6309\u6A21\u578B\u5224\u65B7\uFF08X\u3001Z\uFF09\uFF0C\u6B63\u78BA\u5F97 0.5\uFF1B\u6392\u5E8F\u6309\u5B78\u751F\u8B80\u6578\u8A08\u7B97\u7684\u5E73\u5747\u503C\u5224\u65B7\uFF0C\u6B63\u78BA\u5F97 0.5\uFF0C\u672A\u4F7F\u7528\u7684\u4F4D\u7F6E\u5FC5\u9808\u9078\u4E0D\u9069\u7528\u3002", "0.5\uFF1A\u6A23\u672C\u9078\u64C7\u6216\u6392\u5E8F\u5176\u4E2D\u4E00\u9805\u6B63\u78BA\u3002", "0\uFF1A\u5169\u9805\u5747\u932F\u6216\u8CC7\u6599\u4E0D\u8DB3\uFF1B\u76F8\u540C\u5E73\u5747\u503C\u63A5\u53D7\u4EFB\u4E00\u5148\u5F8C\u6B21\u5E8F\uFF0C\u4E0D\u91CD\u8907\u6263\u91CF\u5EA6\u8AA4\u5DEE\u3002", "communicating"],
-  ["\u65B0\u7248\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B", 23, "\u516C\u5F0F", "\u6CBF\u7528\u8A2D\u8A08\u53CA\u91CF\u5EA6\u6E96\u5247\uFF1B\u65B0\u589E\u4E94\u984C\u5404 1 \u5206\u3001\u9078\u586B\u7D50\u8AD6 1 \u5206\u3001\u53CD\u601D 2 \u5206\u3002\u516D\u500B\u4EBA\u5DE5\u683C\u586B\u5B8C\u4E14\u53CD\u601D\u5DF2\u63D0\u4EA4\u624D\u986F\u793A\u7E3D\u5206\u3002", "\u522A\u9664\u5716\u8868\u53CA\u820A\u5206\u6790\u984C\u7684\u8A55\u5206\uFF1B\u65B0\u7248\u8207\u820A\u7248\u5206\u958B\uFF0C\u4E0D\u76F4\u63A5\u6BD4\u8F03\u5169\u7248\u7E3D\u5206\u3002", "\u6B64\u6E96\u5247\u70BA\u8A66\u6559\u8349\u6848\uFF0C\u9700\u914D\u5408\u984C\u76EE\u6539\u52D5\u6821\u6E96\uFF1B\u4E0D\u628A\u64CD\u4F5C\u901F\u5EA6\u3001\u6B21\u6578\u6216\u5B8C\u6210\u7387\u63DB\u7B97\u80FD\u529B\u3002", "score"]
-];
-
-// reports.js
-var esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-var tr = (language2, zh, en) => language2 === "en" ? glossEnglish(en) : zh;
-var dateText = (value, language2 = "zh") => {
-  if (!value) return tr(language2, "\u672A\u63D0\u4EA4", "Not submitted");
-  const date = new Date(value);
-  return Number.isFinite(date.getTime()) ? date.toLocaleString(language2 === "en" ? "en-GB" : "zh-HK", { timeZone: "Asia/Hong_Kong", hour12: false }) : String(value);
-};
-var imagePattern = /^data:image\/(png|jpe?g|webp);base64,[A-Za-z0-9+/=]+$/;
-var sampleName = (sample, language2) => sample === "C" ? tr(language2, "C\uFF08\u5C0D\u7167\uFF09", "C (control)") : sample;
-var notAnswered = (language2) => tr(language2, "\u672A\u56DE\u7B54", "Not answered");
-var ANSWER_FIELDS = [
-  ["observation", ...L.observation, "observing"],
-  ["prediction", "\u4F60\u9810\u6E2C\u54EA\u4E9B\u6A23\u672C\u6703\u51FA\u73FE\u7D19\u789F\u5916\u7684\u53EF\u898B\u6E05\u6670\u5340\uFF1F", "Which samples do you predict will have a visible zone outside the disc?", "designing"],
-  ["largestPrediction", ...L.largestPrediction, "designing"],
-  ["reason", ...L.hypothesisReason, "designing"],
-  ["iv", "\u7368\u7ACB\u8B8A\u91CF\uFF1A\u672C\u6B21\u6539\u8B8A\u751A\u9EBC\uFF1F", "Independent variable: what do we change?", "classifying"],
-  ["dv", "\u56E0\u8B8A\u91CF\uFF1A\u672C\u6B21\u89C0\u5BDF\u53CA\u91CF\u5EA6\u751A\u9EBC\uFF1F", "Dependent variable: what do we observe and measure?", "classifying"],
-  ["cv", "\u63A7\u5236\u8B8A\u91CF\uFF1A\u54EA\u4E9B\u689D\u4EF6\u4FDD\u6301\u76F8\u540C\uFF1F", "Controlled variables: what stays the same?", "classifying"],
-  ["assumptions", "\u63A2\u7A76\u5047\u8A2D", "Assumptions for a fair investigation", "designing"],
-  ["controlPlan", ...L.controlPlan, "designing"],
-  ["designDescription", "\u74CA\u8102\u677F\u4F4D\u7F6E\u53CA\u5BE6\u9A57\u8A2D\u8A08\u6587\u5B57", "Plate positions and experiment setup", "conducting"],
-  ["plannedReplicates", ...L.plannedReplicates, "designing"],
-  ["plannedReplicateReason", ...L.plannedReplicateReason, "designing"],
-  ["analysisControl", "C\uFF08\u5C0D\u7167\uFF09\u7684\u751F\u9577\u60C5\u6CC1\u5982\u4F55\uFF1F\u5B83\u63D0\u4F9B\u751A\u9EBC\u6BD4\u8F03\u57FA\u790E\uFF1F", "What growth is visible around C (control)? What comparison does it provide?", "inferring"],
-  ["analysisConsistent", "\u54EA\u4E9B\u6A23\u672C\u5728\u4E09\u6B21\u6E2C\u8A66\u5747\u51FA\u73FE\u53EF\u898B\u6E05\u6670\u5340\uFF1F", "Which samples show a visible zone in all three tests?", "inferring"],
-  ["analysisVariation", "\u540C\u4E00\u6A23\u672C\u7684\u4E09\u6B21\u7D50\u679C\u662F\u5426\u4E00\u81F4\uFF1F\u8ACB\u5F15\u7528\u6578\u64DA\u3002", "Are the three results for each sample consistent? Use your data.", "inferring"],
-  ["analysisMethod", "\u5982\u679C\u5DEE\u7570\u8F03\u5927\uFF0C\u9700\u8981\u6AA2\u67E5\u54EA\u4E9B\u64CD\u4F5C\u6216\u689D\u4EF6\uFF1F", "If the results vary greatly, which methods or conditions should you check?", "conducting"],
-  ["analysisHypothesis", "\u7D50\u679C\u5982\u4F55\u652F\u6301\u6216\u4E0D\u652F\u6301\u4F60\u7684\u5047\u8AAA\uFF1F", "How do the results support or challenge your hypothesis?", "inferring"],
-  ["analysisRepeatPlan", "\u539F\u59CB\u91CD\u8907\u5B89\u6392\u8207\u672C\u6B21\u4E09\u6B21\u6E2C\u8A66\u76F8\u6BD4\uFF0C\u6709\u4F55\u9700\u8981\u4FEE\u8A02\uFF1F", "How would you revise your original repeat plan after these three tests?", "inferring"],
-  ["analysisRepeatValue", "\u91CD\u8907\u600E\u6A23\u5E6B\u52A9\u5224\u65B7\u4E00\u81F4\u6027\uFF1F\u4E0D\u7A69\u5B9A\u6642\u5148\u6AA2\u67E5\u65B9\u6CD5\u9084\u662F\u518D\u6E2C\u8A66\uFF1F", "How do repeats help you judge consistency? If results remain unstable, should you check the method or do more tests?", "inferring"],
-  ["analysisDeath", "\u6C92\u6709\u53EF\u898B\u751F\u9577\uFF0C\u80FD\u5426\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\uFF1F", "Does no visible growth prove that all the bacteria are dead?", "inferring"],
-  ["analysisClinical", "\u6700\u5927\u6E05\u6670\u5340\u662F\u5426\u4E00\u5B9A\u4EE3\u8868\u81E8\u5E8A\u6CBB\u7642\u6700\u4F73\uFF1F", "Does the largest zone necessarily indicate the best clinical treatment?", "inferring"],
-  ["conclusion", "\u4F60\u7684\u7D50\u8AD6\uFF1A\u689D\u4EF6\u3001\u7368\u7ACB\u6B21\u6578\u3001\u8B49\u64DA\u8207\u63A8\u8AD6\u754C\u7DDA", "Your conclusion: conditions, independent tests, evidence and limits", "communicating"],
-  ["knowledgeBacteria", "\u6297\u751F\u7D20\u4E3B\u8981\u91DD\u5C0D\u751A\u9EBC\uFF1F", "What do antibiotics act against?", "knowledge"],
-  ["knowledgeResistance", "\u6297\u85E5\u6027\u63CF\u8FF0\u8AB0\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1F", "Whose response to a drug does resistance describe?", "knowledge"],
-  ["knowledgeLimits", "\u6E05\u6670\u5340\u53CA\u91CD\u8907\u6E2C\u8A66\u80FD\u652F\u6301\u751A\u9EBC\uFF1F", "What can zones and repeated tests support?", "knowledge"],
-  ["reflection", ...L.reflectionQuestion, "knowledge"]
-];
-var CURRENT_ANSWER_FIELDS = [
-  ...ANSWER_FIELDS.filter(([field2]) => !field2.startsWith("analysis") && !field2.startsWith("knowledge") && field2 !== "conclusion" && field2 !== "reflection"),
-  ...MC_QUESTIONS.map((question) => [question.id, ...L[question.key], "inferring"]),
-  ...CONCLUSION_FIELDS.map((field2) => [field2, ...L[field2], "communicating"]),
-  ANSWER_FIELDS.find(([field2]) => field2 === "reflection")
-];
-var CHOICES = {
-  sample: ["\u7D19\u789F\u6240\u542B\u6A23\u672C", "The sample carried by each disc"],
-  zone: ["\u6709\u7121\u53EF\u898B\u6E05\u6670\u5340\u53CA\u6E05\u6670\u5340\u7E3D\u76F4\u5F91", "Visible zone presence and total zone diameter"],
-  strain: ["\u540C\u4E00\u7A2E\u6A21\u64EC\u7D30\u83CC", "The same simulated bacterial strain"],
-  distribution: ["\u53EF\u6BD4\u8F03\u7684\u521D\u59CB\u7D30\u83CC\u5206\u5E03", "Comparable initial bacterial distribution"],
-  medium: ["\u76F8\u540C\u57F9\u990A\u57FA\u689D\u4EF6", "The same agar conditions"],
-  disc: ["\u76F8\u540C\u7D19\u789F\u5927\u5C0F", "The same disc size"],
-  preparation: ["\u5404\u6A23\u672C\u9810\u8A2D\u88FD\u5099\u689D\u4EF6", "Preset sample preparation conditions"],
-  observation: ["\u76F8\u540C\u6A21\u64EC\u57F9\u990A\u53CA\u89C0\u5BDF\u689D\u4EF6", "The same simulated incubation and observation conditions"],
-  sterile: ["\u5668\u6750\u4E0D\u6703\u5E36\u5165\u984D\u5916\u6C61\u67D3", "Equipment does not add contamination"],
-  sameConditions: ["\u5404\u74CA\u8102\u677F\u63A1\u7528\u76F8\u540C\u6A21\u64EC\u689D\u4EF6", "The plates use the same simulated conditions"],
-  death: ["\u6CA1\u6709\u53EF\u898B\u751F\u9577\u5FC5\u5B9A\u4EE3\u8868\u5168\u90E8\u6B7B\u4EA1", "No visible growth must mean all bacteria are dead"],
-  all: ["\u5168\u90E8\u6A23\u672C", "All samples"],
-  some: ["\u90E8\u5206\u6A23\u672C", "Some samples"],
-  none: ["\u90FD\u4E0D\u6703", "No samples"],
-  yes: ["\u6703", "Yes"],
-  no: ["\u4E0D\u6703", "No"],
-  cannot: ["\u4E0D\u80FD", "Cannot"],
-  can: ["\u80FD", "Can"],
-  bacteria: ["\u7D30\u83CC", "Bacteria"],
-  viruses: ["\u75C5\u6BD2", "Viruses"],
-  body: ["\u4EBA\u7684\u8EAB\u9AD4", "The human body"],
-  limited: ["\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u5230\u6291\u5236\uFF0C\u91CD\u8907\u53EF\u6AA2\u67E5\u4E00\u81F4\u6027\uFF1B\u4ECD\u6709\u63A8\u8AD6\u9650\u5236", "Local visible growth is inhibited; repeats check consistency, with limits on inference"],
-  guaranteed: ["\u6700\u5927\u6E05\u6670\u5340\u53CA\u4E09\u6B21\u6E2C\u8A66\u4FDD\u8B49\u6700\u4F73\u6CBB\u7642", "The largest zone and three repeats guarantee the best treatment"]
-};
-var choiceFields = /* @__PURE__ */ new Set(["prediction", "largestPrediction", "iv", "dv", "cv", "assumptions", "analysisDeath", "analysisClinical", "knowledgeBacteria", "knowledgeResistance", "knowledgeLimits"]);
-var variableKeys = { sample: "vSample", zone: "vZone", strain: "vStrain", distribution: "vDistribution", medium: "vMedium", disc: "vDisc", preparation: "vPreparation", observation: "vObservation" };
-var fieldChoiceKeys = {
-  prediction: { X: "predictionX", Y: "predictionY", Z: "predictionZ", X_Y: "predictionXY", X_Z: "predictionXZ", Y_Z: "predictionYZ", all: "all", some: "some", none: "none" },
-  largestPrediction: { na: "notApplicable" },
-  iv: variableKeys,
-  dv: variableKeys,
-  cv: variableKeys,
-  assumptions: { distribution: "assumptionDistribution", sterile: "assumptionSterile", sameConditions: "assumptionSame", death: "assumptionDeath" },
-  analysisDeath: { can: "can", cannot: "cannot" },
-  analysisClinical: { can: "can", cannot: "cannot" },
-  knowledgeBacteria: { bacteria: "bacteria", viruses: "viruses" },
-  knowledgeResistance: { bacteria: "resistanceBacteria", body: "resistanceBody" },
-  knowledgeLimits: { limited: "limited", best: "bestDrug" }
-};
-for (const question of MC_QUESTIONS) fieldChoiceKeys[question.id] = Object.fromEntries(question.options);
-fieldChoiceKeys.effectiveSamples = Object.fromEntries(EFFECTIVE_OPTIONS);
-for (const field2 of CONCLUSION_FIELDS.slice(1)) fieldChoiceKeys[field2] = { na: "notApplicable", C: "blank" };
-function answerDisplay(field2, value, language2 = "zh") {
-  if (value === null || value === void 0 || value === "" || Array.isArray(value) && !value.length) return notAnswered(language2);
-  if (Array.isArray(value)) return value.map((item) => answerDisplay(field2, item, language2)).join(tr(language2, "\uFF1B", "; "));
-  const label = L[fieldChoiceKeys[field2]?.[value]] || choiceFields.has(field2) && CHOICES[value];
-  return label ? field2 === "prediction" && ["X", "Y", "Z", "X_Y", "X_Z", "Y_Z"].includes(value) && language2 !== "en" ? label[0].replace(/的$/, "") : tr(language2, label[0], label[1]) : String(value);
-}
-function referenceFor(field2, record, language2) {
-  const refs = {
-    observation: ["\u9752\u9EF4\u83CC\uFF08\u771F\u83CC\uFF09\u9644\u8FD1\u6709\u6E05\u6670\u5340\uFF0C\u5373\u6C92\u6709\u53EF\u898B\u7D30\u83CC\u751F\u9577\u7684\u5340\u57DF\uFF1B\u9019\u662F\u89C0\u5BDF\uFF0C\u539F\u56E0\u4ECD\u9700\u6BD4\u8F03\u3002", "A clear zone with no visible bacterial growth is present near Penicillium (a fungus). This is an observation; its cause needs testing."],
-    prediction: ["\u5408\u7406\u53EF\u6E2C\u8A66\u7684\u5BE6\u9A57\u524D\u9810\u6E2C\u53EF\u4EE5\u8207\u7D50\u679C\u4E0D\u540C\uFF1B\u9810\u6E2C\u53EF\u4EE5\u8207\u7D50\u679C\u4E0D\u540C\uFF1B\u5408\u7406\u7684\u63A8\u6E2C\u4E0D\u9700\u731C\u4E2D\u3002", "A reasonable testable prediction may differ from the results. A reasoned prediction does not have to match the outcome."],
-    largestPrediction: ["\u6839\u64DA\u64F4\u6563\u53CA\u7D30\u83CC\u751F\u9577\u63D0\u51FA\u5408\u7406\u9810\u6E2C\uFF1B\u82E5\u9810\u6E2C\u6C92\u6709\u6E05\u6670\u5340\uFF0C\u53EF\u9078\u4E0D\u9069\u7528\u3002\u9810\u6E2C\u5927\u5C0F\u4E0D\u9700\u731C\u4E2D\u7D50\u679C\u3002", "Give a reasoned prediction based on diffusion and bacterial growth. Choose not applicable if you predict no clear zones. The prediction need not match the result."],
-    reason: ["\u8AAA\u660E\u8207\u7D30\u83CC\u751F\u9577\u53CA\u53EF\u89C0\u5BDF\u73FE\u8C61\u76F8\u95DC\u7684\u7406\u7531\u3002", "Explain a reason related to bacterial growth and observable evidence."],
-    controlPlan: ["\u7528\u76F8\u540C\u8F09\u9AD4\u4F46\u4E0D\u542B\u6297\u751F\u7D20\u7684\u7D19\u789F\uFF0C\u6392\u9664\u8F09\u9AD4\uFF0F\u7D19\u789F\u5F71\u97FF\uFF1B\u5176\u9918\u689D\u4EF6\u4FDD\u6301\u76F8\u540C\u3002\u53EA\u6709\u6240\u6709\u8F09\u9AD4\u90FD\u662F\u6C34\u6642\u624D\u7A31\u6C34\u5C0D\u7167\u3002", "Use a matching carrier-only disc without antibiotic to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water."],
-    designDescription: ["\u6E05\u695A\u6A19\u793A\u6A23\u672C\u8207\u5C0D\u7167\uFF0C\u7559\u8DB3\u9593\u8DDD\u53CA\u908A\u7DE3\u8DDD\u96E2\uFF0C\u907F\u514D\u6E05\u6670\u5340\u4E92\u76F8\u5E72\u64FE\uFF1B\u53EF\u7528\u5716\u50CF\u6216\u6587\u5B57\u8868\u9054\u3002", "Label each sample and control and allow enough space between discs and from the edge to avoid overlapping zones. A drawing or written setup is acceptable."],
-    plannedReplicates: ["\u6B21\u6578\u5305\u62EC\u7B2C\u4E00\u6B21\u3002\u9078\u4E09\u6B21\u4E0D\u662F\u6A19\u6E96\u7B54\u6848\uFF1B\u6B21\u6578\u591A\u4E0D\u4FDD\u8B49\u53EF\u9760\u3002", "Include the first test. Three is not a required correct answer; more repeats do not guarantee reliability."],
-    plannedReplicateReason: ["\u8003\u616E\u4E00\u81F4\u6027\u3001\u8B8A\u7570\u3001\u516C\u5E73\u6BD4\u8F03\u53CA\u8AB2\u5802\u53EF\u884C\u6027\u3002", "Consider consistency, variation, fair comparisons and practical feasibility."],
-    analysisControl: ["\u672C\u6A21\u578B\u7684 C\uFF08\u5C0D\u7167\uFF09\u6C92\u6709\u7D19\u789F\u5916\u6E05\u6670\u5340\uFF1B\u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u8A18\u70BA 0 mm\u3002\u5B83\u63D0\u4F9B\u4E0D\u542B\u6297\u751F\u7D20\u7684\u6BD4\u8F03\u57FA\u790E\u3002", "The model C (control) has no visible zone outside the disc. Its clear-zone diameter is recorded as 0 mm. It provides an antibiotic-free comparison."],
-    analysisConsistent: ["\u4F9D\u4E09\u7247\u74CA\u8102\u677F\u5BE6\u969B\u8CC7\u6599\u5224\u65B7\u3002\u672C\u6A21\u578B X\u3001Z \u5404\u6B21\u6709\u5916\u570D\u6E05\u6670\u5340\uFF0CY \u53CA C\uFF08\u5C0D\u7167\uFF09\u6C92\u6709\u3002", "Use all three plate records. In this model, X and Z have visible zones in each test; Y and C (control) do not."],
-    analysisVariation: ["\u5F15\u7528\u81EA\u5DF1\u7684\u4E09\u6B21\u8B80\u6578\uFF0C\u5206\u958B\u7D50\u679C\u8DA8\u52E2\u8207\u74CA\u8102\u677F\u9593\u8B8A\u7570\u3002", "Quote your three readings and distinguish a consistent pattern from variation between plates."],
-    analysisMethod: ["\u53EF\u6AA2\u67E5\u521D\u59CB\u5206\u5E03\u3001\u6C61\u67D3\u3001\u7D19\u789F\u4F4D\u7F6E\u3001\u88FD\u5099\u53CA\u5171\u540C\u89C0\u5BDF\u689D\u4EF6\uFF1B\u7D50\u679C\u4E0D\u7A69\u5B9A\u6642\u5148\u67E5\u65B9\u6CD5\uFF0C\u518D\u8003\u616E\u984D\u5916\u6E2C\u8A66\u3002", "Check initial distribution, contamination, disc positions, preparation and shared observation conditions. Investigate unstable methods before considering more tests."],
-    analysisHypothesis: ["\u4EE5\u81EA\u5DF1\u7684\u6A23\u672C\uFF0F\u5C0D\u7167\u53CA\u91CD\u8907\u7D50\u679C\u8A55\u4F30\u539F\u59CB\u5047\u8AAA\u3002\u672A\u7372\u652F\u6301\u4ECD\u53EF\u4F5C\u6709\u8B49\u64DA\u7684\u4FEE\u8A02\u3002", "Evaluate your original hypothesis using your sample\u2013control and repeated results. An unsupported hypothesis can still lead to an evidence-based revision."],
-    analysisRepeatPlan: ["\u5C0D\u7167\u81EA\u5DF1\u539F\u59CB\u5B89\u6392\uFF0C\u8AAA\u660E\u4FDD\u7559\u6216\u4FEE\u8A02\u7684\u7406\u7531\u3002", "Compare your original plan and explain why you would keep or revise it."],
-    analysisRepeatValue: ["\u7368\u7ACB\u91CD\u8907\u53EF\u8A55\u4F30\u4E00\u81F4\u6027\u53CA\u8B8A\u7570\uFF1B\u4E09\u6B21\u662F\u8AB2\u5802\u5B89\u6392\uFF0C\u4E0D\u662F\u53EF\u9760\u6027\u4FDD\u8B49\u3002", "Independent repeats help assess consistency and variation. Three tests are a classroom arrangement, not a guarantee of reliability."],
-    analysisDeath: ["\u4E0D\u80FD\u3002\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u80FD\u5340\u5206\u6BBA\u83CC\u8207\u6291\u83CC\uFF0C\u4E5F\u4E0D\u80FD\u8B49\u660E\u5168\u90E8\u7D30\u83CC\u6B7B\u4EA1\u3002", "Cannot. No visible growth cannot distinguish killing from growth inhibition or prove that all bacteria are dead."],
-    analysisClinical: ["\u4E0D\u80FD\u3002\u64F4\u6563\u7279\u6027\u3001\u7D19\u789F\u542B\u91CF\u3001\u7279\u5B9A\u7A2E\u985E\u7684\u7D30\u83CC\u53CA\u6E2C\u8A66\u689D\u4EF6\u6703\u5F71\u97FF\u7D50\u679C\uFF1B\u4E0D\u80FD\u5F9E\u6700\u5927\u6E05\u6670\u5340\u9078\u6700\u4F73\u60A3\u8005\u6CBB\u7642\u3002", "Cannot. Diffusion, disc content, the strain and test conditions affect the result. The largest zone cannot identify the best treatment for a patient."],
-    conclusion: ["\u5728\u672C\u6A21\u64EC\u689D\u4EF6\u4E0B\u4EE5\u6578\u64DA\u6BD4\u8F03\u6A23\u672C\u8207\u5C0D\u7167\uFF1B\u53EF\u652F\u6301\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF0C\u4E0D\u80FD\u78BA\u5B9A\u5168\u90E8\u6B7B\u4EA1\u3001\u4F5C\u7528\u6A5F\u5236\u6216\u6700\u4F73\u6CBB\u7642\uFF0C\u4E5F\u4E0D\u80FD\u63A8\u5EE3\u81F3\u6240\u6709 MRSA\u3002", "Compare samples with the control under these simulated conditions. Evidence may support local inhibition of visible growth, but not complete killing, a mechanism, the best treatment or a generalisation to all MRSA."],
-    knowledgeBacteria: ["\u6297\u751F\u7D20\u91DD\u5C0D\u7D30\u83CC\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u5F15\u8D77\u7684\u50B7\u98A8\u6216\u6D41\u611F\u3002", "Antibiotics act against bacteria; they do not treat viral colds or influenza."],
-    knowledgeResistance: ["\u6297\u85E5\u6027\u63CF\u8FF0\u7D30\u83CC\u5C0D\u85E5\u7269\u7684\u53CD\u61C9\uFF1B\u4E0D\u662F\u4EBA\u7684\u8EAB\u9AD4\u7FD2\u6163\u6297\u751F\u7D20\u3002", "Resistance describes the bacterial response to a drug, not a human body becoming used to antibiotics."],
-    knowledgeLimits: ["\u6E05\u6670\u5340\u652F\u6301\u5C40\u90E8\u53EF\u898B\u751F\u9577\u53D7\u6291\u5236\uFF1B\u91CD\u8907\u6AA2\u67E5\u4E00\u81F4\u6027\uFF0C\u4E0D\u4FDD\u8B49\u53EF\u9760\u6216\u6700\u4F73\u6CBB\u7642\u3002", "A visible zone supports local inhibition of visible growth. Repeats check consistency; they do not guarantee reliability or the best treatment."],
-    reflection: ["\u5F15\u7528\u6240\u9078\u6A23\u672C\u7684\u8B80\u6578\u652F\u6301\u6291\u5236\u751F\u9577\u7684\u5224\u65B7\uFF1B\u89E3\u91CB\u539F\u6709\u6297\u6027\u5DEE\u7570\u5982\u4F55\u5F71\u97FF\u5B58\u6D3B\u53CA\u7E41\u6B96\uFF0C\u6297\u6027\u7279\u5FB5\u5982\u4F55\u907A\u50B3\uFF0C\u4E26\u4F7F\u5177\u6297\u6027\u7684\u7D30\u83CC\u6BD4\u4F8B\u589E\u52A0\u3001\u6297\u751F\u7D20\u6548\u679C\u6E1B\u5F31\u3002\u9019\u662F\u5EF6\u4F38\u60C5\u5883\uFF0C\u4E26\u975E\u672C\u6B21\u5BE6\u9A57\u5DF2\u8B49\u660E\u6297\u6027\u5F62\u6210\u3002", "Use readings for your chosen sample to support growth inhibition. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion increases as antibiotic effectiveness declines. This is a hypothetical extension, not evidence that resistance arose in this experiment."]
-  };
-  const question = MC_QUESTIONS.find((question2) => question2.id === field2);
-  if (question) return answerDisplay(field2, question.correct, language2) + (field2 === "repeatPurpose" ? tr(language2, " A\uFF1A\u7531\u65BC\u7CFB\u7D71\u6216\u5076\u7136\u8AA4\u5DEE\uFF0C\u91CD\u8907\u5BE6\u9A57\u7684\u6578\u503C\u901A\u5E38\u6703\u6709\u5FAE\u5C0F\u843D\u5DEE\uFF0C\u9019\u624D\u9700\u8981\u8A08\u7B97\u5E73\u5747\u503C\u8207\u6A19\u6E96\u5DEE\u3002B\uFF1A\u91CD\u8907\u5BE6\u9A57\u662F\u70BA\u4E86\u63D0\u5347\u6E96\u78BA\u5EA6\uFF0C\u800C\u975E\u523B\u610F\u6D88\u8017\u6642\u9593\u6216\u6E4A\u5B57\u6578\u3002C\uFF1A\u6B63\u78BA\u7B54\u6848\u3002D\uFF1A\u91CD\u8907\u5BE6\u9A57\u662F\u70BA\u4E86\u6AA2\u9A57\u73FE\u72C0\uFF0C\u800C\u975E\u4EBA\u70BA\u5728\u5E38\u898F\u5BE6\u9A57\u4E2D\u52A0\u901F\u751F\u7269\u7A81\u8B8A\u3002", " A: Systematic or random errors can cause variation between repeats, so means and standard deviations are calculated. B: Repetition aims to improve accuracy, not consume time or pad reports. C: Correct answer. D: Repetition checks existing outcomes; it does not accelerate mutations in routine experiments.") : "");
-  if (CONCLUSION_FIELDS.includes(field2)) return tr(language2, "\u6839\u64DA\u81EA\u5DF1\u7684\u89C0\u5BDF\u53CA\u5E73\u5747\u503C\u5224\u65B7\uFF1B\u53EA\u6BD4\u8F03\u672C\u6B21\u6A21\u64EC\u689D\u4EF6\uFF0C\u4E0D\u80FD\u7531\u5708\u5927\u5C0F\u6C7A\u5B9A\u6700\u4F73\u60A3\u8005\u6CBB\u7642\u3002", "Use your observations and means; compare only these simulated conditions, not the best treatment for a patient.");
-  if (field2 === "iv") return answerDisplay(field2, VARIABLE_REFERENCE.iv, language2);
-  if (field2 === "dv") return answerDisplay(field2, VARIABLE_REFERENCE.dv, language2);
-  if (field2 === "cv") return answerDisplay(field2, controlVariableReference(record), language2);
-  if (field2 === "assumptions") return answerDisplay(field2, ASSUMPTION_REFERENCE, language2);
-  return refs[field2] ? tr(language2, ...refs[field2]) : "";
-}
-var markHTML = (check, language2) => check === null || check === void 0 ? "" : `<span class="check ${check ? "correct" : "incorrect"}" aria-label="${tr(language2, check ? "\u7B26\u5408\u53C3\u8003" : "\u4E0D\u7B26\u5408\u53C3\u8003", check ? "Matches reference" : "Does not match reference")}">${check ? "\u2713" : "\u2715"}</span>`;
-function reportAnswer(record, field2, value, language2, withReference = true) {
-  const definition = [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS].find((item) => item[0] === field2);
-  const shown = answerDisplay(field2, value, language2);
-  const submitted = !!record.submittedAt;
-  const checks = objectiveChecks({ ...record, answers: { ...record.answers, [field2]: value } });
-  const reference = submitted && withReference ? referenceFor(field2, record, language2) : "";
-  return `<div class="answer"><h3>${esc(definition ? tr(language2, definition[1], definition[2]) : field2)}</h3><p class="student-answer">${esc(shown)} ${submitted && withReference ? markHTML(checks[field2], language2) : ""}</p>${reference ? `<p class="reference"><strong>${tr(language2, "\u53C3\u8003\u8AAA\u660E\uFF1A", "Reference: ")}</strong>${esc(reference)}</p>` : ""}</div>`;
-}
-function learningDiagram(language2 = "zh") {
-  const t2 = (zh, en) => tr(language2, zh, en);
-  const markup = `<div class="science-diagram">
- <figure class="learning-figure"><figcaption>${t2("A. \u5BE6\u9A57\u539F\u7406\uFF1A\u6297\u751F\u7D20\u6A23\u672C\u7684\u64F4\u6563\u8207\u6E05\u6670\u5340\u7684\u5F62\u6210", "A. Experimental principle: antibiotic diffusion and clear-zone formation")}</figcaption>
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20\uFF0C\u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563\u4E26\u6291\u5236\u7D30\u83CC\u751F\u9577\uFF0C\u5F62\u6210\u6E05\u6670\u5340\u3002", "The disc carries antibiotic, which diffuses through agar and inhibits bacterial growth, forming a clear zone.")}">
- <defs><marker id="vl4-science-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#087b78"/></marker></defs>
- <circle cx="115" cy="142" r="91" fill="#ddd9ae" stroke="#6e897b"/><circle cx="115" cy="142" r="54" fill="#f8faec" stroke="#b4bda3" stroke-dasharray="4 4"/>
- <g fill="#79815c">${[[60, 86], [173, 99], [46, 158], [169, 195], [91, 213], [175, 157], [104, 69], [75, 186]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g><circle cx="115" cy="142" r="12" fill="#fff" stroke="#5e7475"/>
- <g fill="none" stroke="#087b78" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
- <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path d="M221 72L128 136" fill="none" stroke="#698a87"/>
- <text x="225" y="126">${t2("\u2461 \u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563", "2. Antibiotic diffuses")}</text>${language2 === "en" ? '<text x="246" y="146">through agar</text>' : ""}<path d="M221 151L159 142" fill="none" stroke="#698a87"/>
- <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path d="M221 213L152 174" fill="none" stroke="#698a87"/></g></svg>
- <p class="caption">${t2("\u793A\u610F\u5716\uFF0C\u975E\u6309\u6BD4\u4F8B\uFF1B\u4E0D\u80FD\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\u3002", "Schematic, not to scale; it does not prove complete killing.")}</p></figure>
- <figure class="learning-figure"><figcaption>${t2("B. \u7D30\u83CC\u7D50\u69CB\u8207\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "B. Structures and possible action sites")}</figcaption>
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D30\u83CC\u7D50\u69CB\u8207\u6297\u751F\u7D20\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "Bacterial structures and possible antibiotic action sites")}">
- <rect x="21" y="91" width="238" height="122" rx="61" fill="#eef3fa" stroke="#b8cbdc" stroke-width="2"/>
- <rect x="30" y="100" width="220" height="104" rx="52" fill="#d5e5f8" stroke="#597fb1" stroke-width="8"/><rect x="41" y="111" width="198" height="82" rx="40" fill="#f4f0d4" stroke="#8e9f82" stroke-width="4"/>
- <path d="M87 151C97 124 136 179 155 143S190 169 206 143" fill="none" stroke="#a6699c" stroke-width="4"/>
- <g fill="#cb995b"><circle cx="72" cy="142" r="4"/><circle cx="93" cy="171" r="4"/><circle cx="175" cy="176" r="4"/><circle cx="196" cy="124" r="4"/></g>
- <g fill="#15333b" font-size="16"><text x="272" y="70">${t2("\u2460 \u6291\u5236\u7D30\u80DE\u58C1\u5F62\u6210", "1. Inhibit cell wall")}${language2 === "en" ? '<tspan x="290" dy="18">formation</tspan>' : ""}</text><path d="M266 76L232 112" stroke="#597fb1" fill="none"/>
- <text x="272" y="115">${t2("\u2461 \u7834\u58DE\u7D30\u80DE\u819C", "2. Disrupt cell membrane")}</text><path d="M266 121L235 136" stroke="#8e9f82" fill="none"/>
- <text x="272" y="164">${t2("\u2462 \u6291\u5236\u86CB\u767D\u8CEA\u5408\u6210", "3. Inhibit protein")}${language2 === "en" ? '<tspan x="290" dy="18">synthesis</tspan>' : ""}</text><path d="M266 170L179 176" stroke="#cb995b" fill="none"/>
- <text x="272" y="211">${t2("\u2463 \u6291\u5236\u6838\u9178\u5408\u6210", "4. Inhibit nucleic acid")}${language2 === "en" ? '<tspan x="290" dy="18">synthesis</tspan>' : ""}</text><path d="M266 217H155V143" stroke="#a6699c" fill="none"/></g></svg>
- <p class="caption">${t2("\u5916\u5074\u6DE1\u8272\u5C64\u793A\u610F\u83A2\u819C\uFF08\u4E26\u975E\u6240\u6709\u7D30\u83CC\u90FD\u6709\uFF09\uFF1B\u85CD\u8272\u5C64\u70BA\u7D30\u80DE\u58C1\uFF0C\u5167\u5074\u7DA0\u8272\u5C64\u70BA\u7D30\u80DE\u819C\uFF0C\u7D2B\u8272\u66F2\u7DDA\u70BA DNA\u3002\u9019\u4E9B\u6A5F\u5236\u4E26\u975E\u672C\u6B21\u7D19\u789F\u7D50\u679C\u76F4\u63A5\u8B49\u660E\u3002", "The pale outer layer represents a capsule (not present in all bacteria); blue is the cell wall, green is the cell membrane, and the purple strand is DNA. These mechanisms are not proved by this disc experiment.")}</p></figure></div>`;
-  return language2 === "en" ? fitEnglishDiagramLabels(markup) : markup;
-}
-function learningPointsHTML(language2 = "zh") {
-  const sections = [
-    {
-      "title": [
-        "\u6297\u751F\u7D20\u7684\u7528\u9014",
-        "Uses of antibiotics"
-      ],
-      "points": [
-        [
-          "\u6297\u751F\u7D20\u4E3B\u8981\u7528\u65BC[\u7D30\u83CC\u611F\u67D3]\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u5F15\u8D77\u7684\u50B7\u98A8\u6216\u6D41\u611F\u3002",
-          "Antibiotics mainly treat [bacterial infections]; they cannot treat viral colds or influenza."
-        ]
-      ]
-    },
-    {
-      "title": [
-        "\u6E05\u6670\u5340\u5982\u4F55\u5F62\u6210",
-        "How clear zones form"
-      ],
-      "points": [
-        [
-          "\u6297\u751F\u7D20\u7531\u7D19\u789F[\u5411\u5916\u64F4\u6563]\uFF0C\u96E2\u7D19\u789F\u8D8A\u9060\uFF0C\u6FC3\u5EA6\u901A\u5E38\u8D8A\u4F4E\u3002\u53EA\u6709\u6FC3\u5EA6\u4ECD\u8DB3\u4EE5\u6291\u5236\u9019\u7A2E\u7D30\u83CC\u751F\u9577\u7684\u7BC4\u570D\u624D\u6703\u5F62\u6210[\u6E05\u6670\u5340]\u3002\u5982\u679C\u7D30\u83CC\u5C0D\u6297\u751F\u7D20\u6108\u654F\u611F\uFF08\u80FD\u88AB\u8F03\u4F4E\u6FC3\u5EA6\u6297\u751F\u7D20\u6291\u5236\u751F\u9577\uFF09\uFF0C\u80FD\u5F62\u6210\u7684\u6E05\u6670\u5340\u4FBF\u6108\u5927\u3002",
-          "Antibiotic [diffuses outward] from the disc, and its concentration generally decreases with distance. A [clear zone] forms only where the concentration remains sufficient to inhibit this bacterium. Greater susceptibility (growth inhibited at a lower antibiotic concentration) allows a larger clear zone to form."
-        ],
-        [
-          "\u6E05\u6670\u5340\u8868\u793A\u8A72\u4F4D\u7F6E\u6C92\u6709\u53EF\u898B\u7D30\u83CC\u751F\u9577\uFF0C\u8B49\u660E\u8A72\u6297\u751F\u7D20\u6A23\u672C\u80FD[\u6291\u5236\u7D30\u83CC\u751F\u9577]\uFF1B\u4E0D\u80FD\u8B49\u660E\u5340\u5167\u6240\u6709\u7D30\u83CC\u5DF2\u6B7B\u4EA1\u3002",
-          "A clear zone indicates no visible bacterial growth at that location, demonstrating that the antibiotic sample can [inhibit bacterial growth]; it does not prove that all bacteria in the zone have died."
-        ]
-      ]
-    },
-    {
-      "title": [
-        "\u6297\u751F\u7D20\u6297\u6027\u8207\u9078\u64C7\u4F5C\u7528",
-        "Antibiotic resistance and selection"
-      ],
-      "points": [
-        [
-          "\u70BA\u751A\u9EBC\u60C5\u5883\u4E2D\u7684\u539F\u6709\u6297\u751F\u7D20\u6703\u5931\u6548\uFF1F\u6297\u751F\u7D20\u4F7F\u4E0D\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\u8F03\u96E3\u5B58\u6D3B\uFF0C[\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u5247\u8F03\u5BB9\u6613\u5B58\u6D3B\u3001\u7E41\u6B96\u4E26\u907A\u50B3\u6297\u85E5\u6027\u7279\u5FB5]\u3002\u7576\u5F8C\u8005\u6BD4\u4F8B\u589E\u52A0\u4E26\u4F54\u64DA\u6574\u500B\u7FA4\u843D\uFF0C\u539F\u6709\u6297\u751F\u7D20\u4FBF\u6703\u5931\u6548\u3002",
-          "Why does the original antibiotic in the scenario lose effectiveness? Antibiotics make survival harder for susceptible bacteria, while [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As resistant bacteria increase in proportion and occupy the whole population, the original antibiotic becomes ineffective."
-        ],
-        [
-          "[\u904E\u5EA6\u6216\u4E0D\u7576\u4F7F\u7528\u6297\u751F\u7D20]\u6703\u589E\u52A0\u4E0D\u5FC5\u8981\u7684\u9078\u64C7\u58D3\u529B\uFF0C[\u4FC3\u9032\u6297\u85E5\u7D30\u83CC\u751F\u5B58\u8207\u7E41\u6B96]\uFF0C\u4F7F\u611F\u67D3\u53EF\u80FD\u66F4\u96E3\u6CBB\u7642\u3002",
-          "[Antibiotic overuse or misuse] adds unnecessary selection pressure, [promoting the survival and reproduction of resistant bacteria] and potentially making infections harder to treat."
-        ]
-      ]
-    }
-  ];
-  const index = language2 === "en" ? 1 : 0;
-  const supported = (value) => language2 === "en" ? glossEnglish(value) : value;
-  const highlight = (value) => esc(supported(value)).replace(/\[([^\]]+)\]/g, '<strong class="learning-emphasis">$1</strong>');
-  return `${learningDiagram(language2)}${sections.map((section) => `<section class="learning-topic"><h3>${esc(supported(section.title[index]))}</h3><ul class="learning-list">${section.points.map((point) => `<li>${highlight(point[index])}</li>`).join("")}</ul></section>`).join("")}`;
-}
-function reportGraph(record, language2) {
-  const max = 40, height = 160, base = 210;
-  const bars = SAMPLE_IDS.map((sample, index) => {
-    const value = finiteNumber(record.graph?.values?.[sample]), x = 108 + index * 118;
-    const safe = value === null ? 0 : Math.max(0, Math.min(max, value));
-    return `<rect x="${x}" y="${base - safe / max * height}" width="60" height="${safe / max * height}" fill="${sample === "C" ? "#8f9fa5" : "#3a9690"}"/><text x="${x + 30}" y="${base - safe / max * height - 9}" text-anchor="middle" font-size="13">${value === null ? "\u2014" : esc(value)}</text><text x="${x + 30}" y="235" text-anchor="middle" font-size="12">${esc(sampleName(sample, language2))}</text>`;
-  }).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="report-graph" viewBox="0 0 630 275" role="img" aria-label="${tr(language2, "\u5B78\u751F\u78BA\u8A8D\u7684\u5E73\u5747\u6E05\u6670\u5340\u7E3D\u76F4\u5F91\u68D2\u5F62\u5716", "Student-confirmed bar chart of mean total zone diameter")}"><text x="26" y="20" font-size="13">${tr(language2, "\u5E73\u5747\u6E05\u6670\u5340\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "Mean total zone diameter (mm)")}</text>${[0, 10, 20, 30, 40].map((value) => `<line x1="65" y1="${base - value / max * height}" x2="594" y2="${base - value / max * height}" stroke="#dce9e7"/><text x="54" y="${base - value / max * height + 4}" text-anchor="end" font-size="12">${value}</text>`).join("")}<path d="M65 45V210H595" fill="none" stroke="#45656c"/>${bars}<text x="330" y="264" text-anchor="middle" font-size="13">${tr(language2, "\u7D19\u789F\u6240\u542B\u6A23\u672C", "Sample carried by the disc")}</text></svg>`;
-}
-function reportPlate(plate, language2) {
-  const positions = { X: { x: 126, y: 126 }, Y: { x: 274, y: 126 }, Z: { x: 126, y: 274 }, C: { x: 274, y: 274 }, ...plate.discPositions };
-  return `<figure class="plate-figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${esc(tr(language2, `\u74CA\u8102\u677F ${plate.id} \u7684\u56FA\u5B9A\u6A21\u64EC\u89C0\u5BDF`, `Fixed simulated observation for plate ${plate.id}`))}"><circle cx="200" cy="200" r="160" fill="#d8d5a6" stroke="#839976" stroke-width="4"/>${SAMPLE_IDS.map((sample) => {
-    const pos = positions[sample], diameter = clearZoneDiameter(plate, sample) ?? 0;
-    return `<circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="${diameter}" fill="#f8faed"/><circle cx="${Number(pos.x)}" cy="${Number(pos.y)}" r="6" fill="#fff" stroke="#52726d"/><text x="${Number(pos.x)}" y="${Number(pos.y) + 4}" text-anchor="middle" font-size="10">${sample}</text>`;
-  }).join("")}</svg><figcaption>${esc(plate.id)} \xB7 ${tr(language2, "\u56FA\u5B9A\u6559\u5B78\u6A21\u64EC\u89C0\u5BDF\uFF0C\u975E\u81E8\u5E8A\u6821\u6E96\u5716", "Fixed teaching-model observation; not clinically calibrated")}</figcaption></figure>`;
-}
-function reportConclusion(record, language2) {
-  const a = record.answers || {}, i = language2 === "en" ? 1 : 0, checks = conclusionChecks(record), submitted = !!record.submittedAt;
-  const mark = (check) => submitted ? markHTML(check, language2) : "";
-  const reference = submitted ? `<p class="reference">${tr(language2, "\u53C3\u8003\u6709\u6548\u6A23\u672C\uFF1A", "Reference effective samples: ")}${esc(checks.effective.join("\u3001"))}\u3002${tr(language2, "\u6309\u4F60\u7684\u8B80\u6578\u8A08\u7B97\u7684\u6392\u5E8F\uFF1A", "Ranking calculated from your readings: ")}${checks.reference ? esc([...checks.reference, ...Array(4 - checks.reference.length).fill(L.notApplicable[i])].join(" \uFF1E ")) : tr(language2, "\u8CC7\u6599\u4E0D\u8DB3", "Insufficient data")}\u3002${tr(language2, "\u5E73\u5747\u503C\u76F8\u540C\u6642\u63A5\u53D7\u4EFB\u4E00\u5148\u5F8C\u6B21\u5E8F\u3002", "Either order is accepted for equal means.")}</p>` : "";
-  return `<div class="answer"><h3>3. ${esc(tr(language2, ...L.resultConclusion))}</h3><p class="student-answer">${esc(tr(language2, ...L.conclusionContext))}${esc(answerDisplay("effectiveSamples", a.effectiveSamples, language2))}${esc(tr(language2, ...L.conclusionEffective))} ${mark(checks.samples)}</p><p>${esc(tr(language2, ...L.conclusionRanking))}</p><p class="student-answer">${CONCLUSION_FIELDS.slice(1).map((field2) => esc(answerDisplay(field2, a[field2], language2))).join(" \uFF1E ")} ${mark(checks.order)}</p>${reference}</div>`;
-}
-function renderReport(record, language2 = "zh") {
-  language2 = language2 === "en" ? "en" : "zh";
-  const a = record.answers || {}, original = record.original || {}, first = { ...original.answers, plannedReplicates: original.plannedReplicates ?? original.answers?.plannedReplicates, plannedReplicateReason: original.plannedReplicateReason ?? original.answers?.plannedReplicateReason };
-  const t2 = (zh, en) => tr(language2, zh, en);
-  const submitted = !!record.submittedAt, current = currentAnalysis(record);
-  const section = (title, content) => `<section class="report-section"><h2>${esc(title)}</h2><div class="report-card">${content}</div></section>`;
-  const fields = (keys) => keys.map((field2) => reportAnswer(record, field2, a[field2], language2)).join("");
-  const originalFields = ["observation", "prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"];
-  const rows = (record.plates || []).flatMap((plate) => SAMPLE_IDS.map((sample) => {
-    const reading = record.measurements?.[plate.id]?.[sample] || {}, start = reading.first || {}, last = reading.last || reading;
-    const check = readingCheck(record, plate, sample, reading);
-    const presence = (value) => value === "yes" ? t2("\u6709", "Yes") : value === "no" ? t2("\u7121", "No") : "\u2014";
-    const numeric2 = (value) => finiteNumber(value) === null ? "\u2014" : esc(value);
-    return `<tr><td>${esc(plate.id)}</td><td>${esc(sampleName(sample, language2))}</td><td>${presence(start.visible)} / ${numeric2(start.value)}<small>${esc(start.note || "")}</small></td><td>${presence(last.visible)} / ${numeric2(last.value)}<small>${esc(last.note || "")}</small></td><td>${presence(reading.visible)} / ${numeric2(reading.value)} ${submitted ? markHTML(check, language2) : ""}<small>${esc(reading.note || "")}</small></td><td>${submitted ? esc(clearZoneDiameter(plate, sample) ?? "\u2014") : "\u2014"}</td><td>${(reading.revisions || []).length}</td></tr>`;
-  })).join("");
-  const readingsTable = `<p>${t2("\u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u4EE5 mm \u8A18\u9304\uFF1B\u6C92\u6709\u53EF\u898B\u6E05\u6670\u5340\u6642\u8A18\u70BA 0\u3002", "Record total clear-zone diameter in mm; record 0 when no clear zone is visible.")}</p><div class="table-wrap"><table><thead><tr>${[t2("\u74CA\u8102\u677F", "Plate"), t2("\u6A23\u672C", "Sample"), t2("\u9996\u6B21\uFF1A\u5708\uFF0Fmm", "First: zone/mm"), t2("\u6700\u5F8C\u5FEB\u7167\uFF1A\u5708\uFF0Fmm", "Latest snapshot: zone/mm"), t2("\u76EE\u524D\u8B80\u6578\uFF1A\u5708\uFF0Fmm", "Current: zone/mm"), t2("\u53C3\u8003 mm", "Reference mm"), t2("\u4FEE\u8A02\u6B21\u6578", "Revisions")].map((label) => `<th>${label}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div><p class="reference">${t2("\u91CF\u5EA6\u6AA2\u6838\u5BB9\u5DEE \xB11 mm\uFF1B\u9996\u6B21\u53CA\u6700\u5F8C\u8B80\u6578\u4FDD\u7559\uFF0C\u4E0D\u6703\u81EA\u52D5\u6539\u5BEB\u3002", "Reading tolerance: \xB11 mm. First and latest readings are retained and never automatically replaced.")}</p>`;
-  const meansTable = `<table><thead><tr>${[t2("\u6A23\u672C", "Sample"), t2("\u5B78\u751F\u5E73\u5747\u503C\uFF08mm\uFF09", "Student mean (mm)"), t2("\u4F9D\u81EA\u5DF1\u7684\u8B80\u6578\u8A08\u7B97", "Calculated from own readings"), ...current ? [] : [t2("\u78BA\u8A8D\u68D2\u9AD8\uFF08mm\uFF09", "Confirmed bar height (mm)")]].map((label) => `<th>${label}</th>`).join("")}</tr></thead><tbody>${SAMPLE_IDS.map((sample) => `<tr><td>${esc(sampleName(sample, language2))}</td><td>${esc(a.means?.[sample] ?? record.means?.[sample] ?? "\u2014")} ${submitted ? markHTML(meanCheck(record, sample), language2) : ""}</td><td>${submitted && studentMean(record, sample) !== null ? studentMean(record, sample).toFixed(1) : "\u2014"}</td>${current ? "" : `<td>${esc(record.graph?.values?.[sample] ?? "\u2014")} ${submitted ? markHTML(graphCheck(record, sample), language2) : ""}</td>`}</tr>`).join("")}</tbody></table><p class="reference">${current ? t2("\u5E73\u5747\u503C\u6309\u81EA\u5DF1\u7684\u6700\u5F8C\u8B80\u6578\u6AA2\u6838\uFF08\xB10.1 mm\uFF09\u3002", "Means are checked against your own latest readings (\xB10.1 mm).") : t2("\u5E73\u5747\u503C\u6309\u81EA\u5DF1\u7684\u6700\u5F8C\u8B80\u6578\u6AA2\u6838\uFF08\xB10.1 mm\uFF09\uFF1B\u5716\u8868\u6309\u81EA\u5DF1\u7684\u5DF2\u8F38\u5165\u5E73\u5747\u503C\u6AA2\u6838\uFF08\xB10.5 mm\uFF09\uFF0C\u907F\u514D\u540C\u4E00\u91CF\u5EA6\u932F\u8AA4\u91CD\u8907\u6263\u6838\u3002", "Means are checked against your own latest readings (\xB10.1 mm). Bars are checked against your entered means (\xB10.5 mm), avoiding repeated penalties for one reading error.")}</p>`;
-  const designImage = imagePattern.test(record.design?.image || "") ? `<img class="design-image" src="${esc(record.design.image)}" alt="${t2("\u5B78\u751F\u74CA\u8102\u677F\u4F4D\u7F6E\u53CA\u5BE6\u9A57\u8A2D\u8A08\u5716", "Student drawing of disc positions and experiment setup")}">` : "";
-  const originalDesignImage = imagePattern.test(original.design?.image || "") ? `<img class="design-image" src="${esc(original.design.image)}" alt="${t2("\u9996\u6B21\u78BA\u8A8D\u7684\u5B78\u751F\u5BE6\u9A57\u8A2D\u8A08\u5716", "First-confirmed student experiment setup drawing")}">` : "";
-  const extension = record.extension || {};
-  const extensionLabels = { prediction: ["\u9810\u6E2C", "Prediction"], reason: ["\u7406\u7531", "Reason"], fairComparison: ["\u516C\u5E73\u6BD4\u8F03", "Fair comparison"], results: ["\u5BE6\u969B\u6A21\u64EC\u7D50\u679C", "Simulated results"], analysis: ["\u5206\u6790\u53CA\u754C\u7DDA", "Analysis and limits"] };
-  const extensionHTML = extension.started ? Object.entries(extensionLabels).map(([field2, label]) => `<h3>${label[language2 === "en" ? 1 : 0]}</h3><p class="student-answer">${esc(typeof extension[field2] === "object" ? JSON.stringify(extension[field2]) : extension[field2] || notAnswered(language2))}</p>`).join("") + `<p class="reference">${t2("\u53EA\u6BD4\u8F03\u540C\u4E00\u6A23\u672C\u9810\u8A2D\u4F4E\uFF0F\u4E2D\uFF0F\u9AD8\u7D19\u789F\u542B\u91CF\u7684\u6A21\u578B\u5708\u5927\u5C0F\uFF1B\u4E0D\u80FD\u8F49\u6210\u60A3\u8005\u7528\u85E5\u5291\u91CF\u5EFA\u8B70\u3002", "This compares model zones for preset low/medium/high disc contents of one sample. It cannot provide patient dosing advice.")}</p>` : `<p>${t2("\u672A\u958B\u59CB\uFF1B\u9078\u505A\u5EF6\u4F38\u4E0D\u5F71\u97FF\u4E3B\u63A2\u7A76\u905E\u4EA4\u3002", "Not started. This optional extension does not affect submission of the main inquiry.")}</p>`;
-  const totalSeconds = Math.round(Object.values(record.timing || {}).reduce((sum, value) => sum + (Number(value) || 0), 0));
-  return `<article class="vl4-report" lang="${language2 === "en" ? "en" : "zh-Hant-HK"}"><header class="report-cover"><div class="report-brand">IBL \xB7 VL4 \xB7 ${t2("\u751F\u7269", "Biology")}</div><h1>${t2("\u6297\u751F\u7D20\u7814\u7A76\u4EFB\u52D9\uFF1A\u54EA\u4E9B\u6A23\u672C\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\uFF1F", "Antibiotic investigation: which samples inhibit bacterial growth?")}</h1><p>${t2("\u500B\u4EBA\u5B78\u7FD2\u7D00\u9304", "Personal learning record")}${record.demo ? ` \xB7 ${t2("\u6559\u5E2B\u793A\u7BC4", "Teacher demonstration")}` : ""}</p></header>
-  <div class="report-meta"><span>${t2("\u59D3\u540D", "Name")}\uFF1A${esc(record.profile?.name || "\u2014")}</span><span>${t2("\u73ED\u5225\u53CA\u5B78\u865F", "Class and number")}\uFF1A${esc(record.profile?.className || record.profile?.classInfo || "\u2014")}</span><span>${t2("\u96FB\u90F5", "Email")}\uFF1A${esc(record.profile?.email || "\u2014")}</span><span>${t2("\u63A2\u7A76\u905E\u4EA4", "Inquiry submitted")}\uFF1A${esc(dateText(record.submittedAt, language2))}</span><span>${t2("\u53CD\u601D\u63D0\u4EA4", "Reflection submitted")}\uFF1A${esc(dateText(record.reflectionSubmittedAt, language2))}</span><span>${t2("\u6709\u6548\u64CD\u4F5C\u6642\u9593", "Active time")}\uFF1A${Math.floor(totalSeconds / 60)} ${t2("\u5206", "min")} ${totalSeconds % 60} ${t2("\u79D2", "s")}</span></div>
-  <p class="simulation-note">${t2("\u6240\u6709\u5716\u50CF\u8207\u7D50\u679C\u5747\u70BA\u865B\u64EC\u6559\u5B78\u6A21\u64EC\uFF0C\u4E0D\u80FD\u7528\u4F5C\u60A3\u8005\u6CBB\u7642\u6216\u81E8\u5E8A\u654F\u611F\u6027\u5224\u5B9A\u3002\u6B77\u53F2\u89C0\u5BDF\u662F\u8461\u8404\u7403\u83CC\uFF0C\u4E0D\u662F MRSA\uFF1BMRSA \u9996\u6B21\u6B63\u5F0F\u5831\u544A\u65BC 1961 \u5E74\u3002", "All images and results are virtual teaching simulations. They cannot determine patient treatment or clinical susceptibility. Fleming\u2019s historical plates contained staphylococci, not MRSA; MRSA was first formally reported in 1961.")}</p>
-  ${section(t2("01 \u4E86\u89E3\u60C5\u5883\uFF1A\u4F60\u7684\u521D\u6B65\u89C0\u5BDF", "01 Context: your initial observations"), fields(["observation"]))}
-  ${section(t2("02 \u4F60\u7684\u539F\u59CB\u7814\u7A76\u8A08\u5283\uFF08\u9996\u6B21\u78BA\u8A8D\u5FEB\u7167\uFF09", "02 Your original research plan (first confirmed snapshot)"), `<p>${t2("\u4FDD\u5B58\u6642\u9593", "Captured")}\uFF1A${esc(dateText(original.capturedAt, language2))}</p>${originalFields.map((field2) => reportAnswer(record, field2, first[field2], language2, false)).join("")}${originalDesignImage}<p>${t2("\u5BE6\u969B\u8AB2\u5802\u5B89\u6392\uFF1A3 \u7247\u5206\u5225\u6E96\u5099\u7684\u74CA\u8102\u677F\uFF0C\u6BCF\u7247\u542B X\u3001Y\u3001Z \u53CA C\uFF08\u5C0D\u7167\uFF09\u3002\u5B78\u751F\u539F\u59CB\u5EFA\u8B70\u8207\u8AB2\u5802\u5B89\u6392\u5206\u958B\u4FDD\u7559\uFF1B3 \u6B21\u4E0D\u4FDD\u8B49\u53EF\u9760\u3002", "Classroom arrangement: three separately prepared plates, each with X, Y, Z and a C (control). The original proposal is retained separately; three tests do not guarantee reliability.")}</p>`)}
-  ${section(t2("02 \u6700\u65B0\u8A2D\u8A08\u3001\u5047\u8AAA\u53CA\u5C0D\u7167", "02 Latest setup, hypothesis and control"), fields(["prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"]) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ""))}
-  ${section(t2("03 \u4E09\u7247\u7368\u7ACB\u74CA\u8102\u677F\u7684\u89C0\u5BDF\u53CA\u91CF\u5EA6", "03 Observations and readings from independent plates"), `<p>${t2("\u5DF2\u7522\u751F\u7D50\u679C\u7684\u7368\u7ACB\u74CA\u8102\u677F\u6578", "Independent plates with generated results")}\uFF1A${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter((plate) => plate.result).map((plate) => reportPlate(plate, language2)).join("")}</div>${readingsTable}`)}
-  ${section(current ? t2("04 \u7E3D\u76F4\u5F91\u7684\u5E73\u5747\u503C\u8A08\u7B97", "04 Mean total diameter calculation") : t2("04 \u4F60\u7684\u5E73\u5747\u503C\u53CA\u5716\u8868", "04 Your means and chart"), meansTable + (current ? "" : reportGraph(record, language2) + `<p>${t2("\u5716\u8868\u78BA\u8A8D\u6642\u9593", "Chart confirmed")}\uFF1A${esc(dateText(record.graph?.confirmedAt, language2))}</p>`))}
-  ${section(t2("04 \u5206\u6790\u53CA\u7D50\u8AD6", "04 Analysis and conclusion"), current ? MC_QUESTIONS.slice(0, 2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") + reportConclusion(record, language2) + MC_QUESTIONS.slice(2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") : fields(["analysisControl", "analysisConsistent", "analysisVariation", "analysisMethod", "analysisHypothesis", "analysisRepeatPlan", "analysisRepeatValue", "analysisDeath", "analysisClinical", "conclusion"]))}
-  ${current ? "" : section(t2("\u53EF\u9078\u5EF6\u4F38\uFF1A\u540C\u4E00\u6A23\u672C\u7684\u7D19\u789F\u542B\u91CF", "Optional extension: disc content of one sample"), extensionHTML)}
-  ${submitted ? section(t2("\u905E\u4EA4\u5F8C\u7684\u5B78\u7FD2\u91CD\u9EDE", "Learning points after submission"), learningPointsHTML(language2) + (current ? "" : fields(["knowledgeBacteria", "knowledgeResistance", "knowledgeLimits"]))) : ""}
-  ${section(t2("\u5B78\u7FD2\u53CD\u601D", "Learning reflection"), reportAnswer(record, "reflection", a.reflection, language2))}
-  <footer class="report-footer">${t2("\u2713\uFF0F\u2715 \u53EA\u7528\u65BC\u6709\u660E\u78BA\u53C3\u8003\u7684\u9805\u76EE\uFF1B\u958B\u653E\u984C\u9644\u53C3\u8003\u8AAA\u660E\uFF0C\u7531\u6559\u5E2B\u95B1\u8B80\u3002\u5B78\u751F\u539F\u6587\u4E0D\u56E0\u8A9E\u8A00\u5207\u63DB\u800C\u6539\u5BEB\u3002", "\u2713/\u2715 apply only to items with an explicit reference. Open responses have reference notes for teacher review. Student text is preserved when the language changes.")}<br>${t2("\u7D00\u9304\u8B58\u5225\u78BC", "Record ID")}\uFF1A${esc(record.id)}</footer></article>`;
-}
-var REPORT_CSS = `*{box-sizing:border-box}body{margin:0;color:#15333b;font-family:Arial,"Noto Sans TC",sans-serif;font-size:12px;line-height:1.65;background:#f5f9f7}.vl4-report{max-width:1000px;margin:24px auto;padding:28px;background:white}.report-cover{border-left:7px solid #087b78;padding:16px 22px;background:#edf7f3}.report-cover h1{font-size:24px;line-height:1.35;margin:8px 0}.report-brand{letter-spacing:.08em;color:#087b78}.report-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:15px 0}.simulation-note,.reference{color:#536d74;font-size:11px}.simulation-note{border:1px solid #dce9e7;padding:10px;border-radius:8px}.report-section{margin:20px 0}.report-section h2{font-size:17px;color:#087b78;border-bottom:2px solid #dce9e7;padding-bottom:6px;break-after:avoid}.report-card{border:1px solid #dce9e7;border-radius:12px;padding:16px;background:#fcfefc}.answer{padding:8px 0;border-bottom:1px solid #ecf2ef;break-inside:avoid}.answer h3,h3{font-size:12px;margin:0 0 4px;font-weight:700}.student-answer{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}.reference{margin:5px 0}.check{font-weight:bold;margin-left:5px}.correct{color:#167645}.incorrect{color:#ae3434}table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed}th,td{padding:7px;border:1px solid #dce9e7;vertical-align:top;overflow-wrap:anywhere}th{background:#edf7f3}td small{display:block;white-space:pre-wrap}thead{display:table-header-group}tr{break-inside:avoid}.design-image{display:block;max-height:330px;max-width:100%;object-fit:contain;margin:16px auto}.science-diagram svg,.report-graph{display:block;width:100%;height:auto}.science-diagram{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}.learning-figure{margin:0;padding:12px;border:1px solid #bddfd8;border-radius:12px;background:#f2faf7;break-inside:avoid}.learning-figure figcaption{font-size:14px;font-weight:700;line-height:1.5}.learning-figure .caption{font-size:10px;color:#536d74}@media screen and (max-width:600px){.science-diagram{grid-template-columns:1fr}}.plate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.plate-figure{margin:0;break-inside:avoid}.plate-figure svg{width:100%;height:auto}.plate-figure figcaption{font-size:10px}.learning-topic h3{font-size:16px;margin:18px 0 8px;color:#15333b;break-after:avoid}.learning-emphasis{color:#b42318;font-weight:700}.learning-list{padding-left:20px}.learning-list li{margin:8px 0;break-inside:avoid}.report-footer{font-size:10px;color:#658087;border-top:1px solid #dce9e7;padding-top:10px}@page{size:A4;margin:13mm}@media print{body{background:white}.vl4-report{margin:0;padding:0;max-width:none}.report-card{border-radius:8px}.report-cover{break-inside:avoid}.report-cover h1{font-size:22px}.report-section{margin:14px 0}.plate-grid{gap:8px}.report-meta{font-size:10px}a{color:inherit}}`;
-function reportFilename(record) {
-  return `VL4_${record.profile?.className || record.profile?.classInfo || ""}_${record.profile?.name || ""}`.replace(/[\\/:*?"<>|\u0000-\u001f]/g, "_");
-}
-async function openPrintReport(record, language2 = "zh") {
-  if (!record.reflectionSubmittedAt) throw new Error(tr(language2, "\u8ACB\u5148\u5132\u5B58\u4E26\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D\uFF0C\u624D\u53EF\u5217\u5370\uFF0F\u5132\u5B58 PDF\u3002", "Save and submit your reflection before printing or saving a PDF."));
-  const reportWindow = window.open("", "_blank");
-  if (!reportWindow) throw new Error(tr(language2, "\u8ACB\u5141\u8A31\u6B64\u7DB2\u7AD9\u958B\u555F\u5217\u5370\u8996\u7A97\u3002", "Allow this site to open the print window."));
-  reportWindow.document.write(`<!doctype html><html lang="${language2 === "en" ? "en" : "zh-Hant-HK"}"><head><meta charset="UTF-8"><title>${esc(reportFilename(record))}</title><style>${REPORT_CSS}</style></head><body>${renderReport(record, language2)}</body></html>`);
-  reportWindow.document.close();
-  await Promise.all([...reportWindow.document.images].map((image) => image.complete ? Promise.resolve() : new Promise((resolve) => {
-    image.onload = resolve;
-    image.onerror = resolve;
-  })));
-  if (reportWindow.document.fonts?.ready) await reportWindow.document.fonts.ready;
-  reportWindow.focus();
-  reportWindow.print();
-  return reportWindow;
-}
-var GROUP_COLORS = { identity: "EEF2F4", observing: "E9F5E9", classifying: "EAF3FD", designing: "FCF0E5", conducting: "F3ECFA", inferring: "FFF8DD", communicating: "E5F6F4", knowledge: "F9E8F0", score: "E1E9EE", reference: "F2F3F4" };
-var FONT_COLORS = { good: "167645", bad: "AD3434", partial: "B97314", neutral: "536D74" };
-function styleCell(cell, group = "identity", check = null) {
-  cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF" + (GROUP_COLORS[group] || GROUP_COLORS.identity) } };
-  cell.font = { name: "Arial", size: 10, color: { argb: "FF" + (check === true ? FONT_COLORS.good : check === false ? FONT_COLORS.bad : FONT_COLORS.neutral) } };
-  cell.alignment = { vertical: "top", wrapText: true };
-  cell.border = { bottom: { style: "hair", color: { argb: "FFDCE9E7" } } };
-}
-function createSheet(workbook, name, headings, groups = []) {
-  const sheet = workbook.addWorksheet(name, { views: [{ state: "frozen", xSplit: 2, ySplit: 1 }] });
-  sheet.addRow(headings);
-  sheet.getRow(1).height = 42;
-  sheet.getRow(1).eachCell((cell, index) => {
-    styleCell(cell, groups[index - 1] || "identity");
-    cell.font = { ...cell.font, bold: true };
-  });
-  sheet.columns.forEach((column, index) => {
-    column.width = index < 4 ? 22 : 30;
-  });
-  return sheet;
-}
-function finishSheet(sheet) {
-  sheet.autoFilter = { from: { row: 1, column: 1 }, to: { row: Math.max(1, sheet.rowCount), column: sheet.columnCount } };
-}
-function addDataRow(sheet, values, groups = [], checks = {}) {
-  const row = sheet.addRow(values.map((value) => value ?? ""));
-  row.eachCell({ includeEmpty: true }, (cell, index) => styleCell(cell, groups[index - 1] || "identity", checks[index - 1] ?? null));
-  return row;
-}
-function addScoreColor(sheet, cell, max) {
-  sheet.addConditionalFormatting({ ref: cell.address, rules: [
-    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}=${max})`], style: { font: { color: { argb: "FF" + FONT_COLORS.good } } } },
-    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}=0)`], style: { font: { color: { argb: "FF" + FONT_COLORS.bad } } } },
-    { type: "expression", formulae: [`AND(ISNUMBER(${cell.address}),${cell.address}>0,${cell.address}<${max})`], style: { font: { color: { argb: "FF" + FONT_COLORS.partial } } } }
-  ] });
-}
-function safeEventDetails(value) {
-  if (!value || typeof value !== "object") return value;
-  if (Array.isArray(value)) return value.map(safeEventDetails);
-  return Object.fromEntries(Object.entries(value).filter(([key]) => !/password|secret|token|authorization/i.test(key)).map(([key, item]) => [key, safeEventDetails(item)]));
-}
-async function workbookImage(data) {
-  if (!imagePattern.test(data || "")) return null;
-  const match = data.match(/^data:image\/(png|jpe?g|webp);base64,/);
-  if (match[1] !== "webp") return { base64: data, extension: match[1] === "png" ? "png" : "jpeg" };
-  if (typeof document === "undefined") return null;
-  const image = new Image();
-  await new Promise((resolve, reject) => {
-    image.onload = resolve;
-    image.onerror = reject;
-    image.src = data;
-  });
-  const canvas2 = document.createElement("canvas");
-  canvas2.width = image.naturalWidth;
-  canvas2.height = image.naturalHeight;
-  canvas2.getContext("2d").drawImage(image, 0, 0);
-  return { base64: canvas2.toDataURL("image/png"), extension: "png" };
-}
-async function buildWorkbook(inputRecords) {
-  const records = inputRecords.filter((record) => !record.demo && record.moduleId === "VL_BIO_ANTIBIOTICS" && record.profile?.email?.trim().toLowerCase() !== "tzechingchan0605@gmail.com");
-  const workbook = new import_exceljs.default.Workbook();
-  workbook.creator = "VL4";
-  workbook.subject = "\u6297\u751F\u7D20\u865B\u64EC\u63A2\u7A76\u5168\u73ED\u7D00\u9304";
-  workbook.created = /* @__PURE__ */ new Date("2026-01-01T00:00:00Z");
-  workbook.modified = /* @__PURE__ */ new Date("2026-01-01T00:00:00Z");
-  workbook.calcProperties.fullCalcOnLoad = true;
-  const hasLegacy = records.some((record) => !currentAnalysis(record)), hasCurrent = records.some(currentAnalysis);
-  const exportFields = hasLegacy ? hasCurrent ? [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS.filter(([id]) => !ANSWER_FIELDS.some(([field2]) => field2 === id))] : ANSWER_FIELDS : CURRENT_ANSWER_FIELDS;
-  const legacyExtension = hasLegacy ? ["\u5EF6\u4F38\u9810\u6E2C", "\u5EF6\u4F38\u7406\u7531", "\u5EF6\u4F38\u516C\u5E73\u6BD4\u8F03", "\u5EF6\u4F38\u7D50\u679C", "\u5EF6\u4F38\u5206\u6790"] : [];
-  const originalFields = ANSWER_FIELDS.filter(([field2]) => !field2.startsWith("analysis") && !field2.startsWith("knowledge") && field2 !== "reflection" && field2 !== "conclusion");
-  const headings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u72C0\u614B", "\u7248\u672C", "\u63A2\u7A76\u905E\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u53CD\u601D\u63D0\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u539F\u59CB\u5FEB\u7167\u6642\u9593\uFF08\u9999\u6E2F\uFF09", ...originalFields.map(([, label]) => "\u539F\u59CB\uFF5C" + label), ...exportFields.map(([, label]) => "\u6700\u65B0\uFF5C" + label), "plannedReplicates\uFF5C\u539F\u59CB\u5EFA\u8B70", "plannedReplicateReason\uFF5C\u539F\u59CB\u7406\u7531", "actualReplicates\uFF5C\u7368\u7ACB\u74CA\u8102\u677F\u6578", "\u8A2D\u8A08\u6587\u5B57", ...legacyExtension, "\u6709\u6548\u7528\u6642\u7E3D\u79D2\u6578", ...["\u4E00", "\u4E8C", "\u4E09", "\u56DB"].map((stage) => "\u968E\u6BB5" + stage + "\u6709\u6548\u79D2\u6578")];
-  const answerGroups = [...Array(9).fill("identity"), ...originalFields.map((field2) => field2[3]), ...exportFields.map((field2) => field2[3]), ...Array(3).fill("designing"), "conducting", ...Array(legacyExtension.length).fill("inferring"), ...Array(5).fill("identity")];
-  const answers = createSheet(workbook, "\u5B78\u751F\u63A2\u7A76\u7B54\u6848", headings, answerGroups);
-  const dataHeadings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u74CA\u8102\u677F\u8B58\u5225\u78BC", "\u6A23\u672C", "\u9996\u6B21\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u9996\u6B21\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u9996\u6B21\u5099\u8A3B", "\u9996\u6B21\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6700\u5F8C\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u6700\u5F8C\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u6700\u5F8C\u5099\u8A3B", "\u6700\u5F8C\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6A21\u578B\u53C3\u8003\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u76F4\u5F91\uFF0F\u7D19\u789F\u5916\u6E05\u6670\u5340\u6AA2\u6838", "\u4FEE\u8A02\u7D00\u9304", "\u5B78\u751F\u5E73\u5747\u503C\uFF08mm\uFF09", "\u4F9D\u5B78\u751F\u6700\u5F8C\u8B80\u6578\u8A08\u7B97\u5E73\u5747\u503C", "\u5E73\u5747\u503C\u6AA2\u6838", ...hasLegacy ? ["\u78BA\u8A8D\u68D2\u9AD8\uFF08mm\uFF09", "\u5716\u8868\u6AA2\u6838", "\u5716\u8868\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09"] : []];
-  const dataGroups = dataHeadings.map((_, index) => index < 4 ? "identity" : index < 15 ? "observing" : index < 18 ? "inferring" : "communicating");
-  const data = createSheet(workbook, hasLegacy ? "\u91CF\u5EA6\u8A08\u7B97\u8207\u5716\u8868" : "\u91CF\u5EA6\u8207\u8A08\u7B97", dataHeadings, dataGroups);
-  const makeScores = (columns, name) => ({ columns, sheet: createSheet(workbook, name, ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u5B8C\u6210\u72C0\u614B", ...columns.map((column) => column.label + (column.max !== void 0 ? `\uFF080\u2013${column.max}\uFF09` : ""))], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]), index: Object.fromEntries(columns.map((column, index) => [column.id, index + 5])) });
-  const legacyScores = hasLegacy ? makeScores(SCORE_COLUMNS, "\u6559\u5E2B\u8A55\u5206") : null;
-  const currentScores = hasCurrent || !hasLegacy ? makeScores(CURRENT_SCORE_COLUMNS, hasLegacy ? "\u6559\u5E2B\u8A55\u5206\uFF08\u65B0\u7248\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
-  const rubric = createSheet(workbook, "\u8A55\u5206\u6E96\u5247", ["\u985E\u5225\uFF0F\u984C\u76EE", "\u6700\u9AD8\u5206", "\u8A55\u5206\u65B9\u5F0F", "\u6EFF\u5206\u6E96\u5247", "\u90E8\u5206\u5F97\u5206\u6E96\u5247", "\u96F6\u5206\u6E96\u5247"]);
-  for (const row of [...hasLegacy ? RUBRIC_ROWS : [], ...hasCurrent || !hasLegacy ? CURRENT_RUBRIC_ROWS : []]) {
-    addDataRow(rubric, row.slice(0, 6), Array(6).fill(row[6]));
-  }
-  rubric.columns.forEach((column, index) => {
-    column.width = index === 1 ? 10 : index === 2 ? 12 : 60;
-  });
-  const events = createSheet(workbook, "\u64CD\u4F5C\u4E8B\u4EF6\u7D00\u9304", ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u4F86\u6E90", "\u4E8B\u4EF6\u985E\u578B", "\u6642\u9593\uFF08\u9999\u6E2F\uFF09", "\u968E\u6BB5", "\u4E8B\u4EF6\u8A73\u60C5\uFF08JSON\uFF09"]);
-  events.getColumn(7).width = 80;
-  const designs = createSheet(workbook, "\u88DD\u7F6E\u8A2D\u8A08\u5716", ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u5FEB\u7167\u985E\u5225", "\u8A2D\u8A08\u6587\u5B57", "\u5B78\u751F\u8A2D\u8A08\u5716"]);
-  designs.getColumn(5).width = 22;
-  designs.getColumn(6).width = 55;
-  designs.getColumn(7).width = 70;
-  for (const record of records) {
-    const a = record.answers || {}, original = record.original || {}, initial = { ...original.answers, plannedReplicates: original.plannedReplicates ?? original.answers?.plannedReplicates, plannedReplicateReason: original.plannedReplicateReason ?? original.answers?.plannedReplicateReason };
-    const status = record.reflectionSubmittedAt ? "\u5DF2\u5B8C\u6210" : record.submittedAt ? "\u5F85\u63D0\u4EA4\u53CD\u601D" : "\u9032\u884C\u4E2D", profile = record.profile || {}, extension = record.extension || {};
-    const objectText = (value) => typeof value === "object" && value !== null ? JSON.stringify(value) : value ?? "";
-    const values = [record.id, profile.name, profile.className || profile.classInfo, profile.email, status, record.version, dateText(record.submittedAt), dateText(record.reflectionSubmittedAt), dateText(original.capturedAt), ...originalFields.map(([field2]) => answerDisplay(field2, initial[field2])), ...exportFields.map(([field2]) => answerDisplay(field2, a[field2])), initial.plannedReplicates ?? "", initial.plannedReplicateReason ?? "", actualReplicates(record), record.design?.description || a.designDescription || "", ...hasLegacy ? ["prediction", "reason", "fairComparison", "results", "analysis"].map((field2) => extension.started ? objectText(extension[field2]) : "") : [], Math.round(Object.values(record.timing || {}).reduce((sum, time) => sum + (Number(time) || 0), 0)), ...[1, 2, 3, 4].map((phase) => Math.round(record.timing?.[phase] || 0))];
-    const checks = objectiveChecks(record), answerChecks = {};
-    exportFields.forEach(([field2], index) => {
-      if (field2 in checks) answerChecks[9 + originalFields.length + index] = checks[field2];
-    });
-    addDataRow(answers, values, answerGroups, answerChecks);
-    for (const plate of record.plates || []) for (const sample of SAMPLE_IDS) {
-      const reading = record.measurements?.[plate.id]?.[sample] || {}, first = reading.first || {}, last = reading.last || reading;
-      const check = readingCheck(record, plate, sample, reading), mean = studentMean(record, sample), meanCorrect = meanCheck(record, sample), graphCorrect = graphCheck(record, sample);
-      const label = (check2) => check2 === null ? "\u672A\u7B54\uFF0F\u8CC7\u6599\u4E0D\u8DB3" : check2 ? "\u7B26\u5408" : "\u4E0D\u7B26\u5408";
-      const presence = (value) => value === "yes" ? "\u6709" : value === "no" ? "\u7121" : "\u672A\u7B54";
-      addDataRow(data, [record.id, profile.name, plate.id, sampleName(sample, "zh"), presence(first.visible), finiteNumber(first.value) ?? "", first.note || "", first.at ? dateText(first.at) : "", presence(last.visible), finiteNumber(last.value) ?? "", last.note || "", last.at ? dateText(last.at) : "", clearZoneDiameter(plate, sample) ?? "", label(check), JSON.stringify(reading.revisions || []), finiteNumber(record.means?.[sample]) ?? "", mean === null ? "" : Math.round(mean * 1e4) / 1e4, label(meanCorrect), ...hasLegacy ? [finiteNumber(record.graph?.values?.[sample]) ?? "", label(graphCorrect), record.graph?.confirmedAt ? dateText(record.graph.confirmedAt) : ""] : []], dataGroups, { 5: readingCheck(record, plate, sample, first), 9: check, 13: check, 15: meanCorrect, 17: meanCorrect, 18: graphCorrect, 19: graphCorrect });
-      for (const revision of reading.revisions || []) addDataRow(events, [record.id, profile.name, `${plate.id}/${sample}`, "reading_revision", dateText(revision.at || revision.next?.at), 3, JSON.stringify(safeEventDetails(revision))]);
-    }
-    const auto = automaticScores(record), { columns, sheet: scores, index: scoreIndex } = currentAnalysis(record) ? currentScores : legacyScores;
-    const scoreRow = addDataRow(scores, [record.id, profile.name, profile.className || profile.classInfo, status, ...columns.map((column) => column.manual ? null : auto[column.id] ?? "")], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]);
-    const cell = (id) => scoreRow.getCell(scoreIndex[id]), ref = (id) => cell(id).address;
-    const manual = columns.filter((column) => column.manual).map((column) => ref(column.id));
-    for (const column of columns) {
-      const current = cell(column.id);
-      if (column.manual) {
-        current.value = null;
-        current.dataValidation = { type: "decimal", operator: "between", allowBlank: true, formulae: [0, column.max], showInputMessage: true, promptTitle: "\u6559\u5E2B\u4EBA\u5DE5\u8A55\u5206", prompt: `\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF1B\u6709\u6548\u7BC4\u570D 0\u2013${column.max}\u3002`, showErrorMessage: true, errorStyle: "stop", errorTitle: "\u5206\u6578\u8D85\u51FA\u7BC4\u570D", error: `\u8ACB\u8F38\u5165 0\u2013${column.max} \u7684\u6578\u503C\uFF0C\u6216\u4FDD\u6301\u7A7A\u767D\u3002` };
-      }
-      if (column.formula) {
-        const dependencies = column.formula.map(ref);
-        let formula = `IF(COUNT(${dependencies.join(",")})=${dependencies.length},ROUND(SUM(${dependencies.join(",")}),2),"\u5F85\u8A55")`;
-        if (column.id === "overall") formula = `IF(AND(COUNT(${manual.join(",")})=${manual.length},COUNT(${dependencies.join(",")})=${dependencies.length},D${scoreRow.number}="\u5DF2\u5B8C\u6210"),ROUND(SUM(${dependencies.join(",")}),2),"\u5F85\u8A55\uFF0F\u672A\u5B8C\u6210")`;
-        current.value = { formula, result: column.id === "classifying" ? auto.iv + auto.dv + auto.cv : column.id === "overall" ? "\u5F85\u8A55\uFF0F\u672A\u5B8C\u6210" : "\u5F85\u8A55" };
-      }
-      if (column.id === "marking") current.value = { formula: `IF(AND(COUNT(${manual.join(",")})=${manual.length},D${scoreRow.number}="\u5DF2\u5B8C\u6210"),"\u8A55\u5206\u5B8C\u6210","\u5F85\u6559\u5E2B\u8A55\u5206\uFF0F\u5B78\u751F\u672A\u5B8C\u6210")`, result: "\u5F85\u6559\u5E2B\u8A55\u5206\uFF0F\u5B78\u751F\u672A\u5B8C\u6210" };
-      if (column.max !== void 0) addScoreColor(scores, current, column.max);
-    }
-    for (const event of record.events || []) addDataRow(events, [record.id, profile.name, "\u63A2\u7A76", event.type, dateText(event.at), event.phase ?? "", JSON.stringify(safeEventDetails(event.details ?? event))]);
-    for (const plate of record.plates || []) for (const event of plate.operations || []) addDataRow(events, [record.id, profile.name, plate.id, event.type || "plate_operation", event.at ? dateText(event.at) : "", 3, JSON.stringify(safeEventDetails(event))]);
-    const snapshots = [...original.design ? [{ kind: "\u539F\u59CB\u8A2D\u8A08", design: original.design, description: initial.designDescription }] : [], { kind: "\u6700\u5F8C\u8A2D\u8A08", design: record.design || {}, description: a.designDescription }];
-    for (const snapshot of snapshots) {
-      const image = await workbookImage(snapshot.design.image);
-      const imageRow = addDataRow(designs, [record.id, profile.name, profile.className || profile.classInfo, profile.email, snapshot.kind, snapshot.design.description || snapshot.description || "", image ? "\u5D4C\u5165\u5716\u7247" : snapshot.design.image ? "\u5716\u7247\u683C\u5F0F\u9700\u8F49\u63DB\uFF1B\u539F\u5716\u4ECD\u4FDD\u7559\u65BC\u5B8C\u6574\u63A2\u7A76\u7D00\u9304" : "\u6587\u5B57\u8A2D\u8A08"]);
-      if (image) {
-        imageRow.height = 175;
-        const imageId = workbook.addImage(image);
-        designs.addImage(imageId, { tl: { col: 6.05, row: imageRow.number - 1 + 0.05 }, ext: { width: 450, height: 220 }, editAs: "oneCell" });
-      }
-    }
-  }
-  for (const sheet of workbook.worksheets) finishSheet(sheet);
-  return workbook;
-}
-function workbookFilename({ scope = "class" } = {}) {
-  if (!["class", "local"].includes(scope)) throw new Error("Unknown workbook export scope");
-  return `VL4_\u6297\u751F\u7D20\u7814\u7A76\u4EFB\u52D9_${scope === "local" ? "\u672C\u6A5F\u5B78\u7FD2\u7D00\u9304" : "\u5168\u73ED\u5B78\u7FD2\u7D00\u9304"}.xlsx`;
-}
-async function downloadWorkbook(records, options = {}) {
-  const filename = workbookFilename(options);
-  const workbook = await buildWorkbook(records);
-  const buffer = await workbook.xlsx.writeBuffer();
-  const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-  const link = document.createElement("a"), url = URL.createObjectURL(blob);
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1e3);
-  return workbook;
-}
-
 // app.js
 var $ = (s) => document.querySelector(s);
 var $$ = (s) => [...document.querySelectorAll(s)];
@@ -26340,10 +26619,10 @@ function field(id, key, { options, type = "textarea", optional = false, min, max
   const input = options ? `<select ${attrs}>${option("", "choose")}${options.map(([v, k]) => option(v, k)).join("")}</select>` : type === "textarea" ? `<textarea ${attrs} rows="3" maxlength="2000"></textarea>` : `<input ${attrs} type="${type}" ${min !== void 0 ? `min="${min}"` : ""} ${max !== void 0 ? `max="${max}"` : ""} ${type === "number" ? 'step="1"' : ""}>`;
   return `<label class="field">${span(key)}${input}</label>`;
 }
-var variables = [["disc", "vDisc"], ["sample", "vSample"], ["medium", "vMedium"], ["zone", "vZone"], ["strain", "vStrain"], ["distribution", "vDistribution"], ["preparation", "vPreparation"]];
+var variables = VARIABLE_OPTIONS;
 var multi = (name, options) => `<div class="chip-grid">${options.map(([v, k]) => `<label class="choice"><input type="checkbox" data-multi="${name}" value="${v}">${span(k)}</label>`).join("")}</div>`;
 $("#orientationFields").innerHTML = field("observation", "observation", { placeholder: "observationPH" });
-$("#hypothesisFields").innerHTML = `<label class="hypothesis-sentence">${span("predictionPrefix")} <select id="prediction" data-field="prediction" data-scope="answer" required data-i18n-aria="prediction">${option("", "choose")}${[["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "predictionAll"], ["none", "predictionNone"]].map(([v, k]) => option(v, k)).join("")}</select> ${span("predictionSuffix")}</label><label class="hypothesis-sentence">${span("largestPrefix")} <select id="largestPrediction" data-field="largestPrediction" data-scope="answer" required data-i18n-aria="largestPrediction">${option("", "choose")}${["X", "Y", "Z"].map((v) => `<option value="${v}">${v}</option>`).join("")}${option("na", "notApplicable")}</select> <span id="largestSuffix">${span("largestSuffix")}</span><span id="largestNASuffix" hidden>${span("largestNASuffix")}</span></label>` + field("reason", "hypothesisReason", { placeholder: "reasonPH" });
+$("#hypothesisFields").innerHTML = `<label class="hypothesis-sentence">${span("predictionPrefix")} <select id="prediction" data-field="prediction" data-scope="answer" required data-i18n-aria="prediction">${option("", "choose")}${PREDICTION_OPTIONS.map(([v, k]) => option(v, k)).join("")}</select> ${span("predictionSuffix")}</label><label class="hypothesis-sentence">${span("largestPrefix")} <select id="largestPrediction" data-field="largestPrediction" data-scope="answer" required data-i18n-aria="largestPrediction">${option("", "choose")}${["X", "Y", "Z"].map((v) => `<option value="${v}">${v}</option>`).join("")}${option("na", "notApplicable")}</select> <span id="largestSuffix">${span("largestSuffix")}</span><span id="largestNASuffix" hidden>${span("largestNASuffix")}</span></label>` + field("reason", "hypothesisReason", { placeholder: "reasonPH" });
 function refreshLargestPrediction() {
   const na = $("#largestPrediction").value === "na";
   $("#largestSuffix").hidden = na;
@@ -26353,33 +26632,20 @@ $("#largestPrediction").addEventListener("change", refreshLargestPrediction);
 $("#reason").rows = 2;
 $("#reason").maxLength = 600;
 $("#variableFields").innerHTML = [["iv", "iv", "ivHint"], ["dv", "dv", "dvHint"], ["cv", "cv", "cvHint"]].map(([group, title, hint]) => `<section id="${group}" class="variable-group"><h4>${span(title)} <span>\uFF08${span(hint)}\uFF09</span></h4><div class="variable-options">${variables.map(([value, key]) => `<button type="button" data-group="${group}" data-variable="${value}" aria-pressed="false">${span(key)}</button>`).join("")}</div></section>`).join("");
-$("#assumptionFields").innerHTML = multi("assumptions", [["distribution", "assumptionDistribution"], ["sterile", "assumptionSterile"], ["sameConditions", "assumptionSame"], ["death", "assumptionDeath"]]).replace('class="chip-grid"', 'class="choice-stack"').replaceAll('class="choice"', 'class="check-option"');
+$("#assumptionFields").innerHTML = multi("assumptions", ASSUMPTION_OPTIONS).replace('class="chip-grid"', 'class="choice-stack"').replaceAll('class="choice"', 'class="check-option"');
 $("#controlFields").innerHTML = field("controlPlan", "controlPlan").replace("<textarea", `<span class="question-hint control-purpose-hint" data-i18n="controlPurposeHint"></span><span class="question-hint" data-i18n="controlHint"></span><textarea`);
 $("#controlPlan").maxLength = 1e3;
 $("#designFields").innerHTML = field("designDescription", "designDescription", { optional: true, placeholder: "designDescriptionPH" });
 $("#designDescription").rows = 2;
 $("#designDescription").maxLength = 1e3;
-$("#replicateFields").innerHTML = field("plannedReplicates", "plannedReplicates", { options: Array.from({ length: 20 }, (_, i) => [String(i + 1), String(i + 1)]), placeholder: null }) + field("plannedReplicateReason", "plannedReplicateReason", { placeholder: null });
+$("#replicateFields").innerHTML = field("plannedReplicates", "plannedReplicates", { options: REPEAT_OPTIONS, placeholder: null }) + field("plannedReplicateReason", "plannedReplicateReason", { placeholder: null });
 var mcQuestion = (question) => `<fieldset class="analysis-question" id="${question.id}"><legend><span class="question-number">${question.number}</span> ${span(question.key)}</legend><div class="mc-options">${question.options.map(([value, key], i) => `<label class="mc-option"><input type="radio" name="${question.id}" data-field="${question.id}" data-scope="answer" value="${value}" required><span class="mc-letter">${String.fromCharCode(65 + i)}</span>${span(key)}</label>`).join("")}</div></fieldset>`;
 var rankSelect = (id, index) => `<select id="${id}" data-field="${id}" data-scope="answer" required data-i18n-aria="${id}">${option("", "choose")}${SAMPLES.map((sample) => sample === "C" ? option(sample, "blank") : `<option value="${sample}">${sample}</option>`).join("")}${index > 1 ? option("na", "notApplicable") : ""}</select>`;
 var conclusionMarkup = `<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span("resultConclusion")}</legend><div class="conclusion-sentence">${span("conclusionContext")}<select id="effectiveSamples" data-field="effectiveSamples" data-scope="answer" required data-i18n-aria="effectiveSamples">${option("", "choose")}${EFFECTIVE_OPTIONS.map(([value, key]) => option(value, key)).join("")}</select>${span("conclusionEffective")}</div><p>${span("conclusionRanking")}</p><div class="conclusion-ranking">${[0, 1, 2, 3].map((index) => `${index ? '<span aria-hidden="true">\uFF1E</span>' : ""}${rankSelect("rank" + (index + 1), index)}`).join("")}</div><p class="question-hint">${span("conclusionSelectHint")}</p></fieldset>`;
 $("#analysisFields").innerHTML = MC_QUESTIONS.slice(0, 2).map(mcQuestion).join("") + conclusionMarkup + MC_QUESTIONS.slice(2).map(mcQuestion).join("");
 $("#reflectionFields").innerHTML = field("reflection", "reflectionQuestion");
 $("#meanInputs").innerHTML = SAMPLES.map((s) => `<label class="field">${span(`meanLabel${s}`)}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" data-i18n-aria="meanLabel${s}"></label>`).join("");
-var equipmentArt = [
-  ["equipmentPlate", 3, '<path d="M14 40v20c0 11 16 20 36 20s36-9 36-20V40" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M20 44v12c0 8 14 15 30 15s30-7 30-15V44" fill="#ddd0a6"/><ellipse cx="50" cy="40" rx="36" ry="20" fill="#f5f9f3" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="42" rx="30" ry="15" fill="#eadfbc" stroke="#c0ceb7" stroke-width="1.5"/><path d="M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>', "equipmentPlateNote"],
-  ["equipmentMarker", 1, '<g transform="rotate(28 50 50)"><rect x="42" y="13" width="16" height="69" rx="5" fill="#24594e"/><path d="M42 82h16l-8 12z" fill="#15333b"/><rect x="42" y="10" width="16" height="15" rx="3" fill="#a5c4bc"/></g>'],
-  ["equipmentDropper", 1, '<path d="M40 16q10-12 20 0v19H40z" fill="#27796e"/><path d="M44 35h12v38l-6 15-6-15z" fill="#e0efef" stroke="#7faaa0" stroke-width="2"/><path d="M50 91q-7 8 0 8q7 0 0-8" fill="#6ea89d"/>'],
-  ["equipmentBacteria", 1, '<path d="M35 22h30v12l8 50H27l8-50z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M31 59h38l4 25H27z" fill="#adc7ad"/><path d="M32 19h36" stroke="#087b78" stroke-width="7"/>'],
-  ["equipmentSpreader", 1, '<g transform="rotate(30 50 50)"><image href="assets/lab-spreader-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
-  ["equipmentTweezers", 4, '<g transform="rotate(212 50 50)"><image href="assets/lab-forceps-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
-  ["equipmentAlcohol", 1, '<path d="M24 16h53l-5 7v60H28V16" fill="#f4f8f3" stroke="#7faaa0" stroke-width="3"/><path d="M30 53h40v28H30Z" fill="#adc7ad"/><path d="M35 24v47M63 32h7M63 45h7M63 65h7" fill="none" stroke="#7faaa0" stroke-width="2"/>'],
-  ["equipmentLamp", 1, '<path d="M49 8c-13 17-13 25 1 29 12-5 13-15-1-29Z" fill="#e7b36b"/><path d="M46 35h8v14h-8Z" fill="#24594e"/><path d="M33 48h34l12 31c3 9-11 14-29 14S17 88 21 79Z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M27 72h46l4 12H23Z" fill="#adc7ad"/>'],
-  ["equipmentDiscs", 3, '<g fill="#fff" stroke="#7faaa0">' + [[28, 30, "X"], [70, 30, "Y"], [28, 72, "Z"], [70, 72, "C"]].map(([x, y, label]) => `<circle cx="${x}" cy="${y}" r="17"/><text x="${x}" y="${y + 4}" text-anchor="middle" fill="#15333b" stroke="none" font-size="14">${label}</text>`).join("") + "</g>", "equipmentDiscsNote"],
-  ["equipmentIncubator", 1, '<rect x="16" y="14" width="68" height="74" rx="5" fill="#e5ede8" stroke="#7faaa0" stroke-width="3"/><rect x="24" y="24" width="46" height="52" rx="2" fill="#c9dcd4"/><path d="M29 43h35M29 62h35" stroke="#7faaa0"/><path d="M77 43v19" stroke="#087b78" stroke-width="4"/>'],
-  ["equipmentRuler", 1, '<rect x="9" y="35" width="82" height="29" rx="3" fill="#f6e8ba" stroke="#c8b582"/>' + Array.from({ length: 16 }, (_, i) => `<path d="M${12 + i * 5} 35v${i % 5 === 0 ? 14 : 7}" stroke="#927d4a"/>`).join("")]
-];
-if ($("#equipmentBank")) $("#equipmentBank").innerHTML = equipmentArt.map(([key, count, art, note]) => `<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} \xD7${count}${note ? `<small>${span(note)}</small>` : ""}</figcaption></figure>`).join("");
+if ($("#equipmentBank")) $("#equipmentBank").innerHTML = EQUIPMENT_ART.map(([key, count, art, note]) => `<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} \xD7${count}${note ? `<small>${span(note)}</small>` : ""}</figcaption></figure>`).join("");
 $("#historyFigure").innerHTML = historyFigureMarkup();
 var historyCaption = $("#historyCaption") || $('[data-i18n="historyCaption"]') || $("#historyFigure + .caption");
 if (historyCaption) historyCaption.dataset.i18n = historyCaptionKey;
@@ -26405,6 +26671,7 @@ var zoom = false;
 var ruler = { x: 60, y: 350 };
 var lastTime = performance.now();
 var cloudState = { key: "unconfigured" };
+var paperwork = createPaperworkPanel({ host: $("#teacherDialog"), isAuthorised: () => isTeacher(teacherProfile) && $("#teacherDialog").open, getLanguage: () => language });
 var damaged = /* @__PURE__ */ new Set();
 function readRecords() {
   try {
@@ -26561,6 +26828,7 @@ function begin(profile, demo = false) {
   save();
 }
 function showLogin() {
+  paperwork.close();
   save();
   stopActivity();
   state = null;
@@ -26730,6 +26998,7 @@ $("#loginForm").onsubmit = (e) => {
 $("#accountButton").onclick = showLogin;
 $("#newInquiry").onclick = showLogin;
 function relabel() {
+  paperwork.refresh();
   translate();
   cloudStatus(cloudState);
   if (state) {
@@ -26939,13 +27208,17 @@ function openTeacher() {
     $("#main").hidden = true;
   }
   $("#teacherBack").hidden = true;
+  paperwork.refresh();
   $("#dashboardStatus").textContent = t(CLOUD_ENDPOINT ? "teacherIntro" : "cloudUnconfigured");
   renderTeacherRows();
   if (!$("#teacherDialog").open) $("#teacherDialog").showModal();
 }
 $("#teacherBack").onclick = openTeacher;
 $("#closeTeacher").onclick = showLogin;
-$("#teacherDemo").onclick = () => begin(teacherProfile, true);
+$("#teacherDemo").onclick = () => {
+  paperwork.close();
+  begin(teacherProfile, true);
+};
 async function readClass() {
   const g = generation;
   const entered = $("#teacherPassword").value;

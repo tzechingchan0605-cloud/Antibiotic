@@ -6,7 +6,7 @@ Independent, working bilingual inquiry laboratory based on the supplied VL4 brie
 
 ## Run
 
-Requires Node.js 20+ and npm. This cloud workspace has Node.js 24 and system Chromium.
+Requires Node.js 20+ and npm. This cloud workspace has Node.js 24 and system Chromium. Rebuilding changed paper materials also needs Noto CJK, Python FontTools and Poppler; see [paper prerequisites](paperwork/README.md).
 
 ```sh
 npm ci --cache .npm-cache --no-audit --no-fund
@@ -16,7 +16,7 @@ npm start
 
 The static server uses port 4173; set `PORT` to choose another port. Open the server with your hosting platform's normal browser access. In this cloud workspace, `bash scripts/install.sh` uses the shared writable `/workspace/.npm-cache`. The built static files can also be served with `python3 -m http.server 4173` without installing Node. Serve over HTTP(S), rather than double-clicking `index.html`.
 
-For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/` folder and the `app.bundle*.js` files. The repository includes prebuilt files. `npm run build` writes a bundle with a content hash in its filename and updates the matching import in `index.html`; this prevents cached JavaScript from being paired with newer page markup. It also versions the stylesheet URLs from their contents so changed button positions and tool orientations load with the new page. When changing the cloud endpoint or any JavaScript/CSS source, rebuild and commit the updated HTML, versioned bundle, compatibility bundle and source map together. Keep previously published versioned bundles available for cached HTML. `.nojekyll` serves the project as static files on GitHub Pages. If startup fails, the page displays a reload button without clearing saved records. Filesystem setup and a running local server do not publish the site.
+For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/` and `paperwork/generated/` folders and the `app.bundle*.js` files. The repository includes prebuilt files. `npm run build` writes a bundle with a content hash in its filename and updates the matching import in `index.html`; this prevents cached JavaScript from being paired with newer page markup. It also versions the stylesheet URLs from their contents so changed button positions and tool orientations load with the new page. When changing the cloud endpoint or any JavaScript/CSS source, rebuild and commit the updated HTML, versioned bundle, compatibility bundle and source map together. Keep previously published versioned bundles available for cached HTML. `.nojekyll` serves the project as static files on GitHub Pages. If startup fails, the page displays a reload button without clearing saved records. Filesystem setup and a running local server do not publish the site.
 
 ## Student workflow
 
@@ -73,3 +73,21 @@ Browser tests use system Chromium at `/usr/bin/chromium`, or the `CHROMIUM_PATH`
 See [validation record](docs/validation.md) for the executed results and practical limitations. Test-generated learner identities and data are fixtures, not actual student research data.
 
 The five supplied scientific/history references could not be accessed through the current proxy (HTTP 403). Their exact URLs and access results are documented in [design rationale](docs/design-rationale.md); this delivery does not claim live verification of those pages.
+
+## 教師下載紙本對照組工作紙 PDF
+
+教師儀表板可獨立選擇繁中／英文，預覽並下載 A、B、C、D 或完整教師套裝。與現行 VL4 共用題目、提示、選項、模型資料、學習重點與 rubric，不恢復已刪題目；只在 A／C 首頁印姓名欄，文字作答及修訂區各兩線。
+
+<!-- paper-summary:start -->
+材料 v1 · 內容版本 22ddc4c4967f
+
+| 分冊 | 頁數 | 完整套裝頁碼 | 繁中 PDF | 英文 PDF |
+| --- | ---: | --- | --- | --- |
+| A | 3 | 1–3 | [下載](paperwork/generated/VL4_A_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_A_en_v1_22ddc4c4967f.pdf) |
+| B | 2 | 4–5 | [下載](paperwork/generated/VL4_B_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_B_en_v1_22ddc4c4967f.pdf) |
+| C | 2 | 6–7 | [下載](paperwork/generated/VL4_C_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_C_en_v1_22ddc4c4967f.pdf) |
+| D | 6 | 8–13 | [下載](paperwork/generated/VL4_D_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_D_en_v1_22ddc4c4967f.pdf) |
+| 完整教師套裝 | 13 | 1–13 | [下載](paperwork/generated/VL4_all_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_all_en_v1_22ddc4c4967f.pdf) |
+<!-- paper-summary:end -->
+
+先保存 A 原始設計再派 B，固定原探究答案後才派 C；D 及完整套裝只供教師。學生不顯示入口。下載不建立探究、修改紀錄或 Excel，無須新增 Apps Script。`npm run build` 在來源更新時自動重建材料；`npm run paper:check` 拒絕過期材料。產生、字型、測試及研究核對事項見 [紙本材料說明](paperwork/README.md)。

@@ -2,7 +2,7 @@
 
 VL4 is a scaffolded inquiry activity for Hong Kong S4 students encountering antibiotics, inhibition zones, and experimental controls before formal teaching. The attached research proposal is background for design; it does not establish that this application or its rubric improves learning. The activity follows the proposal's four inquiry phases and preserves evidence for the six Science Process Skills (SPS): observing, classifying, designing investigations, conducting practical work, inferring, and communicating.
 
-繁體中文為每次開啟的預設語言。學生可在右上角切換 English；問題、圖示及報告文字跟隨介面語言，學生自由答案保持原文。教師 Excel 始終使用繁體中文。下列英文術語只是待研究者選擇的中文括號支援候選，暫不加入英文介面。
+繁體中文為每次開啟的預設語言。學生可在右上角切換 English；問題、圖示及報告文字跟隨介面語言，學生自由答案保持原文。教師 Excel 始終使用繁體中文。英文介面及紙本已採用本聊天批准的中文括號支援及排除清單，以 `english-glossary.js` 為現行來源；下方候選表保留作歷史設計記錄。
 
 ## First pilot lesson: 45–55 minutes
 
@@ -51,7 +51,7 @@ Manual scores remain blank/pending until a teacher enters a score; an entered ze
 
 This rubric is an initial researcher's draft. Before longitudinal comparisons across VL1–VL4, review item coverage, comparable demands and weighting, partial-credit rules, measurement tolerance, and inter-rater agreement. The application does not replace the proposal's separate pre/post SPS assessment or conceptual knowledge test. Outcome superiority and instrument validity require research evidence rather than software verification.
 
-## English glossary candidates / 待確認英文詞彙
+## Historical glossary candidates / 歷史詞彙候選
 
 | English term | 繁體中文意思 |
 | --- | --- |
@@ -83,7 +83,7 @@ This rubric is an initial researcher's draft. Before longitudinal comparisons ac
 | in vitro | 體外 |
 | methicillin-resistant Staphylococcus aureus (MRSA) | 耐甲氧西林金黃葡萄球菌 |
 
-The full English interface can be used before this candidate list is approved. Earlier VL2 transpiration glossary approvals do not automatically apply to VL4.
+The current VL4-specific approvals are implemented in `english-glossary.js`; this historical candidate list does not override them. See `paperwork/README.md` for the shared paper support.
 
 ## Supplied source references and access record
 

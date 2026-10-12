@@ -1,3 +1,5 @@
+import {createPaperworkPanel} from './paperwork/client.js';
+import {VARIABLE_OPTIONS,ASSUMPTION_OPTIONS,PREDICTION_OPTIONS,REPEAT_OPTIONS,EQUIPMENT_ART} from './inquiry-content.js';
 import {MC_QUESTIONS,EFFECTIVE_OPTIONS,ANALYSIS_FIELDS} from './analysis.js';
 import {language,t,setLanguage,translate} from './i18n.js';
 import {createExperimentBench} from './experiment-bench.js';
@@ -15,40 +17,27 @@ function field(id,key,{options,type='textarea',optional=false,min,max,placeholde
   const input=options?`<select ${attrs}>${option('','choose')}${options.map(([v,k])=>option(v,k)).join('')}</select>`:type==='textarea'?`<textarea ${attrs} rows="3" maxlength="2000"></textarea>`:`<input ${attrs} type="${type}" ${min!==undefined?`min="${min}"`:''} ${max!==undefined?`max="${max}"`:''} ${type==='number'?'step="1"':''}>`;
   return `<label class="field">${span(key)}${input}</label>`;
 }
-const variables=[['disc','vDisc'],['sample','vSample'],['medium','vMedium'],['zone','vZone'],['strain','vStrain'],['distribution','vDistribution'],['preparation','vPreparation']];
+const variables=VARIABLE_OPTIONS;
 const multi=(name,options)=>`<div class="chip-grid">${options.map(([v,k])=>`<label class="choice"><input type="checkbox" data-multi="${name}" value="${v}">${span(k)}</label>`).join('')}</div>`;
 $('#orientationFields').innerHTML=field('observation','observation',{placeholder:'observationPH'});
-$('#hypothesisFields').innerHTML=`<label class="hypothesis-sentence">${span('predictionPrefix')} <select id="prediction" data-field="prediction" data-scope="answer" required data-i18n-aria="prediction">${option('','choose')}${[['X','predictionX'],['Y','predictionY'],['Z','predictionZ'],['X_Y','predictionXY'],['X_Z','predictionXZ'],['Y_Z','predictionYZ'],['all','predictionAll'],['none','predictionNone']].map(([v,k])=>option(v,k)).join('')}</select> ${span('predictionSuffix')}</label><label class="hypothesis-sentence">${span('largestPrefix')} <select id="largestPrediction" data-field="largestPrediction" data-scope="answer" required data-i18n-aria="largestPrediction">${option('','choose')}${['X','Y','Z'].map(v=>`<option value="${v}">${v}</option>`).join('')}${option('na','notApplicable')}</select> <span id="largestSuffix">${span('largestSuffix')}</span><span id="largestNASuffix" hidden>${span('largestNASuffix')}</span></label>`+field('reason','hypothesisReason',{placeholder:'reasonPH'});
+$('#hypothesisFields').innerHTML=`<label class="hypothesis-sentence">${span('predictionPrefix')} <select id="prediction" data-field="prediction" data-scope="answer" required data-i18n-aria="prediction">${option('','choose')}${PREDICTION_OPTIONS.map(([v,k])=>option(v,k)).join('')}</select> ${span('predictionSuffix')}</label><label class="hypothesis-sentence">${span('largestPrefix')} <select id="largestPrediction" data-field="largestPrediction" data-scope="answer" required data-i18n-aria="largestPrediction">${option('','choose')}${['X','Y','Z'].map(v=>`<option value="${v}">${v}</option>`).join('')}${option('na','notApplicable')}</select> <span id="largestSuffix">${span('largestSuffix')}</span><span id="largestNASuffix" hidden>${span('largestNASuffix')}</span></label>`+field('reason','hypothesisReason',{placeholder:'reasonPH'});
 function refreshLargestPrediction(){const na=$('#largestPrediction').value==='na';$('#largestSuffix').hidden=na;$('#largestNASuffix').hidden=!na;}
 $('#largestPrediction').addEventListener('change',refreshLargestPrediction);
 $('#reason').rows=2;$('#reason').maxLength=600;
 $('#variableFields').innerHTML=[['iv','iv','ivHint'],['dv','dv','dvHint'],['cv','cv','cvHint']].map(([group,title,hint])=>`<section id="${group}" class="variable-group"><h4>${span(title)} <span>（${span(hint)}）</span></h4><div class="variable-options">${variables.map(([value,key])=>`<button type="button" data-group="${group}" data-variable="${value}" aria-pressed="false">${span(key)}</button>`).join('')}</div></section>`).join('');
-$('#assumptionFields').innerHTML=multi('assumptions',[['distribution','assumptionDistribution'],['sterile','assumptionSterile'],['sameConditions','assumptionSame'],['death','assumptionDeath']]).replace('class="chip-grid"','class="choice-stack"').replaceAll('class="choice"','class="check-option"');
+$('#assumptionFields').innerHTML=multi('assumptions',ASSUMPTION_OPTIONS).replace('class="chip-grid"','class="choice-stack"').replaceAll('class="choice"','class="check-option"');
 $('#controlFields').innerHTML=field('controlPlan','controlPlan').replace('<textarea',`<span class="question-hint control-purpose-hint" data-i18n="controlPurposeHint"></span><span class="question-hint" data-i18n="controlHint"></span><textarea`);
 $('#controlPlan').maxLength=1000;
 $('#designFields').innerHTML=field('designDescription','designDescription',{optional:true,placeholder:'designDescriptionPH'});
 $('#designDescription').rows=2;$('#designDescription').maxLength=1000;
-$('#replicateFields').innerHTML=field('plannedReplicates','plannedReplicates',{options:Array.from({length:20},(_,i)=>[String(i+1),String(i+1)]),placeholder:null})+field('plannedReplicateReason','plannedReplicateReason',{placeholder:null});
+$('#replicateFields').innerHTML=field('plannedReplicates','plannedReplicates',{options:REPEAT_OPTIONS,placeholder:null})+field('plannedReplicateReason','plannedReplicateReason',{placeholder:null});
 const mcQuestion=question=>`<fieldset class="analysis-question" id="${question.id}"><legend><span class="question-number">${question.number}</span> ${span(question.key)}</legend><div class="mc-options">${question.options.map(([value,key],i)=>`<label class="mc-option"><input type="radio" name="${question.id}" data-field="${question.id}" data-scope="answer" value="${value}" required><span class="mc-letter">${String.fromCharCode(65+i)}</span>${span(key)}</label>`).join('')}</div></fieldset>`;
 const rankSelect=(id,index)=>`<select id="${id}" data-field="${id}" data-scope="answer" required data-i18n-aria="${id}">${option('','choose')}${SAMPLES.map(sample=>sample==='C'?option(sample,'blank'):`<option value="${sample}">${sample}</option>`).join('')}${index>1?option('na','notApplicable'):''}</select>`;
 const conclusionMarkup=`<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span('resultConclusion')}</legend><div class="conclusion-sentence">${span('conclusionContext')}<select id="effectiveSamples" data-field="effectiveSamples" data-scope="answer" required data-i18n-aria="effectiveSamples">${option('','choose')}${EFFECTIVE_OPTIONS.map(([value,key])=>option(value,key)).join('')}</select>${span('conclusionEffective')}</div><p>${span('conclusionRanking')}</p><div class="conclusion-ranking">${[0,1,2,3].map((index)=>`${index?'<span aria-hidden="true">＞</span>':''}${rankSelect('rank'+(index+1),index)}`).join('')}</div><p class="question-hint">${span('conclusionSelectHint')}</p></fieldset>`;
 $('#analysisFields').innerHTML=MC_QUESTIONS.slice(0,2).map(mcQuestion).join('')+conclusionMarkup+MC_QUESTIONS.slice(2).map(mcQuestion).join('');
 $('#reflectionFields').innerHTML=field('reflection','reflectionQuestion');
 $('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${span(`meanLabel${s}`)}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" data-i18n-aria="meanLabel${s}"></label>`).join('');
-const equipmentArt=[
- ['equipmentPlate',3,'<path d="M14 40v20c0 11 16 20 36 20s36-9 36-20V40" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M20 44v12c0 8 14 15 30 15s30-7 30-15V44" fill="#ddd0a6"/><ellipse cx="50" cy="40" rx="36" ry="20" fill="#f5f9f3" stroke="#7faaa0" stroke-width="3"/><ellipse cx="50" cy="42" rx="30" ry="15" fill="#eadfbc" stroke="#c0ceb7" stroke-width="1.5"/><path d="M17 56c0 10 15 18 33 18s33-8 33-18M23 43c0 7 12 12 27 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>','equipmentPlateNote'],
- ['equipmentMarker',1,'<g transform="rotate(28 50 50)"><rect x="42" y="13" width="16" height="69" rx="5" fill="#24594e"/><path d="M42 82h16l-8 12z" fill="#15333b"/><rect x="42" y="10" width="16" height="15" rx="3" fill="#a5c4bc"/></g>'],
- ['equipmentDropper',1,'<path d="M40 16q10-12 20 0v19H40z" fill="#27796e"/><path d="M44 35h12v38l-6 15-6-15z" fill="#e0efef" stroke="#7faaa0" stroke-width="2"/><path d="M50 91q-7 8 0 8q7 0 0-8" fill="#6ea89d"/>'],
- ['equipmentBacteria',1,'<path d="M35 22h30v12l8 50H27l8-50z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M31 59h38l4 25H27z" fill="#adc7ad"/><path d="M32 19h36" stroke="#087b78" stroke-width="7"/>'],
- ['equipmentSpreader',1,'<g transform="rotate(30 50 50)"><image href="assets/lab-spreader-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
- ['equipmentTweezers',4,'<g transform="rotate(212 50 50)"><image href="assets/lab-forceps-cartoon.png" x="30" y="2" width="40" height="96"/></g>'],
- ['equipmentAlcohol',1,'<path d="M24 16h53l-5 7v60H28V16" fill="#f4f8f3" stroke="#7faaa0" stroke-width="3"/><path d="M30 53h40v28H30Z" fill="#adc7ad"/><path d="M35 24v47M63 32h7M63 45h7M63 65h7" fill="none" stroke="#7faaa0" stroke-width="2"/>'],
- ['equipmentLamp',1,'<path d="M49 8c-13 17-13 25 1 29 12-5 13-15-1-29Z" fill="#e7b36b"/><path d="M46 35h8v14h-8Z" fill="#24594e"/><path d="M33 48h34l12 31c3 9-11 14-29 14S17 88 21 79Z" fill="#e4eee5" stroke="#7faaa0" stroke-width="3"/><path d="M27 72h46l4 12H23Z" fill="#adc7ad"/>'],
- ['equipmentDiscs',3,'<g fill="#fff" stroke="#7faaa0">'+[[28,30,'X'],[70,30,'Y'],[28,72,'Z'],[70,72,'C']].map(([x,y,label])=>`<circle cx="${x}" cy="${y}" r="17"/><text x="${x}" y="${y+4}" text-anchor="middle" fill="#15333b" stroke="none" font-size="14">${label}</text>`).join('')+'</g>','equipmentDiscsNote'],
- ['equipmentIncubator',1,'<rect x="16" y="14" width="68" height="74" rx="5" fill="#e5ede8" stroke="#7faaa0" stroke-width="3"/><rect x="24" y="24" width="46" height="52" rx="2" fill="#c9dcd4"/><path d="M29 43h35M29 62h35" stroke="#7faaa0"/><path d="M77 43v19" stroke="#087b78" stroke-width="4"/>'],
- ['equipmentRuler',1,'<rect x="9" y="35" width="82" height="29" rx="3" fill="#f6e8ba" stroke="#c8b582"/>'+Array.from({length:16},(_,i)=>`<path d="M${12+i*5} 35v${i%5===0?14:7}" stroke="#927d4a"/>`).join('')]
-];
-if($('#equipmentBank'))$('#equipmentBank').innerHTML=equipmentArt.map(([key,count,art,note])=>`<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} ×${count}${note?`<small>${span(note)}</small>`:''}</figcaption></figure>`).join('');
+if($('#equipmentBank'))$('#equipmentBank').innerHTML=EQUIPMENT_ART.map(([key,count,art,note])=>`<figure class="equipment"><svg viewBox="0 0 100 100" role="img" data-i18n-aria="${key}">${art}</svg><figcaption>${span(key)} ×${count}${note?`<small>${span(note)}</small>`:''}</figcaption></figure>`).join('');
 $('#historyFigure').innerHTML=historyFigureMarkup();
 // Older cached HTML has these paragraphs without their newer IDs.
 const historyCaption=$('#historyCaption')||$('[data-i18n="historyCaption"]')||$('#historyFigure + .caption');
@@ -58,6 +47,7 @@ if(colonyMeaning)colonyMeaning.hidden=historyCaptionKey==='historyCaption';
 translate();
 let state=null,plateIndex=0,tool=null,drawTool='pencil',gesture=null,drawing=false,drawn=false,animation=null,saveTimer=null,generation=0;
 let teacherProfile=null,teacherPassword='',cloudRecords=null,selectedRecord=null,showCoverage=true,zoom=false,ruler={x:60,y:350},lastTime=performance.now(),cloudState={key:'unconfigured'};
+const paperwork=createPaperworkPanel({host:$('#teacherDialog'),isAuthorised:()=>isTeacher(teacherProfile)&&$('#teacherDialog').open,getLanguage:()=>language});
 const damaged=new Set();
 function readRecords(){try{const rows=JSON.parse(localStorage.getItem(KEYS.records)||'[]');if(!Array.isArray(rows))throw Error();return rows;}catch{damaged.add(KEYS.records);$('#localStatus').textContent=t('storageError');return [];}}
 function studentRecords(){return readRecords().map(canonicalRecord).filter(Boolean);}
@@ -89,7 +79,7 @@ $$('[data-variable]').forEach(button=>button.onclick=()=>{
 function stopActivity(){bench.cancel();bench.reset();generation++;if(animation)cancelAnimationFrame(animation);animation=null;clearTimeout(saveTimer);gesture=null;drawing=false;tool=null;plateIndex=0;ruler={x:60,y:350};showCoverage=true;zoom=false;drawn=false;$('#setupCanvas').getContext('2d').clearRect(0,0,1000,400);}
 function clearForms(){for(const el of $$('main input, main textarea, main select')){if(el.type==='checkbox'||el.type==='radio')el.checked=el.id==='showCoverage';else if(el.type!=='file')el.value=el.id==='rulerSample'?'X':'';el.disabled=false;}$$('main button').forEach(b=>b.disabled=false);$$('[data-variable]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});refreshLargestPrediction();$('#designStatus').textContent='';$('#measurementStatus').textContent='';$('#learningSection').hidden=true;$('#submitActions').hidden=false;$('#submitDialog').open&&$('#submitDialog').close();}
 function begin(profile,demo=false){save();stopActivity();clearForms();state=freshRecord(profile,demo);lastTime=performance.now();$('#main').hidden=false;$('#studentName').textContent=profile.name;$('#demoBanner').hidden=!demo;$('#teacherBack').hidden=!demo;$('#loginDialog').open&&$('#loginDialog').close();$('#teacherDialog').open&&$('#teacherDialog').close();showPhase(1);layoutHistoryLabels();save();}
-function showLogin(){save();stopActivity();state=null;teacherPassword='';selectedRecord=null;cloudRecords=null;teacherProfile=null;$('#teacherPassword').value='';$('#teacherDialog').open&&$('#teacherDialog').close();$('#main').hidden=true;$('#studentName').textContent='';$('#teacherBack').hidden=true;$('#loginForm').reset();if(!$('#loginDialog').open)$('#loginDialog').showModal();}
+function showLogin(){paperwork.close();save();stopActivity();state=null;teacherPassword='';selectedRecord=null;cloudRecords=null;teacherProfile=null;$('#teacherPassword').value='';$('#teacherDialog').open&&$('#teacherDialog').close();$('#main').hidden=true;$('#studentName').textContent='';$('#teacherBack').hidden=true;$('#loginForm').reset();if(!$('#loginDialog').open)$('#loginDialog').showModal();}
 function showPhase(number){if(!state||number>state.unlocked)return;if(number!==3)bench.cancel();settleTime();state.phase=number;$$('.phase').forEach(el=>el.hidden=el.id!==`phase-${number}`);$$('[data-phase]').forEach(b=>{const n=Number(b.dataset.phase);b.disabled=n>state.unlocked;b.classList.toggle('active',n===number);b.classList.toggle('done',n<number);if(n===number)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});if(number===3)renderBench();if(number===4){renderSummary();}save();$('#phase-'+number+' h2').focus({preventScroll:true});}
 $$('[data-phase]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.phase)));
 $$('[data-back]').forEach(b=>b.onclick=()=>showPhase(Number(b.dataset.back)));
@@ -116,7 +106,7 @@ $('#setupPhoto').onchange=async e=>{const file=e.target.files[0],id=state?.id,g=
 $('#saveDesign').onclick=()=>{if(!state||state.submittedAt)return;const description=$('#designDescription').value.trim();if(!drawn&&!description){guide('designRequired','#designDescription');return;}state.design={image:drawn?canvas.toDataURL('image/png'):'',description,saved:true};log('design_confirmed');save();$('#designStatus').textContent=t('designSaved');};
 $('#loginForm').onsubmit=e=>{e.preventDefault();if(!e.target.reportValidity())return;const profile={name:$('#profileName').value.trim(),className:$('#profileClass').value.trim(),email:$('#profileEmail').value.trim().toLowerCase()};if(!profile.name||!profile.className)return;if(isTeacher(profile)){teacherProfile=profile;$('#loginDialog').close();openTeacher();}else begin(profile);};
 $('#accountButton').onclick=showLogin;$('#newInquiry').onclick=showLogin;
-function relabel(){translate();cloudStatus(cloudState);if(state){if(state.phase===3){renderBench(false);}if(state.phase===4){renderSummary();}if(state.submittedAt)renderLearning();}if($('#teacherDialog').open){renderTeacherRows();if(selectedRecord)$('#teacherReport').innerHTML=renderReport(selectedRecord,language);}$('#rotateLeft').setAttribute('aria-label',`${t('rotate')} ↶`);$('#rotateRight').setAttribute('aria-label',`${t('rotate')} ↷`);$('#rulerLeft').setAttribute('aria-label',`${t('rulerMove')} ←`);$('#rulerRight').setAttribute('aria-label',`${t('rulerMove')} →`);}
+function relabel(){paperwork.refresh();translate();cloudStatus(cloudState);if(state){if(state.phase===3){renderBench(false);}if(state.phase===4){renderSummary();}if(state.submittedAt)renderLearning();}if($('#teacherDialog').open){renderTeacherRows();if(selectedRecord)$('#teacherReport').innerHTML=renderReport(selectedRecord,language);}$('#rotateLeft').setAttribute('aria-label',`${t('rotate')} ↶`);$('#rotateRight').setAttribute('aria-label',`${t('rotate')} ↷`);$('#rulerLeft').setAttribute('aria-label',`${t('rulerMove')} ←`);$('#rulerRight').setAttribute('aria-label',`${t('rulerMove')} →`);}
 $$('[data-language]').forEach(b=>b.onclick=()=>{setLanguage(language==='zh'?'en':'zh');relabel();});
 $('#retryCloud').onclick=()=>cloud.flush().catch(()=>toast('cloudError'));
 
@@ -189,11 +179,11 @@ $('#saveReflection').onclick=()=>{if(!state?.submittedAt||state.reflectionSubmit
 $('#downloadPDF').onclick=()=>{if(state?.reflectionSubmittedAt)openPrintReport(clone(state),language);};
 function openTeacher(){
  if(!teacherProfile)return;
- if(state?.demo){stopActivity();state=null;$('#main').hidden=true;}$('#teacherBack').hidden=true;
+ if(state?.demo){stopActivity();state=null;$('#main').hidden=true;}$('#teacherBack').hidden=true;paperwork.refresh();
  $('#dashboardStatus').textContent=t(CLOUD_ENDPOINT?'teacherIntro':'cloudUnconfigured');renderTeacherRows();if(!$('#teacherDialog').open)$('#teacherDialog').showModal();
 }
 $('#teacherBack').onclick=openTeacher;$('#closeTeacher').onclick=showLogin;
-$('#teacherDemo').onclick=()=>begin(teacherProfile,true);
+$('#teacherDemo').onclick=()=>{paperwork.close();begin(teacherProfile,true);};
 async function readClass(){
  const g=generation;
  const entered=$('#teacherPassword').value;$('#teacherPassword').value='';if(entered)teacherPassword=entered;
