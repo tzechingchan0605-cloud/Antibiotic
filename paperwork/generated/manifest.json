@@ -1,8 +1,9 @@
 {
   "module": "VL4",
-  "materialVersion": 1,
-  "contentVersion": "22ddc4c4967f",
-  "sourceDigest": "7960ae45c8f7b1c31de6d3907f739ab24795b789fbb46ede50a50142190a4b91",
+  "materialVersion": 2,
+  "taskVersion": "VL4-WS-concept-first-2",
+  "contentVersion": "e608cf069b6e",
+  "sourceDigest": "70314a50dbd2f2bd96031c5b0f286263dd663d79020a9d587def21cb6d380ea8",
   "inputs": {
     "analysis.js": "fad28dddf69dbad21abfce48bbb0df04e13447770c9bb3eede815fff8c38f331",
     "app.js": "8594dbc51c6b82829a7612198a10b0589e24b14460bf419dcfae97330c0ce4cd",
@@ -16,100 +17,96 @@
     "experiment-model.js": "8c4dd463357cd3df37baeb18c2d76b92da29762be0e3b35d56d4322c00ac9b76",
     "history-figure.js": "cdbad4b89912dff37470805681e60669a41d6c2e006dd6091838d8383c428a1d",
     "i18n.js": "4ae0eca2c9bb169f677ab240f5b7374ec80424cb9d57ecfaf532adb1e4475d83",
-    "index.html": "714f9a1f9398a0557a99a2a1a291c5bcca4a9ddc141abfc54aebc23c25098a90",
+    "index.html": "338d8935e91ff0f7d32b918a23b8d819f4dd034e3b484d8531a24d1e3aa1f24e",
     "inquiry-content.js": "6a31db1182be02b54b39bd091742bbfdd53da686fcb3c628774444bbf6f25696",
     "model.js": "0b034b04e93542357a7ad1f0f443fb9d290fa7dc27d22be59b05977097f97fdf",
     "package-lock.json": "466c839cb0ca6e92d4c90a0b3384b67adcd54259f0a453a839c0e2a0095bc1cf",
     "package.json": "ed280cd391a5ed63cdfe8fefc3c017ace53a84d2956546bd7c04eb3ce80700d4",
-    "paperwork/build.mjs": "2b71dcba151f12b740b71e9b7ec385d8f7a236339611092e48d57ccb89e58b2a",
-    "paperwork/client.js": "34f7797ff7f6068e8e0e5f3dc26d1c98bc610b410aa5eac58bfad79c30794d19",
+    "paperwork/alignment.js": "f46de557ee6001f24120e777518a36ac553dbe38776ee97024d97d867508d4ef",
+    "paperwork/build.mjs": "22bcb813ed43f41dc34ee8e5775cc52ae7a5ed1f2f81c2eb9b528e072d9aaba2",
+    "paperwork/client.js": "fd1c5f0608f5598e0ea25be4e6a273374d674f8b6fc8934081ba49b63cd5fc82",
     "paperwork/fonts/LICENSE.txt": "849f4ea9c214fa4ac3593b770c699f387534b11ce671264c1b10d85bdcb5997b",
-    "paperwork/print.css": "3cc96133151a38ffa8dff7f5a6dd24f213c6a207e426cf7a6fa1015280654a67",
-    "paperwork/render.js": "4d90d8128ac76ed759975c526f6a74c50a76d3d47231387a114966a79a560f8f",
-    "paperwork/source.js": "93dc5ec59d1c93902b2b3072cc56052783f0b30981446141a9b6be943309dc8c",
-    "paperwork/texts.js": "7a6831164d5b15b4515f8cb71aad707e17f06be2dc7173c495109e15c9dcb85c",
+    "paperwork/print.css": "a4c4f265f1542327ccecf37cd5010885e237dd8be844604ddf2fd097cc43b108",
+    "paperwork/render.js": "ed298c0c7de19a6ba5bd1ea238866cd84647385065825c48dc8afe59b7056d21",
+    "paperwork/source.js": "f4a8353c949ef6521da93367d99de422033fef531ab3fe9432ee625591a2ee3f",
+    "paperwork/texts.js": "85a7cd3b35d492d4085d0a823dee0edc66b0c6a8b06e7ef227f989b568058455",
     "reports.js": "210759c0f1ee4ce800d51f1f2c5514f1bed8bf70809e61e9d18bb016a0b7eee5",
     "rubric.js": "706c0d3b5ced2059865faa87cb68e250253f53565e7d9d81380495fd3ed960dc",
     "styles.css": "3c367049227ea170633fb07227a44e802e185e127cea08e36e751e6a22983ce0"
   },
   "font": {
     "path": "paperwork/fonts/NotoSansHK-paper.otf",
-    "sha256": "1a167c59cffe4a6d296cdf8ffb0ca3df46b7b1c41db7197f8bc3cfd1eed871eb"
+    "sha256": "b3fe3da4360f51871256cc2f4ed1ce2bf0bb08155db3095fdce59cfd016f1835"
   },
   "sourcePath": "paperwork/generated/source.json",
   "languages": {
     "zh": {
       "files": {
         "A": {
-          "path": "paperwork/generated/VL4_A_zh_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_A_ZH_v1_22ddc4c4967f.pdf",
-          "pages": 3,
-          "bytes": 1295192,
-          "sha256": "58d549db81409bf99bc097803ecc5f5361d13787f914ad54c223587e05ad6f58",
+          "path": "paperwork/generated/VL4_A_zh_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_A_ZH_v2_e608cf069b6e.pdf",
+          "pages": 2,
+          "bytes": 315565,
+          "sha256": "b2eb5820a0dca7f6f24bcbe7b7987547789255c08470288b063501ce7ae73cc9",
           "layout": [
             {
               "part": "A",
               "page": 1,
               "identity": 1,
-              "writingLines": [
-                2
-              ],
-              "fields": [
-                "observation"
-              ],
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "A",
               "page": 2,
               "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "prediction",
-                "largestPrediction",
-                "reason",
-                "iv",
-                "dv",
-                "cv",
-                "plannedReplicates",
-                "plannedReplicateReason"
-              ],
-              "overflow": []
-            },
-            {
-              "part": "A",
-              "page": 3,
-              "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "assumptions",
-                "designDescription"
+              "writingLines": [],
+              "fields": [],
+              "rulers": [
+                {
+                  "id": "worked-S",
+                  "sample": "S",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 16,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
               ],
               "overflow": []
             }
           ]
         },
         "B": {
-          "path": "paperwork/generated/VL4_B_zh_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_B_ZH_v1_22ddc4c4967f.pdf",
-          "pages": 2,
-          "bytes": 350202,
-          "sha256": "43b6c64735acacf06040f4c9d60095ba7bae48b811cdf4a65855a617299f7886",
+          "path": "paperwork/generated/VL4_B_zh_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_B_ZH_v2_e608cf069b6e.pdf",
+          "pages": 7,
+          "bytes": 1051294,
+          "sha256": "856892b6eeb1b90b7880dfa535f5e2f1b6603c95368cf567884a6a39b67c45f9",
           "layout": [
             {
               "part": "B",
               "page": 1,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
                 2
               ],
-              "fields": [],
+              "fields": [
+                "observation",
+                "hypothesisEval",
+                "hypothesisApply",
+                "controlPrompt",
+                "iv",
+                "dv",
+                "cv",
+                "assumptions"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -117,9 +114,195 @@
               "page": 2,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
+                2,
+                2,
                 2
               ],
               "fields": [
+                "designLabels",
+                "spacing",
+                "designFault",
+                "repeatCompare",
+                "repeatFeasible",
+                "procedureError"
+              ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 3,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-1-X",
+                "reading-plate-1-Y",
+                "reading-plate-1-Z",
+                "reading-plate-1-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-1-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.1,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 4,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-2-X",
+                "reading-plate-2-Y",
+                "reading-plate-2-Z",
+                "reading-plate-2-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-2-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.3,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 5,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-3-X",
+                "reading-plate-3-Y",
+                "reading-plate-3-Z",
+                "reading-plate-3-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-3-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.5,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 6,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "copy-plate-1-X",
+                "copy-plate-1-Y",
+                "copy-plate-1-Z",
+                "copy-plate-1-C",
+                "copy-plate-2-X",
+                "copy-plate-2-Y",
+                "copy-plate-2-Z",
+                "copy-plate-2-C",
+                "copy-plate-3-X",
+                "copy-plate-3-Y",
+                "copy-plate-3-Z",
+                "copy-plate-3-C",
                 "mean-X",
                 "mean-Y",
                 "mean-Z",
@@ -135,23 +318,40 @@
                 "repeatVariation",
                 "controlPurpose"
               ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [
+                2
+              ],
+              "fields": [
+                "reflectionPrompt"
+              ],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "C": {
-          "path": "paperwork/generated/VL4_C_zh_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_C_ZH_v1_22ddc4c4967f.pdf",
+          "path": "paperwork/generated/VL4_C_zh_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_C_ZH_v2_e608cf069b6e.pdf",
           "pages": 2,
-          "bytes": 177998,
-          "sha256": "47351ba402361403fd677e789531429c25e1cfd945c05754ac701b9cde7e246a",
+          "bytes": 194285,
+          "sha256": "7bed12800f562e15ce6f42eeb6feec69f93491d8fefc7d85d7685320dc892968",
           "layout": [
             {
               "part": "C",
               "page": 1,
               "identity": 1,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -163,18 +363,20 @@
                 2
               ],
               "fields": [
-                "reflection"
+                "guidedCorrection",
+                "conceptCorrection"
               ],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "D": {
-          "path": "paperwork/generated/VL4_D_zh_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_D_ZH_v1_22ddc4c4967f.pdf",
-          "pages": 6,
-          "bytes": 290502,
-          "sha256": "3d548ef44eac164f9f78283aa72d421191dfe73139ad0e0800a234c34217965d",
+          "path": "paperwork/generated/VL4_D_zh_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_D_ZH_v2_e608cf069b6e.pdf",
+          "pages": 8,
+          "bytes": 313213,
+          "sha256": "299be3f1e3a820f4b5a476bdf37d86e5cd6e8441bc7698a17b47fe5a9d637630",
           "layout": [
             {
               "part": "D",
@@ -182,22 +384,33 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 2,
               "identity": 0,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 3,
               "identity": 0,
-              "writingLines": [],
-              "fields": [],
+              "writingLines": [
+                2,
+                2
+              ],
+              "fields": [
+                "guidedCorrection",
+                "conceptCorrection"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -206,6 +419,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -214,6 +428,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -222,60 +437,61 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 8,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "all": {
-          "path": "paperwork/generated/VL4_all_zh_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_CompleteTeacherPack_ZH_v1_22ddc4c4967f.pdf",
-          "pages": 13,
-          "bytes": 1609825,
-          "sha256": "17763f3f0bf57d771e1301f065c48fcb0faace72d86a08b0273a5a4ad52ace23",
+          "path": "paperwork/generated/VL4_all_zh_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_CompleteTeacherPack_ZH_v2_e608cf069b6e.pdf",
+          "pages": 19,
+          "bytes": 1283328,
+          "sha256": "2a31eef127780c2897504e7ec58eb401719cb185767c0e42d20ce5c58ee97f82",
           "layout": [
             {
               "part": "A",
               "page": 1,
               "identity": 1,
-              "writingLines": [
-                2
-              ],
-              "fields": [
-                "observation"
-              ],
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "A",
               "page": 2,
               "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "prediction",
-                "largestPrediction",
-                "reason",
-                "iv",
-                "dv",
-                "cv",
-                "plannedReplicates",
-                "plannedReplicateReason"
-              ],
-              "overflow": []
-            },
-            {
-              "part": "A",
-              "page": 3,
-              "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "assumptions",
-                "designDescription"
+              "writingLines": [],
+              "fields": [],
+              "rulers": [
+                {
+                  "id": "worked-S",
+                  "sample": "S",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 16,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
               ],
               "overflow": []
             },
@@ -284,9 +500,22 @@
               "page": 1,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
                 2
               ],
-              "fields": [],
+              "fields": [
+                "observation",
+                "hypothesisEval",
+                "hypothesisApply",
+                "controlPrompt",
+                "iv",
+                "dv",
+                "cv",
+                "assumptions"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -294,9 +523,195 @@
               "page": 2,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
+                2,
+                2,
                 2
               ],
               "fields": [
+                "designLabels",
+                "spacing",
+                "designFault",
+                "repeatCompare",
+                "repeatFeasible",
+                "procedureError"
+              ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 3,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-1-X",
+                "reading-plate-1-Y",
+                "reading-plate-1-Z",
+                "reading-plate-1-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-1-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.1,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 4,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-2-X",
+                "reading-plate-2-Y",
+                "reading-plate-2-Z",
+                "reading-plate-2-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-2-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.3,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 5,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-3-X",
+                "reading-plate-3-Y",
+                "reading-plate-3-Z",
+                "reading-plate-3-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-3-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.5,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 6,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "copy-plate-1-X",
+                "copy-plate-1-Y",
+                "copy-plate-1-Z",
+                "copy-plate-1-C",
+                "copy-plate-2-X",
+                "copy-plate-2-Y",
+                "copy-plate-2-Z",
+                "copy-plate-2-C",
+                "copy-plate-3-X",
+                "copy-plate-3-Y",
+                "copy-plate-3-Z",
+                "copy-plate-3-C",
                 "mean-X",
                 "mean-Y",
                 "mean-Z",
@@ -312,14 +727,31 @@
                 "repeatVariation",
                 "controlPurpose"
               ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [
+                2
+              ],
+              "fields": [
+                "reflectionPrompt"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "C",
               "page": 1,
               "identity": 1,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -331,8 +763,10 @@
                 2
               ],
               "fields": [
-                "reflection"
+                "guidedCorrection",
+                "conceptCorrection"
               ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -341,22 +775,33 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 2,
               "identity": 0,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 3,
               "identity": 0,
-              "writingLines": [],
-              "fields": [],
+              "writingLines": [
+                2,
+                2
+              ],
+              "fields": [
+                "guidedCorrection",
+                "conceptCorrection"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -365,6 +810,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -373,6 +819,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -381,6 +828,25 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 8,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             }
           ]
@@ -389,94 +855,89 @@
       "ranges": {
         "A": [
           1,
-          3
+          2
         ],
         "B": [
-          4,
-          5
+          3,
+          9
         ],
         "C": [
-          6,
-          7
+          10,
+          11
         ],
         "D": [
-          8,
-          13
+          12,
+          19
         ]
       }
     },
     "en": {
       "files": {
         "A": {
-          "path": "paperwork/generated/VL4_A_en_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_A_EN_v1_22ddc4c4967f.pdf",
-          "pages": 3,
-          "bytes": 1136231,
-          "sha256": "9d9cb1d002ea0d70f3c514094ce8bdc799de88f08cc231ec245e960af5dbb9af",
+          "path": "paperwork/generated/VL4_A_en_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_A_EN_v2_e608cf069b6e.pdf",
+          "pages": 2,
+          "bytes": 163122,
+          "sha256": "b2da060c7263bfb432480e5638190918b934eb4a1cc6a0a97deb2289a2df62cc",
           "layout": [
             {
               "part": "A",
               "page": 1,
               "identity": 1,
-              "writingLines": [
-                2
-              ],
-              "fields": [
-                "observation"
-              ],
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "A",
               "page": 2,
               "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "prediction",
-                "largestPrediction",
-                "reason",
-                "iv",
-                "dv",
-                "cv",
-                "plannedReplicates",
-                "plannedReplicateReason"
-              ],
-              "overflow": []
-            },
-            {
-              "part": "A",
-              "page": 3,
-              "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "assumptions",
-                "designDescription"
+              "writingLines": [],
+              "fields": [],
+              "rulers": [
+                {
+                  "id": "worked-S",
+                  "sample": "S",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 16,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
               ],
               "overflow": []
             }
           ]
         },
         "B": {
-          "path": "paperwork/generated/VL4_B_en_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_B_EN_v1_22ddc4c4967f.pdf",
-          "pages": 2,
-          "bytes": 202782,
-          "sha256": "0f2ffe61aa54449a0452d9bb97f9acdeef5327ed2621e3f3b21e6c9183ed360b",
+          "path": "paperwork/generated/VL4_B_en_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_B_EN_v2_e608cf069b6e.pdf",
+          "pages": 7,
+          "bytes": 869386,
+          "sha256": "4ad74d13e6ac661dada24059891e281702587b1b48f1a4f4cc9a9e7d8791df5a",
           "layout": [
             {
               "part": "B",
               "page": 1,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
                 2
               ],
-              "fields": [],
+              "fields": [
+                "observation",
+                "hypothesisEval",
+                "hypothesisApply",
+                "controlPrompt",
+                "iv",
+                "dv",
+                "cv",
+                "assumptions"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -484,9 +945,195 @@
               "page": 2,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
+                2,
+                2,
                 2
               ],
               "fields": [
+                "designLabels",
+                "spacing",
+                "designFault",
+                "repeatCompare",
+                "repeatFeasible",
+                "procedureError"
+              ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 3,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-1-X",
+                "reading-plate-1-Y",
+                "reading-plate-1-Z",
+                "reading-plate-1-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-1-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.1,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 4,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-2-X",
+                "reading-plate-2-Y",
+                "reading-plate-2-Z",
+                "reading-plate-2-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-2-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.3,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 5,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-3-X",
+                "reading-plate-3-Y",
+                "reading-plate-3-Z",
+                "reading-plate-3-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-3-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.5,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 6,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "copy-plate-1-X",
+                "copy-plate-1-Y",
+                "copy-plate-1-Z",
+                "copy-plate-1-C",
+                "copy-plate-2-X",
+                "copy-plate-2-Y",
+                "copy-plate-2-Z",
+                "copy-plate-2-C",
+                "copy-plate-3-X",
+                "copy-plate-3-Y",
+                "copy-plate-3-Z",
+                "copy-plate-3-C",
                 "mean-X",
                 "mean-Y",
                 "mean-Z",
@@ -502,23 +1149,40 @@
                 "repeatVariation",
                 "controlPurpose"
               ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [
+                2
+              ],
+              "fields": [
+                "reflectionPrompt"
+              ],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "C": {
-          "path": "paperwork/generated/VL4_C_en_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_C_EN_v1_22ddc4c4967f.pdf",
+          "path": "paperwork/generated/VL4_C_en_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_C_EN_v2_e608cf069b6e.pdf",
           "pages": 2,
-          "bytes": 84709,
-          "sha256": "10e014fb805000441fedaf9902ceff7d1ef94cf748ea571ab8f3d2ac8c031035",
+          "bytes": 61027,
+          "sha256": "04d5ecbecbe50a335071f98ecdbece41c905057f2147019b3d06ffae4683141c",
           "layout": [
             {
               "part": "C",
               "page": 1,
               "identity": 1,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -530,18 +1194,20 @@
                 2
               ],
               "fields": [
-                "reflection"
+                "guidedCorrection",
+                "conceptCorrection"
               ],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "D": {
-          "path": "paperwork/generated/VL4_D_en_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_D_EN_v1_22ddc4c4967f.pdf",
-          "pages": 6,
-          "bytes": 88128,
-          "sha256": "df8ae9cd9184f7976ab6e59a17337fc8fee241e7022861be1d9e3d1037d66e30",
+          "path": "paperwork/generated/VL4_D_en_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_D_EN_v2_e608cf069b6e.pdf",
+          "pages": 8,
+          "bytes": 108609,
+          "sha256": "106feb7f32e0524f17afc4e6cde00943526fadcb09ed0b11326dee44d144e9fe",
           "layout": [
             {
               "part": "D",
@@ -549,22 +1215,33 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 2,
               "identity": 0,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 3,
               "identity": 0,
-              "writingLines": [],
-              "fields": [],
+              "writingLines": [
+                2,
+                2
+              ],
+              "fields": [
+                "guidedCorrection",
+                "conceptCorrection"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -573,6 +1250,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -581,6 +1259,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -589,60 +1268,61 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 8,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             }
           ]
         },
         "all": {
-          "path": "paperwork/generated/VL4_all_en_v1_22ddc4c4967f.pdf",
-          "name": "VL4_ControlGroup_CompleteTeacherPack_EN_v1_22ddc4c4967f.pdf",
-          "pages": 13,
-          "bytes": 1364135,
-          "sha256": "926c76643ccefc26ae732a9cd9d2b39a41980699948673899237e9c0d392ff10",
+          "path": "paperwork/generated/VL4_all_en_v2_e608cf069b6e.pdf",
+          "name": "VL4_SelfStudy_CompleteTeacherPack_EN_v2_e608cf069b6e.pdf",
+          "pages": 19,
+          "bytes": 1045747,
+          "sha256": "a6c141668e49bbe7e3bd6bcb4c65569f81da418da00390e726f89cbedd0d2e59",
           "layout": [
             {
               "part": "A",
               "page": 1,
               "identity": 1,
-              "writingLines": [
-                2
-              ],
-              "fields": [
-                "observation"
-              ],
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "A",
               "page": 2,
               "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "prediction",
-                "largestPrediction",
-                "reason",
-                "iv",
-                "dv",
-                "cv",
-                "plannedReplicates",
-                "plannedReplicateReason"
-              ],
-              "overflow": []
-            },
-            {
-              "part": "A",
-              "page": 3,
-              "identity": 0,
-              "writingLines": [
-                2,
-                2
-              ],
-              "fields": [
-                "assumptions",
-                "designDescription"
+              "writingLines": [],
+              "fields": [],
+              "rulers": [
+                {
+                  "id": "worked-S",
+                  "sample": "S",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 16,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
               ],
               "overflow": []
             },
@@ -651,9 +1331,22 @@
               "page": 1,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
                 2
               ],
-              "fields": [],
+              "fields": [
+                "observation",
+                "hypothesisEval",
+                "hypothesisApply",
+                "controlPrompt",
+                "iv",
+                "dv",
+                "cv",
+                "assumptions"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -661,9 +1354,195 @@
               "page": 2,
               "identity": 0,
               "writingLines": [
+                2,
+                2,
+                2,
+                2,
+                2,
                 2
               ],
               "fields": [
+                "designLabels",
+                "spacing",
+                "designFault",
+                "repeatCompare",
+                "repeatFeasible",
+                "procedureError"
+              ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 3,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-1-X",
+                "reading-plate-1-Y",
+                "reading-plate-1-Z",
+                "reading-plate-1-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-1-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.1,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-1-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 4,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-2-X",
+                "reading-plate-2-Y",
+                "reading-plate-2-Z",
+                "reading-plate-2-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-2-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.3,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-2-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 5,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "reading-plate-3-X",
+                "reading-plate-3-Y",
+                "reading-plate-3-Z",
+                "reading-plate-3-C"
+              ],
+              "rulers": [
+                {
+                  "id": "plate-3-X",
+                  "sample": "X",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 18.7,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Y",
+                  "sample": "Y",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-Z",
+                  "sample": "Z",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 26.5,
+                  "discDiameter": 6,
+                  "textClipped": false
+                },
+                {
+                  "id": "plate-3-C",
+                  "sample": "C",
+                  "ticks": 41,
+                  "scale": 9,
+                  "zoneDiameter": 0,
+                  "discDiameter": 6,
+                  "textClipped": false
+                }
+              ],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 6,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [
+                "copy-plate-1-X",
+                "copy-plate-1-Y",
+                "copy-plate-1-Z",
+                "copy-plate-1-C",
+                "copy-plate-2-X",
+                "copy-plate-2-Y",
+                "copy-plate-2-Z",
+                "copy-plate-2-C",
+                "copy-plate-3-X",
+                "copy-plate-3-Y",
+                "copy-plate-3-Z",
+                "copy-plate-3-C",
                 "mean-X",
                 "mean-Y",
                 "mean-Z",
@@ -679,14 +1558,31 @@
                 "repeatVariation",
                 "controlPurpose"
               ],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "B",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [
+                2
+              ],
+              "fields": [
+                "reflectionPrompt"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "C",
               "page": 1,
               "identity": 1,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -698,8 +1594,10 @@
                 2
               ],
               "fields": [
-                "reflection"
+                "guidedCorrection",
+                "conceptCorrection"
               ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -708,22 +1606,33 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 2,
               "identity": 0,
-              "writingLines": [],
+              "writingLines": [
+                2
+              ],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
               "part": "D",
               "page": 3,
               "identity": 0,
-              "writingLines": [],
-              "fields": [],
+              "writingLines": [
+                2,
+                2
+              ],
+              "fields": [
+                "guidedCorrection",
+                "conceptCorrection"
+              ],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -732,6 +1641,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -740,6 +1650,7 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
               "overflow": []
             },
             {
@@ -748,6 +1659,25 @@
               "identity": 0,
               "writingLines": [],
               "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 7,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
+              "overflow": []
+            },
+            {
+              "part": "D",
+              "page": 8,
+              "identity": 0,
+              "writingLines": [],
+              "fields": [],
+              "rulers": [],
               "overflow": []
             }
           ]
@@ -756,19 +1686,19 @@
       "ranges": {
         "A": [
           1,
-          3
+          2
         ],
         "B": [
-          4,
-          5
+          3,
+          9
         ],
         "C": [
-          6,
-          7
+          10,
+          11
         ],
         "D": [
-          8,
-          13
+          12,
+          19
         ]
       }
     }

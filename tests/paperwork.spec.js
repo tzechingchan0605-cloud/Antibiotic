@@ -19,7 +19,7 @@ test('teacher downloads all ten real PDFs and previews without altering records,
  await page.addInitScript(({r,RECORDS,CURRENT})=>{localStorage.setItem(RECORDS,JSON.stringify([r]));localStorage.setItem(CURRENT,JSON.stringify(r));},{r,RECORDS,CURRENT});
  await page.goto('/');await teacher(page);await page.locator('[data-view]').click();await page.evaluate(()=>{const ctx=document.querySelector('#setupCanvas').getContext('2d');ctx.fillStyle='#15333b';ctx.fillRect(40,30,90,20);});
  const before=await snapshot(page);const firstExcelPromise=page.waitForEvent('download');await page.locator('#exportLocal').click();const firstExcel=await excelContent(await firstExcelPromise);
- await page.locator('#openPaperwork').click();await expect(page.locator('[data-paper-download=A]')).toBeEnabled();
+ await page.locator('#openPaperwork').click();await expect(page.locator('[data-paper-download=A]')).toBeEnabled();await expect(page.locator('#paperContentVersion')).toContainText('v2');await expect(page.locator('#paperStatus')).toContainText('15–20');
  for(const lang of ['zh','en']){
    await page.locator('#paperLanguage').selectOption(lang);
    await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant-HK');
@@ -29,14 +29,14 @@ test('teacher downloads all ten real PDFs and previews without altering records,
      expect(await snapshot(page)).toEqual(before);
    }
  }
- await page.locator('[data-paper-preview=C]').click();await expect(page.locator('#paperPreview')).toBeVisible();expect(await page.locator('#paperPreview').getAttribute('src')).toMatch(/^blob:/);
+ for(const part of ['A','B','C','D','all']){await page.locator(`[data-paper-preview=${part}]`).click();await expect(page.locator('#paperPreview')).toBeVisible();expect(await page.locator('#paperPreview').getAttribute('src')).toMatch(/^blob:/);}
  const lastExcelPromise=page.waitForEvent('download');await page.locator('#exportLocal').click();expect(await excelContent(await lastExcelPromise)).toEqual(firstExcel);
  expect(await snapshot(page)).toEqual(before);expect(errors).toEqual([]);
 });
 
 test('mobile material language is independent, and student mode has no material entrance',async({page})=>{
  await page.setViewportSize({width:360,height:800});await page.goto('/');await teacher(page);await page.locator('#openPaperwork').click();await expect(page.locator('[data-paper-download=A]')).toBeEnabled();
- await page.locator('#paperLanguage').selectOption('en');await expect(page.locator('#paperNameA')).toContainText('Context');await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant-HK');
+ await page.locator('#paperLanguage').selectOption('en');await expect(page.locator('#paperNameA')).toContainText('Concepts');await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant-HK');
  expect(await page.locator('#paperPanel').evaluate(el=>el.scrollWidth<=el.clientWidth+1)).toBe(true);
  const dl=page.waitForEvent('download');await page.locator('[data-paper-download=B]').click();expect((await dl).suggestedFilename()).toBe(manifest.languages.en.files.B.name);
  await page.locator('#closeTeacher').click();await page.locator('#profileName').fill('Student');await page.locator('#profileClass').fill('X1');await page.locator('#profileEmail').fill('student@school.edu.hk');await page.locator('#loginForm button[type=submit]').click();await expect(page.locator('#main')).toBeVisible();

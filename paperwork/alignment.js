@@ -1,0 +1,41 @@
+// Paper-only adaptations. Original prompts are read from the current VL dictionary.
+export const ALIGNMENT=[
+ {keys:['observation'],target:'observation',treatment:['保留／靜態讀圖','Retain / static image'],goal:['觀察與推論區分','Distinguish observation from inference'],reason:['保留歷史證據，不需操作 VL。','Retain historical evidence without VL operation.']},
+ {keys:['prediction'],target:'hypothesisEval',treatment:['改寫：假說評估','Rewrite: evaluate a hypothesis'],goal:['可測試假說','Testable hypothesis'],reason:['概念已先教，不假裝原始預測。','Concepts are taught first; do not pretend to make an initial prediction.']},
+ {keys:['largestPrediction'],target:'hypothesisApply',treatment:['改寫：另一情境','Rewrite: another context'],goal:['遷移可測試假說','Transfer testable hypotheses'],reason:['用未知 U 與另一種細菌，不重猜已看過的結果。','Use unknown U and another bacterium instead of re-predicting seen outcomes.']},
+ {keys:['hypothesisReason'],target:'hypothesisEval',treatment:['融入假說評估及應用','Integrate with evaluation/application'],goal:['以可觀察證據說明','Explain using observable evidence'],reason:['評估可檢驗性，保留理由練習。','Evaluate testability and retain reasoning practice.']},
+ {keys:['iv'],target:'iv',treatment:['保留，前置示例','Retain, with an earlier example'],goal:['辨認改變因素','Identify the changed factor'],reason:['用不同紙碟大小示例，再分類 X/Y/Z 的樣本因素。','Use a disc-size example, then classify sample contents in X/Y/Z.']},
+ {keys:['dv'],target:'dv',treatment:['保留','Retain'],goal:['辨認觀察／量度結果','Identify observed/measured outcomes'],reason:['仍需分類有無圈及總直徑。','Still classify zone presence and total diameter.']},
+ {keys:['cv'],target:'cv',treatment:['保留','Retain'],goal:['公平比較條件','Fair-comparison conditions'],reason:['保留同一選項及控制目標。','Retain the same options and control goals.']},
+ {keys:['assumptionQuestion'],target:'assumptions',treatment:['保留並提供定義','Retain with definition'],goal:['辨認實驗前提','Identify assumptions'],reason:['不把「無可見生長」誤作全部死亡。','Do not assume absence of visible growth proves complete killing.']},
+ {keys:['controlPlan'],target:'controlPrompt',treatment:['改寫：解釋已給對照','Rewrite: explain the given control'],goal:['對照比較功能','Control comparison function'],reason:['C 是同載體無抗生素；不一律稱水對照。','C has the same carrier without antibiotic, not necessarily water.']},
+ {keys:['design','designDescription'],target:'designPrompt',treatment:['改寫：補標示、間距及錯誤辨識','Rewrite: labels, spacing and error identification'],goal:['安排與公平比較','Setup and fair comparison'],reason:['不要求自主操作設計，保留位置與污染判斷。','Retain position and contamination judgments without autonomous operation.']},
+ {keys:['plannedReplicates'],target:'repeatCompare',treatment:['改寫：比較給定方案','Rewrite: compare given plans'],goal:['獨立重複與變異','Independent repeats and variation'],reason:['分辨新平板與重複量同一圈。','Distinguish new plates from remeasuring one zone.']},
+ {keys:['plannedReplicateReason'],target:'repeatFeasible',treatment:['改寫：可行性理由','Rewrite: feasibility reasoning'],goal:['證據品質與可行性','Evidence quality and feasibility'],reason:['三次是課堂安排，不是唯一標準。','Three is a classroom arrangement, not a universal standard.']},
+ {keys:['phase3','procedureHeading'],target:'procedurePrompt',treatment:['靜態化：前後圖、排序及錯誤辨識','Static: before/after images, ordering and errors'],goal:['程序理解及證據判讀','Procedure understanding and evidence interpretation'],reason:['不等同已展示消毒、塗布或培養能力。','Not evidence of sterilisation, spreading or incubation performance.']},
+ {keys:['visible','measureDefinition'],target:'measureDefinition',treatment:['保留：十二組靜態量尺','Retain: twelve static rulers'],goal:['量度及分類','Measure and classify'],reason:['沿用同 seeds／模型；B 不預印答案。','Use the same seeds/model; do not preprint B answers.']},
+ {keys:['mean'],target:'mean',treatment:['保留，前置非研究資料示例','Retain with a separate worked example'],goal:['按自己的資料計算','Calculate from own readings'],reason:['四組三次平均；不重複扣量度誤差。','Four three-reading means; avoid repeated measurement penalties.']},
+ {keys:['zoneMeaning'],target:'zoneMeaning',treatment:['同題','Same item'],goal:['清晰區的證據含義','Meaning of clear-zone evidence'],reason:['教後仍需獨立辨識，不能推論全部死亡。','Independent interpretation after teaching; no complete-killing inference.']},
+ {keys:['zoneDiameterMeaning'],target:'zoneDiameterMeaning',treatment:['同題','Same item'],goal:['直徑含義及界限','Diameter meaning and limits'],reason:['不以圈大小推導患者治療。','Do not infer patient treatment from zone size.']},
+ {keys:['resultConclusion','conclusionRanking'],target:'ranking',treatment:['等值改寫：平均直徑排序','Equivalent rewrite: mean-diameter order'],goal:['根據資料作有限結論','Draw bounded conclusions from data'],reason:['保留樣本選擇，不把藥物直徑叫臨床效能。','Retain sample selection without calling diameter clinical effectiveness.']},
+ {keys:['repeatPurpose'],target:'repeatPurpose',treatment:['同題','Same item'],goal:['重複的作用','Purpose of repeats'],reason:['保留偶然誤差、可重複性與可靠性。','Retain random error, reproducibility and reliability.']},
+ {keys:['repeatVariation'],target:'repeatVariation',treatment:['同題','Same item'],goal:['評估變異與方法','Evaluate variation and methods'],reason:['先查原因，不刪不合假說資料。','Check causes; do not delete data for disagreement.']},
+ {keys:['controlPurpose'],target:'controlPurpose',treatment:['同題','Same item'],goal:['對照作用','Role of the control'],reason:['保留抗生素之外因素的比較基準。','Retain comparison against non-antibiotic factors.']},
+ {keys:['reflectionQuestion'],target:'reflectionPrompt',treatment:['等值簡寫：概念應用','Equivalent concise concept application'],goal:['數據、存活、繁殖與遺傳','Data, survival, reproduction and inheritance'],reason:['原題已是抗性選擇應用；無須改成修訂原假說。','The original already applies resistance selection; no hypothesis-revision task is needed.']},
+ {keys:['submitted','learning'],target:'checkingGate',treatment:['重排：概念在 A，核對修正在 C','Reorder: concepts in A, checking in C'],goal:['自學及評估修正','Self-study and correction'],reason:['比較組先教後練；保留首次答案，不按完成率給能力分。','Teach before practice; preserve first answers and do not score completion as ability.']}
+];
+export const WS_RUBRIC=[
+ ['observation',2,['描述真菌附近可見生長較少／有清晰區，分開觀察及原因推測。各1分。','Describe reduced visible growth/clear area near the fungus and separate observation from causal inference; 1 each.']],
+ ['hypothesisEval',1,['選乙並指出比較條件及可觀察結果；合理理由1分。','Select B and identify comparison conditions and an observable outcome; 1 for a reasoned judgment.']],
+ ['hypothesisApply',2,['另一細菌及 U／載體的可測試比較1分；有無區／直徑結果1分。不按猜中結果評。','Testable comparison of U/carrier for another bacterium: 1; observable zone/diameter outcome: 1. Do not score outcome guessing.']],
+ ['variables',4,['獨立1、因1；五項控制各0.4，誤選不適當控制項時該欄0。','Independent: 1; dependent: 1; five correct controls: 0.4 each, with 0 for inappropriate extra control choices.']],
+ ['assumptions',1,['只選分布平均、無額外污染及共同條件；漏選／錯選0。','Only even distribution, no added contamination and shared conditions; missing/additional choices: 0.']],
+ ['controlPrompt',2,['同載體而無抗生素1分；排除載體等因素並維持相同條件1分。不是必然水對照。','Same carrier without antibiotic: 1; compare carrier/other factors under shared conditions: 1. Not necessarily a water control.']],
+ ['design',4,['四種標示各一次1；解釋間距／邊緣1；辨識甲污染、乙不公平各1。不評美術或操作能力。','Four labels once each: 1; spacing/edge reasoning: 1; identify A contamination and B unfair comparison: 1 each. No art or operation score.']],
+ ['repeat',3,['方案乙及新平板獨立性1；變異比較1；三次非唯一並提出資源／時間可行性1。','Plan B and independent new plates: 1; variation comparison: 1; three is not universal, with time/resource feasibility: 1.']],
+ ['procedure',4,['順序 R→U→Q→T→S→P 得2（每正確位置1/3）；甲塗布問題、乙不是獨立結果各1。只評程序理解。','R→U→Q→T→S→P: 2 (1/3 per correct position); A spreading problem and B non-independent result: 1 each. Procedure understanding only.']],
+ ['measurements',4,['十二項各1/3：有區須分類正確且總直徑在模型±1mm；無區須選無且恰為0。','Twelve readings at 1/3 each: correct zone classification plus ±1 mm; absence requires No and exactly 0.']],
+ ['means',2,['四組各0.5，按學生自己的三次讀數計算，容差±0.1mm。','Four means at 0.5 each, based on the student’s own three readings, within ±0.1 mm.']],
+ ['analysis',6,['五題MC各1，答案B、C、C、D、C；第3題樣本0.5、按自身平均值排序0.5。','Five MCs at 1 each: B, C, C, D, C. Item 3: samples 0.5, ranking by own means 0.5.']],
+ ['reflectionPrompt',3,['有效樣本與讀數1；抗性者較易存活繁殖及遺傳1；比例可能上升／效果可能下降1。不要求完全佔據群體。','Effective sample/readings: 1; differential survival, reproduction and inheritance: 1; proportion may rise/effectiveness may decline: 1. No complete takeover required.']]
+];

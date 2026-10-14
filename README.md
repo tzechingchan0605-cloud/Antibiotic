@@ -74,20 +74,22 @@ See [validation record](docs/validation.md) for the executed results and practic
 
 The five supplied scientific/history references could not be accessed through the current proxy (HTTP 403). Their exact URLs and access results are documented in [design rationale](docs/design-rationale.md); this delivery does not claim live verification of those pages.
 
-## 教師下載紙本對照組工作紙 PDF
+## 教師下載紙本自學工作紙 PDF（WS v2）
 
-教師儀表板可獨立選擇繁中／英文，預覽並下載 A、B、C、D 或完整教師套裝。與現行 VL4 共用題目、提示、選項、模型資料、學習重點與 rubric，不恢復已刪題目；只在 A／C 首頁印姓名欄，文字作答及修訂區各兩線。
+比較組沒有課前講授、不操作 VL，使用「解說→示例→有提示練習→獨立應用→核對修正」。A 從開始閱讀；B 有12把靜態毫米量尺，先自行量度，不預印答案；完成 B 後才派 C，D 只供教師。保留相同生物內容及 SPS 目標、固定 seeds 1001/1002/1003 與六類分析；假說、設計及重複方案題按自學方式等值改寫。學生 VL、數據模型、紀錄、雲端及 Excel 不改。
+
+兩組均15–20分鐘，建議共同20分鐘。WS作業檢核38分不與VL23分直接比較；研究成效另用共同測驗。附23項逐題配對表。
 
 <!-- paper-summary:start -->
-材料 v1 · 內容版本 22ddc4c4967f
+紙本自學 v2 · VL4-WS-concept-first-2 · 內容版本 e608cf069b6e
 
 | 分冊 | 頁數 | 完整套裝頁碼 | 繁中 PDF | 英文 PDF |
 | --- | ---: | --- | --- | --- |
-| A | 3 | 1–3 | [下載](paperwork/generated/VL4_A_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_A_en_v1_22ddc4c4967f.pdf) |
-| B | 2 | 4–5 | [下載](paperwork/generated/VL4_B_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_B_en_v1_22ddc4c4967f.pdf) |
-| C | 2 | 6–7 | [下載](paperwork/generated/VL4_C_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_C_en_v1_22ddc4c4967f.pdf) |
-| D | 6 | 8–13 | [下載](paperwork/generated/VL4_D_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_D_en_v1_22ddc4c4967f.pdf) |
-| 完整教師套裝 | 13 | 1–13 | [下載](paperwork/generated/VL4_all_zh_v1_22ddc4c4967f.pdf) | [Download](paperwork/generated/VL4_all_en_v1_22ddc4c4967f.pdf) |
+| A | 2 | 1–2 | [下載](paperwork/generated/VL4_A_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_A_en_v2_e608cf069b6e.pdf) |
+| B | 7 | 3–9 | [下載](paperwork/generated/VL4_B_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_B_en_v2_e608cf069b6e.pdf) |
+| C | 2 | 10–11 | [下載](paperwork/generated/VL4_C_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_C_en_v2_e608cf069b6e.pdf) |
+| D | 8 | 12–19 | [下載](paperwork/generated/VL4_D_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_D_en_v2_e608cf069b6e.pdf) |
+| 完整教師套裝 | 19 | 1–19 | [下載](paperwork/generated/VL4_all_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_all_en_v2_e608cf069b6e.pdf) |
 <!-- paper-summary:end -->
 
-先保存 A 原始設計再派 B，固定原探究答案後才派 C；D 及完整套裝只供教師。學生不顯示入口。下載不建立探究、修改紀錄或 Excel，無須新增 Apps Script。`npm run build` 在來源更新時自動重建材料；`npm run paper:check` 拒絕過期材料。產生、字型、測試及研究核對事項見 [紙本材料說明](paperwork/README.md)。
+教師登入可選兩語、預覽及直接下載各 PDF／完整套裝。`npm run build` 自動重建更新內容；下載拒絕舊版本及校驗不符材料。完整使用、時點、評分、量尺及驗證見 [紙本自學說明](paperwork/README.md)。

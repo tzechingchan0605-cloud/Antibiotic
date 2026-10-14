@@ -1,3 +1,9 @@
+# Current 15–20 minute research condition (14 October 2026)
+
+Both IBL+VL and paper groups use the same 15–20 minute window, preferably 20 minutes. The WS comparison group now uses concept-first self-study without a pre-lesson lecture or VL operation; see [WS v2](../paperwork/README.md). Learner VL code and behavior are unchanged. The earlier 45–55 minute pilot table below is historical planning and does not set the current research timing.
+
+---
+
 # VL4 design rationale / 教學設計說明
 
 VL4 is a scaffolded inquiry activity for Hong Kong S4 students encountering antibiotics, inhibition zones, and experimental controls before formal teaching. The attached research proposal is background for design; it does not establish that this application or its rubric improves learning. The activity follows the proposal's four inquiry phases and preserves evidence for the six Science Process Skills (SPS): observing, classifying, designing investigations, conducting practical work, inferring, and communicating.

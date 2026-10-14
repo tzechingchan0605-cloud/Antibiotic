@@ -1,4 +1,24 @@
-# Current paper-material validation (12 October 2026, Hong Kong)
+# Current concept-first paper validation (14 October 2026)
+
+WS v2 (`VL4-WS-concept-first-2`, content `e608cf069b6e`) implements self-study without a pre-lesson lecture or VL operation. Concepts and separate worked examples precede guided practice and independent application; C is provided only after B. Both groups use the researcher's 15–20 minute window, with a suggested common 20-minute allocation. Software tests do not establish student completion time.
+
+Both languages have A 2 pages, B 7, C 2, D 8, and a 19-page complete teacher pack. All ten actual PDFs (76 pages including complete packs) passed text, font/glyph, margins, pagination, two-line writing, A/C-first-page identity, staged answers, approved glossary and all 23 alignment rows. Every page was visually reviewed in bilingual contact sheets. Twelve independent static rulers per language retain the fixed seeds 1001/1002/1003 and original `generateResult`, with 41 ticks over 0–40 mm, a geometrically calibrated 6 mm disc, and no clipped ruler text. Actual grayscale evidence was checked for each plate. A/B contain the necessary images, not the independent numeric answers.
+
+Executed results:
+
+- `npm run build` and `npm run paper:check`: passed; all ten PDFs match the current source and checksums.
+- `python tests/paperwork_pdf.py`: all 76 actual PDF pages passed.
+- `npm test`: 64 passed, zero failures/skips.
+- Full `npx playwright test`: all 20 passed. Coverage includes ten bilingual PDF downloads/checksums, five previews, 360 px mobile materials, independent material language, absent student entrance, stale/corrupt rejection, and the existing student, teacher, experiment, startup and isolated cloud workflows.
+- Download/preview snapshots retained nonempty canvas drawings, original answers, local records/queue, events and timing; actual Excel ZIP entry contents were identical before and after. Production Google requests were blocked in these tests.
+- SHA-256 comparison against the pre-revision baseline confirmed all 14 learner, model, assessment, record, cloud, ruler and glossary source files were unchanged. No Apps Script was added or changed.
+- `git diff --check`: passed.
+
+WS task checking is 38 marks for this version's practice; it is not interchangeable with VL's 23-mark activity. Group outcomes require separate common assessments. Researcher checks remain: printed readability, actual 15–20 minute feasibility, common conceptual scope/qualifiers, clarification and feedback consistency, assessment validity and scorer agreement. See [paper instructions](../paperwork/README.md) and [research alignment](paper-research-alignment.md). Live deployment is checked separately after pushing the completed release.
+
+---
+
+# Historical paper-material validation (12 October 2026, Hong Kong)
 
 The teacher paper feature uses the current VL4 activity, not the older activity described below. Current materials: A 3 pages, B 2, C 2, D 6; complete teacher pack 13. Both languages have five real PDF files. All 52 pages across ten PDFs passed content, glyph/font resources, pagination, exact two-line writing areas, identity location, margins and glossary checks; actual pages and grey B renderings were visually reviewed. See [paper instructions](../paperwork/README.md) and [proposal alignment](paper-research-alignment.md).
 
