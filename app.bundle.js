@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "c0a88b09e0a32158d4c68ea0da29438f4d1d61bbd3082efb32538edb64e0b8ae";
+var PAPER_FINGERPRINT = "51defe392da7876ff576b0eb79bc042810ec6e5dfc9194e9dd8a09111ab63f4a";
 
 // english-glossary.js
 var entries = [
@@ -24752,9 +24752,9 @@ function learningDiagram(language2 = "zh") {
  <circle cx="115" cy="142" r="91" fill="#ddd9ae" stroke="#6e897b"/><circle cx="115" cy="142" r="54" fill="#f8faec" stroke="#b4bda3" stroke-dasharray="4 4"/>
  <g fill="#79815c">${[[60, 86], [173, 99], [46, 158], [169, 195], [91, 213], [175, 157], [104, 69], [75, 186]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g><circle cx="115" cy="142" r="12" fill="#fff" stroke="#5e7475"/>
  <g fill="none" stroke="#087b78" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
- <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path d="M221 72L128 136" fill="none" stroke="#698a87"/>
+ <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path d="M221 72L115 142" fill="none" stroke="#698a87"/>
  <text x="225" y="126">${t2("\u2461 \u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563", "2. Antibiotic diffuses")}</text>${language2 === "en" ? '<text x="246" y="146">through agar</text>' : ""}<path d="M221 151L159 142" fill="none" stroke="#698a87"/>
- <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path d="M221 213L152 174" fill="none" stroke="#698a87"/></g></svg>
+ <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path d="M221 213L136 168" fill="none" stroke="#698a87"/></g></svg>
  <p class="caption">${t2("\u793A\u610F\u5716\uFF0C\u975E\u6309\u6BD4\u4F8B\uFF1B\u4E0D\u80FD\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\u3002", "Schematic, not to scale; it does not prove complete killing.")}</p></figure>
  <figure class="learning-figure"><figcaption>${t2("B. \u7D30\u83CC\u7D50\u69CB\u8207\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "B. Structures and possible action sites")}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D30\u83CC\u7D50\u69CB\u8207\u6297\u751F\u7D20\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "Bacterial structures and possible antibiotic action sites")}">
@@ -25070,8 +25070,8 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 5;
-var PAPER_TASK_VERSION = "VL4-WS4-physical-ruler-5";
+var PAPER_VERSION = 6;
+var PAPER_TASK_VERSION = "VL4-WS4-notes-layout-6";
 var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
@@ -25093,10 +25093,13 @@ function getPaperSource(language2 = "zh") {
   return {
     module: "VL4",
     version: PAPER_VERSION,
+    worksheetPages: 6,
+    pageMap: { notes: 1, variables: 2, planning: 3, results: 4, conclusion: 5, reflection: 6 },
     taskVersion: PAPER_TASK_VERSION,
     language: language2,
     principle: { title: principle[1], svg: principle[2] },
     printScale: 1,
+    measurementHint: en ? "Use a ruler to measure the total diameter through the centre, including the disc. Record 0 mm if there is no clear zone outside the disc. Reading tolerance: \xB11 mm." : "\u8ACB\u7528\u76F4\u5C3A\u901A\u904E\u5713\u5FC3\u91CF\u5EA6\u7E3D\u76F4\u5F91\uFF08\u5305\u62EC\u7D19\u789F\uFF09\uFF1B\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340\u6642\u8A18\u9304\u70BA0 mm\u3002\u91CF\u5EA6\u5BB9\u5DEE\uFF1A\xB11 mm\u3002",
     text: Object.fromEntries(Object.keys(L).sort().map((k) => [k, t2(k)])),
     repeatPrompt: en ? "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?" : "\u6E2C\u8A66\u6A23\u672C\u5171\u67094\u7A2E\uFF1A\u6297\u751F\u7D20X\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\u70BA\u4EC0\u9EBC\uFF1F",
     rankingPrompt: en ? "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with \u201C/\u201D." : "\u4EE5\u672C\u6B21\u6E05\u6670\u5340\u7684\u5E73\u5747\u7E3D\u76F4\u5F91\u6BD4\u8F03\uFF0C\u5B83\u5011\u7684\u6291\u5236\u6548\u80FD\u70BA\uFF1A\u53EA\u6392\u5217\u6709\u53EF\u898B\u6E05\u6670\u5340\u7684\u6A23\u672C\u3002\u4EE5\u300C\uFF0F\u300D\u522A\u53BB\u4E0D\u9069\u7528\u4F4D\u7F6E\u3002",

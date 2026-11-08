@@ -74,9 +74,9 @@ See [validation record](docs/validation.md) for the executed results and practic
 
 The five supplied scientific/history references could not be accessed through the current proxy (HTTP 403). Their exact URLs and access results are documented in [design rationale](docs/design-rationale.md); this delivery does not claim live verification of those pages.
 
-## WS4 教師教材（v5）
+## WS4 教師教材（v6）
 
-完整學生PDF／Word、完整連答案PDF／Word、D教師指引PDF，中英文各五檔。按目前VL語言下載，三PDF可預覽；學生沒有教材入口。兩語學生及答案版均四頁，Word正文、選項、表格及作答區可編輯。12pt正文與選項、11pt提示、深灰1pt作答線、青綠標題、紅色概念及藍色答案。
+完整學生PDF／Word、完整連答案PDF／Word、D教師指引PDF，中英文各五檔。按目前VL語言下載，三PDF可預覽；學生沒有教材入口。兩語學生及答案版均六頁，Word正文、選項、表格及作答區可編輯。12pt正文與選項、11pt提示、深灰1pt作答線、青綠標題、紅色概念及藍色答案。
 
 現行analysisVersion2沒有棒形圖或含量延伸，不恢復。紙本只選取原有變量（完整三列剔選選項）、假設、對照、重複安排及理由、三板12項判讀／量度、均值、五MC、結論及原有證據反思。沒有舊WS額外假說評估、排序程序或延伸練習。第一次答案保存後才派完整答案版，安排見D。
 
@@ -85,15 +85,15 @@ VL仍先探究，提交後揭示學習重點／反思，反思提交才解鎖學
 新探究保留analysisVersion2，新增rubricVersion3及taskVersion VL4-multiselect-5，反思從2分改8，其餘21不變，總29分。舊23／32分保留當時規準與獨立評分表。R3六人工欄只接受整數，公式拒絕無效貼入；空白待評、0已評零分。紙本有作答機會的24分不能直接與VL29分換算。**舊下載Excel不會自動更新，須重新匯出**，先保存已評版本。
 
 <!-- paper-summary:start -->
-WS4 v5 · 23117c870d7e
+WS4 v6 · 820d33f6ad59
 
-| 教材 | 頁數 | 繁中 | English |
+| 教材 | 頁數（中／英） | 繁中 | English |
 | --- | ---: | --- | --- |
-| 完整學生 PDF | 4 | [下載](paperwork/generated/VL4_studentPDF_zh_v5_23117c870d7e.pdf) | [Download](paperwork/generated/VL4_studentPDF_en_v5_23117c870d7e.pdf) |
-| 完整學生 Word | 4 | [下載](paperwork/generated/VL4_studentWord_zh_v5_23117c870d7e.docx) | [Download](paperwork/generated/VL4_studentWord_en_v5_23117c870d7e.docx) |
-| 完整連答案 PDF | 4 | [下載](paperwork/generated/VL4_answersPDF_zh_v5_23117c870d7e.pdf) | [Download](paperwork/generated/VL4_answersPDF_en_v5_23117c870d7e.pdf) |
-| 完整連答案 Word | 4 | [下載](paperwork/generated/VL4_answersWord_zh_v5_23117c870d7e.docx) | [Download](paperwork/generated/VL4_answersWord_en_v5_23117c870d7e.docx) |
-| D 教師指引、配對及評分 | 4 | [下載](paperwork/generated/VL4_D_zh_v5_23117c870d7e.pdf) | [Download](paperwork/generated/VL4_D_en_v5_23117c870d7e.pdf) |
+| 完整學生 PDF | 6 | [下載](paperwork/generated/VL4_studentPDF_zh_v6_820d33f6ad59.pdf) | [Download](paperwork/generated/VL4_studentPDF_en_v6_820d33f6ad59.pdf) |
+| 完整學生 Word | 6 | [下載](paperwork/generated/VL4_studentWord_zh_v6_820d33f6ad59.docx) | [Download](paperwork/generated/VL4_studentWord_en_v6_820d33f6ad59.docx) |
+| 完整連答案 PDF | 6 | [下載](paperwork/generated/VL4_answersPDF_zh_v6_820d33f6ad59.pdf) | [Download](paperwork/generated/VL4_answersPDF_en_v6_820d33f6ad59.pdf) |
+| 完整連答案 Word | 6 | [下載](paperwork/generated/VL4_answersWord_zh_v6_820d33f6ad59.docx) | [Download](paperwork/generated/VL4_answersWord_en_v6_820d33f6ad59.docx) |
+| D 教師指引、配對及評分 | 6／5 | [下載](paperwork/generated/VL4_D_zh_v6_820d33f6ad59.pdf) | [Download](paperwork/generated/VL4_D_en_v6_820d33f6ad59.pdf) |
 <!-- paper-summary:end -->
 
 見[生成與部署](paperwork/README.md)、[教學大綱](SYLLABUS.md)、[評分與版本](docs/rubric.md)。教材預覽／下載不改學生答案、圖像、事件、計時、雲端佇列或Excel。不新增Apps Script。
