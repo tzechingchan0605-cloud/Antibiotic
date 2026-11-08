@@ -5,7 +5,7 @@ import {MC_QUESTIONS,EFFECTIVE_SAMPLE_OPTIONS} from '../analysis.js';
 import {generateResult,DEFAULT_POSITIONS,SAMPLES,DISC_MM,ACTUAL_REPLICATES} from '../model.js';
 import {referenceFor,learningDiagram} from '../reports.js';
 import {VARIABLE_REFERENCE,ASSUMPTION_REFERENCE,TOLERANCES,V3_RUBRIC_ROWS,REFLECTION_CRITERIA} from '../rubric.js';
-export const PAPER_VERSION=7,PAPER_TASK_VERSION='VL4-WS4-four-pages-7',PAPER_SEEDS=Object.freeze([1001,123456789,4294967]);
+export const PAPER_VERSION=8,PAPER_TASK_VERSION='VL4-WS4-balanced-spacing-8',PAPER_SEEDS=Object.freeze([1001,123456789,4294967]);
 export const translated=(key,lang)=>lang==='en'?glossEnglish(L[key]?.[1]??key):L[key]?.[0]??key;
 export function getPaperSource(language='zh'){
  if(!['zh','en'].includes(language))throw Error('Invalid language');

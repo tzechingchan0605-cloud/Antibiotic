@@ -1,4 +1,4 @@
-# WS4 v7：抗生素與細菌生長
+# WS4 v8：抗生素與細菌生長
 
 唯一教材來源是 `source.js`：讀取現行L、完整變量／假設選項、MC、模型、容差、參考函式與rubric。`worksheet.py`產生可編輯DOCX，LibreOffice從同一DOCX產生PDF；不是整頁圖片。十二項資料沿用seeds1001/123456789/4294967，清晰區及6mm紙碟按1:1實際印刷尺寸繪製，不附內置直尺；圖的結果不另造數據。學生版不預印待答讀數或均值。v4改用較分散的固定種子，直接取自同一generateResult，沒有改VL模型公式或既存結果。
 
@@ -16,18 +16,18 @@ npm test
 npm run paper:test
 ```
 
-需要Noto CJK、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v7及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
+需要Noto CJK、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v8及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
 
 <!-- paper-summary:start -->
-WS4 v7 · 1c29c907329d
+WS4 v8 · 8d30fc198995
 
 | 教材 | 頁數（中／英） | 繁中 | English |
 | --- | ---: | --- | --- |
-| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v7_1c29c907329d.pdf) | [Download](generated/VL4_studentPDF_en_v7_1c29c907329d.pdf) |
-| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v7_1c29c907329d.docx) | [Download](generated/VL4_studentWord_en_v7_1c29c907329d.docx) |
-| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v7_1c29c907329d.pdf) | [Download](generated/VL4_answersPDF_en_v7_1c29c907329d.pdf) |
-| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v7_1c29c907329d.docx) | [Download](generated/VL4_answersWord_en_v7_1c29c907329d.docx) |
-| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v7_1c29c907329d.pdf) | [Download](generated/VL4_D_en_v7_1c29c907329d.pdf) |
+| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v8_8d30fc198995.pdf) | [Download](generated/VL4_studentPDF_en_v8_8d30fc198995.pdf) |
+| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v8_8d30fc198995.docx) | [Download](generated/VL4_studentWord_en_v8_8d30fc198995.docx) |
+| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v8_8d30fc198995.pdf) | [Download](generated/VL4_answersPDF_en_v8_8d30fc198995.pdf) |
+| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v8_8d30fc198995.docx) | [Download](generated/VL4_answersWord_en_v8_8d30fc198995.docx) |
+| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v8_8d30fc198995.pdf) | [Download](generated/VL4_D_en_v8_8d30fc198995.pdf) |
 <!-- paper-summary:end -->
 
 學生／答案各四頁：課題需知與情境；變量、假設、對照與重複安排；量度、均值與兩道分析；結論、其餘分析及整合解釋。姓名只在首頁，同一行。所有題目、選項及提示來自現行VL；最後題只把學習重點改為課題需知。
@@ -44,3 +44,6 @@ v6按WS1實際Word格式改為正文／MC選項1.5倍行距、段後5pt；表內
 
 
 v7依最新四頁要求重新分頁，僅在需要位置改為正文／選項18pt行距、表格20pt；字體12pt不變。三個照片括號說明統一灰色#607D85。繁中無可見生長提醒為11pt單獨一行（第3行）；部分1回到首頁，WS刪除指定MRSA抗性補充句。其餘題目、選項、作答區、實際毫米比例及±1mm規則保留。兩語學生／答案均四頁；D依實際頁數列於清單。
+
+
+v8保留四頁及全部內容，按語言／頁面分配空白：繁中正文22–25pt、選項22–25pt、表格按頁20–28pt；英文只在第2、3頁略增間距，保留已接近頁底的第1、4頁設定。繁中答案文字22pt；題間距同步調整。量度圖不縮放，單行11pt括號提醒不變。

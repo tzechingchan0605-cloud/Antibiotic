@@ -26,13 +26,17 @@ def xml(tag,**attrs):
  return e
 class Sheet:
  def __init__(self,lang,answers=False,teacher=False):
-  self.lang=lang;self.pending=False;self.m=SRC[lang];self.answers=answers;self.teacher=teacher;self.d=Document();s=self.d.sections[0]
+  self.lang=lang;self.sheet_page=1;self.pending=False;self.m=SRC[lang];self.answers=answers;self.teacher=teacher;self.d=Document();s=self.d.sections[0]
   s.page_width=Cm(21);s.page_height=Cm(29.7);s.top_margin=Cm(1.0);s.bottom_margin=Cm(1.0);s.left_margin=Cm(1.3);s.right_margin=Cm(1.3);s.header_distance=Cm(.4);s.footer_distance=Cm(.4)
   st=self.d.styles['Normal'];st.font.name='Liberation Sans' if lang=='en' else FONT;st.font.size=Pt(12);st.element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),FONT);st.paragraph_format.line_spacing=1.5;st.paragraph_format.space_after=Pt(5)
   for name in ['Heading 1','Heading 2','Heading 3']:
    st=self.d.styles[name];st.font.name=FONT;st.font.size=Pt(16 if name=='Heading 1' else 13);st.font.color.rgb=RGBColor.from_string(TEAL);st.paragraph_format.space_before=Pt(2);st.paragraph_format.space_after=Pt(1)
   self.run(s.header.paragraphs[0],self.t('生物科｜抗生素與細菌生長','Biology | Antibiotics and bacterial growth')+self.t('｜參考答案' if answers else '',' | Reference answers' if answers else ''),11)
   p=s.footer.paragraphs[0];p.alignment=2;self.run(p,self.t(f'工作紙四 · v{self.m["version"]}｜',f'WS4 · v{self.m["version"]} | '),11);p._p.append(xml('w:fldSimple',**{'w:instr':'PAGE'}))
+ def spacing(self):
+  if self.teacher:return (18,2,20,18,0)
+  # Body leading, paragraph gap, table leading, choice leading/gap.
+  return ({'zh':[(23,4,20,18,0),(25,5,28,22,3),(22,4,26,25,2),(22,4,20,24,3)],'en':[(18,2,20,18,0),(19,3,23,19,1),(18,2,22,20,1),(18,2,20,18,0)]}[self.lang][self.sheet_page-1])
  def t(self,z,e):return e if self.lang=='en' else z
  def run(self,p,text,size=12,color=None,bold=False,concept=False):
   # Bracketed concepts are red in BOTH versions; choices are never concept-highlighted.
@@ -50,18 +54,20 @@ class Sheet:
  def p(self,text='',size=12,color=None,bold=False,parent=None):
   p=(parent or self.d).add_paragraph();
   if self.pending:p.paragraph_format.page_break_before=True;self.pending=False
-  self.run(p,text,size,color,bold);p.paragraph_format.line_spacing=Pt(size*1.5);p.paragraph_format.space_after=Pt(2);return p
+  self.run(p,text,size,color,bold);p.paragraph_format.line_spacing=Pt(self.spacing()[0]*size/12);p.paragraph_format.space_after=Pt(self.spacing()[1]);return p
  def h(self,text,level=2):
   p=self.d.add_paragraph('', 'Heading '+str(level));self.run(p,text,16 if level==1 else 13,TEAL,True);p.paragraph_format.line_spacing=Pt(24 if level==1 else 20)
+  if not self.teacher:
+   p.paragraph_format.space_before=Pt(6 if self.lang=='zh' else 4 if self.sheet_page==2 else 2);p.paragraph_format.space_after=Pt(3 if self.lang=='zh' else 2 if self.sheet_page==2 else 1)
   if self.pending:p.paragraph_format.page_break_before=True;self.pending=False
   return p
  def hint(self,text):
   p=self.p(text,11,'607D85');p.paragraph_format.line_spacing=Pt(16.5);return p
- def page(self):self.pending=True
+ def page(self):self.pending=True;self.sheet_page+=1
  def lines(self,answer,n=2):
   for i in range(n):
    p=self.d.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(26)
-   if self.answers and i==0:p.paragraph_format.line_spacing=Pt(18);self.run(p,self.t('參考答案：','Reference answer: ')+answer,12,BLUE,True)
+   if self.answers and i==0:p.paragraph_format.line_spacing=Pt(22 if not self.teacher and self.lang=='zh' else 18);self.run(p,self.t('參考答案：','Reference answer: ')+answer,12,BLUE,True)
    else:self.run(p,' ')
    borders=xml('w:pBdr');borders.append(xml('w:bottom',**{'w:val':'single','w:sz':'8','w:color':'333333','w:space':'1'}));borders.append(xml('w:between',**{'w:val':'single','w:sz':'8','w:color':'333333','w:space':'1'}));p._p.get_or_add_pPr().append(borders)
    # Multi-line reference takes its natural space; no extra blank lines beyond the same area.
@@ -75,7 +81,7 @@ class Sheet:
    if widths:
     for c,w in zip(cells,widths):c.width=Cm(w)
    for j,text in enumerate(row):
-    p=cells[j].paragraphs[0];p.paragraph_format.line_spacing=Pt(20);p.paragraph_format.space_after=Pt(1);self.run(p,text,size,BLUE if (i,j) in marks else TEAL if i==0 else None,(i,j) in marks or i==0)
+    p=cells[j].paragraphs[0];p.paragraph_format.line_spacing=Pt(self.spacing()[2]);p.paragraph_format.space_after=Pt(1);self.run(p,text,size,BLUE if (i,j) in marks else TEAL if i==0 else None,(i,j) in marks or i==0)
     b=xml('w:tcBorders')
     for edge in ['top','left','bottom','right']:b.append(xml('w:'+edge,**{'w:val':'single','w:sz':'4','w:color':'BED0D2'}))
     cells[j]._tc.get_or_add_tcPr().append(b)
@@ -86,7 +92,7 @@ class Sheet:
  def mc(self,q):
   self.h('2.'+str(q['number']+2)+'  '+q['text'],3)
   for i,o in enumerate(q['choices']):
-   correct=self.answers and o['id']==q['correct'];p=self.p('');p.paragraph_format.line_spacing=Pt(18);p.paragraph_format.space_after=Pt(0);p.paragraph_format.keep_with_next=i<3;self.run(p,('☑ ' if correct else '□ ')+chr(65+i)+'. '+o['text'],12,BLUE if correct else None,correct)
+   correct=self.answers and o['id']==q['correct'];p=self.p('');p.paragraph_format.line_spacing=Pt(self.spacing()[3]);p.paragraph_format.space_after=Pt(self.spacing()[4]);p.paragraph_format.keep_with_next=i<3;self.run(p,('☑ ' if correct else '□ ')+chr(65+i)+'. '+o['text'],12,BLUE if correct else None,correct)
  def save(self,name):self.d.save(WORK/(name+'.docx'))
 def svgdoc(content,w=PRINT_WIDTH,h=90):return f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}pt" height="{h}pt" viewBox="0 0 {w} {h}" font-family="Noto Sans CJK TC">{content}</svg>'
 def history(m):
@@ -166,10 +172,10 @@ def worksheet(lang,answers):
   cell._tc.get_or_add_tcPr().append(borders)
  for cell in table.rows[0].cells:cell.width=Cm(18.4/3)
  for col,field in enumerate(['iv','dv','cv']):
-  c=table.cell(0,col);p=c.paragraphs[0];p.paragraph_format.line_spacing=Pt(20);s.run(p,t(field)+'（'+t(field+'Hint')+'）',12,TEAL,True);c=table.cell(1,col);c.paragraphs[0].paragraph_format.line_spacing=Pt(1)
+  c=table.cell(0,col);p=c.paragraphs[0];p.paragraph_format.line_spacing=Pt(s.spacing()[2]);s.run(p,t(field)+'（'+t(field+'Hint')+'）',12,TEAL,True);c=table.cell(1,col);c.paragraphs[0].paragraph_format.line_spacing=Pt(1)
   ref=m['variableReference'][field];ref=[ref] if isinstance(ref,str) else ref
   for o in m['variables']:
-   p=c.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(20);correct=answers and o['id'] in ref;s.run(p,('☑ ' if correct else '□ ')+o['text'],12,BLUE if correct else None,correct)
+   p=c.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(s.spacing()[2]);correct=answers and o['id'] in ref;s.run(p,('☑ ' if correct else '□ ')+o['text'],12,BLUE if correct else None,correct)
  s.h('1.2  '+t('assumptionQuestion'));s.hint(t('assumptionDefinitionHint'));s.p(t('assumptionNote'))
  for o in m['assumptions']:
   correct=answers and o['id'] in m['assumptionReference'];s.p(('☑ ' if correct else '□ ')+o['text'],color=BLUE if correct else None,bold=correct)

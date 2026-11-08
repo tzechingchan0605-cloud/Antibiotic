@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "1c57bb21d3d6b0945f5b8ce54e8ff054a27c762ab68f7ea004070b3154639277";
+var PAPER_FINGERPRINT = "38c7a1cc6803da98eb29e29aa513882c3c8715345e3b900a3f0414ee61f2cee4";
 
 // english-glossary.js
 var entries = [
@@ -25070,8 +25070,8 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 7;
-var PAPER_TASK_VERSION = "VL4-WS4-four-pages-7";
+var PAPER_VERSION = 8;
+var PAPER_TASK_VERSION = "VL4-WS4-balanced-spacing-8";
 var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
