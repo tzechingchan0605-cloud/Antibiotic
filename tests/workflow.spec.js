@@ -542,7 +542,7 @@ test('new MC questions and selected conclusion are required, bilingual, and lock
     await expect(page.locator('#analysisFields .question-number')).toHaveText(['1','2','3','4','5','6']);
     await expect(page.locator('#controlPurpose legend')).not.toContainText('生長');
     await expect(page.locator('#rank3 option[value="na"],#rank4 option[value="na"]')).toHaveCount(2);
-    const samples=page.locator('[data-multi="effectiveSamples"]');await expect(samples).toHaveCount(4);
+    const samples=page.locator('[data-multi="effectiveSamples"]');await expect(samples).toHaveCount(5);await expect(page.locator('[data-multi="effectiveSamples"][value="C"]')).toBeVisible();
     await page.locator('[data-multi="effectiveSamples"][value="X"]').uncheck();await page.locator('[data-multi="effectiveSamples"][value="Z"]').uncheck();await page.locator('#submitInquiry').click();await expect(page.locator('#submitDialog')).toBeHidden();await expect(samples.first()).toBeFocused();
     await page.locator('[data-multi="effectiveSamples"][value="none"]').check();await page.locator('[data-multi="effectiveSamples"][value="X"]').check();await expect(page.locator('[data-multi="effectiveSamples"][value="none"]')).not.toBeChecked();await page.locator('[data-multi="effectiveSamples"][value="Z"]').check();
     await page.locator('#rank4').selectOption('');

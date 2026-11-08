@@ -1,1 +1,1 @@
-export const PAPER_FINGERPRINT='d0b8a98ac32c5baffe2c16f0382fd688afe7e344c8a317c50162dbcfa81543dd';
+export const PAPER_FINGERPRINT='c0a88b09e0a32158d4c68ea0da29438f4d1d61bbd3082efb32538edb64e0b8ae';

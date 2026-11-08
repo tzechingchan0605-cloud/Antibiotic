@@ -3,4 +3,4 @@ test('R3 totals29 with six integer manual fields; historical23/32 remain explici
 
 test('empty exports use the current R3 headers and rubric',async()=>{const w=await buildWorkbook([]);const h=w.getWorksheet('教師評分').getRow(1).values.join(' ');assert.match(h,/R3 整體總分（29）/);});
 
-test('multiple effective-sample choices and historical combined choices are graded equivalently',()=>{const r=freshRecord({});r.plates[0].result={X:18,Y:0,Z:27,C:0};for(const [value,expected] of [[['X','Z'],true],['X_Z',true],[['X','X','Z'],false],[['none'],false],[['none','X'],false],[[],null]]){r.answers.effectiveSamples=value;assert.equal(conclusionChecks(r).samples,expected);}});
+test('multiple effective-sample choices and historical combined choices are graded equivalently',()=>{const r=freshRecord({});r.plates[0].result={X:18,Y:0,Z:27,C:0};for(const [value,expected] of [[['X','Z'],true],['X_Z',true],[['X','X','Z'],false],[['X','Z','C'],false],[['C'],false],[['none'],false],[['none','X'],false],[[],null]]){r.answers.effectiveSamples=value;assert.equal(conclusionChecks(r).samples,expected);}});

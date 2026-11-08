@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "d0b8a98ac32c5baffe2c16f0382fd688afe7e344c8a317c50162dbcfa81543dd";
+var PAPER_FINGERPRINT = "c0a88b09e0a32158d4c68ea0da29438f4d1d61bbd3082efb32538edb64e0b8ae";
 
 // english-glossary.js
 var entries = [
@@ -24303,7 +24303,7 @@ var MC_QUESTIONS = [
   { id: "controlPurpose", number: 6, key: "controlPurpose", correct: "baseline", options: [["same", "controlSame"], ["treatment", "controlTreatment"], ["baseline", "controlBaseline"], ["increase", "controlIncrease"]] }
 ];
 var EFFECTIVE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "effectiveAll"], ["none", "effectiveNone"]];
-var EFFECTIVE_SAMPLE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["none", "effectiveNone"]];
+var EFFECTIVE_SAMPLE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["C", "blank"], ["none", "effectiveNone"]];
 var effectiveSelections = (value) => Array.isArray(value) ? value : value === "all" ? ["X", "Y", "Z"] : value === "none" ? ["none"] : typeof value === "string" ? value.split("_").filter(Boolean) : [];
 var CONCLUSION_FIELDS = ["effectiveSamples", "rank1", "rank2", "rank3", "rank4"];
 var ANALYSIS_FIELDS = [...MC_QUESTIONS.map((question) => question.id), ...CONCLUSION_FIELDS];
@@ -24329,7 +24329,7 @@ function freshRecord(profile, demo = false) {
     schemaVersion: 1,
     analysisVersion: 2,
     rubricVersion: 3,
-    taskVersion: "VL4-multiselect-4",
+    taskVersion: "VL4-multiselect-5",
     conclusionVersion: 2,
     moduleId: MODULE_ID,
     id: crypto.randomUUID(),
@@ -24692,7 +24692,7 @@ var fieldChoiceKeys = {
   knowledgeLimits: { limited: "limited", best: "bestDrug" }
 };
 for (const question of MC_QUESTIONS) fieldChoiceKeys[question.id] = Object.fromEntries(question.options);
-fieldChoiceKeys.effectiveSamples = Object.fromEntries(EFFECTIVE_OPTIONS);
+fieldChoiceKeys.effectiveSamples = { ...Object.fromEntries(EFFECTIVE_OPTIONS), C: "blank" };
 for (const field2 of CONCLUSION_FIELDS.slice(1)) fieldChoiceKeys[field2] = { na: "notApplicable", C: "blank" };
 function answerDisplay(field2, value, language2 = "zh") {
   if (value === null || value === void 0 || value === "" || Array.isArray(value) && !value.length) return notAnswered(language2);
@@ -25070,8 +25070,8 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 4;
-var PAPER_TASK_VERSION = "VL4-WS4-layout-4";
+var PAPER_VERSION = 5;
+var PAPER_TASK_VERSION = "VL4-WS4-physical-ruler-5";
 var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
@@ -25083,16 +25083,20 @@ function getPaperSource(language2 = "zh") {
     return p;
   });
   const concepts = [
-    ["\u6297\u751F\u7D20\u53EF\u6291\u5236\u751F\u9577\u6216\u6BBA\u6B7B\u67D0\u4E9B\u7D30\u83CC\uFF0C\u4E3B\u8981\u7528\u65BC[\u7D30\u83CC\u611F\u67D3]\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u611F\u67D3\u3002MRSA \u662F\u8010\u7532\u6C27\u897F\u6797\u91D1\u9EC3\u8461\u8404\u7403\u83CC\uFF0C\u4E0D\u4EE3\u8868\u5C0D\u6240\u6709\u6297\u751F\u7D20\u7686\u6709\u6297\u6027\u3002", "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections. MRSA means methicillin-resistant Staphylococcus aureus; this does not imply resistance to all antibiotics."],
-    ["\u6297\u751F\u7D20\u7531\u7D19\u789F[\u5411\u5916\u64F4\u6563]\uFF0C\u6FC3\u5EA6\u901A\u5E38\u96A8\u8DDD\u96E2\u4E0B\u964D\uFF1B\u8DB3\u4EE5[\u6291\u5236\u7D30\u83CC\u751F\u9577]\u7684\u7BC4\u570D\u5F62\u6210[\u6E05\u6670\u5340]\u3002\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u4EE3\u8868\u6240\u6709\u7D30\u83CC\u5DF2\u6B7B\u4EA1\u3002", "Antibiotic [diffuses outward] from a disc; concentration generally falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. No visible growth does not prove all bacteria have died."],
-    ["\u7FA4\u9AD4\u539F\u6709[\u6297\u6027\u5DEE\u7570]\uFF1B\u6297\u751F\u7D20\u4F7F\u654F\u611F\u7D30\u83CC\u8F03\u96E3\u5B58\u6D3B\uFF0C\u6297\u6027\u8005\u8F03\u5BB9\u6613[\u5B58\u6D3B\u3001\u7E41\u6B96]\u4E26[\u907A\u50B3\u6297\u6027\u7279\u5FB5]\u3002\u6BD4\u4F8B\u53EF\u80FD\u4E0A\u5347\uFF0C\u85E5\u7269\u6548\u679C\u53EF\u80FD\u4E0B\u964D\uFF1B[\u904E\u5EA6\u6216\u4E0D\u7576\u4F7F\u7528\u6297\u751F\u7D20]\u6703\u589E\u52A0\u9078\u64C7\u58D3\u529B\u3002\u9019\u4E0D\u662F\u7D30\u83CC\u4E3B\u52D5\u7522\u751F\u6240\u9700\u6297\u6027\u6216\u60A3\u8005\u672C\u4EBA\u8B8A\u5F97\u6297\u85E5\u3002", "The population has [pre-existing resistance differences]. Antibiotics reduce survival of susceptible bacteria. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; [Overuse or misuse] adds selection pressure. Bacteria do not purposefully develop needed resistance, and the patient does not become resistant."]
+    ["\u6297\u751F\u7D20\u53EF\u6291\u5236\u751F\u9577\u6216\u6BBA\u6B7B\u67D0\u4E9B\u7D30\u83CC\uFF0C\u4E3B\u8981\u7528\u65BC[\u7D30\u83CC\u611F\u67D3]\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u611F\u67D3\u3002", "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections."],
+    ["\u6297\u751F\u7D20\u7531\u7D19\u789F[\u5411\u5916\u64F4\u6563]\uFF0C\u6FC3\u5EA6\u96A8\u8DDD\u96E2\u4E0B\u964D\uFF1B\u8DB3\u4EE5[\u6291\u5236\u7D30\u83CC\u751F\u9577]\u7684\u7BC4\u570D\u5F62\u6210[\u6E05\u6670\u5340]\u3002\uFF08\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u4EE3\u8868\u6240\u6709\u7D30\u83CC\u5DF2\u6B7B\u4EA1\u3002\uFF09", "Antibiotic [diffuses outward] from a disc; concentration falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. (No visible growth does not prove all bacteria have died.)"],
+    ["\u7D30\u83CC\u500B\u9AD4\u5C0D\u6297\u751F\u7D20\u5B58\u5728\u6297\u6027\u5DEE\u7570\uFF1B\u6297\u751F\u7D20\u4F7F\u4E0D\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\u8F03\u96E3\u5B58\u6D3B\uFF0C[\u5177\u6297\u751F\u7D20\u6297\u6027\u7684\u5247\u8F03\u5BB9\u6613\u5B58\u6D3B\u3001\u7E41\u6B96\u4E26\u907A\u50B3\u6297\u85E5\u6027\u7279\u5FB5]\u3002\u7576\u5F8C\u8005\u6BD4\u4F8B\u589E\u52A0\uFF0C\u539F\u6709\u6297\u751F\u7D20\u7684\u6548\u679C\u53EF\u80FD\u4E0B\u964D\u3002", "Individual bacteria differ in antibiotic resistance. Antibiotics make survival harder for susceptible bacteria; [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As their proportion increases, the original antibiotic may become less effective."],
+    ["[\u904E\u5EA6\u6216\u4E0D\u7576\u4F7F\u7528\u6297\u751F\u7D20]\u6703\u589E\u52A0\u9078\u64C7\u58D3\u529B\uFF0C[\u4FC3\u9032\u6297\u85E5\u7D30\u83CC\u751F\u5B58\u8207\u7E41\u6B96]\uFF0C\u4F7F\u611F\u67D3\u53EF\u80FD\u66F4\u96E3\u6CBB\u7642\u3002", "[Antibiotic overuse or misuse] increases selection pressure, [promoting the survival and reproduction of resistant bacteria] and potentially making infections harder to treat."]
   ].map((pair2) => pair2[en ? 1 : 0]);
+  const principle = learningDiagram(language2).match(/<figure[^>]*><figcaption>([\s\S]*?)<\/figcaption>\s*(<svg[\s\S]*?<\/svg>)/);
   const mapping = [["1.1", "iv,dv,cv", t2("variables"), "4"], ["1.2", "assumptions", t2("assumptionQuestion"), "1"], ["1.3", "controlPlan", t2("controlPlan"), "1"], ["1.4", "plannedReplicates,plannedReplicateReason", t2("plannedReplicates") + " " + t2("plannedReplicateReason"), "1"], ["2.1", "measurements", t2("visible") + " / " + t2("diameter"), "2"], ["2.2", "means", t2("mean"), "1"], ...MC_QUESTIONS.map((q) => ["2." + (q.number + 2), q.id, t2(q.key), "1"]), ["2.5", "effectiveSamples,rank1\u20134", t2("resultConclusion"), "1"], ["3", "reflection", t2("reflectionQuestion"), "8"]];
   return {
     module: "VL4",
     version: PAPER_VERSION,
     taskVersion: PAPER_TASK_VERSION,
     language: language2,
+    principle: { title: principle[1], svg: principle[2] },
+    printScale: 1,
     text: Object.fromEntries(Object.keys(L).sort().map((k) => [k, t2(k)])),
     repeatPrompt: en ? "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?" : "\u6E2C\u8A66\u6A23\u672C\u5171\u67094\u7A2E\uFF1A\u6297\u751F\u7D20X\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\u70BA\u4EC0\u9EBC\uFF1F",
     rankingPrompt: en ? "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with \u201C/\u201D." : "\u4EE5\u672C\u6B21\u6E05\u6670\u5340\u7684\u5E73\u5747\u7E3D\u76F4\u5F91\u6BD4\u8F03\uFF0C\u5B83\u5011\u7684\u6291\u5236\u6548\u80FD\u70BA\uFF1A\u53EA\u6392\u5217\u6709\u53EF\u898B\u6E05\u6670\u5340\u7684\u6A23\u672C\u3002\u4EE5\u300C\uFF0F\u300D\u522A\u53BB\u4E0D\u9069\u7528\u4F4D\u7F6E\u3002",

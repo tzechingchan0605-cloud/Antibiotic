@@ -1,9 +1,14 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 4,
-    "taskVersion": "VL4-WS4-layout-4",
+    "version": 5,
+    "taskVersion": "VL4-WS4-physical-ruler-5",
     "language": "zh",
+    "principle": {
+      "title": "A. 實驗原理：抗生素樣本的擴散與清晰區的形成",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\">① 紙碟承載抗生素</text><path d=\"M221 72L128 136\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\">② 抗生素向瓊脂擴散</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\">③ 抗生素抑制細菌生長</text><text x=\"246\" y=\"227\">並形成清晰區</text><path d=\"M221 213L152 174\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+    },
+    "printScale": 1,
     "text": {
       "account": "切換帳戶",
       "addBacteria": "加入模擬細菌",
@@ -449,9 +454,10 @@
     "rankingPrompt": "以本次清晰區的平均總直徑比較，它們的抑制效能為：只排列有可見清晰區的樣本。以「／」刪去不適用位置。",
     "title": "工作紙四：抗生素與細菌生長",
     "concepts": [
-      "抗生素可抑制生長或殺死某些細菌，主要用於[細菌感染]，不能治療病毒感染。MRSA 是耐甲氧西林金黃葡萄球菌，不代表對所有抗生素皆有抗性。",
-      "抗生素由紙碟[向外擴散]，濃度通常隨距離下降；足以[抑制細菌生長]的範圍形成[清晰區]。沒有可見生長不代表所有細菌已死亡。",
-      "群體原有[抗性差異]；抗生素使敏感細菌較難存活，抗性者較容易[存活、繁殖]並[遺傳抗性特徵]。比例可能上升，藥物效果可能下降；[過度或不當使用抗生素]會增加選擇壓力。這不是細菌主動產生所需抗性或患者本人變得抗藥。"
+      "抗生素可抑制生長或殺死某些細菌，主要用於[細菌感染]，不能治療病毒感染。",
+      "抗生素由紙碟[向外擴散]，濃度隨距離下降；足以[抑制細菌生長]的範圍形成[清晰區]。（沒有可見生長不代表所有細菌已死亡。）",
+      "細菌個體對抗生素存在抗性差異；抗生素使不具抗生素抗性的細菌較難存活，[具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵]。當後者比例增加，原有抗生素的效果可能下降。",
+      "[過度或不當使用抗生素]會增加選擇壓力，[促進抗藥細菌生存與繁殖]，使感染可能更難治療。"
     ],
     "variables": [
       {
@@ -513,6 +519,10 @@
       {
         "id": "Z",
         "text": "Z"
+      },
+      {
+        "id": "C",
+        "text": "C（對照）"
       },
       {
         "id": "none",
@@ -1121,9 +1131,14 @@
   },
   "en": {
     "module": "VL4",
-    "version": 4,
-    "taskVersion": "VL4-WS4-layout-4",
+    "version": 5,
+    "taskVersion": "VL4-WS4-physical-ruler-5",
     "language": "en",
+    "principle": {
+      "title": "A. Experimental principle: antibiotic（抗生素） diffusion and clear-zone（清晰區） formation",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">1. Disc carries antibiotic（抗生素）</tspan></text><path d=\"M221 72L128 136\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">2. Antibiotic（抗生素） diffuses</tspan></text><text x=\"246\" y=\"146\">through agar</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">3. Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"246\" y=\"227\">bacterial growth, forming</text><text x=\"246\" y=\"250\">a clear zone</text><path d=\"M221 213L152 174\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+    },
+    "printScale": 1,
     "text": {
       "account": "Switch account",
       "addBacteria": "Add simulated bacteria",
@@ -1569,9 +1584,10 @@
     "rankingPrompt": "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with “/”.",
     "title": "WS4: Antibiotics and bacterial growth",
     "concepts": [
-      "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections. MRSA means methicillin-resistant Staphylococcus aureus; this does not imply resistance to all antibiotics.",
-      "Antibiotic [diffuses outward] from a disc; concentration generally falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. No visible growth does not prove all bacteria have died.",
-      "The population has [pre-existing resistance differences]. Antibiotics reduce survival of susceptible bacteria. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; [Overuse or misuse] adds selection pressure. Bacteria do not purposefully develop needed resistance, and the patient does not become resistant."
+      "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections.",
+      "Antibiotic [diffuses outward] from a disc; concentration falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. (No visible growth does not prove all bacteria have died.)",
+      "Individual bacteria differ in antibiotic resistance. Antibiotics make survival harder for susceptible bacteria; [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As their proportion increases, the original antibiotic may become less effective.",
+      "[Antibiotic overuse or misuse] increases selection pressure, [promoting the survival and reproduction of resistant bacteria] and potentially making infections harder to treat."
     ],
     "variables": [
       {
@@ -1633,6 +1649,10 @@
       {
         "id": "Z",
         "text": "Z"
+      },
+      {
+        "id": "C",
+        "text": "C (control)"
       },
       {
         "id": "none",

@@ -69,7 +69,7 @@ const fieldChoiceKeys = {
   knowledgeBacteria:{bacteria:'bacteria',viruses:'viruses'},knowledgeResistance:{bacteria:'resistanceBacteria',body:'resistanceBody'},knowledgeLimits:{limited:'limited',best:'bestDrug'}
 };
 for(const question of MC_QUESTIONS)fieldChoiceKeys[question.id]=Object.fromEntries(question.options);
-fieldChoiceKeys.effectiveSamples=Object.fromEntries(EFFECTIVE_OPTIONS);
+fieldChoiceKeys.effectiveSamples={...Object.fromEntries(EFFECTIVE_OPTIONS),C:'blank'};
 for(const field of CONCLUSION_FIELDS.slice(1))fieldChoiceKeys[field]={na:'notApplicable',C:'blank'};
 export function answerDisplay(field, value, language = 'zh') {
   if (value === null || value === undefined || value === '' || (Array.isArray(value) && !value.length)) return notAnswered(language);
