@@ -11,7 +11,8 @@
     "test:browser": "playwright test",
     "paper:build": "node scripts/build.mjs && node paperwork/build.mjs",
     "paper:check": "node paperwork/build.mjs --check",
-    "paper:test": "python tests/paperwork_pdf.py && playwright test tests/paperwork.spec.js"
+    "paper:test": "python tests/paperwork_pdf.py && playwright test tests/paperwork.spec.js",
+    "test:xlsx": "node scripts/check-xlsx.mjs"
   },
   "dependencies": {
     "exceljs": "4.4.0"

@@ -1,3 +1,17 @@
+# 現行 WS4／R3 檢查 · 2026-11-08
+
+兩語學生／完整連答案均四頁，D繁中3頁、英文4頁；十份檔案含原生可編輯Word及由同一Word輸出的真PDF。已檢查23頁實際PDF的字型（最少11pt）、姓名同列、完整候選因素／選項／提示、紅色概念、藍色答案、頁邊界及圖像；三板圖重新繪製，與尺共同1.5pt/mm，灰階像素辨識也檢查。所有四頁學生／答案已逐頁視覺核對。
+
+`npm test` 64項通過。`npm run test:xlsx`以真XLSX經LibreOffice重算，檢查0、29分滿分、空白、負數、超上限、小數、文字及數字文字。混合R3/29、R2/23及歷史32分分表，原資料、圖像、公式、驗證與條件色彩亦有檢查。R3人工整數；歷史版本保留半分規則。實際總分仍需反思提交及全部適用人工欄合法。
+
+教材瀏覽器測試涵蓋兩語十檔、六次PDF預覽、手機、學生／教師、延遲舊語言預覽、缺英文檔不代用中文、損壞／過期、非空繪圖／答案／計時／事件／localStorage與真Excel ZIP內容不變。所有Google正式收集請求在測試中被攔截，沒有真學生雲端寫入。完整 `npx playwright test` 22項通過（2.3分鐘），零失敗；舊「必定失效」文字測試已更新。
+
+已讀取同系列VL1與VL2 repo現行教材與生成來源；先前聊天附件已無法解析，並未假稱讀取該附件。Git讀取main成功，但GitHub Pages與api.github.com被環境HTTP政策403阻擋；已保存網域設定草稿，未經啟用前不能宣稱已驗證線上部署。實際完成時間15–20分鐘、共同測驗、評分者一致性及官方課程資料仍需研究者核對。
+
+以下為歷史驗證紀錄，頁數、教材入口及配分不適用本版。
+
+---
+
 # Current concept-first paper validation (14 October 2026)
 
 WS v2 (`VL4-WS-concept-first-2`, content `e608cf069b6e`) implements self-study without a pre-lesson lecture or VL operation. Concepts and separate worked examples precede guided practice and independent application; C is provided only after B. Both groups use the researcher's 15–20 minute window, with a suggested common 20-minute allocation. Software tests do not establish student completion time.

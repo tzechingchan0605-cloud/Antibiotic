@@ -1,70 +1,35 @@
-# VL4 v2 紙本自學工作紙
+# WS4 v3：抗生素與細菌生長
 
-本版依研究者 2026-10-14 的新要求重設比較組：沒有課前講授、不操作 VL，只靠 WS 自學。採「概念解說 → 已解說示例 → 有提示練習 → 獨立應用 → 核對修正」，核心教學放在練習前。學生版使用中性名稱「抗生素與細菌生長」。學生 IBL＋VL 的程式、數據模型、紀錄、雲端及舊資料相容功能保持原有行為。
+唯一教材來源是 `source.js`：讀取現行L、完整變量／假設選項、MC、模型、容差、參考函式與rubric。`worksheet.py`產生可編輯DOCX，LibreOffice從同一DOCX產生PDF；不是整頁圖片。十二項資料沿用seeds1001/1002/1003，圖與尺同為1.5pt/mm，6mm紙碟；圖的結果不另造數據。學生版不預印待答讀數或均值。
 
-## 派發、時間與 PDF
+參照已讀取VL1 repo a9ea711、VL2 repo現行四頁教材及生成來源的版面，沒有移入其科學內容。先前聊天的WS1附件已無法解析，不能聲稱另行核對了該附件；本版參照同系列repo實際公開教材。
 
-兩組均使用 **15–20 分鐘**，建議共同使用 **20 分鐘**。教師版建議分段：概念 3、示例 2、有提示練習 4、獨立應用 8、核對修正 3 分鐘。這是研究者指定的課節安排，不是軟體測試所量得的學習完成時間；試教須記錄實際完成時間及未完成項目，不把速度或完成率換算能力分數。
+## 重建
 
-<!-- paper-summary:start -->
-紙本自學 v2 · VL4-WS-concept-first-2 · 內容版本 e608cf069b6e
-
-| 分冊 | 頁數 | 完整套裝頁碼 | 繁中 PDF | 英文 PDF |
-| --- | ---: | --- | --- | --- |
-| A | 2 | 1–2 | [下載](generated/VL4_A_zh_v2_e608cf069b6e.pdf) | [Download](generated/VL4_A_en_v2_e608cf069b6e.pdf) |
-| B | 7 | 3–9 | [下載](generated/VL4_B_zh_v2_e608cf069b6e.pdf) | [Download](generated/VL4_B_en_v2_e608cf069b6e.pdf) |
-| C | 2 | 10–11 | [下載](generated/VL4_C_zh_v2_e608cf069b6e.pdf) | [Download](generated/VL4_C_en_v2_e608cf069b6e.pdf) |
-| D | 8 | 12–19 | [下載](generated/VL4_D_zh_v2_e608cf069b6e.pdf) | [Download](generated/VL4_D_en_v2_e608cf069b6e.pdf) |
-| 完整教師套裝 | 19 | 1–19 | [下載](generated/VL4_all_zh_v2_e608cf069b6e.pdf) | [Download](generated/VL4_all_en_v2_e608cf069b6e.pdf) |
-<!-- paper-summary:end -->
-
-- **A（2 頁）** 從開始即可閱讀：歷史觀察圖、菌落說明、抗生素／MRSA／清晰區／抗性選擇概念，及非 X/Y/Z/C 的已解說示例。
-- **B（7 頁）**：B1–2 有提示假說、變量、假設、對照、補標示、間距、污染／公平比較、給定重複方案、程序排序及錯誤辨識；B3–5 有三板前後圖、十二把靜態尺及兩欄空白讀數表；B6 有平均值與六類分析；B7 是讀數支持的抗性選擇應用。
-- **C（2 頁）** 只在完成 B 並保存首次作答後派發：核對模型讀數、均值、分析及理由，再以不同筆色修正。先核對自己的讀數，不強行改寫有效讀數。
-- **D（8 頁）** 只供教師：時間／澄清／回饋／派發時點、完整答案、WS 作業檢核及 **23 項逐題配對表**。完整套裝 19 頁，不整套派學生。學生使用 A–C 共 11 頁，多數量度頁為大幅圖像。
-
-教師登入後點「下載紙本自學工作紙 PDF」，可獨立選材料繁中／英文、預覽五種材料及直接下載真正 PDF。材料語言不切換 VL 語言，不建立示範或探究，也不需新增 Apps Script。只在 A、C 首頁印姓名、班別、學號；所有文字作答／修正欄恰為兩條橫線，允許短句或關鍵詞，不要求填滿。
-
-## 前置教學及題目處理
-
-- 保留發現歷史圖片、菌落為大量細菌形成群體的說明及初步觀察練習。
-- 教導抗生素處理細菌感染、不能治病毒傷風／流感；擴散與濃度梯度、清晰區及不等同全部死亡；MRSA 不等同抗所有藥；原有抗性者較易存活繁殖並傳遞特徵，比例上升已可能削弱效果，不需必然佔滿群體；不是目的性適應，也不是患者本人產生細菌抗性。
-- 原始樣本／最大圈預測改為可測試假說評估及另一細菌／未知 U 的應用，不假裝已教後的「原始預測」。A 的示例 S／P／T 與正式獨立資料分開。
-- 自主平板設計改為補全 X/Y/Z/C、間距與不公平比較判斷。C 是同載體無抗生素紙碟，只有實為水載體才稱水對照。
-- 原次數／理由改為比較重量同板與新板獨立重複、變異及資源／時間可行性；三次不是唯一正確次數。
-- 程序卡與前後圖是**程序理解及讀圖**，不是消毒、塗布或培養操作能力證據，沒有實體培養 MRSA 要求。
-- 保留六類分析；第 3 題改稱「本條件下平均清晰區總直徑的排序」，不表示藥物的臨床效能排名。保留抗性選擇的概念應用，不改成修訂原假說。
-
-## 模型、量尺與核對
-
-固定 seeds **1001、1002、1003** 沿用同一 `generateResult`；沒有改動模型或假設每次 VL 隨機結果相同。每板四幅放大圖由同一結果構造，40 mm 量尺有 41 個逐毫米刻度；1 mm＝9 SVG units，紙碟直徑＝6 mm。讀圖刻度，不以紙張上的實際長度代替 mm。圖形為向量，黑白以白圈、邊線及生長紋理分辨。
-
-A 的示例 S 左端 12、右端 28，總直徑 16 mm；均值示例 12／16／20 →16.0，只教方法。**A／B 不預印正式資料的 18.7、26.1、26.3、26.5 或樣本答案**。獨立題的圖像是所需觀察資料；數字答案只在 C／D。
-
-有外圍圈時總直徑包含 6 mm 紙碟；無外圍圈記 0，不記 6。十二項量度參考容差 ±1 mm；無區分類需正確且值恰為 0。均值按學生自己三次讀數核對，容差 ±0.1 mm；不重複扣量度錯誤。最大區不是最佳治療，無區也不是臨床抗藥判定；沒有臨床判定界線，不推廣至所有 MRSA。
-
-## 來源、評分及隔離
-
-`paperwork/texts.js` 是紙本先教後練的兩語內容；`alignment.js` 供逐題配對及紙本 rubric。`source.js` 只讀現行 VL 字典、變量／假設選項、五題 MC、圖片、概念圖、參考函式及同一結果模型；不呼叫 `freshRecord`、不讀任何學生紀錄。原題文字在 D 的配對表供追溯，已改寫題目不偽稱逐字同題。
-
-WS 作業檢核 **38 分**僅供本版本的練習診斷，不能直接比較 VL 23 分，不把紙本程序或讀圖等同虛擬操作，也不給完成速度能力分。研究成效須使用另行共同測驗（SPSAI／CKT），不能由作業總分或軟體測試推論效果。正式測驗原題及效度資料未在本次來源中提供。
-
-沿用 `english-glossary.js` 已批准的英文括號翻譯／排除清單；學生 VL 的詞彙與自由作答不改。教師材料入口仍沿用教師電郵模式，靜態 PDF 在公開 GitHub Pages 上，教師須管理 C／D 派發。預覽／下載不改答案、圖像、示範、計時、事件、localStorage、雲端或教師 Excel。
-
-## 重建與檢查
-
-```bash
-npm ci
-python -m pip install -r paperwork/requirements.txt
-# 系統需 Noto CJK、Poppler 與 Chromium。
-npm run paper:build
+```sh
+npm ci --cache /workspace/shared/npm-cache --no-audit --no-fund
+python -m venv --system-site-packages /workspace/shared/ws4-venv
+/workspace/shared/ws4-venv/bin/pip install -r paperwork/requirements.txt
+PAPER_PYTHON=/workspace/shared/ws4-venv/bin/python npm run build
 npm run paper:check
 npm test
 npm run paper:test
 ```
 
-材料版本 **v2**，題目版本 **VL4-WS-concept-first-2**。`npm run build` 在來源更新時重建。檔名 `VL4_{分冊}_{語言}_v2_{hash}.pdf`，下載名 `VL4_SelfStudy_{分冊|CompleteTeacherPack}_{ZH|EN}_v2_{hash}.pdf`。manifest、README 表格及檔名同步產生；成功重建後清除舊材料。教師面板比對題目／材料版本、來源 digest及 PDF SHA-256，舊快取或損壞檔案拒絕下載。
+需要Noto CJK、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v3及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
 
-實際十份 PDF 共 **76 頁**逐頁檢查字型／字形、頁面邊界、兩線作答、姓名位置、核心內容／配對表、十二把尺的刻度與幾何、灰階辨識及答案派發。每頁及灰階圖輸出至 `artifacts/paper-review-v2/` 供視覺檢查。瀏覽器測試兩語十份下載、五份預覽、手機與過期拒絕，並比較下載前後非空畫布、學生紀錄、計時／事件及實際 Excel ZIP 內容。
+<!-- paper-summary:start -->
+WS4 v3 · 598905cb7a91
 
-研究文件修訂及需研究者核對項目見 [比較組對照說明](../docs/paper-research-alignment.md)。實際時間可行性與正式評量仍需試教／研究驗證，不聲稱已因軟體通過而完成教育效果驗證。
+| 教材 | 頁數 | 繁中 | English |
+| --- | ---: | --- | --- |
+| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v3_598905cb7a91.pdf) | [Download](generated/VL4_studentPDF_en_v3_598905cb7a91.pdf) |
+| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v3_598905cb7a91.docx) | [Download](generated/VL4_studentWord_en_v3_598905cb7a91.docx) |
+| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v3_598905cb7a91.pdf) | [Download](generated/VL4_answersPDF_en_v3_598905cb7a91.pdf) |
+| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v3_598905cb7a91.docx) | [Download](generated/VL4_answersWord_en_v3_598905cb7a91.docx) |
+| D 教師指引、配對及評分 | 3 | [下載](generated/VL4_D_zh_v3_598905cb7a91.pdf) | [Download](generated/VL4_D_en_v3_598905cb7a91.pdf) |
+<!-- paper-summary:end -->
+
+學生／答案各四頁：需知與情境；公平比較；三板、量度、均值與部分分析；其餘分析與整合解釋。姓名只在首頁，同一行。所有題目、選項及提示來自現行VL；最後題只把學習重點改為課題需知。
+
+D列明派發、首次保存、15–20分鐘試教安排、教師支援、逐題配對、全部答案、部分分、缺答／不適用與Excel版本。WS24分僅供紙本作業檢核，不能直接與VL29分比較。沒有紙本機會的原始預測、歷史觀察、自主設計與實作不當零分。正式課本／官方syllabus及共同測驗效度未在本次提供，不捏造。

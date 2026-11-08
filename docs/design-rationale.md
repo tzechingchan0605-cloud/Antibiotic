@@ -1,3 +1,9 @@
+# 現行 WS4／R3
+
+請以 [教學大綱](../SYLLABUS.md)、[評分](rubric.md) 及 [WS4來源](../paperwork/README.md) 為準。下列為歷史設計，不代表現行題目、教材數或配分；舊A/B/C材料及額外問題已撤換。
+
+---
+
 # Current 15–20 minute research condition (14 October 2026)
 
 Both IBL+VL and paper groups use the same 15–20 minute window, preferably 20 minutes. The WS comparison group now uses concept-first self-study without a pre-lesson lecture or VL operation; see [WS v2](../paperwork/README.md). Learner VL code and behavior are unchanged. The earlier 45–55 minute pilot table below is historical planning and does not set the current research timing.

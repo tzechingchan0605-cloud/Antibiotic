@@ -149,3 +149,18 @@ export const CURRENT_RUBRIC_ROWS = [
   ['結論｜樣本選擇及排序',1,'自動','有效樣本按模型判斷（X、Z），正確得 0.5；排序按學生讀數計算的平均值判斷，正確得 0.5，未使用的位置必須選不適用。','0.5：樣本選擇或排序其中一項正確。','0：兩項均錯或資料不足；相同平均值接受任一先後次序，不重複扣量度誤差。','communicating'],
   ['新版總分及待評狀態',23,'公式','沿用設計及量度準則；新增五題各 1 分、選填結論 1 分、反思 2 分。六個人工格填完且反思已提交才顯示總分。','刪除圖表及舊分析題的評分；新版與舊版分開，不直接比較兩版總分。','此準則為試教草案，需配合題目改動校準；不把操作速度、次數或完成率換算能力。','score']
 ];
+
+// R3 retains the same evidence question; only the analytic reflection rubric changes.
+export const RUBRIC_VERSION=3;
+export const REFLECTION_CRITERIA=[
+ ['樣本選擇及讀數證據',2,'2：選出本次有抑制作用的樣本，引用合理讀數支持判斷；1：判斷或讀數支持其中一項恰當；0：沒有恰當支持。'],
+ ['原有抗性差異與選擇',2,'2：群體原有少量抗性差異，敏感者受抑制而抗性者較易存活；1：只連結其中一項；0：目的性產生指定抗性或無相關解釋。'],
+ ['繁殖與遺傳',2,'2：存活抗性者繁殖並把抗性特徵傳予後代；1：只解釋其中一項；0：無相關因果。'],
+ ['比例及效果改變',2,'2：抗性者比例可能上升，使該藥效果可能下降；1：只解釋其中一項；0：無相關因果。']
+];
+export const V3_SCORE_COLUMNS=CURRENT_SCORE_COLUMNS.map(c=>c.id==='reflection'?{...c,max:8,label:'整合反思｜樣本證據與抗性選擇（教師）'}:c.id==='overall'?{...c,max:29,label:'R3 整體總分（29）'}:{...c});
+export const V3_RUBRIC_ROWS=CURRENT_RUBRIC_ROWS.map(row=>row[0].startsWith('反思｜')?['整合反思｜樣本證據與抗性選擇',8,'教師',REFLECTION_CRITERIA.map(c=>c[0]+'：'+c[2]).join('；'),'四個互不重複範疇各0–2整數，依科學概念及因果評分，不數關鍵字。','缺答0；不要求修訂假說或另列限制。','knowledge']:row[0]==='新版總分及待評狀態'?['R3總分及待評狀態',29,'公式','其餘21分不變，反思8分。六個人工欄及反思提交閘門；人工分僅接受範圍內整數。','空白待評；0是已評零分；不適用項目不列入閘門。','無效貼入不顯示總分；點擊、速度、次數及完成率不是能力分。','score']:row.map(v=>typeof v==='string'?v.replace('0.5：','舊版半分不適用於R3；以0或1評：'):v));
+export const scoreColumnsFor=record=>!currentAnalysis(record)?SCORE_COLUMNS:record.rubricVersion===3?V3_SCORE_COLUMNS:CURRENT_SCORE_COLUMNS;
+export const rubricRowsFor=record=>!currentAnalysis(record)?RUBRIC_ROWS:record.rubricVersion===3?V3_RUBRIC_ROWS:CURRENT_RUBRIC_ROWS;
+export const assessmentLabel=record=>!currentAnalysis(record)?'歷史32分':record.rubricVersion===3?'R3／29分':'R2／23分';
+export const validManualScore=(value,column,record)=>typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=column.max&&(record.rubricVersion===3?Number.isInteger(value):Number.isInteger(value*2));

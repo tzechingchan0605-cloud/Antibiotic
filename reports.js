@@ -3,7 +3,7 @@ import ExcelJS from 'exceljs';
 import {clearZoneDiameter} from './model.js';
 import { L } from './i18n.js';
 import {glossEnglish,fitEnglishDiagramLabels} from './english-glossary.js';
-import { SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, CURRENT_SCORE_COLUMNS, CURRENT_RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, conclusionChecks, automaticScores } from './rubric.js';
+import { scoreColumnsFor,rubricRowsFor,assessmentLabel, SAMPLE_IDS, TOLERANCES, VARIABLE_REFERENCE, controlVariableReference, ASSUMPTION_REFERENCE, SCORE_COLUMNS, RUBRIC_ROWS, CURRENT_SCORE_COLUMNS, CURRENT_RUBRIC_ROWS, actualReplicates, finiteNumber, objectiveChecks, readingCheck, studentMean, meanCheck, graphCheck, conclusionChecks, automaticScores } from './rubric.js';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const tr = (language, zh, en) => language === 'en' ? glossEnglish(en) : zh;
@@ -100,7 +100,7 @@ export function referenceFor(field, record, language) {
     knowledgeBacteria: ['抗生素針對細菌，不能治療病毒引起的傷風或流感。', 'Antibiotics act against bacteria; they do not treat viral colds or influenza.'],
     knowledgeResistance: ['抗藥性描述細菌對藥物的反應；不是人的身體習慣抗生素。', 'Resistance describes the bacterial response to a drug, not a human body becoming used to antibiotics.'],
     knowledgeLimits: ['清晰區支持局部可見生長受抑制；重複檢查一致性，不保證可靠或最佳治療。', 'A visible zone supports local inhibition of visible growth. Repeats check consistency; they do not guarantee reliability or the best treatment.'],
-    reflection: ['引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。', 'Use readings for your chosen sample to support growth inhibition. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion increases as antibiotic effectiveness declines. This is a hypothetical extension, not evidence that resistance arose in this experiment.']
+    reflection: ['引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並可能使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。', 'Use readings for your chosen sample to support growth inhibition. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion may increase and antibiotic effectiveness may decline. This is a hypothetical extension, not evidence that resistance arose in this experiment.']
   };
   const question=MC_QUESTIONS.find(question=>question.id===field);
   if(question)return answerDisplay(field,question.correct,language)+(field==='repeatPurpose'?tr(language,' A：由於系統或偶然誤差，重複實驗的數值通常會有微小落差，這才需要計算平均值與標準差。B：重複實驗是為了提升準確度，而非刻意消耗時間或湊字數。C：正確答案。D：重複實驗是為了檢驗現狀，而非人為在常規實驗中加速生物突變。',' A: Systematic or random errors can cause variation between repeats, so means and standard deviations are calculated. B: Repetition aims to improve accuracy, not consume time or pad reports. C: Correct answer. D: Repetition checks existing outcomes; it does not accelerate mutations in routine experiments.'):'');
@@ -184,8 +184,8 @@ export function learningPointsHTML(language = 'zh') {
     ],
     "points": [
       [
-        "為甚麼情境中的原有抗生素會失效？抗生素使不具抗生素抗性的細菌較難存活，[具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵]。當後者比例增加並佔據整個群落，原有抗生素便會失效。",
-        "Why does the original antibiotic in the scenario lose effectiveness? Antibiotics make survival harder for susceptible bacteria, while [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As resistant bacteria increase in proportion and occupy the whole population, the original antibiotic becomes ineffective."
+        "為甚麼情境中的原有抗生素會失效？抗生素使不具抗生素抗性的細菌較難存活，[具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵]。當後者比例增加，原有抗生素的效果可能下降；不必完全佔據群落。",
+        "Why does the original antibiotic in the scenario lose effectiveness? Antibiotics make survival harder for susceptible bacteria, while [resistant bacteria are more likely to survive, reproduce and pass on resistance traits]. As resistant bacteria increase in proportion, the original antibiotic may become less effective; complete takeover is not required."
       ],
       [
         "[過度或不當使用抗生素]會增加不必要的選擇壓力，[促進抗藥細菌生存與繁殖]，使感染可能更難治療。",
@@ -330,17 +330,20 @@ export async function buildWorkbook(inputRecords) {
   const exportFields=hasLegacy?(hasCurrent?[...ANSWER_FIELDS,...CURRENT_ANSWER_FIELDS.filter(([id])=>!ANSWER_FIELDS.some(([field])=>field===id))]:ANSWER_FIELDS):CURRENT_ANSWER_FIELDS;
   const legacyExtension=hasLegacy?['延伸預測','延伸理由','延伸公平比較','延伸結果','延伸分析']:[];
   const originalFields = ANSWER_FIELDS.filter(([field])=>!field.startsWith('analysis') && !field.startsWith('knowledge') && field !== 'reflection' && field !== 'conclusion');
-  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...exportFields.map(([,label])=>'最新｜'+label),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立瓊脂板數','設計文字',...legacyExtension,'有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數')];
-  const answerGroups = [...Array(9).fill('identity'),...originalFields.map(field=>field[3]),...exportFields.map(field=>field[3]),...Array(3).fill('designing'),'conducting',...Array(legacyExtension.length).fill('inferring'),...Array(5).fill('identity')];
+  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...exportFields.map(([,label])=>'最新｜'+label),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立瓊脂板數','設計文字',...legacyExtension,'有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數'),'題目／評分版本'];
+  const answerGroups = [...Array(9).fill('identity'),...originalFields.map(field=>field[3]),...exportFields.map(field=>field[3]),...Array(3).fill('designing'),'conducting',...Array(legacyExtension.length).fill('inferring'),...Array(6).fill('identity')];
   const answers = createSheet(workbook,'學生探究答案',headings,answerGroups);
   const dataHeadings=['紀錄識別碼','姓名','瓊脂板識別碼','樣本','首次有無紙碟外清晰區','首次總直徑（mm）','首次備註','首次確認（香港）','最後有無紙碟外清晰區','最後總直徑（mm）','最後備註','最後確認（香港）','模型參考總直徑（mm）','直徑／紙碟外清晰區檢核','修訂紀錄','學生平均值（mm）','依學生最後讀數計算平均值','平均值檢核',...(hasLegacy?['確認棒高（mm）','圖表檢核','圖表確認（香港）']:[])];
   const dataGroups=dataHeadings.map((_,index)=>index<4?'identity':index<15?'observing':index<18?'inferring':'communicating');
   const data=createSheet(workbook,hasLegacy?'量度計算與圖表':'量度與計算',dataHeadings,dataGroups);
   const makeScores=(columns,name)=>({columns,sheet:createSheet(workbook,name,['紀錄識別碼','姓名','班別及學號','完成狀態',...columns.map(column=>column.label+(column.max!==undefined?`（0–${column.max}）`:''))],[...Array(4).fill('identity'),...columns.map(column=>column.group)]),index:Object.fromEntries(columns.map((column,index)=>[column.id,index+5]))});
   const legacyScores=hasLegacy?makeScores(SCORE_COLUMNS,'教師評分'):null;
-  const currentScores=hasCurrent||!hasLegacy?makeScores(CURRENT_SCORE_COLUMNS,hasLegacy?'教師評分（新版）':'教師評分'):null;
+  const hasV2=records.some(r=>currentAnalysis(r)&&r.rubricVersion!==3);
+  const currentScores=hasV2?makeScores(CURRENT_SCORE_COLUMNS,hasLegacy?'教師評分（新版）':'教師評分'):null;
+  const v3Records=records.filter(r=>currentAnalysis(r)&&r.rubricVersion===3);
+  const v3Scores=v3Records.length||!records.length?makeScores(scoreColumnsFor(v3Records[0]||{analysisVersion:2,rubricVersion:3}),hasLegacy||hasV2?'教師評分（R3）':'教師評分'):null;
   const rubric=createSheet(workbook,'評分準則',['類別／題目','最高分','評分方式','滿分準則','部分得分準則','零分準則']);
-  for(const row of [...(hasLegacy?RUBRIC_ROWS:[]),...(hasCurrent||!hasLegacy?CURRENT_RUBRIC_ROWS:[])]){addDataRow(rubric,row.slice(0,6),Array(6).fill(row[6]));}
+  for(const row of [...(hasLegacy?RUBRIC_ROWS:[]),...(records.some(r=>currentAnalysis(r)&&r.rubricVersion!==3)?CURRENT_RUBRIC_ROWS:[]),...(v3Records.length||!records.length?rubricRowsFor(v3Records[0]||{analysisVersion:2,rubricVersion:3}):[])]){addDataRow(rubric,row.slice(0,6),Array(6).fill(row[6]));}
   rubric.columns.forEach((column,index)=>{column.width=index===1?10:index===2?12:60;});
   const events=createSheet(workbook,'操作事件紀錄',['紀錄識別碼','姓名','來源','事件類型','時間（香港）','階段','事件詳情（JSON）']);events.getColumn(7).width=80;
   const designs=createSheet(workbook,'裝置設計圖',['紀錄識別碼','姓名','班別及學號','電郵','快照類別','設計文字','學生設計圖']);designs.getColumn(5).width=22;designs.getColumn(6).width=55;designs.getColumn(7).width=70;
@@ -348,7 +351,7 @@ export async function buildWorkbook(inputRecords) {
     const a=record.answers || {}, original=record.original || {}, initial={...original.answers,plannedReplicates:original.plannedReplicates??original.answers?.plannedReplicates,plannedReplicateReason:original.plannedReplicateReason??original.answers?.plannedReplicateReason};
     const status=record.reflectionSubmittedAt?'已完成':record.submittedAt?'待提交反思':'進行中', profile=record.profile || {}, extension=record.extension || {};
     const objectText=value=>typeof value==='object'&&value!==null?JSON.stringify(value):value??'';
-    const values=[record.id,profile.name,profile.className||profile.classInfo,profile.email,status,record.version,dateText(record.submittedAt),dateText(record.reflectionSubmittedAt),dateText(original.capturedAt),...originalFields.map(([field])=>answerDisplay(field,initial[field])),...exportFields.map(([field])=>answerDisplay(field,a[field])),initial.plannedReplicates??'',initial.plannedReplicateReason??'',actualReplicates(record),record.design?.description||a.designDescription||'',...(hasLegacy?['prediction','reason','fairComparison','results','analysis'].map(field=>extension.started?objectText(extension[field]):''):[]),Math.round(Object.values(record.timing||{}).reduce((sum,time)=>sum+(Number(time)||0),0)),...[1,2,3,4].map(phase=>Math.round(record.timing?.[phase]||0))];
+    const values=[record.id,profile.name,profile.className||profile.classInfo,profile.email,status,record.version,dateText(record.submittedAt),dateText(record.reflectionSubmittedAt),dateText(original.capturedAt),...originalFields.map(([field])=>answerDisplay(field,initial[field])),...exportFields.map(([field])=>answerDisplay(field,a[field])),initial.plannedReplicates??'',initial.plannedReplicateReason??'',actualReplicates(record),record.design?.description||a.designDescription||'',...(hasLegacy?['prediction','reason','fairComparison','results','analysis'].map(field=>extension.started?objectText(extension[field]):''):[]),Math.round(Object.values(record.timing||{}).reduce((sum,time)=>sum+(Number(time)||0),0)),...[1,2,3,4].map(phase=>Math.round(record.timing?.[phase]||0)),assessmentLabel(record)];
     const checks=objectiveChecks(record), answerChecks={};
     exportFields.forEach(([field],index)=>{if(field in checks)answerChecks[9+originalFields.length+index]=checks[field];});
     addDataRow(answers,values,answerGroups,answerChecks);
@@ -360,21 +363,24 @@ export async function buildWorkbook(inputRecords) {
       addDataRow(data,[record.id,profile.name,plate.id,sampleName(sample,'zh'),presence(first.visible),finiteNumber(first.value)??'',first.note||'',first.at?dateText(first.at):'',presence(last.visible),finiteNumber(last.value)??'',last.note||'',last.at?dateText(last.at):'',clearZoneDiameter(plate,sample)??'',label(check),JSON.stringify(reading.revisions||[]),finiteNumber(record.means?.[sample])??'',mean===null?'':Math.round(mean*10000)/10000,label(meanCorrect),...(hasLegacy?[finiteNumber(record.graph?.values?.[sample])??'',label(graphCorrect),record.graph?.confirmedAt?dateText(record.graph.confirmedAt):'']:[])],dataGroups,{5:readingCheck(record,plate,sample,first),9:check,13:check,15:meanCorrect,17:meanCorrect,18:graphCorrect,19:graphCorrect});
       for (const revision of reading.revisions||[]) addDataRow(events,[record.id,profile.name,`${plate.id}/${sample}`,'reading_revision',dateText(revision.at||revision.next?.at),3,JSON.stringify(safeEventDetails(revision))]);
     }
-    const auto=automaticScores(record),{columns,sheet:scores,index:scoreIndex}=currentAnalysis(record)?currentScores:legacyScores;
+    const auto=automaticScores(record),{columns,sheet:scores,index:scoreIndex}=record.rubricVersion===3&&currentAnalysis(record)?v3Scores:currentAnalysis(record)?currentScores:legacyScores;
     const scoreRow=addDataRow(scores,[record.id,profile.name,profile.className||profile.classInfo,status,...columns.map(column=>column.manual?null:auto[column.id]??'')],[...Array(4).fill('identity'),...columns.map(column=>column.group)]);
     const cell=id=>scoreRow.getCell(scoreIndex[id]), ref=id=>cell(id).address;
-    const manual=columns.filter(column=>column.manual).map(column=>ref(column.id));
+    const manualColumns=columns.filter(column=>column.manual),manual=manualColumns.map(column=>ref(column.id));
+    const guards=manualColumns.map(c=>`IFERROR(AND(ISNUMBER(${ref(c.id)}),${ref(c.id)}>=0,${ref(c.id)}<=${c.max},MOD(${ref(c.id)},${record.rubricVersion===3?1:0.5})=0),FALSE)`);
+    const validManual=guards.join(',');
     for(const column of columns){
       const current=cell(column.id);
-      if(column.manual){current.value=null;current.dataValidation={type:'decimal',operator:'between',allowBlank:true,formulae:[0,column.max],showInputMessage:true,promptTitle:'教師人工評分',prompt:`空白＝待評；有效範圍 0–${column.max}。`,showErrorMessage:true,errorStyle:'stop',errorTitle:'分數超出範圍',error:`請輸入 0–${column.max} 的數值，或保持空白。`};}
+      if(column.manual){current.value=null;current.dataValidation={type:record.rubricVersion===3?'whole':'decimal',operator:'between',allowBlank:true,formulae:[0,column.max],showInputMessage:true,promptTitle:'教師人工評分',prompt:`空白＝待評；有效範圍 0–${column.max}；R3只接受整數。`,showErrorMessage:true,errorStyle:'stop',errorTitle:'分數超出範圍',error:`請輸入 0–${column.max} 的數值，或保持空白。`};}
       if(column.formula){
         const dependencies=column.formula.map(ref);
         let formula=`IF(COUNT(${dependencies.join(',')})=${dependencies.length},ROUND(SUM(${dependencies.join(',')}),2),"待評")`;
-        if(column.id==='overall') formula=`IF(AND(COUNT(${manual.join(',')})=${manual.length},COUNT(${dependencies.join(',')})=${dependencies.length},D${scoreRow.number}="已完成"),ROUND(SUM(${dependencies.join(',')}),2),"待評／未完成")`;
+        if(column.id==='overall') formula=`IF(AND(COUNT(${manual.join(',')})=${manual.length},${validManual},COUNT(${dependencies.join(',')})=${dependencies.length},D${scoreRow.number}="已完成"),ROUND(SUM(${dependencies.join(',')}),2),"待評／未完成")`;
         current.value={formula,result:column.id==='classifying'?auto.iv+auto.dv+auto.cv:column.id==='overall'?'待評／未完成':'待評'};
       }
-      if(column.id==='marking') current.value={formula:`IF(AND(COUNT(${manual.join(',')})=${manual.length},D${scoreRow.number}="已完成"),"評分完成","待教師評分／學生未完成")`,result:'待教師評分／學生未完成'};
+      if(column.id==='marking') current.value={formula:`IF(AND(COUNT(${manual.join(',')})=${manual.length},${validManual},D${scoreRow.number}="已完成"),"評分完成","待教師評分／學生未完成")`,result:'待教師評分／學生未完成'};
       if(column.max!==undefined)addScoreColor(scores,current,column.max);
+      if(column.manual)scores.addConditionalFormatting({ref:current.address,rules:[{type:'expression',formulae:[`AND(NOT(ISBLANK(${current.address})),NOT(${guards[manualColumns.indexOf(column)]}))`],style:{fill:{type:'pattern',pattern:'solid',fgColor:{argb:'FFFFC7CE'}}}}]});
     }
     for(const event of record.events||[])addDataRow(events,[record.id,profile.name,'探究',event.type,dateText(event.at),event.phase??'',JSON.stringify(safeEventDetails(event.details??event))]);
     for(const plate of record.plates||[])for(const event of plate.operations||[])addDataRow(events,[record.id,profile.name,plate.id,event.type||'plate_operation',event.at?dateText(event.at):'',3,JSON.stringify(safeEventDetails(event))]);

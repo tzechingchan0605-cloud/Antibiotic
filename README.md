@@ -26,7 +26,7 @@ For static hosting, deploy `index.html`, `styles.css`, `bench.css`, the `assets/
 4. **分析與結論 / Analysis:** enter your own three-reading means, answer five multiple-choice questions about clear zones, diameter, independent repeats, variable results and C (control), and select the effective samples and their order in a structured conclusion. The third and fourth ranking positions offer “Not applicable”. Complete answers can be submitted even when incorrect; no chart or extension is required.
 5. **Submission and reflection:** confirmation locks inquiry answers, reveals an enlarged learning-points heading with the revised antibiotic-diffusion diagram and notes about zone-size differences, treatment choice, antibiotic overuse/misuse and selection of resistant bacteria, and asks students to revisit their original ideas. Reflection submission is a second lock and enables the bilingual print/save-as-PDF report. Student reports never display scores.
 
-The initial trial target is 45–55 minutes (to be reassessed with the revised analysis questions). See [design rationale](docs/design-rationale.md) for the proposed teaching sequence and candidate English glossary terms. English terminology has no unapproved Chinese parenthetical additions.
+Both groups target the same 15–20-minute activity window, subject to pilot feasibility. See [design rationale](docs/design-rationale.md) for the proposed teaching sequence and candidate English glossary terms. English terminology has no unapproved Chinese parenthetical additions.
 
 The design-phase materials match the virtual procedure: three nutrient-containing agar plates; one marker, dropper, diluted bacterial suspension and sterile spreader; four forceps, a beaker of alcohol and an alcohol lamp; three X/Y/Z/C disc sets; one incubator and ruler. C is labelled as the control. The agar plate illustration shows its sidewall and depth. The spreader and forceps use mint/teal cartoon illustrations based on the teacher's reference photographs; the forceps opening faces the lower left. See [asset notes](assets/README.md).
 
@@ -51,9 +51,9 @@ Legacy imports accept compatible **VL4** module records. VL2 transpiration data 
 
 The supplied teacher email opens the dashboard only. Access to cloud class records additionally requires a password validated by the backend on every page of the read. Teacher demonstrations have a complete student workflow and PDF capability but are excluded from student persistence, telemetry, synchronization, exports and scoring.
 
-Class export reloads all cloud pages first. A failed read blocks class export rather than substituting partial/local records. Genuine `.xlsx` files always use Traditional Chinese and include six worksheets for current records: student answers; readings/calculations; teacher scoring; rubric; operation events; design images. Mixed legacy/current exports add a separate current scoring sheet and retain legacy chart and question evidence. Images, original/latest evidence, formulas, validation, category colours, frozen headings and filters are included.
+Class export reloads all cloud pages first. A failed read blocks class export rather than substituting partial/local records. Genuine `.xlsx` files always use Traditional Chinese and include six worksheets for current records: student answers; readings/calculations; teacher scoring; rubric; operation events; design images. Mixed mixed-version exports add separate R2/R3 scoring sheets and retain legacy chart and question evidence. Images, original/latest evidence, formulas, validation, category colours, frozen headings and filters are included.
 
-The revised draft rubric totals **23 points**, with five MC questions at 1 point each and six manual marking cells. Removed chart and question tasks no longer contribute to the current score. Legacy records retain their original **32-point** rubric; totals from the two versions are not directly comparable. Required manual scores remain blank/待評 until assessed; entering 0 is different from leaving a blank. The total is gated by all required manual scores and reflection submission. Hypothesis outcome, choosing three repeats, operation speed/count, time and completion are not automatic ability scores. The rubric requires trial teaching and cross-module calibration; see [rubric](docs/rubric.md).
+The current R3 rubric totals **29 points** (the same evidence reflection now has 8 marks); R2 retains **23 points**, with five MC questions at 1 point each and six manual marking cells. Removed chart and question tasks no longer contribute to the current score. Legacy records retain their original **32-point** rubric; totals from the two versions are not directly comparable. Required manual scores remain blank/待評 until assessed; entering 0 is different from leaving a blank. The total is gated by all required manual scores and reflection submission. Hypothesis outcome, choosing three repeats, operation speed/count, time and completion are not automatic ability scores. The rubric requires trial teaching and cross-module calibration; see [rubric](docs/rubric.md).
 
 ## Google collection backend
 
@@ -74,22 +74,26 @@ See [validation record](docs/validation.md) for the executed results and practic
 
 The five supplied scientific/history references could not be accessed through the current proxy (HTTP 403). Their exact URLs and access results are documented in [design rationale](docs/design-rationale.md); this delivery does not claim live verification of those pages.
 
-## 教師下載紙本自學工作紙 PDF（WS v2）
+## WS4 教師教材（v3）
 
-比較組沒有課前講授、不操作 VL，使用「解說→示例→有提示練習→獨立應用→核對修正」。A 從開始閱讀；B 有12把靜態毫米量尺，先自行量度，不預印答案；完成 B 後才派 C，D 只供教師。保留相同生物內容及 SPS 目標、固定 seeds 1001/1002/1003 與六類分析；假說、設計及重複方案題按自學方式等值改寫。學生 VL、數據模型、紀錄、雲端及 Excel 不改。
+完整學生PDF／Word、完整連答案PDF／Word、D教師指引PDF，中英文各五檔。按目前VL語言下載，三PDF可預覽；學生沒有教材入口。兩語學生及答案版均四頁，Word正文、選項、表格及作答區可編輯。12pt正文與選項、11pt提示、深灰1pt作答線、青綠標題、紅色概念及藍色答案。
 
-兩組均15–20分鐘，建議共同20分鐘。WS作業檢核38分不與VL23分直接比較；研究成效另用共同測驗。附23項逐題配對表。
+現行analysisVersion2沒有棒形圖或含量延伸，不恢復。紙本只選取原有變量（完整三列剔選選項）、假設、對照、重複安排及理由、三板12項判讀／量度、均值、五MC、結論及原有證據反思。沒有舊WS額外假說評估、排序程序或延伸練習。第一次答案保存後才派完整答案版，安排見D。
+
+VL仍先探究，提交後揭示學習重點／反思，反思提交才解鎖學生報告。WS的課題需知前置不改VL流程。比較組無課前講授、不操作VL；兩組共同15–20分鐘目標須試教核對。
+
+新探究保留analysisVersion2，新增rubricVersion3及taskVersion VL4-evidence-reflection-3，反思從2分改8，其餘21不變，總29分。舊23／32分保留當時規準與獨立評分表。R3六人工欄只接受整數，公式拒絕無效貼入；空白待評、0已評零分。紙本有作答機會的24分不能直接與VL29分換算。**舊下載Excel不會自動更新，須重新匯出**，先保存已評版本。
 
 <!-- paper-summary:start -->
-紙本自學 v2 · VL4-WS-concept-first-2 · 內容版本 e608cf069b6e
+WS4 v3 · 598905cb7a91
 
-| 分冊 | 頁數 | 完整套裝頁碼 | 繁中 PDF | 英文 PDF |
-| --- | ---: | --- | --- | --- |
-| A | 2 | 1–2 | [下載](paperwork/generated/VL4_A_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_A_en_v2_e608cf069b6e.pdf) |
-| B | 7 | 3–9 | [下載](paperwork/generated/VL4_B_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_B_en_v2_e608cf069b6e.pdf) |
-| C | 2 | 10–11 | [下載](paperwork/generated/VL4_C_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_C_en_v2_e608cf069b6e.pdf) |
-| D | 8 | 12–19 | [下載](paperwork/generated/VL4_D_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_D_en_v2_e608cf069b6e.pdf) |
-| 完整教師套裝 | 19 | 1–19 | [下載](paperwork/generated/VL4_all_zh_v2_e608cf069b6e.pdf) | [Download](paperwork/generated/VL4_all_en_v2_e608cf069b6e.pdf) |
+| 教材 | 頁數 | 繁中 | English |
+| --- | ---: | --- | --- |
+| 完整學生 PDF | 4 | [下載](paperwork/generated/VL4_studentPDF_zh_v3_598905cb7a91.pdf) | [Download](paperwork/generated/VL4_studentPDF_en_v3_598905cb7a91.pdf) |
+| 完整學生 Word | 4 | [下載](paperwork/generated/VL4_studentWord_zh_v3_598905cb7a91.docx) | [Download](paperwork/generated/VL4_studentWord_en_v3_598905cb7a91.docx) |
+| 完整連答案 PDF | 4 | [下載](paperwork/generated/VL4_answersPDF_zh_v3_598905cb7a91.pdf) | [Download](paperwork/generated/VL4_answersPDF_en_v3_598905cb7a91.pdf) |
+| 完整連答案 Word | 4 | [下載](paperwork/generated/VL4_answersWord_zh_v3_598905cb7a91.docx) | [Download](paperwork/generated/VL4_answersWord_en_v3_598905cb7a91.docx) |
+| D 教師指引、配對及評分 | 3 | [下載](paperwork/generated/VL4_D_zh_v3_598905cb7a91.pdf) | [Download](paperwork/generated/VL4_D_en_v3_598905cb7a91.pdf) |
 <!-- paper-summary:end -->
 
-教師登入可選兩語、預覽及直接下載各 PDF／完整套裝。`npm run build` 自動重建更新內容；下載拒絕舊版本及校驗不符材料。完整使用、時點、評分、量尺及驗證見 [紙本自學說明](paperwork/README.md)。
+見[生成與部署](paperwork/README.md)、[教學大綱](SYLLABUS.md)、[評分與版本](docs/rubric.md)。教材預覽／下載不改學生答案、圖像、事件、計時、雲端佇列或Excel。不新增Apps Script。

@@ -285,7 +285,7 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await expect(page.locator('#learningContent')).not.toContainText('學習重溫備註');
   await expect(page.locator('#learningContent')).toContainText('過度或不當使用抗生素');
   await expect(page.locator('#learningContent')).toContainText('具抗生素抗性的則較容易存活、繁殖並遺傳抗藥性特徵');
-  await expect(page.locator('#learningContent')).toContainText('原有抗生素便會失效');
+  await expect(page.locator('#learningContent')).toContainText('原有抗生素的效果可能下降；不必完全佔據群落。');
   await expect(page.locator('.reflection-card [data-i18n="reflection"]')).toHaveText('學習反思');
   await expect(page.locator('#originalSummary > b')).toHaveText('你的實驗結果：');
   await expect(page.locator('#originalSummary table tbody tr')).toHaveCount(3);
