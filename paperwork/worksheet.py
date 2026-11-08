@@ -30,7 +30,7 @@ class Sheet:
   s.page_width=Cm(21);s.page_height=Cm(29.7);s.top_margin=Cm(1.0);s.bottom_margin=Cm(1.0);s.left_margin=Cm(1.3);s.right_margin=Cm(1.3);s.header_distance=Cm(.4);s.footer_distance=Cm(.4)
   st=self.d.styles['Normal'];st.font.name='Liberation Sans' if lang=='en' else FONT;st.font.size=Pt(12);st.element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),FONT);st.paragraph_format.line_spacing=1.5;st.paragraph_format.space_after=Pt(5)
   for name in ['Heading 1','Heading 2','Heading 3']:
-   st=self.d.styles[name];st.font.name=FONT;st.font.size=Pt(16 if name=='Heading 1' else 13);st.font.color.rgb=RGBColor.from_string(TEAL);st.paragraph_format.space_before=Pt(4);st.paragraph_format.space_after=Pt(4)
+   st=self.d.styles[name];st.font.name=FONT;st.font.size=Pt(16 if name=='Heading 1' else 13);st.font.color.rgb=RGBColor.from_string(TEAL);st.paragraph_format.space_before=Pt(2);st.paragraph_format.space_after=Pt(1)
   self.run(s.header.paragraphs[0],self.t('生物科｜抗生素與細菌生長','Biology | Antibiotics and bacterial growth')+self.t('｜參考答案' if answers else '',' | Reference answers' if answers else ''),11)
   p=s.footer.paragraphs[0];p.alignment=2;self.run(p,self.t(f'工作紙四 · v{self.m["version"]}｜',f'WS4 · v{self.m["version"]} | '),11);p._p.append(xml('w:fldSimple',**{'w:instr':'PAGE'}))
  def t(self,z,e):return e if self.lang=='en' else z
@@ -50,18 +50,18 @@ class Sheet:
  def p(self,text='',size=12,color=None,bold=False,parent=None):
   p=(parent or self.d).add_paragraph();
   if self.pending:p.paragraph_format.page_break_before=True;self.pending=False
-  self.run(p,text,size,color,bold);p.paragraph_format.line_spacing=1.5;p.paragraph_format.space_after=Pt(5);return p
+  self.run(p,text,size,color,bold);p.paragraph_format.line_spacing=Pt(size*1.5);p.paragraph_format.space_after=Pt(2);return p
  def h(self,text,level=2):
   p=self.d.add_paragraph('', 'Heading '+str(level));self.run(p,text,16 if level==1 else 13,TEAL,True);p.paragraph_format.line_spacing=Pt(24 if level==1 else 20)
   if self.pending:p.paragraph_format.page_break_before=True;self.pending=False
   return p
  def hint(self,text):
-  p=self.p(text,11,'607D85');p.paragraph_format.line_spacing=1.2;return p
+  p=self.p(text,11,'607D85');p.paragraph_format.line_spacing=Pt(16.5);return p
  def page(self):self.pending=True
  def lines(self,answer,n=2):
   for i in range(n):
    p=self.d.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(26)
-   if self.answers and i==0:p.paragraph_format.line_spacing=1.2;self.run(p,self.t('參考答案：','Reference answer: ')+answer,12,BLUE,True)
+   if self.answers and i==0:p.paragraph_format.line_spacing=Pt(18);self.run(p,self.t('參考答案：','Reference answer: ')+answer,12,BLUE,True)
    else:self.run(p,' ')
    borders=xml('w:pBdr');borders.append(xml('w:bottom',**{'w:val':'single','w:sz':'8','w:color':'333333','w:space':'1'}));borders.append(xml('w:between',**{'w:val':'single','w:sz':'8','w:color':'333333','w:space':'1'}));p._p.get_or_add_pPr().append(borders)
    # Multi-line reference takes its natural space; no extra blank lines beyond the same area.
@@ -75,7 +75,7 @@ class Sheet:
    if widths:
     for c,w in zip(cells,widths):c.width=Cm(w)
    for j,text in enumerate(row):
-    p=cells[j].paragraphs[0];p.paragraph_format.line_spacing=1.2;p.paragraph_format.space_after=Pt(3);self.run(p,text,size,BLUE if (i,j) in marks else TEAL if i==0 else None,(i,j) in marks or i==0)
+    p=cells[j].paragraphs[0];p.paragraph_format.line_spacing=Pt(20);p.paragraph_format.space_after=Pt(1);self.run(p,text,size,BLUE if (i,j) in marks else TEAL if i==0 else None,(i,j) in marks or i==0)
     b=xml('w:tcBorders')
     for edge in ['top','left','bottom','right']:b.append(xml('w:'+edge,**{'w:val':'single','w:sz':'4','w:color':'BED0D2'}))
     cells[j]._tc.get_or_add_tcPr().append(b)
@@ -86,7 +86,7 @@ class Sheet:
  def mc(self,q):
   self.h('2.'+str(q['number']+2)+'  '+q['text'],3)
   for i,o in enumerate(q['choices']):
-   correct=self.answers and o['id']==q['correct'];p=self.p('');p.paragraph_format.keep_with_next=i<3;self.run(p,('☑ ' if correct else '□ ')+chr(65+i)+'. '+o['text'],12,BLUE if correct else None,correct)
+   correct=self.answers and o['id']==q['correct'];p=self.p('');p.paragraph_format.line_spacing=Pt(18);p.paragraph_format.space_after=Pt(0);p.paragraph_format.keep_with_next=i<3;self.run(p,('☑ ' if correct else '□ ')+chr(65+i)+'. '+o['text'],12,BLUE if correct else None,correct)
  def save(self,name):self.d.save(WORK/(name+'.docx'))
 def svgdoc(content,w=PRINT_WIDTH,h=90):return f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}pt" height="{h}pt" viewBox="0 0 {w} {h}" font-family="Noto Sans CJK TC">{content}</svg>'
 def history(m):
@@ -102,7 +102,7 @@ def history(m):
  for width,col in [(3,'white'),(1,'#15333b')]:
   body+=''.join(f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{width}"/>' for d in paths)
  for x,y,key,bold in [(12,14,'mouldLabel',True),(12,31,'fungusRemark',False),(122 if en else 150,40 if en else 18,'clearAreaTerm',True),(122 if en else 150,57 if en else 35,'clearAreaLine1',False),(122 if en else 150,74 if en else 52,'clearAreaLine2',False),(12,baseline,'colonies',True)]:
-  body+=f'<text x="{x}" y="{y}" font-size="11" font-weight="{700 if bold else 400}" fill="#15333b">{html.escape(t[key])}</text>'
+  body+=f'<text x="{x}" y="{y}" font-size="11" font-weight="{700 if bold else 400}" fill="{'#607D85' if not bold else '#15333b'}">{html.escape(t[key])}</text>'
  return svgdoc(body,w=w,h=baseline+9)
 def principle(m):
  # Reuse the live VL's actual figure A, with a print layout and >=11pt labels.
@@ -114,10 +114,10 @@ def principle(m):
  body='<g transform="scale(.5)">'+''.join(E.tostring(n,encoding='unicode') for n in root)+'</g>'
  blocks=[labels[0],' '.join(labels[1:3]),' '.join(labels[3:])] if m['language']=='en' else [labels[0],labels[1],' '.join(labels[2:])]
  for j,text in enumerate(blocks):
-  for k,label in enumerate(label_lines(text,148)):
+  for k,label in enumerate(label_lines(text,137)):
    body+=f'<text x="118" y="{[20,62,98][j]+k*16.5}" font-size="11" fill="#15333b">{html.escape(label)}</text>'
  for j,(x,y) in enumerate(targets):body+=f'<path d="M111 {[25,67,103][j]}L{float(x)/2} {float(y)/2}" stroke="#698a87" fill="none"/>'
- return svgdoc(body,w=96*PT_MM,h=138)
+ return svgdoc(body,w=92*PT_MM,h=155 if m['language']=='en' else 138)
 def plates(m):
  s=''
  for i,p in enumerate(m['plates']):
@@ -146,14 +146,18 @@ def worksheet(lang,answers):
  s.d=document
  s.p(m['principle']['title'],11,TEAL,True)
  diffusion=s.d.add_table(rows=1,cols=2);diffusion.autofit=False
- for col,w in zip(diffusion.columns,[10,8.4]):col.width=Cm(w)
- for cell,w in zip(diffusion.rows[0].cells,[10,8.4]):
+ for col,w in zip(diffusion.columns,[9.6,8.8]):col.width=Cm(w)
+ for cell,w in zip(diffusion.rows[0].cells,[9.6,8.8]):
   cell.width=Cm(w);cell.paragraphs[0].paragraph_format.line_spacing=Pt(1);cell._tc.get_or_add_tcPr().append(xml('w:shd',**{'w:fill':'F0F8F7'}))
- s.d=diffusion.cell(0,0);s.image(principle(m),'principle-'+lang,9.6)
- s.d=diffusion.cell(0,1);s.p('• '+m['concepts'][1]);s.d=document
- s.page();s.h(s.t('部分1｜研究情境與公平比較','Part 1 | Research context and fair comparison'))
- s.p(t('contextCopy'));s.p(s.t('MRSA 對甲氧西林有抗性，不代表對所有抗生素皆有抗性。','MRSA resists methicillin; this does not mean it resists all antibiotics.'));s.p(t('researchQuestion'))
- s.h('1.1  '+t('variables'))
+ s.d=diffusion.cell(0,0);s.image(principle(m),'principle-'+lang,9.2)
+ s.d=diffusion.cell(0,1)
+ main,aside=m['concepts'][1].split('（' if lang=='zh' else ' (',1)
+ s.p('• '+main)
+ s.p(('（' if lang=='zh' else '(')+aside,11 if lang=='zh' else 11,'607D85')
+ s.d=document
+ s.h(s.t('部分1｜研究情境與公平比較','Part 1 | Research context and fair comparison'))
+ s.p(t('contextCopy'));s.p(t('researchQuestion'))
+ s.page();s.h('1.1  '+t('variables'))
  # Each of the three complete ordered lists is retained, never a forced single-category matrix.
  table=s.d.add_table(rows=2,cols=3);table.autofit=False
  for cell in [c for row in table.rows for c in row.cells]:
@@ -162,11 +166,11 @@ def worksheet(lang,answers):
   cell._tc.get_or_add_tcPr().append(borders)
  for cell in table.rows[0].cells:cell.width=Cm(18.4/3)
  for col,field in enumerate(['iv','dv','cv']):
-  c=table.cell(0,col);p=c.paragraphs[0];p.paragraph_format.line_spacing=1.2;s.run(p,t(field)+'（'+t(field+'Hint')+'）',12,TEAL,True);c=table.cell(1,col);c.paragraphs[0].paragraph_format.line_spacing=Pt(1)
+  c=table.cell(0,col);p=c.paragraphs[0];p.paragraph_format.line_spacing=Pt(20);s.run(p,t(field)+'（'+t(field+'Hint')+'）',12,TEAL,True);c=table.cell(1,col);c.paragraphs[0].paragraph_format.line_spacing=Pt(1)
   ref=m['variableReference'][field];ref=[ref] if isinstance(ref,str) else ref
   for o in m['variables']:
-   p=c.add_paragraph();p.paragraph_format.space_after=Pt(3);p.paragraph_format.line_spacing=1.2;correct=answers and o['id'] in ref;s.run(p,('☑ ' if correct else '□ ')+o['text'],12,BLUE if correct else None,correct)
- s.page();s.h('1.2  '+t('assumptionQuestion'));s.hint(t('assumptionDefinitionHint'));s.p(t('assumptionNote'))
+   p=c.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(20);correct=answers and o['id'] in ref;s.run(p,('☑ ' if correct else '□ ')+o['text'],12,BLUE if correct else None,correct)
+ s.h('1.2  '+t('assumptionQuestion'));s.hint(t('assumptionDefinitionHint'));s.p(t('assumptionNote'))
  for o in m['assumptions']:
   correct=answers and o['id'] in m['assumptionReference'];s.p(('☑ ' if correct else '□ ')+o['text'],color=BLUE if correct else None,bold=correct)
  s.h('1.3  '+t('controlPlan'));s.hint(t('controlPurposeHint'));s.lines(m['reference']['control'],2)
@@ -194,15 +198,18 @@ def worksheet(lang,answers):
     p=result_table.cell(i*2+1,j).paragraphs[0];p.clear();visible=bool(m['plates'][i]['result'][sample]);s.run(p,'✓',12,BLUE if visible else None,visible);s.run(p,' / ');s.run(p,'✗',12,BLUE if not visible else None,not visible)
 
  s.h('2.2  '+t('mean'));rows=[[t('meanLabel'+x) for x in m['samples']],[str(round(sum(p['result'][x] for p in m['plates'])/3,1)) if answers else '' for x in m['samples']]];s.table(rows,[4.1,4.1,4.1,6.1],{(1,i) for i in range(4)} if answers else set())
- s.mc(m['questions'][0])
- s.page();s.mc(m['questions'][1]);s.h('2.5  '+t('resultConclusion'));p=s.p(t('conclusionContext'));s.run(p,'（' if lang=='zh' else '(')
+ mc_table=s.d.add_table(rows=1,cols=2);mc_table.autofit=False;document=s.d
+ for j,q in enumerate(m['questions'][:2]):
+  cell=mc_table.cell(0,j);cell.width=Cm(9.2);cell.paragraphs[0].paragraph_format.line_spacing=Pt(1);s.d=cell;s.mc(q)
+ s.d=document
+ s.page();s.h('2.5  '+t('resultConclusion'));p=s.p(t('conclusionContext'));s.run(p,'（' if lang=='zh' else '(')
  for i,o in enumerate(m['effective']):
   correct=answers and o['id'] in ['X','Z'];s.run(p,('☑ ' if correct else '□ ')+('C' if o['id']=='C' else o['text'])+('    ' if i<len(m['effective'])-1 else ''),12,BLUE if correct else None,correct)
  s.run(p,('）' if lang=='zh' else ')')+t('conclusionEffective'))
  s.p(m['rankingPrompt'])
  s.p('Z > X > ／ > ／' if answers else '________ > ________ > ________ > ________',color=BLUE if answers else None,bold=answers)
- s.mc(m['questions'][2]);s.page()
- for q in m['questions'][3:]:s.mc(q)
+
+ for q in m['questions'][2:]:s.mc(q)
  s.h(s.t('部分3｜整合解釋','Part 3 | Integrated explanation'));s.p(m['reflection'])
  vals=', '.join(str(p['result']['X']) for p in m['plates'])
  answer=s.t(f'例如 X 的讀數為 {vals} mm，顯示能抑制生長；Z 配合其讀數也可。群體原有少量抗性細菌，抗生素令敏感者較難存活；抗性者較易存活、繁殖並把抗性特徵傳給後代。其比例可能上升，令持續使用的效果可能下降；不表示每次必然完全失效。',f'For example, X has readings {vals} mm, supporting inhibition; accept Z with its readings too. A few resistant bacteria already exist. The antibiotic reduces survival of susceptible bacteria. Resistant bacteria are more likely to survive, reproduce and pass resistance traits to offspring. Their proportion may rise, so continued use may become less effective; complete failure is not inevitable.')
@@ -249,7 +256,7 @@ def teacher(lang):
  s.p(s.t('analysisVersion2題目範圍不變。新探究rubricVersion3／taskVersion VL4-multiselect-5：反思由2改8，其餘21分不變，共29；六人工欄為觀察2、假說1、重複1、對照1、設計2、反思8。R3人工欄僅接受0至上限整數，空白待評、0已評零分；公式亦檢查無效貼入，不因資料驗證可繞過而出有效總分。全部適用人工欄有效且反思已提交才出總分。','analysisVersion2 task scope remains unchanged. New inquiries have rubricVersion3/taskVersion VL4-multiselect-5: reflection rises from 2 to 8; other 21 unchanged; total 29. Six manual fields: observation2, hypothesis1, repeats1, control1, design2, reflection8. R3 accepts only integers within bounds; blank=pending, 0=marked zero. Formulas reject invalid pasted values too. All applicable manual fields plus submitted reflection are required.'))
  s.p(s.t('舊R2仍23分、舊歷史版32分及原規準，混合匯出分表，保留當時半分規則。欄尾標記題目／評分版本；原始／首次／最後答案、研究ID、圖像、事件及雲端佇列不改。人工分只在保存的Excel；舊下載檔不會自動更新，須重新匯出。','R2 remains23, earlier legacy32, with historical criteria and half-mark rules. Mixed exports use separate sheets and explicit assessment metadata. Original/first/latest responses, research IDs, images, events and cloud queues are retained. Manual marks live in saved Excel files; old downloads do not update—export again.'))
  s.p(s.t('科學界限：清晰區為無可見生長，不證明全死；不同抗生素擴散不同，最大圈不等於最佳臨床用藥，沒有臨床界值。原有抗性比例上升已可能影響效果，不必完全佔據群體。Fleming當時不是研究MRSA。','Scientific limits: no visible growth does not prove all dead. Different antibiotics diffuse differently; largest zone is not best clinical treatment, and no clinical breakpoint is supplied. Rising resistance proportion may affect effectiveness without complete takeover. Fleming did not study MRSA.'))
- s.p(s.t('歷史照片來源：CBS News · The discovery of penicillin；使用原圖重新標示。圖A直接取自VL學習重點，為解說示意，與第4頁按實際尺寸印刷的量度圖分開。','Historical photo: CBS News · The discovery of penicillin, relabelled from the source image. Figure A comes from the VL learning points; it is explanatory, separate from page 4’s measurement views printed at actual size.'))
+ s.p(s.t('歷史照片來源：CBS News · The discovery of penicillin；使用原圖重新標示。圖A直接取自VL學習重點，為解說示意，與第3頁按實際尺寸印刷的量度圖分開。','Historical photo: CBS News · The discovery of penicillin, relabelled from the source image. Figure A comes from the VL learning points; it is explanatory, separate from page 3’s measurement views printed at actual size.'))
  s.save('WS4_D_'+lang)
 for lang in ['zh','en']:
  for ans in [False,True]:worksheet(lang,ans)

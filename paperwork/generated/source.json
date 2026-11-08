@@ -1,17 +1,17 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 6,
-    "worksheetPages": 6,
+    "version": 7,
+    "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
       "variables": 2,
-      "planning": 3,
-      "results": 4,
-      "conclusion": 5,
-      "reflection": 6
+      "planning": 2,
+      "results": 3,
+      "conclusion": 4,
+      "reflection": 4
     },
-    "taskVersion": "VL4-WS4-notes-layout-6",
+    "taskVersion": "VL4-WS4-four-pages-7",
     "language": "zh",
     "principle": {
       "title": "A. 實驗原理：抗生素樣本的擴散與清晰區的形成",
@@ -1141,17 +1141,17 @@
   },
   "en": {
     "module": "VL4",
-    "version": 6,
-    "worksheetPages": 6,
+    "version": 7,
+    "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
       "variables": 2,
-      "planning": 3,
-      "results": 4,
-      "conclusion": 5,
-      "reflection": 6
+      "planning": 2,
+      "results": 3,
+      "conclusion": 4,
+      "reflection": 4
     },
-    "taskVersion": "VL4-WS4-notes-layout-6",
+    "taskVersion": "VL4-WS4-four-pages-7",
     "language": "en",
     "principle": {
       "title": "A. Experimental principle: antibiotic（抗生素） diffusion and clear-zone（清晰區） formation",

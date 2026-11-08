@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "51defe392da7876ff576b0eb79bc042810ec6e5dfc9194e9dd8a09111ab63f4a";
+var PAPER_FINGERPRINT = "1c57bb21d3d6b0945f5b8ce54e8ff054a27c762ab68f7ea004070b3154639277";
 
 // english-glossary.js
 var entries = [
@@ -25070,8 +25070,8 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 6;
-var PAPER_TASK_VERSION = "VL4-WS4-notes-layout-6";
+var PAPER_VERSION = 7;
+var PAPER_TASK_VERSION = "VL4-WS4-four-pages-7";
 var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
@@ -25093,8 +25093,8 @@ function getPaperSource(language2 = "zh") {
   return {
     module: "VL4",
     version: PAPER_VERSION,
-    worksheetPages: 6,
-    pageMap: { notes: 1, variables: 2, planning: 3, results: 4, conclusion: 5, reflection: 6 },
+    worksheetPages: 4,
+    pageMap: { notes: 1, variables: 2, planning: 2, results: 3, conclusion: 4, reflection: 4 },
     taskVersion: PAPER_TASK_VERSION,
     language: language2,
     principle: { title: principle[1], svg: principle[2] },
