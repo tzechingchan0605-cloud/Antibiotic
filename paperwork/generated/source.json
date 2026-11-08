@@ -1,8 +1,8 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 3,
-    "taskVersion": "VL4-WS4-evidence-3",
+    "version": 4,
+    "taskVersion": "VL4-WS4-layout-4",
     "language": "zh",
     "text": {
       "account": "切換帳戶",
@@ -281,7 +281,7 @@
       "placeDiscs": "用虛擬鑷子放置紙碟",
       "placeHint": "選擇樣本，再點選瓊脂板位置；可重新選擇以移動。輔助放置提供可量度的位置。",
       "plannedReplicateReason": "為甚麼你會這樣安排？",
-      "plannedReplicates": "測試樣本其有4種：X、Y、Z 及對照組。你認為每種樣本共需測試多少次？（包含第一次）",
+      "plannedReplicates": "測試樣本共有4種：X、Y、Z 及對照組。你認為每種樣本共需測試多少次？（包含第一次）",
       "plate": "瓊脂板",
       "plateBottom": "底部",
       "plateLabel": "瓊脂板標示",
@@ -445,12 +445,13 @@
       "zoom": "放大量度視圖",
       "zoomOut": "顯示整個瓊脂板"
     },
+    "repeatPrompt": "測試樣本共有4種：抗生素X、Y、Z 及對照組。你認為每種樣本共需測試多少次？為什麼？",
+    "rankingPrompt": "以本次清晰區的平均總直徑比較，它們的抑制效能為：只排列有可見清晰區的樣本。以「／」刪去不適用位置。",
     "title": "工作紙四：抗生素與細菌生長",
     "concepts": [
       "抗生素可抑制生長或殺死某些細菌，主要用於[細菌感染]，不能治療病毒感染。MRSA 是耐甲氧西林金黃葡萄球菌，不代表對所有抗生素皆有抗性。",
       "抗生素由紙碟[向外擴散]，濃度通常隨距離下降；足以[抑制細菌生長]的範圍形成[清晰區]。沒有可見生長不代表所有細菌已死亡。",
-      "量度通過圓心的[總直徑]，包括 6 mm 紙碟；無紙碟外清晰區時選「沒有」並記 0 mm。三塊獨立平板分別量度，平均值＝三次讀數之和÷3。",
-      "群體原有[抗性差異]；抗性者較容易[存活、繁殖]並[遺傳抗性特徵]。比例可能上升，藥物效果可能下降；不是細菌主動產生所需抗性或患者本人變得抗藥。"
+      "群體原有[抗性差異]；抗生素使敏感細菌較難存活，抗性者較容易[存活、繁殖]並[遺傳抗性特徵]。比例可能上升，藥物效果可能下降；[過度或不當使用抗生素]會增加選擇壓力。這不是細菌主動產生所需抗性或患者本人變得抗藥。"
     ],
     "variables": [
       {
@@ -512,22 +513,6 @@
       {
         "id": "Z",
         "text": "Z"
-      },
-      {
-        "id": "X_Y",
-        "text": "X、Y"
-      },
-      {
-        "id": "X_Z",
-        "text": "X、Z"
-      },
-      {
-        "id": "Y_Z",
-        "text": "Y、Z"
-      },
-      {
-        "id": "all",
-        "text": "X、Y、Z"
       },
       {
         "id": "none",
@@ -783,7 +768,7 @@
       },
       {
         "id": "plate-2",
-        "seed": 1002,
+        "seed": 123456789,
         "discPositions": {
           "X": {
             "x": 130,
@@ -803,16 +788,16 @@
           }
         },
         "result": {
-          "X": 18.7,
+          "X": 18,
           "Y": 0,
-          "Z": 26.3,
+          "Z": 27.8,
           "C": 0
         },
         "completed": true
       },
       {
         "id": "plate-3",
-        "seed": 1003,
+        "seed": 4294967,
         "discPositions": {
           "X": {
             "x": 130,
@@ -832,9 +817,9 @@
           }
         },
         "result": {
-          "X": 18.7,
+          "X": 18.9,
           "Y": 0,
-          "Z": 26.5,
+          "Z": 27.9,
           "C": 0
         },
         "completed": true
@@ -1073,7 +1058,7 @@
       [
         "1.4",
         "plannedReplicates,plannedReplicateReason",
-        "測試樣本其有4種：X、Y、Z 及對照組。你認為每種樣本共需測試多少次？（包含第一次） 為甚麼你會這樣安排？",
+        "測試樣本共有4種：X、Y、Z 及對照組。你認為每種樣本共需測試多少次？（包含第一次） 為甚麼你會這樣安排？",
         "1"
       ],
       [
@@ -1136,8 +1121,8 @@
   },
   "en": {
     "module": "VL4",
-    "version": 3,
-    "taskVersion": "VL4-WS4-evidence-3",
+    "version": 4,
+    "taskVersion": "VL4-WS4-layout-4",
     "language": "en",
     "text": {
       "account": "Switch account",
@@ -1580,12 +1565,13 @@
       "zoom": "Magnify measurement view",
       "zoomOut": "Show whole plate"
     },
+    "repeatPrompt": "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?",
+    "rankingPrompt": "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with “/”.",
     "title": "WS4: Antibiotics and bacterial growth",
     "concepts": [
       "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections. MRSA means methicillin-resistant Staphylococcus aureus; this does not imply resistance to all antibiotics.",
       "Antibiotic [diffuses outward] from a disc; concentration generally falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. No visible growth does not prove all bacteria have died.",
-      "Measure the [total diameter] through the centre, including the 6 mm disc. With no external zone, select No and record 0 mm. Measure three independent plates; mean = sum of three readings ÷ 3.",
-      "The population has [pre-existing resistance differences]. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; bacteria do not purposefully develop needed resistance, and the patient does not become resistant."
+      "The population has [pre-existing resistance differences]. Antibiotics reduce survival of susceptible bacteria. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; [Overuse or misuse] adds selection pressure. Bacteria do not purposefully develop needed resistance, and the patient does not become resistant."
     ],
     "variables": [
       {
@@ -1647,22 +1633,6 @@
       {
         "id": "Z",
         "text": "Z"
-      },
-      {
-        "id": "X_Y",
-        "text": "X and Y"
-      },
-      {
-        "id": "X_Z",
-        "text": "X and Z"
-      },
-      {
-        "id": "Y_Z",
-        "text": "Y and Z"
-      },
-      {
-        "id": "all",
-        "text": "X, Y and Z"
       },
       {
         "id": "none",
@@ -1918,7 +1888,7 @@
       },
       {
         "id": "plate-2",
-        "seed": 1002,
+        "seed": 123456789,
         "discPositions": {
           "X": {
             "x": 130,
@@ -1938,16 +1908,16 @@
           }
         },
         "result": {
-          "X": 18.7,
+          "X": 18,
           "Y": 0,
-          "Z": 26.3,
+          "Z": 27.8,
           "C": 0
         },
         "completed": true
       },
       {
         "id": "plate-3",
-        "seed": 1003,
+        "seed": 4294967,
         "discPositions": {
           "X": {
             "x": 130,
@@ -1967,9 +1937,9 @@
           }
         },
         "result": {
-          "X": 18.7,
+          "X": 18.9,
           "Y": 0,
-          "Z": 26.5,
+          "Z": 27.9,
           "C": 0
         },
         "completed": true

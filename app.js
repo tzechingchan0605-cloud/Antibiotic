@@ -1,6 +1,6 @@
 import {createPaperworkPanel} from './paperwork/client.js';
 import {VARIABLE_OPTIONS,ASSUMPTION_OPTIONS,PREDICTION_OPTIONS,REPEAT_OPTIONS,EQUIPMENT_ART} from './inquiry-content.js';
-import {MC_QUESTIONS,EFFECTIVE_OPTIONS,ANALYSIS_FIELDS} from './analysis.js';
+import {MC_QUESTIONS,EFFECTIVE_SAMPLE_OPTIONS,ANALYSIS_FIELDS} from './analysis.js';
 import {language,t,setLanguage,translate} from './i18n.js';
 import {createExperimentBench} from './experiment-bench.js';
 import {historyFigureMarkup,historyCaptionKey,layoutHistoryLabels} from './history-figure.js';
@@ -33,7 +33,7 @@ $('#designDescription').rows=2;$('#designDescription').maxLength=1000;
 $('#replicateFields').innerHTML=field('plannedReplicates','plannedReplicates',{options:REPEAT_OPTIONS,placeholder:null})+field('plannedReplicateReason','plannedReplicateReason',{placeholder:null});
 const mcQuestion=question=>`<fieldset class="analysis-question" id="${question.id}"><legend><span class="question-number">${question.number}</span> ${span(question.key)}</legend><div class="mc-options">${question.options.map(([value,key],i)=>`<label class="mc-option"><input type="radio" name="${question.id}" data-field="${question.id}" data-scope="answer" value="${value}" required><span class="mc-letter">${String.fromCharCode(65+i)}</span>${span(key)}</label>`).join('')}</div></fieldset>`;
 const rankSelect=(id,index)=>`<select id="${id}" data-field="${id}" data-scope="answer" required data-i18n-aria="${id}">${option('','choose')}${SAMPLES.map(sample=>sample==='C'?option(sample,'blank'):`<option value="${sample}">${sample}</option>`).join('')}${index>1?option('na','notApplicable'):''}</select>`;
-const conclusionMarkup=`<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span('resultConclusion')}</legend><div class="conclusion-sentence">${span('conclusionContext')}<select id="effectiveSamples" data-field="effectiveSamples" data-scope="answer" required data-i18n-aria="effectiveSamples">${option('','choose')}${EFFECTIVE_OPTIONS.map(([value,key])=>option(value,key)).join('')}</select>${span('conclusionEffective')}</div><p>${span('conclusionRanking')}</p><div class="conclusion-ranking">${[0,1,2,3].map((index)=>`${index?'<span aria-hidden="true">＞</span>':''}${rankSelect('rank'+(index+1),index)}`).join('')}</div><p class="question-hint">${span('conclusionSelectHint')}</p></fieldset>`;
+const conclusionMarkup=`<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span('resultConclusion')}</legend><div class="conclusion-sentence">${span('conclusionContext')}<div id="effectiveSamples" role="group" data-i18n-aria="effectiveSamples">${multi('effectiveSamples',EFFECTIVE_SAMPLE_OPTIONS)}</div>${span('conclusionEffective')}</div><p>${span('conclusionRanking')}</p><div class="conclusion-ranking">${[0,1,2,3].map((index)=>`${index?'<span aria-hidden="true">＞</span>':''}${rankSelect('rank'+(index+1),index)}`).join('')}</div><p class="question-hint">${span('conclusionSelectHint')}</p></fieldset>`;
 $('#analysisFields').innerHTML=MC_QUESTIONS.slice(0,2).map(mcQuestion).join('')+conclusionMarkup+MC_QUESTIONS.slice(2).map(mcQuestion).join('');
 $('#reflectionFields').innerHTML=field('reflection','reflectionQuestion');
 $('#meanInputs').innerHTML=SAMPLES.map(s=>`<label class="field">${span(`meanLabel${s}`)}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" data-i18n-aria="meanLabel${s}"></label>`).join('');
@@ -67,7 +67,10 @@ function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(save,350);}
 function log(type,details={}){if(!state||state.demo)return;state.events.push({type,details:clone(details),phase:state.phase,at:nowISO()});}
 function recordAnswer(id,value){if(!state||(state.submittedAt&&id!=='reflection')||(id==='reflection'&&state.reflectionSubmittedAt))return;const old=state.answers[id];state.answers[id]=value;if(state.original&&JSON.stringify(old)!==JSON.stringify(value))log('answer_revision',{field:id,previous:old??'',next:value});if(id==='designDescription'){state.design.saved=false;$('#designStatus').textContent='';}scheduleSave();}
 $$('[data-field][data-scope="answer"]').forEach(el=>{el.addEventListener(el.tagName==='SELECT'||el.type==='radio'?'change':'input',()=>recordAnswer(el.dataset.field,el.value));});
-$$('[data-multi]').forEach(el=>el.addEventListener('change',()=>recordAnswer(el.dataset.multi,$$(`[data-multi="${el.dataset.multi}"]:checked`).map(c=>c.value))));
+$$('[data-multi]').forEach(el=>el.addEventListener('change',()=>{
+ if(el.dataset.multi==='effectiveSamples'&&el.checked){for(const other of $$('[data-multi="effectiveSamples"]'))if(other!==el&&(el.value==='none'||other.value==='none'))other.checked=false;}
+ recordAnswer(el.dataset.multi,$$(`[data-multi="${el.dataset.multi}"]:checked`).map(c=>c.value));
+}));
 $$('[data-variable]').forEach(button=>button.onclick=()=>{
  if(!state||state.submittedAt)return;
  const group=button.dataset.group,value=button.dataset.variable,current=state.answers[group];

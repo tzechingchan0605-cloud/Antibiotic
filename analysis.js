@@ -8,6 +8,9 @@ export const MC_QUESTIONS = [
   {id:'controlPurpose',number:6,key:'controlPurpose',correct:'baseline',options:[['same','controlSame'],['treatment','controlTreatment'],['baseline','controlBaseline'],['increase','controlIncrease']]}
 ];
 export const EFFECTIVE_OPTIONS = [['X','predictionX'],['Y','predictionY'],['Z','predictionZ'],['X_Y','predictionXY'],['X_Z','predictionXZ'],['Y_Z','predictionYZ'],['all','effectiveAll'],['none','effectiveNone']];
+export const EFFECTIVE_SAMPLE_OPTIONS=[['X','predictionX'],['Y','predictionY'],['Z','predictionZ'],['none','effectiveNone']];
+// Read historical combined selections without rewriting saved responses.
+export const effectiveSelections=value=>Array.isArray(value)?value:value==='all'?['X','Y','Z']:value==='none'?['none']:typeof value==='string'?value.split('_').filter(Boolean):[];
 export const CONCLUSION_FIELDS = ['effectiveSamples','rank1','rank2','rank3','rank4'];
 export const ANALYSIS_FIELDS = [...MC_QUESTIONS.map(question=>question.id),...CONCLUSION_FIELDS];
 export const currentAnalysis = record => record.analysisVersion === ANALYSIS_VERSION;

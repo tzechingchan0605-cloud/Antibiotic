@@ -1,4 +1,4 @@
-import {MC_QUESTIONS,currentAnalysis,analysisChecks} from './analysis.js';
+import {MC_QUESTIONS,currentAnalysis,analysisChecks,effectiveSelections} from './analysis.js';
 // Draft criteria for teaching/research review; not a validated psychometric instrument.
 import {clearZoneDiameter} from './model.js';
 export const TOLERANCES = Object.freeze({ reading: 1, mean: 0.1, graph: 0.5 });
@@ -22,8 +22,8 @@ export function studentMean(record, sample) {
 export function conclusionChecks(record) {
   const a=record.answers||{},plates=record.plates||[];
   const effective=['X','Y','Z'].filter(sample=>plates.some(plate=>clearZoneDiameter(plate,sample)>0));
-  const selected=a.effectiveSamples==='all'?['X','Y','Z']:a.effectiveSamples==='none'?[]:(a.effectiveSamples||'').split('_').filter(Boolean);
-  const samples=a.effectiveSamples?plates.length>0&&sameChoices(selected,effective):null;
+  const choices=effectiveSelections(a.effectiveSamples), selected=choices.includes('none')?(choices.length===1?[]:['invalid']):choices;
+  const samples=choices.length?plates.length>0&&sameChoices(selected,effective):null;
   const ranking=['rank1','rank2','rank3','rank4'].map(key=>a[key]);
   const means=Object.fromEntries(effective.map(sample=>[sample,studentMean(record,sample)]));
   const reference=effective.every(sample=>means[sample]!==null)?[...effective].sort((x,y)=>means[y]-means[x]):null;

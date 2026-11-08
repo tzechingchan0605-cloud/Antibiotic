@@ -33,20 +33,25 @@ for lang in ['zh','en']:
      # Identity labels and lines remain on one printed line.
      row=[s for s in spans if abs(s['bbox'][1]-identity[0]['bbox'][1])<1];whole=''.join(s['text'] for s in row);assert ('學號' if lang=='zh' else 'No.') in whole
     if i in [0,2]:
-     rects=[r for img in p.get_images() for r in p.get_image_rects(img[0])];assert any(r.height>(60 if i==0 else 150) and r.width>=520 for r in rects),(lang,key,i,'diagram clipped')
+     rects=[r for img in p.get_images() for r in p.get_image_rects(img[0])];assert any(r.height>(280 if i==0 else 125) and r.width>=(195 if i==0 else 520) for r in rects),(lang,key,i,'diagram clipped')
     if i==2:
      image_rect=max(rects,key=lambda r:r.width);pix=p.get_pixmap(matrix=fitz.Matrix(3,3),colorspace=fitz.csGRAY,alpha=False);im=Image.frombytes('L',[pix.width,pix.height],pix.samples)
      def gray(x,y):
-      px=round((image_rect.x0+x*image_rect.width/522)*3);py=round((image_rect.y0+y*image_rect.height/157)*3);box=im.crop((px-1,py-1,px+2,py+2));return sum(box.tobytes())/9
+      px=round((image_rect.x0+x*image_rect.width/522)*3);py=round((image_rect.y0+y*image_rect.height/130)*3);box=im.crop((px-1,py-1,px+2,py+2));return sum(box.tobytes())/9
      for offset in [0,174,348]:assert gray(offset+21.75+64*.75,64*.75)>gray(offset+21.75+120*.75,64*.75)+12,(lang,key,'missing/indistinct gray zones')
-    if key=='studentPDF':assert not re.search(r'18\.7|26\.1|26\.3|26\.5',p.get_text())
+    if key=='studentPDF':
+     for value in {v for plate in sources[lang]['plates'] for v in plate['result'].values() if v}:assert str(value) not in p.get_text(),(lang,'reading leaked')
     pix=p.get_pixmap(matrix=fitz.Matrix(1.2,1.2),alpha=False);pix.save(out/f'{lang}-{key}-{i+1}.png')
   if key=='answersPDF':assert '參考答案' in text if lang=='zh' else 'Reference answer:' in text
  s=sources[lang]
  for key in ['studentPDF','answersPDF']:
-  for name in ['assumptionDefinitionHint','controlPurposeHint','plannedReplicates','plannedReplicateReason']:
+  for name in ['assumptionDefinitionHint','controlPurposeHint','contextCopy']:
    assert norm(s['text'][name]) in texts[key],(lang,key,name)
   assert norm(s['reflection']) in texts[key]
+  assert norm(s['repeatPrompt']) in texts[key]
+  assert norm(s['rankingPrompt']) in texts[key]
+  assert norm('（包含第一次）') not in texts[key]
+  assert norm('1 / 2 / 3 / 4 / 5 / 6') not in texts[key]
   for options in ['variables','assumptions']:
    for o in s[options]:assert norm(o['text']) in texts[key],(lang,key,o)
   for q in s['questions']:

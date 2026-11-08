@@ -19,7 +19,7 @@ test('teacher downloads all ten real PDFs and previews without altering records,
  await page.addInitScript(({r,RECORDS,CURRENT})=>{if(location.origin!=='http://127.0.0.1:4173')return;localStorage.setItem(RECORDS,JSON.stringify([r]));localStorage.setItem(CURRENT,JSON.stringify(r));},{r,RECORDS,CURRENT});
  await page.goto('/');await teacher(page);await page.locator('[data-view]').click();await page.evaluate(()=>{const ctx=document.querySelector('#setupCanvas').getContext('2d');ctx.fillStyle='#15333b';ctx.fillRect(40,30,90,20);});
  const before=await snapshot(page);const firstExcelPromise=page.waitForEvent('download');await page.locator('#exportLocal').click();const firstExcel=await excelContent(await firstExcelPromise);
- await page.locator('#openPaperwork').click();await expect(page.locator('[data-paper-download=studentPDF]')).toBeEnabled();await expect(page.locator('#paperContentVersion')).toContainText('v3');await expect(page.locator('#paperStatus')).toContainText('15–20');
+ await page.locator('#openPaperwork').click();await expect(page.locator('[data-paper-download=studentPDF]')).toBeEnabled();await expect(page.locator('#paperContentVersion')).toContainText('v4');await expect(page.locator('#paperStatus')).toContainText('15–20');
  for(const lang of ['zh','en']){
    await page.locator('#paperLanguage').selectOption(lang);
    await expect(page.locator('html')).toHaveAttribute('lang',lang==='en'?'en':'zh-Hant-HK');

@@ -276,7 +276,8 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await expect(page.locator('#submitDialog')).toBeHidden();
   await expect(page.locator('#zoneMeaning input').first()).toBeFocused();
   for(const [id,value] of Object.entries({zoneMeaning:'inhibition',zoneDiameterMeaning:'extent',repeatPurpose:'consistency',repeatVariation:'check',controlPurpose:'baseline'}))await page.locator(`input[name="${id}"][value="${value}"]`).check();
-  for(const [id,value] of Object.entries({effectiveSamples:'X_Z',rank1:'Z',rank2:'X',rank3:'na',rank4:'na'}))await page.locator('#'+id).selectOption(value);
+  await page.locator('[data-multi="effectiveSamples"][value="X"]').check();await page.locator('[data-multi="effectiveSamples"][value="Z"]').check();
+  for(const [id,value] of Object.entries({rank1:'Z',rank2:'X',rank3:'na',rank4:'na'}))await page.locator('#'+id).selectOption(value);
   if (beforeSubmit) await beforeSubmit();
   await page.locator('#submitInquiry').click();
   await expect(page.locator('#submitDialog')).toBeVisible();
@@ -541,6 +542,9 @@ test('new MC questions and selected conclusion are required, bilingual, and lock
     await expect(page.locator('#analysisFields .question-number')).toHaveText(['1','2','3','4','5','6']);
     await expect(page.locator('#controlPurpose legend')).not.toContainText('生長');
     await expect(page.locator('#rank3 option[value="na"],#rank4 option[value="na"]')).toHaveCount(2);
+    const samples=page.locator('[data-multi="effectiveSamples"]');await expect(samples).toHaveCount(4);
+    await page.locator('[data-multi="effectiveSamples"][value="X"]').uncheck();await page.locator('[data-multi="effectiveSamples"][value="Z"]').uncheck();await page.locator('#submitInquiry').click();await expect(page.locator('#submitDialog')).toBeHidden();await expect(samples.first()).toBeFocused();
+    await page.locator('[data-multi="effectiveSamples"][value="none"]').check();await page.locator('[data-multi="effectiveSamples"][value="X"]').check();await expect(page.locator('[data-multi="effectiveSamples"][value="none"]')).not.toBeChecked();await page.locator('[data-multi="effectiveSamples"][value="Z"]').check();
     await page.locator('#rank4').selectOption('');
     await page.locator('#submitInquiry').click();
     await expect(page.locator('#submitDialog')).toBeHidden();
@@ -565,7 +569,7 @@ test('new MC questions and selected conclusion are required, bilingual, and lock
   const state=await current(page);
   expect(state.analysisVersion).toBe(2);
   expect(state.submittedAt).toBeTruthy();
-  expect(state.answers.effectiveSamples).toBe('X_Z');
+  expect(state.answers.effectiveSamples).toEqual(['X','Z']);
   expect(state.answers.rank1).toBe('Z');
   await expect(page.locator('#rank1')).toBeDisabled();
   await expect(page.locator('input[name="zoneMeaning"][value="inhibition"]')).toBeDisabled();

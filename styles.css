@@ -582,3 +582,5 @@ dialog::backdrop { background: #17392dcc; backdrop-filter: blur(5px); }
 .paper-file .record-actions { flex-wrap: wrap; }
 #paperPreview { width: 100%; height: 65vh; border: 1px solid #c5d9d2; background: white; }
 @media (max-width: 600px) { .paper-files { grid-template-columns: 1fr; } .paper-heading { align-items: flex-start; flex-direction: column; } }
+
+#effectiveSamples .chip-grid{display:flex;flex-wrap:wrap;gap:.6rem}#effectiveSamples .choice{min-width:4rem}#effectiveSamples{display:inline-block;max-width:100%}

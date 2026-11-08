@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
-const materialInputs=['paperwork/worksheet.py','paperwork/source.js','paperwork/client.js','i18n.js','inquiry-content.js','rubric.js','reports.js','model.js'];
+const materialInputs=['paperwork/worksheet.py','paperwork/source.js','paperwork/client.js','i18n.js','inquiry-content.js','rubric.js','reports.js','model.js','analysis.js','history-figure.js','assets/alexander-fleming-petri-dish-penicillin.jpg'];
 const materialBytes=await Promise.all(materialInputs.map(n=>readFile(resolve(root,n))));
 const materialFingerprint=createHash('sha256').update(Buffer.concat(materialBytes)).digest('hex');
 await writeFile(resolve(root,'paperwork/fingerprint.js'),`export const PAPER_FINGERPRINT='${materialFingerprint}';\n`);

@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "ffd9da6162cfdc37257c50690c20369e1d52718053fe9b410e84785b5d0a171e";
+var PAPER_FINGERPRINT = "d0b8a98ac32c5baffe2c16f0382fd688afe7e344c8a317c50162dbcfa81543dd";
 
 // english-glossary.js
 var entries = [
@@ -24093,7 +24093,7 @@ var L = {
   saveDesign: pair("\u5132\u5B58\u88DD\u7F6E\u8A2D\u8A08", "Save setup design"),
   designSaved: pair("\u8A2D\u8A08\u5DF2\u5132\u5B58\u3002", "Setup saved."),
   repeatPlan: pair("\u4F60\u7684\u539F\u59CB\u7814\u7A76\u8A08\u5283", "Your original research plan"),
-  plannedReplicates: pair("\u6E2C\u8A66\u6A23\u672C\u5176\u67094\u7A2E\uFF1AX\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\uFF08\u5305\u542B\u7B2C\u4E00\u6B21\uFF09", "There are 4 test samples: X, Y, Z and the control. How many tests do you think each sample needs in total? (Include the first test.)"),
+  plannedReplicates: pair("\u6E2C\u8A66\u6A23\u672C\u5171\u67094\u7A2E\uFF1AX\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\uFF08\u5305\u542B\u7B2C\u4E00\u6B21\uFF09", "There are 4 test samples: X, Y, Z and the control. How many tests do you think each sample needs in total? (Include the first test.)"),
   plannedReplicateReason: pair("\u70BA\u751A\u9EBC\u4F60\u6703\u9019\u6A23\u5B89\u6392\uFF1F", "Why would you plan it this way?"),
   repeatNote: pair("\u6BCF\u500B\u7368\u7ACB\u74CA\u8102\u677F\u5747\u6709 X\u3001Y\u3001Z \u53CA\u5C0D\u7167\uFF1B\u591A\u4E00\u500B\u74CA\u8102\u677F\uFF0C\u6BCF\u500B\u6A23\u672C\u5C31\u591A\u4E00\u6B21\u89C0\u5BDF\u3002\u6B21\u6578\u591A\u4E0D\u7B49\u65BC\u7406\u7531\u66F4\u597D\u3002", "Each independent plate has X, Y, Z and the control. One more plate gives one more observation per sample. A higher number does not automatically mean a better plan."),
   classroomPlan: pair("\u4EE5\u4E0A\u662F\u4F60\u7684\u539F\u59CB\u7814\u7A76\u5EFA\u8B70\uFF0C\u5DF2\u7368\u7ACB\u4FDD\u5B58\u3002\u70BA\u5171\u540C\u6BD4\u8F03\uFF0C\u672C\u8AB2\u5802\u5C07\u7D71\u4E00\u4F7F\u7528 3 \u584A\u5E73\u677F\u9032\u884C\u6E2C\u8A66\u3002\u4F60\u7121\u9700\u66F4\u6539\u4F60\u7684\u539F\u59CB\u8A2D\u8A08\u3002", "Your original research proposal has been saved separately. For classroom comparison, this activity will use 3 agar plates. You do not need to change your original design."),
@@ -24303,6 +24303,8 @@ var MC_QUESTIONS = [
   { id: "controlPurpose", number: 6, key: "controlPurpose", correct: "baseline", options: [["same", "controlSame"], ["treatment", "controlTreatment"], ["baseline", "controlBaseline"], ["increase", "controlIncrease"]] }
 ];
 var EFFECTIVE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["X_Y", "predictionXY"], ["X_Z", "predictionXZ"], ["Y_Z", "predictionYZ"], ["all", "effectiveAll"], ["none", "effectiveNone"]];
+var EFFECTIVE_SAMPLE_OPTIONS = [["X", "predictionX"], ["Y", "predictionY"], ["Z", "predictionZ"], ["none", "effectiveNone"]];
+var effectiveSelections = (value) => Array.isArray(value) ? value : value === "all" ? ["X", "Y", "Z"] : value === "none" ? ["none"] : typeof value === "string" ? value.split("_").filter(Boolean) : [];
 var CONCLUSION_FIELDS = ["effectiveSamples", "rank1", "rank2", "rank3", "rank4"];
 var ANALYSIS_FIELDS = [...MC_QUESTIONS.map((question) => question.id), ...CONCLUSION_FIELDS];
 var currentAnalysis = (record) => record.analysisVersion === ANALYSIS_VERSION;
@@ -24327,7 +24329,8 @@ function freshRecord(profile, demo = false) {
     schemaVersion: 1,
     analysisVersion: 2,
     rubricVersion: 3,
-    taskVersion: "VL4-evidence-reflection-3",
+    taskVersion: "VL4-multiselect-4",
+    conclusionVersion: 2,
     moduleId: MODULE_ID,
     id: crypto.randomUUID(),
     version: 0,
@@ -24454,8 +24457,8 @@ function studentMean(record, sample) {
 function conclusionChecks(record) {
   const a = record.answers || {}, plates = record.plates || [];
   const effective = ["X", "Y", "Z"].filter((sample) => plates.some((plate) => clearZoneDiameter(plate, sample) > 0));
-  const selected = a.effectiveSamples === "all" ? ["X", "Y", "Z"] : a.effectiveSamples === "none" ? [] : (a.effectiveSamples || "").split("_").filter(Boolean);
-  const samples = a.effectiveSamples ? plates.length > 0 && sameChoices(selected, effective) : null;
+  const choices = effectiveSelections(a.effectiveSamples), selected = choices.includes("none") ? choices.length === 1 ? [] : ["invalid"] : choices;
+  const samples = choices.length ? plates.length > 0 && sameChoices(selected, effective) : null;
   const ranking = ["rank1", "rank2", "rank3", "rank4"].map((key) => a[key]);
   const means = Object.fromEntries(effective.map((sample) => [sample, studentMean(record, sample)]));
   const reference = effective.every((sample) => means[sample] !== null) ? [...effective].sort((x, y) => means[y] - means[x]) : null;
@@ -25067,9 +25070,9 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 3;
-var PAPER_TASK_VERSION = "VL4-WS4-evidence-3";
-var PAPER_SEEDS = Object.freeze([1001, 1002, 1003]);
+var PAPER_VERSION = 4;
+var PAPER_TASK_VERSION = "VL4-WS4-layout-4";
+var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
   if (!["zh", "en"].includes(language2)) throw Error("Invalid language");
@@ -25082,8 +25085,7 @@ function getPaperSource(language2 = "zh") {
   const concepts = [
     ["\u6297\u751F\u7D20\u53EF\u6291\u5236\u751F\u9577\u6216\u6BBA\u6B7B\u67D0\u4E9B\u7D30\u83CC\uFF0C\u4E3B\u8981\u7528\u65BC[\u7D30\u83CC\u611F\u67D3]\uFF0C\u4E0D\u80FD\u6CBB\u7642\u75C5\u6BD2\u611F\u67D3\u3002MRSA \u662F\u8010\u7532\u6C27\u897F\u6797\u91D1\u9EC3\u8461\u8404\u7403\u83CC\uFF0C\u4E0D\u4EE3\u8868\u5C0D\u6240\u6709\u6297\u751F\u7D20\u7686\u6709\u6297\u6027\u3002", "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections. MRSA means methicillin-resistant Staphylococcus aureus; this does not imply resistance to all antibiotics."],
     ["\u6297\u751F\u7D20\u7531\u7D19\u789F[\u5411\u5916\u64F4\u6563]\uFF0C\u6FC3\u5EA6\u901A\u5E38\u96A8\u8DDD\u96E2\u4E0B\u964D\uFF1B\u8DB3\u4EE5[\u6291\u5236\u7D30\u83CC\u751F\u9577]\u7684\u7BC4\u570D\u5F62\u6210[\u6E05\u6670\u5340]\u3002\u6C92\u6709\u53EF\u898B\u751F\u9577\u4E0D\u4EE3\u8868\u6240\u6709\u7D30\u83CC\u5DF2\u6B7B\u4EA1\u3002", "Antibiotic [diffuses outward] from a disc; concentration generally falls with distance. A [clear zone] forms where it can [inhibit bacterial growth]. No visible growth does not prove all bacteria have died."],
-    ["\u91CF\u5EA6\u901A\u904E\u5713\u5FC3\u7684[\u7E3D\u76F4\u5F91]\uFF0C\u5305\u62EC 6 mm \u7D19\u789F\uFF1B\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340\u6642\u9078\u300C\u6C92\u6709\u300D\u4E26\u8A18 0 mm\u3002\u4E09\u584A\u7368\u7ACB\u5E73\u677F\u5206\u5225\u91CF\u5EA6\uFF0C\u5E73\u5747\u503C\uFF1D\u4E09\u6B21\u8B80\u6578\u4E4B\u548C\xF73\u3002", "Measure the [total diameter] through the centre, including the 6 mm disc. With no external zone, select No and record 0 mm. Measure three independent plates; mean = sum of three readings \xF7 3."],
-    ["\u7FA4\u9AD4\u539F\u6709[\u6297\u6027\u5DEE\u7570]\uFF1B\u6297\u6027\u8005\u8F03\u5BB9\u6613[\u5B58\u6D3B\u3001\u7E41\u6B96]\u4E26[\u907A\u50B3\u6297\u6027\u7279\u5FB5]\u3002\u6BD4\u4F8B\u53EF\u80FD\u4E0A\u5347\uFF0C\u85E5\u7269\u6548\u679C\u53EF\u80FD\u4E0B\u964D\uFF1B\u4E0D\u662F\u7D30\u83CC\u4E3B\u52D5\u7522\u751F\u6240\u9700\u6297\u6027\u6216\u60A3\u8005\u672C\u4EBA\u8B8A\u5F97\u6297\u85E5\u3002", "The population has [pre-existing resistance differences]. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; bacteria do not purposefully develop needed resistance, and the patient does not become resistant."]
+    ["\u7FA4\u9AD4\u539F\u6709[\u6297\u6027\u5DEE\u7570]\uFF1B\u6297\u751F\u7D20\u4F7F\u654F\u611F\u7D30\u83CC\u8F03\u96E3\u5B58\u6D3B\uFF0C\u6297\u6027\u8005\u8F03\u5BB9\u6613[\u5B58\u6D3B\u3001\u7E41\u6B96]\u4E26[\u907A\u50B3\u6297\u6027\u7279\u5FB5]\u3002\u6BD4\u4F8B\u53EF\u80FD\u4E0A\u5347\uFF0C\u85E5\u7269\u6548\u679C\u53EF\u80FD\u4E0B\u964D\uFF1B[\u904E\u5EA6\u6216\u4E0D\u7576\u4F7F\u7528\u6297\u751F\u7D20]\u6703\u589E\u52A0\u9078\u64C7\u58D3\u529B\u3002\u9019\u4E0D\u662F\u7D30\u83CC\u4E3B\u52D5\u7522\u751F\u6240\u9700\u6297\u6027\u6216\u60A3\u8005\u672C\u4EBA\u8B8A\u5F97\u6297\u85E5\u3002", "The population has [pre-existing resistance differences]. Antibiotics reduce survival of susceptible bacteria. Resistant bacteria are more likely to [survive and reproduce] and [pass on resistance traits]. Their proportion may rise and effectiveness may fall; [Overuse or misuse] adds selection pressure. Bacteria do not purposefully develop needed resistance, and the patient does not become resistant."]
   ].map((pair2) => pair2[en ? 1 : 0]);
   const mapping = [["1.1", "iv,dv,cv", t2("variables"), "4"], ["1.2", "assumptions", t2("assumptionQuestion"), "1"], ["1.3", "controlPlan", t2("controlPlan"), "1"], ["1.4", "plannedReplicates,plannedReplicateReason", t2("plannedReplicates") + " " + t2("plannedReplicateReason"), "1"], ["2.1", "measurements", t2("visible") + " / " + t2("diameter"), "2"], ["2.2", "means", t2("mean"), "1"], ...MC_QUESTIONS.map((q) => ["2." + (q.number + 2), q.id, t2(q.key), "1"]), ["2.5", "effectiveSamples,rank1\u20134", t2("resultConclusion"), "1"], ["3", "reflection", t2("reflectionQuestion"), "8"]];
   return {
@@ -25092,11 +25094,13 @@ function getPaperSource(language2 = "zh") {
     taskVersion: PAPER_TASK_VERSION,
     language: language2,
     text: Object.fromEntries(Object.keys(L).sort().map((k) => [k, t2(k)])),
+    repeatPrompt: en ? "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?" : "\u6E2C\u8A66\u6A23\u672C\u5171\u67094\u7A2E\uFF1A\u6297\u751F\u7D20X\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\u70BA\u4EC0\u9EBC\uFF1F",
+    rankingPrompt: en ? "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with \u201C/\u201D." : "\u4EE5\u672C\u6B21\u6E05\u6670\u5340\u7684\u5E73\u5747\u7E3D\u76F4\u5F91\u6BD4\u8F03\uFF0C\u5B83\u5011\u7684\u6291\u5236\u6548\u80FD\u70BA\uFF1A\u53EA\u6392\u5217\u6709\u53EF\u898B\u6E05\u6670\u5340\u7684\u6A23\u672C\u3002\u4EE5\u300C\uFF0F\u300D\u522A\u53BB\u4E0D\u9069\u7528\u4F4D\u7F6E\u3002",
     title: en ? "WS4: Antibiotics and bacterial growth" : "\u5DE5\u4F5C\u7D19\u56DB\uFF1A\u6297\u751F\u7D20\u8207\u7D30\u83CC\u751F\u9577",
     concepts,
     variables: opts(VARIABLE_OPTIONS),
     assumptions: opts(ASSUMPTION_OPTIONS),
-    effective: opts(EFFECTIVE_OPTIONS),
+    effective: opts(EFFECTIVE_SAMPLE_OPTIONS),
     questions: MC_QUESTIONS.map((q) => ({ ...q, text: t2(q.key), choices: opts(q.options) })),
     plates,
     samples: SAMPLES,
@@ -26612,7 +26616,7 @@ $("#designDescription").maxLength = 1e3;
 $("#replicateFields").innerHTML = field("plannedReplicates", "plannedReplicates", { options: REPEAT_OPTIONS, placeholder: null }) + field("plannedReplicateReason", "plannedReplicateReason", { placeholder: null });
 var mcQuestion = (question) => `<fieldset class="analysis-question" id="${question.id}"><legend><span class="question-number">${question.number}</span> ${span(question.key)}</legend><div class="mc-options">${question.options.map(([value, key], i) => `<label class="mc-option"><input type="radio" name="${question.id}" data-field="${question.id}" data-scope="answer" value="${value}" required><span class="mc-letter">${String.fromCharCode(65 + i)}</span>${span(key)}</label>`).join("")}</div></fieldset>`;
 var rankSelect = (id, index) => `<select id="${id}" data-field="${id}" data-scope="answer" required data-i18n-aria="${id}">${option("", "choose")}${SAMPLES.map((sample) => sample === "C" ? option(sample, "blank") : `<option value="${sample}">${sample}</option>`).join("")}${index > 1 ? option("na", "notApplicable") : ""}</select>`;
-var conclusionMarkup = `<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span("resultConclusion")}</legend><div class="conclusion-sentence">${span("conclusionContext")}<select id="effectiveSamples" data-field="effectiveSamples" data-scope="answer" required data-i18n-aria="effectiveSamples">${option("", "choose")}${EFFECTIVE_OPTIONS.map(([value, key]) => option(value, key)).join("")}</select>${span("conclusionEffective")}</div><p>${span("conclusionRanking")}</p><div class="conclusion-ranking">${[0, 1, 2, 3].map((index) => `${index ? '<span aria-hidden="true">\uFF1E</span>' : ""}${rankSelect("rank" + (index + 1), index)}`).join("")}</div><p class="question-hint">${span("conclusionSelectHint")}</p></fieldset>`;
+var conclusionMarkup = `<fieldset class="analysis-question conclusion-question"><legend><span class="question-number">3</span> ${span("resultConclusion")}</legend><div class="conclusion-sentence">${span("conclusionContext")}<div id="effectiveSamples" role="group" data-i18n-aria="effectiveSamples">${multi("effectiveSamples", EFFECTIVE_SAMPLE_OPTIONS)}</div>${span("conclusionEffective")}</div><p>${span("conclusionRanking")}</p><div class="conclusion-ranking">${[0, 1, 2, 3].map((index) => `${index ? '<span aria-hidden="true">\uFF1E</span>' : ""}${rankSelect("rank" + (index + 1), index)}`).join("")}</div><p class="question-hint">${span("conclusionSelectHint")}</p></fieldset>`;
 $("#analysisFields").innerHTML = MC_QUESTIONS.slice(0, 2).map(mcQuestion).join("") + conclusionMarkup + MC_QUESTIONS.slice(2).map(mcQuestion).join("");
 $("#reflectionFields").innerHTML = field("reflection", "reflectionQuestion");
 $("#meanInputs").innerHTML = SAMPLES.map((s) => `<label class="field">${span(`meanLabel${s}`)}<input id="mean-${s}" data-mean="${s}" type="number" min="0" max="40" step="0.1" required placeholder="mm" data-i18n-aria="meanLabel${s}"></label>`).join("");
@@ -26736,7 +26740,12 @@ function recordAnswer(id, value) {
 $$('[data-field][data-scope="answer"]').forEach((el) => {
   el.addEventListener(el.tagName === "SELECT" || el.type === "radio" ? "change" : "input", () => recordAnswer(el.dataset.field, el.value));
 });
-$$("[data-multi]").forEach((el) => el.addEventListener("change", () => recordAnswer(el.dataset.multi, $$(`[data-multi="${el.dataset.multi}"]:checked`).map((c) => c.value))));
+$$("[data-multi]").forEach((el) => el.addEventListener("change", () => {
+  if (el.dataset.multi === "effectiveSamples" && el.checked) {
+    for (const other of $$('[data-multi="effectiveSamples"]')) if (other !== el && (el.value === "none" || other.value === "none")) other.checked = false;
+  }
+  recordAnswer(el.dataset.multi, $$(`[data-multi="${el.dataset.multi}"]:checked`).map((c) => c.value));
+}));
 $$("[data-variable]").forEach((button) => button.onclick = () => {
   if (!state || state.submittedAt) return;
   const group = button.dataset.group, value = button.dataset.variable, current = state.answers[group];
