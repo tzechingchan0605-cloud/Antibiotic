@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "38c7a1cc6803da98eb29e29aa513882c3c8715345e3b900a3f0414ee61f2cee4";
+var PAPER_FINGERPRINT = "2930bfd75c48401513f7d9d30668db76c16b86d2475bbc0f36e58fe44e5a2a6d";
 
 // english-glossary.js
 var entries = [
@@ -24143,7 +24143,7 @@ var L = {
   visibleRequired: pair("\u8ACB\u5148\u9078\u64C7\u7D19\u789F\u5916\u662F\u5426\u6709\u53EF\u898B\u6E05\u6670\u5340\uFF08\u6709\uFF0F\u6C92\u6709\uFF09\u3002", "First select whether there is a visible zone outside the disc (Yes/No)."),
   invalidNumber: pair("\u8ACB\u8F38\u5165 0\u201340 mm \u7BC4\u570D\u5167\u7684\u6709\u6548\u6578\u503C\u3002", "Enter a valid value from 0\u201340 mm."),
   allPlatesRequired: pair("\u8ACB\u5B8C\u6210\u4E09\u500B\u7368\u7ACB\u74CA\u8102\u677F\uFF0C\u4E26\u78BA\u8A8D\u5404\u6A23\u672C\u8B80\u6578\u3002", "Complete all three independent plates and confirm the readings for each sample."),
-  mean: pair("\u7E3D\u76F4\u5F91\u7684\u5E73\u5747\u503C\u8A08\u7B97", "Mean total diameter calculation"),
+  mean: pair("\u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u5E73\u5747\u503C\u8A08\u7B97", "Mean clear-zone total diameter calculation"),
   meanLabelX: pair("X \u7684\u5E73\u5747\u503C(mm)", "Mean for X (mm)"),
   meanLabelY: pair("Y \u7684\u5E73\u5747\u503C(mm)", "Mean for Y (mm)"),
   meanLabelZ: pair("Z \u7684\u5E73\u5747\u503C(mm)", "Mean for Z (mm)"),
@@ -24188,7 +24188,7 @@ var L = {
   learning: pair("\u5B78\u7FD2\u91CD\u9EDE", "Learning points"),
   reflection: pair("\u5B78\u7FD2\u53CD\u601D", "Learning reflection"),
   experimentResults: pair("\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\uFF1A", "Your experimental results:"),
-  reflectionQuestion: pair("\u5F9E\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\u4E2D\uFF0C\u9078\u51FA\u4E00\u500B\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\u7684\u6297\u751F\u7D20\u6A23\u672C\uFF0C\u5F15\u7528\u8B80\u6578\u652F\u6301\u4F60\u7684\u5224\u65B7\u3002\u5047\u5982\u9019\u7FA4\u7D30\u83CC\u539F\u672C\u5DF2\u6709\u5C11\u91CF\u5177\u8A72\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\uFF0C\u6301\u7E8C\u4F7F\u7528\u8A72\u6297\u751F\u7D20\u5F8C\uFF0C\u5B83\u7684\u6548\u679C\u53EF\u80FD\u5982\u4F55\u6539\u8B8A\uFF1F\u8ACB\u904B\u7528\u300C\u5B78\u7FD2\u91CD\u9EDE\u300D\uFF0C\u89E3\u91CB\u7D30\u83CC\u7684\u5B58\u6D3B\u3001\u7E41\u6B96\u53CA\u6297\u6027\u7279\u5FB5\u7684\u907A\u50B3\u5982\u4F55\u9020\u6210\u9019\u500B\u8B8A\u5316\u3002", "Choose an antibiotic sample from your experimental results that can inhibit bacterial growth, and cite readings to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant to that antibiotic. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction and inheritance of resistance traits cause this change."),
+  reflectionQuestion: pair("\u5F9E\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\u4E2D\uFF0C\u9078\u51FA\u4E00\u500B\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\u7684\u6297\u751F\u7D20\u6A23\u672C\uFF0C\u5F15\u7528\u6578\u64DA\u652F\u6301\u4F60\u7684\u5224\u65B7\u3002\u5047\u5982\u9019\u7FA4\u7D30\u83CC\u539F\u672C\u5DF2\u6709\u5C11\u91CF\u5177\u8A72\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\uFF0C\u6301\u7E8C\u4F7F\u7528\u8A72\u6297\u751F\u7D20\u5F8C\uFF0C\u5B83\u7684\u6548\u679C\u53EF\u80FD\u5982\u4F55\u6539\u8B8A\uFF1F\u8ACB\u904B\u7528\u300C\u5B78\u7FD2\u91CD\u9EDE\u300D\uFF0C\u89E3\u91CB\u7D30\u83CC\u7684\u5B58\u6D3B\u3001\u7E41\u6B96\u53CA\u6297\u6027\u7279\u5FB5\u7684\u907A\u50B3\u5982\u4F55\u9020\u6210\u9019\u500B\u8B8A\u5316\u3002", "Choose an antibiotic sample from your experimental results that can inhibit bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant to that antibiotic. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction and inheritance of resistance traits cause this change."),
   saveReflection: pair("\u5132\u5B58\u4E26\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D", "Save and submit reflection"),
   reflectionPending: pair("\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D\u5F8C\u958B\u653E PDF\u3002", "PDF is available after reflection submission."),
   reflectionDone: pair("\u5B78\u7FD2\u53CD\u601D\u5DF2\u9396\u5B9A\uFF1B\u53EF\u5217\u5370\u6216\u5132\u5B58 PDF\u3002", "Reflection is locked. You can print or save a PDF."),
@@ -24748,13 +24748,13 @@ function learningDiagram(language2 = "zh") {
   const markup = `<div class="science-diagram">
  <figure class="learning-figure"><figcaption>${t2("A. \u5BE6\u9A57\u539F\u7406\uFF1A\u6297\u751F\u7D20\u6A23\u672C\u7684\u64F4\u6563\u8207\u6E05\u6670\u5340\u7684\u5F62\u6210", "A. Experimental principle: antibiotic diffusion and clear-zone formation")}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20\uFF0C\u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563\u4E26\u6291\u5236\u7D30\u83CC\u751F\u9577\uFF0C\u5F62\u6210\u6E05\u6670\u5340\u3002", "The disc carries antibiotic, which diffuses through agar and inhibits bacterial growth, forming a clear zone.")}">
- <defs><marker id="vl4-science-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#087b78"/></marker></defs>
+ <defs><marker id="vl4-science-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#C56800"/></marker></defs>
  <circle cx="115" cy="142" r="91" fill="#ddd9ae" stroke="#6e897b"/><circle cx="115" cy="142" r="54" fill="#f8faec" stroke="#b4bda3" stroke-dasharray="4 4"/>
  <g fill="#79815c">${[[60, 86], [173, 99], [46, 158], [169, 195], [91, 213], [175, 157], [104, 69], [75, 186]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"/>`).join("")}</g><circle cx="115" cy="142" r="12" fill="#fff" stroke="#5e7475"/>
- <g fill="none" stroke="#087b78" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
- <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path d="M221 72L115 142" fill="none" stroke="#698a87"/>
- <text x="225" y="126">${t2("\u2461 \u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563", "2. Antibiotic diffuses")}</text>${language2 === "en" ? '<text x="246" y="146">through agar</text>' : ""}<path d="M221 151L159 142" fill="none" stroke="#698a87"/>
- <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path d="M221 213L136 168" fill="none" stroke="#698a87"/></g></svg>
+ <g fill="none" stroke="#C56800" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
+ <g font-size="16" fill="#15333b"><text x="225" y="65">${t2("\u2460 \u7D19\u789F\u627F\u8F09\u6297\u751F\u7D20", "1. Disc carries antibiotic")}</text><path data-step="1" d="M221 72L115 142" fill="none" stroke="#698a87"/>
+ <text x="225" y="126" fill="#C56800">${t2("\u2461 \u6297\u751F\u7D20\u5411\u74CA\u8102\u64F4\u6563", "2. Antibiotic diffuses")}</text>${language2 === "en" ? '<text x="246" y="146" fill="#C56800">through agar</text>' : ""}
+ <text x="225" y="204">${t2("\u2462 \u6297\u751F\u7D20\u6291\u5236\u7D30\u83CC\u751F\u9577", "3. Antibiotic inhibits")}</text><text x="246" y="227">${t2("\u4E26\u5F62\u6210\u6E05\u6670\u5340", "bacterial growth, forming")}</text>${language2 === "en" ? '<text x="246" y="250">a clear zone</text>' : ""}<path data-step="3" d="M221 213L136 168" fill="none" stroke="#698a87"/></g></svg>
  <p class="caption">${t2("\u793A\u610F\u5716\uFF0C\u975E\u6309\u6BD4\u4F8B\uFF1B\u4E0D\u80FD\u8B49\u660E\u7D30\u83CC\u5168\u90E8\u6B7B\u4EA1\u3002", "Schematic, not to scale; it does not prove complete killing.")}</p></figure>
  <figure class="learning-figure"><figcaption>${t2("B. \u7D30\u83CC\u7D50\u69CB\u8207\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "B. Structures and possible action sites")}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t2("\u7D30\u83CC\u7D50\u69CB\u8207\u6297\u751F\u7D20\u53EF\u80FD\u4F5C\u7528\u4F4D\u7F6E", "Bacterial structures and possible antibiotic action sites")}">
@@ -24873,7 +24873,7 @@ function renderReport(record, language2 = "zh") {
   ${section(t2("02 \u4F60\u7684\u539F\u59CB\u7814\u7A76\u8A08\u5283\uFF08\u9996\u6B21\u78BA\u8A8D\u5FEB\u7167\uFF09", "02 Your original research plan (first confirmed snapshot)"), `<p>${t2("\u4FDD\u5B58\u6642\u9593", "Captured")}\uFF1A${esc(dateText(original.capturedAt, language2))}</p>${originalFields.map((field2) => reportAnswer(record, field2, first[field2], language2, false)).join("")}${originalDesignImage}<p>${t2("\u5BE6\u969B\u8AB2\u5802\u5B89\u6392\uFF1A3 \u7247\u5206\u5225\u6E96\u5099\u7684\u74CA\u8102\u677F\uFF0C\u6BCF\u7247\u542B X\u3001Y\u3001Z \u53CA C\uFF08\u5C0D\u7167\uFF09\u3002\u5B78\u751F\u539F\u59CB\u5EFA\u8B70\u8207\u8AB2\u5802\u5B89\u6392\u5206\u958B\u4FDD\u7559\uFF1B3 \u6B21\u4E0D\u4FDD\u8B49\u53EF\u9760\u3002", "Classroom arrangement: three separately prepared plates, each with X, Y, Z and a C (control). The original proposal is retained separately; three tests do not guarantee reliability.")}</p>`)}
   ${section(t2("02 \u6700\u65B0\u8A2D\u8A08\u3001\u5047\u8AAA\u53CA\u5C0D\u7167", "02 Latest setup, hypothesis and control"), fields(["prediction", "largestPrediction", "reason", "iv", "dv", "cv", "assumptions", "controlPlan", "designDescription", "plannedReplicates", "plannedReplicateReason"]) + designImage + (record.design?.description ? `<p class="student-answer">${esc(record.design.description)}</p>` : ""))}
   ${section(t2("03 \u4E09\u7247\u7368\u7ACB\u74CA\u8102\u677F\u7684\u89C0\u5BDF\u53CA\u91CF\u5EA6", "03 Observations and readings from independent plates"), `<p>${t2("\u5DF2\u7522\u751F\u7D50\u679C\u7684\u7368\u7ACB\u74CA\u8102\u677F\u6578", "Independent plates with generated results")}\uFF1A${actualReplicates(record)}</p><div class="plate-grid">${(record.plates || []).filter((plate) => plate.result).map((plate) => reportPlate(plate, language2)).join("")}</div>${readingsTable}`)}
-  ${section(current ? t2("04 \u7E3D\u76F4\u5F91\u7684\u5E73\u5747\u503C\u8A08\u7B97", "04 Mean total diameter calculation") : t2("04 \u4F60\u7684\u5E73\u5747\u503C\u53CA\u5716\u8868", "04 Your means and chart"), meansTable + (current ? "" : reportGraph(record, language2) + `<p>${t2("\u5716\u8868\u78BA\u8A8D\u6642\u9593", "Chart confirmed")}\uFF1A${esc(dateText(record.graph?.confirmedAt, language2))}</p>`))}
+  ${section(current ? t2("04 \u6E05\u6670\u5340\u7684\u7E3D\u76F4\u5F91\u5E73\u5747\u503C\u8A08\u7B97", "04 Mean clear-zone total diameter calculation") : t2("04 \u4F60\u7684\u5E73\u5747\u503C\u53CA\u5716\u8868", "04 Your means and chart"), meansTable + (current ? "" : reportGraph(record, language2) + `<p>${t2("\u5716\u8868\u78BA\u8A8D\u6642\u9593", "Chart confirmed")}\uFF1A${esc(dateText(record.graph?.confirmedAt, language2))}</p>`))}
   ${section(t2("04 \u5206\u6790\u53CA\u7D50\u8AD6", "04 Analysis and conclusion"), current ? MC_QUESTIONS.slice(0, 2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") + reportConclusion(record, language2) + MC_QUESTIONS.slice(2).map((question) => reportAnswer(record, question.id, a[question.id], language2)).join("") : fields(["analysisControl", "analysisConsistent", "analysisVariation", "analysisMethod", "analysisHypothesis", "analysisRepeatPlan", "analysisRepeatValue", "analysisDeath", "analysisClinical", "conclusion"]))}
   ${current ? "" : section(t2("\u53EF\u9078\u5EF6\u4F38\uFF1A\u540C\u4E00\u6A23\u672C\u7684\u7D19\u789F\u542B\u91CF", "Optional extension: disc content of one sample"), extensionHTML)}
   ${submitted ? section(t2("\u905E\u4EA4\u5F8C\u7684\u5B78\u7FD2\u91CD\u9EDE", "Learning points after submission"), learningPointsHTML(language2) + (current ? "" : fields(["knowledgeBacteria", "knowledgeResistance", "knowledgeLimits"]))) : ""}
@@ -25070,9 +25070,9 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 8;
-var PAPER_TASK_VERSION = "VL4-WS4-balanced-spacing-8";
-var PAPER_SEEDS = Object.freeze([1001, 123456789, 4294967]);
+var PAPER_VERSION = 9;
+var PAPER_TASK_VERSION = "VL4-WS4-orange-diffusion-9";
+var PAPER_SEEDS = Object.freeze([1001, 123456789, 1982]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
   if (!["zh", "en"].includes(language2)) throw Error("Invalid language");
@@ -25097,12 +25097,13 @@ function getPaperSource(language2 = "zh") {
     pageMap: { notes: 1, variables: 2, planning: 2, results: 3, conclusion: 4, reflection: 4 },
     taskVersion: PAPER_TASK_VERSION,
     language: language2,
+    scenario: en ? glossEnglish("After initial [antibiotic treatment], a patient\u2019s wound infection has not clearly improved. Laboratory testing identifies methicillin-resistant Staphylococcus aureus, abbreviated as [MRSA]. This experiment compares the effects of [samples X, Y and Z] on MRSA growth.") : "\u4E00\u540D\u60A3\u8005\u7684\u50B7\u53E3\u611F\u67D3\u5728\u63A5\u53D7\u521D\u6B65[\u6297\u751F\u7D20\u6CBB\u7642]\u5F8C\uFF0C\u4ECD\u672A\u660E\u986F\u6539\u5584\u3002\u91AB\u9662\u5316\u9A57\u78BA\u8A8D\uFF0C\u5F15\u8D77\u611F\u67D3\u7684\u662F\u8010\u7532\u6C27\u897F\u6797\u91D1\u9EC3\u8461\u8404\u7403\u83CC\uFF0C\u7C21\u7A31 [MRSA]\u3002\u6B64\u5BE6\u9A57\u6BD4\u8F03 [X\u3001Y\u3001Z \u4E09\u7A2E\u6A23\u672C]\u5C0D MRSA \u751F\u9577\u7684\u5F71\u97FF\u3002",
     principle: { title: principle[1], svg: principle[2] },
     printScale: 1,
     measurementHint: en ? "Use a ruler to measure the total diameter through the centre, including the disc. Record 0 mm if there is no clear zone outside the disc. Reading tolerance: \xB11 mm." : "\u8ACB\u7528\u76F4\u5C3A\u901A\u904E\u5713\u5FC3\u91CF\u5EA6\u7E3D\u76F4\u5F91\uFF08\u5305\u62EC\u7D19\u789F\uFF09\uFF1B\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340\u6642\u8A18\u9304\u70BA0 mm\u3002\u91CF\u5EA6\u5BB9\u5DEE\uFF1A\xB11 mm\u3002",
     text: Object.fromEntries(Object.keys(L).sort().map((k) => [k, t2(k)])),
     repeatPrompt: en ? "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?" : "\u6E2C\u8A66\u6A23\u672C\u5171\u67094\u7A2E\uFF1A\u6297\u751F\u7D20X\u3001Y\u3001Z \u53CA\u5C0D\u7167\u7D44\u3002\u4F60\u8A8D\u70BA\u6BCF\u7A2E\u6A23\u672C\u5171\u9700\u6E2C\u8A66\u591A\u5C11\u6B21\uFF1F\u70BA\u4EC0\u9EBC\uFF1F",
-    rankingPrompt: en ? "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with \u201C/\u201D." : "\u4EE5\u672C\u6B21\u6E05\u6670\u5340\u7684\u5E73\u5747\u7E3D\u76F4\u5F91\u6BD4\u8F03\uFF0C\u5B83\u5011\u7684\u6291\u5236\u6548\u80FD\u70BA\uFF1A\u53EA\u6392\u5217\u6709\u53EF\u898B\u6E05\u6670\u5340\u7684\u6A23\u672C\u3002\u4EE5\u300C\uFF0F\u300D\u522A\u53BB\u4E0D\u9069\u7528\u4F4D\u7F6E\u3002",
+    rankingPrompt: en ? "Comparing the mean total clear-zone diameters in this test, their [inhibitory effects] rank as follows. Rank only samples with visible clear zones. [Cross out unused positions with \u201C/\u201D]." : "\u4EE5\u672C\u6B21\u6E05\u6670\u5340\u7684\u5E73\u5747\u7E3D\u76F4\u5F91\u6BD4\u8F03\uFF0C\u5B83\u5011\u7684[\u6291\u5236\u6548\u80FD]\u70BA\uFF1A\u53EA\u6392\u5217\u6709\u53EF\u898B\u6E05\u6670\u5340\u7684\u6A23\u672C\u3002[\u4EE5\u300C\uFF0F\u300D\u522A\u53BB\u4E0D\u9069\u7528\u4F4D\u7F6E]\u3002",
     title: en ? "WS4: Antibiotics and bacterial growth" : "\u5DE5\u4F5C\u7D19\u56DB\uFF1A\u6297\u751F\u7D20\u8207\u7D30\u83CC\u751F\u9577",
     concepts,
     variables: opts(VARIABLE_OPTIONS),

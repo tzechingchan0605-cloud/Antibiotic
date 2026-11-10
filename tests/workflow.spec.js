@@ -263,7 +263,7 @@ async function analyseInvestigation(page, { beforeSubmit } = {}) {
   await page.locator('#experimentNext').click();
   await expect(page.locator('#phase-4')).toBeVisible();
   await expect(page.locator('[data-i18n="meanNote"]')).toHaveCount(0);
-  await expect(page.locator('[data-i18n="mean"]')).toHaveText(/總直徑的平均值計算|Mean total diameter calculation/);
+  await expect(page.locator('[data-i18n="mean"]')).toHaveText(/清晰區的總直徑平均值計算|Mean clear-zone total diameter calculation/);
   await expect(page.locator('#mean-C').locator('..')).toContainText(/C（對照）|C \(control\)/);
   const state = await current(page);
   for (const sample of SAMPLES) {

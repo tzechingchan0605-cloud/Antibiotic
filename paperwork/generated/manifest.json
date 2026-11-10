@@ -1,30 +1,30 @@
 {
-  "fingerprint": "38c7a1cc6803da98eb29e29aa513882c3c8715345e3b900a3f0414ee61f2cee4",
+  "fingerprint": "2930bfd75c48401513f7d9d30668db76c16b86d2475bbc0f36e58fe44e5a2a6d",
   "module": "VL4",
-  "materialVersion": 8,
-  "taskVersion": "VL4-WS4-balanced-spacing-8",
-  "contentVersion": "8d30fc198995",
-  "sourceDigest": "b1c5b6c2764d93db239c1885d978b162e9808abe6996757bc005c897fabc7815",
+  "materialVersion": 9,
+  "taskVersion": "VL4-WS4-orange-diffusion-9",
+  "contentVersion": "f028ff70994b",
+  "sourceDigest": "d000b21d9a7b3d7e265809cf73ceab67087d0b8b64f6a64f74f00eee8a500ccf",
   "inputs": {
     "package.json": "6b79a6df490dcfff0ebd6b9a7993985ca76e5599729450f5822324fe1d28c4af",
     "package-lock.json": "466c839cb0ca6e92d4c90a0b3384b67adcd54259f0a453a839c0e2a0095bc1cf",
-    "index.html": "b49f93a0b67958cf26e377c682f82a5d27b92460401864ad51a46aaff2fe73e8",
+    "index.html": "440e21260f901c4de9b9e7305ee1afdcf209088f1fb6fdbbee16de1212b175d9",
     "app.js": "64ae9cc736e1994ee620aed5dc7ab04c2b478325a3878be3044aff117956417a",
-    "i18n.js": "01c60cd14553067262ddd9d71b745e0141d6421965da175a5b3540109f46cde4",
+    "i18n.js": "39a2166daff72f09cdd36275cd2a69a73c70b7885d51713b63fc8c3db96594d6",
     "analysis.js": "a3d3cf4ce8a621ec61e5cd1514dc04faa8315e5ed8b5625fdaeada9df631a708",
     "model.js": "b84afb3045cf67f0be364385cf4425de0306c07d8ff1a3bf33e0073f7550380d",
     "rubric.js": "ff6a670a455fca564f1d49dcb1a45ecfbe93a4ec3abb5c62245ac5de23e342cf",
-    "reports.js": "e4a075da8debf489c536be7275d88baf9f6ddce91527b19a1c0016de9fa330dc",
+    "reports.js": "77d5b86fd59db847d56c175f641f3d5cce7de7b4a4334a76ab294a2ddc0bdbd8",
     "inquiry-content.js": "6a31db1182be02b54b39bd091742bbfdd53da686fcb3c628774444bbf6f25696",
     "english-glossary.js": "2e72c46804b4fa2a714dbbb1f3b9a7424b23f4e44626a09b67afa6aea16698ae",
-    "paperwork/source.js": "dfbaa428405b604f43461a438976cd8fb37f6cb65f35168a13b91cde4978d56d",
+    "paperwork/source.js": "24e93f6760566cd9bf71a16e23d9b5ccfbe4765788965199cc1b5de69a84fce2",
     "paperwork/client.js": "35d4804169edc20be33f925152509e5f1171c1cff99d567799fc756a9b7c720d",
     "paperwork/build.mjs": "6f7d49cb7bde6f0432949467424c7f55b99aaabe1351afeb27001510327a65e5",
-    "paperwork/worksheet.py": "201b2fe2f2bb443f20a3c1416948f34a3d26385394bc206bcaf23817db75d89b",
-    "paperwork/requirements.txt": "ed183d2d731a750ab3a778a62eadd5669328a0f91786a0140f8b20b36c02be6a",
+    "paperwork/worksheet.py": "f76182d0bfa2bb493148250c3a944636fb51190b87201013c4937f91e3236d7d",
+    "paperwork/requirements.txt": "28988c2f14f462e625bf10789feb9255e68f1dde268169a2809b34617c62c976",
     "scripts/serve.mjs": "b9cca2e19e991e548d2858b37ee8707ad8c21c0f262570339a114885d9fca71e",
     "scripts/build.mjs": "7e759faa677fa8df6930cb78ab62361fb18282b5850a62009501d2e21395c55a",
-    "paperwork/fingerprint.js": "c6b472781e5f6d2e71c40c6183d7f396c23d03361aca8da2a0b9276117e671fd",
+    "paperwork/fingerprint.js": "e78c82a1029092ab7f0b656870eff6f5d60d813401e51b192b25e96a9246eebf",
     "assets/alexander-fleming-petri-dish-penicillin.jpg": "de19c562230a2e2123376071f255fa135c41788210f5051ec3df54c94710eab9",
     "history-figure.js": "cdbad4b89912dff37470805681e60669a41d6c2e006dd6091838d8383c428a1d"
   },
@@ -32,43 +32,43 @@
     "zh": {
       "files": {
         "studentPDF": {
-          "path": "paperwork/generated/VL4_studentPDF_zh_v8_8d30fc198995.pdf",
-          "name": "VL4_studentPDF_zh_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_studentPDF_zh_v9_f028ff70994b.pdf",
+          "name": "VL4_studentPDF_zh_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 835420,
-          "sha256": "b486b5007d21f289897f6c030f242161e872de520cfb760e3fac91853b51b897",
+          "bytes": 840173,
+          "sha256": "cdba2b0f892677cd46c3fa36fdf99e7f040e840c9b245928f1e3729f2a343e17",
           "mime": "application/pdf"
         },
         "studentWord": {
-          "path": "paperwork/generated/VL4_studentWord_zh_v8_8d30fc198995.docx",
-          "name": "VL4_studentWord_zh_v8_8d30fc198995.docx",
+          "path": "paperwork/generated/VL4_studentWord_zh_v9_f028ff70994b.docx",
+          "name": "VL4_studentWord_zh_v9_f028ff70994b.docx",
           "pages": 4,
-          "bytes": 1448770,
-          "sha256": "970f2ea9dac33dcc430cbba05e60a221f7dd7fc932bf95c218970f9175798cfa",
+          "bytes": 1445011,
+          "sha256": "bfb3850e327dc9f75f2848ce867391254c7e25d0c7906dc12a4f70a5dc30ba8c",
           "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         },
         "answersPDF": {
-          "path": "paperwork/generated/VL4_answersPDF_zh_v8_8d30fc198995.pdf",
-          "name": "VL4_answersPDF_zh_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_answersPDF_zh_v9_f028ff70994b.pdf",
+          "name": "VL4_answersPDF_zh_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 899575,
-          "sha256": "24dabdd540b8a4e734efd3fa784dbc8b14948cc6374e4d8679c99c63b4316e4b",
+          "bytes": 904155,
+          "sha256": "6a5c79f1fd980b9358e3b41c1239d6dd0fce9b823172f02361d7ee756a07d5df",
           "mime": "application/pdf"
         },
         "answersWord": {
-          "path": "paperwork/generated/VL4_answersWord_zh_v8_8d30fc198995.docx",
-          "name": "VL4_answersWord_zh_v8_8d30fc198995.docx",
+          "path": "paperwork/generated/VL4_answersWord_zh_v9_f028ff70994b.docx",
+          "name": "VL4_answersWord_zh_v9_f028ff70994b.docx",
           "pages": 4,
-          "bytes": 1449435,
-          "sha256": "41ef5a91da213eda342eb9e416c71334c0acfa4e4133568bcb6756a0515d4679",
+          "bytes": 1445698,
+          "sha256": "dc660eb2eed24906a6874a0430d7617bfdf06df0ffd672dd84815d572f73617d",
           "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         },
         "D": {
-          "path": "paperwork/generated/VL4_D_zh_v8_8d30fc198995.pdf",
-          "name": "VL4_D_zh_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_D_zh_v9_f028ff70994b.pdf",
+          "name": "VL4_D_zh_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 266568,
-          "sha256": "c71de37443f7aa169d99d11290493df7298ed51f9b05899d62669e7afa6b4098",
+          "bytes": 266766,
+          "sha256": "ff999b0b452d0c2c082449735c685712bb1e24b1066a915dcaa2e84d76a41b31",
           "mime": "application/pdf"
         }
       }
@@ -76,43 +76,43 @@
     "en": {
       "files": {
         "studentPDF": {
-          "path": "paperwork/generated/VL4_studentPDF_en_v8_8d30fc198995.pdf",
-          "name": "VL4_studentPDF_en_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_studentPDF_en_v9_f028ff70994b.pdf",
+          "name": "VL4_studentPDF_en_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 695066,
-          "sha256": "33ce4785a9660f93ca466869f12ee523effd6999a2ee1a1e9df724c363b69b49",
+          "bytes": 712640,
+          "sha256": "d7a3cc7cecc9df5860df0d66ac3050ae868bea5b151c631a7cba42d5c57920aa",
           "mime": "application/pdf"
         },
         "studentWord": {
-          "path": "paperwork/generated/VL4_studentWord_en_v8_8d30fc198995.docx",
-          "name": "VL4_studentWord_en_v8_8d30fc198995.docx",
+          "path": "paperwork/generated/VL4_studentWord_en_v9_f028ff70994b.docx",
+          "name": "VL4_studentWord_en_v9_f028ff70994b.docx",
           "pages": 4,
-          "bytes": 1485272,
-          "sha256": "05ea329395b073fedf2b96fdf1bd4aada3924b33a788593b513a2bd59bc3a9e3",
+          "bytes": 1482392,
+          "sha256": "807669c94050b10771e02bed5e1ea7145a6640b3bb9c638348729b6d96c4d8a4",
           "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         },
         "answersPDF": {
-          "path": "paperwork/generated/VL4_answersPDF_en_v8_8d30fc198995.pdf",
-          "name": "VL4_answersPDF_en_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_answersPDF_en_v9_f028ff70994b.pdf",
+          "name": "VL4_answersPDF_en_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 721572,
-          "sha256": "53ab28158a7acea7a05423e093ee3e339c5cb1d6ccc8fd6f608bcee1efcf3dcf",
+          "bytes": 737736,
+          "sha256": "fb7ef81bb342f637023b8cb01971733a56ff2ea65194c1fbc1012385e4adcfa0",
           "mime": "application/pdf"
         },
         "answersWord": {
-          "path": "paperwork/generated/VL4_answersWord_en_v8_8d30fc198995.docx",
-          "name": "VL4_answersWord_en_v8_8d30fc198995.docx",
+          "path": "paperwork/generated/VL4_answersWord_en_v9_f028ff70994b.docx",
+          "name": "VL4_answersWord_en_v9_f028ff70994b.docx",
           "pages": 4,
-          "bytes": 1485891,
-          "sha256": "a0a9b518b919eb60ea5f22de5e7bbf3eb06a650e44aa389db811a19aa6e15575",
+          "bytes": 1483025,
+          "sha256": "123094207b23a25b17a1429e9a734168d97b4ab43c66265e65c4bd865601aa8c",
           "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         },
         "D": {
-          "path": "paperwork/generated/VL4_D_en_v8_8d30fc198995.pdf",
-          "name": "VL4_D_en_v8_8d30fc198995.pdf",
+          "path": "paperwork/generated/VL4_D_en_v9_f028ff70994b.pdf",
+          "name": "VL4_D_en_v9_f028ff70994b.pdf",
           "pages": 4,
-          "bytes": 90874,
-          "sha256": "bc93f0b23be3f2d9e03437bf0f2341024c4e1c16b930b56a68d06c1ca72307d1",
+          "bytes": 91243,
+          "sha256": "f351845e5f9df6bbe11a56ee34c491b2cc449e8e1d5dd09a1f5671f35c6eacb3",
           "mime": "application/pdf"
         }
       }

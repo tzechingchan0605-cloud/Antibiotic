@@ -76,17 +76,18 @@ for lang in ['zh','en']:
   if key=='answersPDF':assert '參考答案' in text if lang=='zh' else 'Reference answer:' in text
  s=sources[lang]
  for key in ['studentPDF','answersPDF']:
-  for name in ['assumptionDefinitionHint','controlPurposeHint','contextCopy']:
+  for name in ['assumptionDefinitionHint','controlPurposeHint']:
    assert norm(s['text'][name]) in texts[key],(lang,key,name)
+  assert norm(s['scenario'].replace('[','').replace(']','')) in texts[key]
   assert norm(s['reflection']) in texts[key]
   assert norm(s['repeatPrompt']) in texts[key]
-  assert norm(s['rankingPrompt']) in texts[key]
+  assert norm(s['rankingPrompt'].replace('[','').replace(']','')) in texts[key]
   assert norm('（包含第一次）') not in texts[key]
   assert norm('1 / 2 / 3 / 4 / 5 / 6') not in texts[key]
   assert norm('CBS News') not in texts[key]
   assert norm('MRSA 對甲氧西林有抗性，不代表對所有抗生素皆有抗性。' if lang=='zh' else 'MRSA resists methicillin; this does not mean it resists all antibiotics.') not in texts[key]
   assert norm(s['principle']['title']) in texts[key]
-  if key=='studentPDF':assert norm('（□ X    □ Y    □ Z    □ C    □ 沒有樣本）' if lang=='zh' else '(□ X    □ Y    □ Z    □ C    □ No samples)') in texts[key]
+  if key=='studentPDF':assert norm('（□ X,    □ Y,    □ Z,    □ C,    □ 沒有樣本）' if lang=='zh' else '(□ X,    □ Y,    □ Z,    □ C,    □ No samples)') in texts[key]
   assert norm(s['measurementHint']) in texts[key]
   assert '100%' not in texts[key] and '20mm' not in texts[key]
   assert ('±1mm' in texts[key])

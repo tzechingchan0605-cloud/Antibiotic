@@ -3,15 +3,20 @@ import json,re,subprocess,os,base64,html
 from pathlib import Path
 from docx import Document
 from docx.shared import Pt,Cm,RGBColor
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import cairosvg
 from lxml import etree as E
 from PIL import ImageFont
+from fontTools.ttLib import TTFont
 ROOT=Path(__file__).resolve().parents[1];WORK=ROOT/'artifacts/ws4-build';WORK.mkdir(parents=True,exist_ok=True)
 SRC=json.loads((ROOT/'paperwork/generated/source.json').read_text());FONT='Noto Sans CJK TC';TEAL='206B73';BLUE='165CA5';RED='BC2927'
 PT_MM=72/25.4;PRINT_WIDTH=184*PT_MM
 LABEL_FONT=ImageFont.truetype(subprocess.check_output(['fc-match','-f','%{file}',FONT],text=True),110)
+HANG_FONTS={(lang,bold):ImageFont.truetype(subprocess.check_output(['fc-match','-f','%{file}',('Liberation Sans' if lang=='en' else FONT)+(':style=Bold' if bold else '')],text=True),110) for lang in ['zh','en'] for bold in [False,True]}
+emoji=TTFont(subprocess.check_output(['fc-match','-f','%{file}','Noto Color Emoji'],text=True));CHECK_ADVANCE=emoji['hmtx'][emoji.getBestCmap()[0x2611]][0]/emoji['head'].unitsPerEm
+emoji.close()
 def label_width(text):return LABEL_FONT.getlength(text)/10
 def label_lines(text,width):
  lines=[];line=''
@@ -50,6 +55,9 @@ class Sheet:
     r.font.size=Pt(size);r.bold=bold or emph
     if color==BLUE and bold:r.font.underline=True
     if color or emph:r.font.color.rgb=RGBColor.from_string(RED if emph else color)
+  prefix=re.match(r'^(?:[•□☑]\s*(?:[A-D]\.\s*)?|[A-D]\.\s+|\d+(?:\.\d+)*[.、]?\s+(?:[·｜]\s*)?)',p.text)
+  if prefix:
+   indent=HANG_FONTS[(self.lang,bool(p.runs[0].bold))].getlength(prefix[0].replace('☑',''))/10*size/11+prefix[0].count('☑')*CHECK_ADVANCE*size;p.paragraph_format.left_indent=Pt(indent);p.paragraph_format.first_line_indent=Pt(-indent)
 
  def p(self,text='',size=12,color=None,bold=False,parent=None):
   p=(parent or self.d).add_paragraph();
@@ -113,16 +121,18 @@ def history(m):
 def principle(m):
  # Reuse the live VL's actual figure A, with a print layout and >=11pt labels.
  root=E.fromstring(m['principle']['svg'].encode());ns={'s':'http://www.w3.org/2000/svg'}
- labels=[' '.join(t.itertext()) for t in root.findall('.//s:text',ns)]
- targets=[re.findall(r'[-+]?[0-9]*\.?[0-9]+',path.get('d'))[-2:] for group in root.findall('s:g',ns) if group.get('font-size') for path in group.findall('s:path',ns)]
+ texts=root.findall('.//s:text',ns);labels=[' '.join(t.itertext()) for t in texts]
+ colours=[texts[i].get('fill','#15333b') for i in ([0,1,3] if m['language']=='en' else [0,1,2])]
+ targets=[(int(path.get('data-step'))-1,re.findall(r'[-+]?[0-9]*\.?[0-9]+',path.get('d'))[-2:]) for group in root.findall('s:g',ns) if group.get('font-size') for path in group.findall('s:path',ns)]
  for group in root.findall('s:g',ns):
   if group.get('font-size'):root.remove(group)
  body='<g transform="scale(.5)">'+''.join(E.tostring(n,encoding='unicode') for n in root)+'</g>'
  blocks=[labels[0],' '.join(labels[1:3]),' '.join(labels[3:])] if m['language']=='en' else [labels[0],labels[1],' '.join(labels[2:])]
  for j,text in enumerate(blocks):
-  for k,label in enumerate(label_lines(text,137)):
-   body+=f'<text x="118" y="{[20,62,98][j]+k*16.5}" font-size="11" fill="#15333b">{html.escape(label)}</text>'
- for j,(x,y) in enumerate(targets):body+=f'<path d="M111 {[25,67,103][j]}L{float(x)/2} {float(y)/2}" stroke="#698a87" fill="none"/>'
+  prefix=re.match(r'^(?:[①②③]|[1-3]\.)\s*',text)[0];indent=label_width(prefix)
+  for k,label in enumerate(label_lines(text[len(prefix):],137-indent)):
+   body+=f'<text x="{118 if k==0 else 118+indent}" y="{[20,62,98][j]+k*14}" font-size="11" fill="{colours[j]}">{html.escape(prefix+label if k==0 else label)}</text>'
+ for j,(x,y) in targets:body+=f'<path d="M111 {[25,67,103][j]}L{float(x)/2} {float(y)/2}" stroke="#698a87" fill="none"/>'
  return svgdoc(body,w=92*PT_MM,h=155 if m['language']=='en' else 138)
 def plates(m):
  s=''
@@ -147,6 +157,7 @@ def worksheet(lang,answers):
  for cell,w in zip(notes.rows[0].cells,[9,9.4]):cell.width=Cm(w);cell.paragraphs[0].paragraph_format.line_spacing=Pt(1)
  s.d=notes.cell(0,0);s.image(history(m),'history-'+lang,8.6)
  s.hint(t('colonyMeaningLine1')+t('colonyMeaningLine2'))
+ notes.cell(0,1).vertical_alignment=WD_CELL_VERTICAL_ALIGNMENT.CENTER
  s.d=notes.cell(0,1)
  for i in [0,2,3]:s.p('• '+m['concepts'][i])
  s.d=document
@@ -162,32 +173,35 @@ def worksheet(lang,answers):
  s.p(('（' if lang=='zh' else '(')+aside,11 if lang=='zh' else 11,'607D85')
  s.d=document
  s.h(s.t('部分1｜研究情境與公平比較','Part 1 | Research context and fair comparison'))
- s.p(t('contextCopy'));s.p(t('researchQuestion'))
+ s.p(m['scenario'])
  s.page();s.h('1.1  '+t('variables'))
- # Each of the three complete ordered lists is retained, never a forced single-category matrix.
- table=s.d.add_table(rows=2,cols=3);table.autofit=False
- for cell in [c for row in table.rows for c in row.cells]:
-  borders=xml('w:tcBorders')
-  for edge in ['top','left','bottom','right']:borders.append(xml('w:'+edge,**{'w:val':'single','w:sz':'8','w:color':TEAL}))
-  cell._tc.get_or_add_tcPr().append(borders)
- for cell in table.rows[0].cells:cell.width=Cm(18.4/3)
- for col,field in enumerate(['iv','dv','cv']):
-  c=table.cell(0,col);p=c.paragraphs[0];p.paragraph_format.line_spacing=Pt(s.spacing()[2]);s.run(p,t(field)+'（'+t(field+'Hint')+'）',12,TEAL,True);c=table.cell(1,col);c.paragraphs[0].paragraph_format.line_spacing=Pt(1)
+ # Repeat the same complete ordered factor list in each horizontal row.
+ table=s.table([[s.t('變量類別','Variable type'),s.t('可選因素','Available factors')]]+[['',''] for _ in range(3)],[4.4,14])
+ for cell in table.rows[0].cells:
+  cell._tc.get_or_add_tcPr().append(xml('w:shd',**{'w:fill':'EEF5F4'}));cell.paragraphs[0].alignment=1
+ for row,field in enumerate(['iv','dv','cv'],1):
+  c=table.cell(row,0);p=c.paragraphs[0];p.paragraph_format.line_spacing=Pt(21);s.run(p,t(field),12,TEAL,True)
+  p=c.add_paragraph();p.paragraph_format.line_spacing=Pt(18);p.paragraph_format.space_after=Pt(0);s.run(p,'（'+t(field+'Hint')+'）',11,'607D85')
+  cell=table.cell(row,1);margins=xml('w:tcMar')
+  for side in ['left','right']:margins.append(xml('w:'+side,**{'w:w':'40','w:type':'dxa'}))
+  cell._tc.get_or_add_tcPr().append(margins)
+  p=cell.paragraphs[0];p.paragraph_format.line_spacing=Pt(32 if lang=='zh' else 24)
   ref=m['variableReference'][field];ref=[ref] if isinstance(ref,str) else ref
-  for o in m['variables']:
-   p=c.add_paragraph();p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=Pt(s.spacing()[2]);correct=answers and o['id'] in ref;s.run(p,('☑ ' if correct else '□ ')+o['text'],12,BLUE if correct else None,correct)
+  for j,o in enumerate(m['variables']):
+   correct=answers and o['id'] in ref
+   s.run(p,('☑' if correct else '□')+'\u00a0'+o['text']+(' ' if j<len(m['variables'])-1 else ''),12,BLUE if correct else None,correct)
  s.h('1.2  '+t('assumptionQuestion'));s.hint(t('assumptionDefinitionHint'));s.p(t('assumptionNote'))
  for o in m['assumptions']:
   correct=answers and o['id'] in m['assumptionReference'];s.p(('☑ ' if correct else '□ ')+o['text'],color=BLUE if correct else None,bold=correct)
  s.h('1.3  '+t('controlPlan'));s.hint(t('controlPurposeHint'));s.lines(m['reference']['control'],2)
  s.h('1.4  '+m['repeatPrompt']);s.lines(s.t('可選合理次數；以獨立平板檢查一致性及變異，兼顧可行性，不以次數本身評分。','Accept a feasible number. Independent plates help examine consistency and variation; the number itself earns no ability mark.'),2)
  s.page();s.h(s.t('部分2｜實驗結果、量度、計算與分析','Part 2 | Results, measurement, calculation and analysis'))
- s.h('2.1  '+t('measureDefinition'));s.hint(s.t('三塊獨立瓊脂板｜共同模擬條件：30°C、24小時｜紙碟直徑6 mm','Three independent plates | Shared simulation: 30°C, 24 h | Disc diameter 6 mm'))
+ s.h('2.1  '+t('measureDefinition'));s.hint(s.t('三塊獨立瓊脂板｜共同模擬條件：30°C、24小時','Three independent plates | Shared simulation: 30°C, 24 h'))
  s.hint(m['measurementHint'])
  s.image(plates(m),'plates-'+lang)
  rows=[['','']+[s.t('樣本','Sample ')+x for x in m['samples']]];marks=set()
  for i,plate in enumerate(m['plates']):
-  presence=[s.t('清晰區存在','Clear zone present')];readings=[s.t('總直徑 (mm)','Total diameter (mm)')]
+  presence=[s.t('清晰區的存在','Presence of a clear zone')];readings=[s.t('清晰區的總直徑 (mm)','Clear-zone total diameter (mm)')]
   for sample in m['samples']:
    value=plate['result'][sample]
    presence.append('✓ / ✗')
@@ -195,7 +209,7 @@ def worksheet(lang,answers):
   rows.append([s.t('瓊脂板','Plate ')+str(i+1)]+presence)
   rows.append(['']+readings)
   if answers:marks.update((i*2+2,col) for col in range(2,6))
- result_table=s.table(rows,[2,4.4]+[3]*4,marks)
+ result_table=s.table(rows,[1.8,6.4]+[2.55]*4,marks)
  result_table.cell(0,0).merge(result_table.cell(0,1))
  for i in range(3):
   result_table.cell(i*2+1,0).merge(result_table.cell(i*2+2,0))
@@ -210,7 +224,7 @@ def worksheet(lang,answers):
  s.d=document
  s.page();s.h('2.5  '+t('resultConclusion'));p=s.p(t('conclusionContext'));s.run(p,'（' if lang=='zh' else '(')
  for i,o in enumerate(m['effective']):
-  correct=answers and o['id'] in ['X','Z'];s.run(p,('☑ ' if correct else '□ ')+('C' if o['id']=='C' else o['text'])+('    ' if i<len(m['effective'])-1 else ''),12,BLUE if correct else None,correct)
+  correct=answers and o['id'] in ['X','Z'];s.run(p,('☑ ' if correct else '□ ')+('C' if o['id']=='C' else o['text'])+(',    ' if i<len(m['effective'])-1 else ''),12,BLUE if correct else None,correct)
  s.run(p,('）' if lang=='zh' else ')')+t('conclusionEffective'))
  s.p(m['rankingPrompt'])
  s.p('Z > X > ／ > ／' if answers else '________ > ________ > ________ > ________',color=BLUE if answers else None,bold=answers)
@@ -251,7 +265,7 @@ def teacher(lang):
  s.p(m['reference']['control']);s.p(m['reference']['reflection']);s.p(s.t('C是相同載體但不含抗生素；只有實際載體為水才稱水對照。重複理由須連結獨立平板、一致性或變異；不因選3次給分。','C is the same carrier without antibiotic; call it a water control only if water is the carrier. Repeat reasons connect independent plates to consistency/variation; choosing three itself earns no mark.'))
  for p in m['plates']:s.p(p['id']+': '+', '.join(x+' '+str(p['result'][x])+' mm' for x in m['samples']))
  s.p(s.t('X與Z有區；Y與C無區並記0。均值按本冊三板數據計算。MC依次B、C、C、D、C。結論選X與Z，固定資料次序Z＞X＞／＞／。排序及均值仍按學生有效自身讀數判斷，同值接受任一先後。','X and Z have zones; Y and C have none and are recorded as 0. Calculate means from the three printed plates. MC keys: B, C, C, D, C. Select X and Z; fixed-data order Z > X > / > /. Judge means/order from valid own readings; accept either order for ties.'))
- s.p(s.t('有區量度容差±1 mm；無區分類及0須正確。均值按自身三次讀數核對±0.1 mm，避免重複扣量度錯誤。三板使用原有seeds 1001/123456789/4294967及generateResult，不代表每次VL讀數都相同。清晰區與6 mm紙碟以1:1印刷尺寸繪製，沒有附設量尺。用實體毫米直尺量度，必須以100%／實際大小列印，勿選符合頁面，教師印前核對紙碟為6 mm。','External-zone tolerance ±1 mm; absence requires the correct category and exactly 0. Check means from own three readings within ±0.1 mm, avoiding repeated reading penalties. Plates use existing seeds 1001/123456789/4294967 and generateResult, not identical outcomes for every VL run. Clear zones and 6 mm discs are drawn at 1:1 print size, without an attached ruler. Use a physical millimetre ruler. Print at 100% / actual size, never fit to page; the teacher checks that a printed disc measures 6 mm before distribution.'))
+ s.p(s.t('有區量度容差±1 mm；無區分類及0須正確。均值按自身三次讀數核對±0.1 mm，避免重複扣量度錯誤。三板使用固定seeds 1001/123456789/1982及generateResult，不代表每次VL讀數都相同。清晰區與6 mm紙碟以1:1印刷尺寸繪製，沒有附設量尺。用實體毫米直尺量度，必須以100%／實際大小列印，勿選符合頁面，教師印前核對紙碟為6 mm。','External-zone tolerance ±1 mm; absence requires the correct category and exactly 0. Check means from own three readings within ±0.1 mm, avoiding repeated reading penalties. Plates use fixed seeds 1001/123456789/1982 and generateResult, not identical outcomes for every VL run. Clear zones and 6 mm discs are drawn at 1:1 print size, without an attached ruler. Use a physical millimetre ruler. Print at 100% / actual size, never fit to page; the teacher checks that a printed disc measures 6 mm before distribution.'))
  s.p(s.t('本冊平均值：','Printed model means: ')+', '.join(x+' '+format(sum(p['result'][x] for p in m['plates'])/3,'.1f')+' mm' for x in m['samples']))
  s.h(s.t('配分、缺答及整合題','Marks, omissions and reflection'))
  s.p(s.t('WS作業檢核共24分：變量4、假設1、對照1、重複理由1、量度2、均值1、五MC5、結論1、整合8。不是VL29分的等值量表，不直接比較活動總分；成效另用研究者選定的共同測驗，本次未捏造測驗或效度。','WS checking totals 24: variables 4, assumptions 1, control 1, repeat reason 1, readings 2, means 1, five MCs 5, conclusion 1, reflection 8. It is not equivalent to VL29; do not directly compare activity totals. Outcomes need researcher-selected common assessments; no test or validity evidence is invented here.'))

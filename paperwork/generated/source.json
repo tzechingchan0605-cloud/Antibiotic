@@ -1,7 +1,7 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 8,
+    "version": 9,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -11,11 +11,12 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-balanced-spacing-8",
+    "taskVersion": "VL4-WS4-orange-diffusion-9",
     "language": "zh",
+    "scenario": "一名患者的傷口感染在接受初步[抗生素治療]後，仍未明顯改善。醫院化驗確認，引起感染的是耐甲氧西林金黃葡萄球菌，簡稱 [MRSA]。此實驗比較 [X、Y、Z 三種樣本]對 MRSA 生長的影響。",
     "principle": {
       "title": "A. 實驗原理：抗生素樣本的擴散與清晰區的形成",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\">① 紙碟承載抗生素</text><path d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\">② 抗生素向瓊脂擴散</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\">③ 抗生素抑制細菌生長</text><text x=\"246\" y=\"227\">並形成清晰區</text><path d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\">① 紙碟承載抗生素</text><path data-step=\"1\" d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\" fill=\"#C56800\">② 抗生素向瓊脂擴散</text>\n <text x=\"225\" y=\"204\">③ 抗生素抑制細菌生長</text><text x=\"246\" y=\"227\">並形成清晰區</text><path data-step=\"3\" d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
     },
     "printScale": 1,
     "measurementHint": "請用直尺通過圓心量度總直徑（包括紙碟）；無紙碟外清晰區時記錄為0 mm。量度容差：±1 mm。",
@@ -257,7 +258,7 @@
       "materialSpreader": "無菌塗布器：分布模擬細菌。",
       "materialTweezers": "鑷子 ×4：每夾一片紙碟前，使用酒精燒杯及酒精燈完成消毒。",
       "materials": "材料及用途",
-      "mean": "總直徑的平均值計算",
+      "mean": "清晰區的總直徑平均值計算",
       "meanLabelC": "C（對照）的平均值(mm)",
       "meanLabelX": "X 的平均值(mm)",
       "meanLabelY": "Y 的平均值(mm)",
@@ -361,7 +362,7 @@
       "reflection": "學習反思",
       "reflectionDone": "學習反思已鎖定；可列印或儲存 PDF。",
       "reflectionPending": "提交學習反思後開放 PDF。",
-      "reflectionQuestion": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用讀數支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+      "reflectionQuestion": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
       "reflectionRequired": "請先完成學習反思，再按「儲存並提交學習反思」。",
       "refresh": "驗證並讀取全部雲端紀錄",
       "repeatConsistency": "為了降低偶然誤差，驗證實驗結果的「可重複性」與數據的可靠性。",
@@ -461,7 +462,7 @@
       "zoomOut": "顯示整個瓊脂板"
     },
     "repeatPrompt": "測試樣本共有4種：抗生素X、Y、Z 及對照組。你認為每種樣本共需測試多少次？為什麼？",
-    "rankingPrompt": "以本次清晰區的平均總直徑比較，它們的抑制效能為：只排列有可見清晰區的樣本。以「／」刪去不適用位置。",
+    "rankingPrompt": "以本次清晰區的平均總直徑比較，它們的[抑制效能]為：只排列有可見清晰區的樣本。[以「／」刪去不適用位置]。",
     "title": "工作紙四：抗生素與細菌生長",
     "concepts": [
       "抗生素可抑制生長或殺死某些細菌，主要用於[細菌感染]，不能治療病毒感染。",
@@ -817,7 +818,7 @@
       },
       {
         "id": "plate-3",
-        "seed": 4294967,
+        "seed": 1982,
         "discPositions": {
           "X": {
             "x": 130,
@@ -837,9 +838,9 @@
           }
         },
         "result": {
-          "X": 18.9,
+          "X": 17.7,
           "Y": 0,
-          "Z": 27.9,
+          "Z": 26.1,
           "C": 0
         },
         "completed": true
@@ -874,7 +875,7 @@
       "sterile",
       "sameConditions"
     ],
-    "reflection": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用讀數支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「課題需知」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+    "reflection": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「課題需知」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
     "reference": {
       "control": "用相同載體但不含抗生素的紙碟，排除載體／紙碟影響；其餘條件保持相同。只有所有載體都是水時才稱水對照。",
       "reflection": "引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並可能使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。"
@@ -1090,7 +1091,7 @@
       [
         "2.2",
         "means",
-        "總直徑的平均值計算",
+        "清晰區的總直徑平均值計算",
         "1"
       ],
       [
@@ -1132,7 +1133,7 @@
       [
         "3",
         "reflection",
-        "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用讀數支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+        "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
         "8"
       ]
     ],
@@ -1141,7 +1142,7 @@
   },
   "en": {
     "module": "VL4",
-    "version": 8,
+    "version": 9,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -1151,11 +1152,12 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-balanced-spacing-8",
+    "taskVersion": "VL4-WS4-orange-diffusion-9",
     "language": "en",
+    "scenario": "After initial [antibiotic（抗生素） treatment], a patient’s wound infection has not clearly improved. Laboratory testing identifies methicillin-resistant Staphylococcus aureus（耐甲氧西林金黃葡萄球菌）, abbreviated as [MRSA（耐甲氧西林金黃葡萄球菌）]. This experiment compares the effects of [samples X, Y and Z] on MRSA（耐甲氧西林金黃葡萄球菌） growth.",
     "principle": {
       "title": "A. Experimental principle: antibiotic（抗生素） diffusion and clear-zone（清晰區） formation",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#087b78\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#087b78\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">1. Disc carries antibiotic（抗生素）</tspan></text><path d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">2. Antibiotic（抗生素） diffuses</tspan></text><text x=\"246\" y=\"146\">through agar</text><path d=\"M221 151L159 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">3. Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"246\" y=\"227\">bacterial growth, forming</text><text x=\"246\" y=\"250\">a clear zone</text><path d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">1. Disc carries antibiotic（抗生素）</tspan></text><path data-step=\"1\" d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\" fill=\"#C56800\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">2. Antibiotic（抗生素） diffuses</tspan></text><text x=\"246\" y=\"146\" fill=\"#C56800\">through agar</text>\n <text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">3. Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"246\" y=\"227\">bacterial growth, forming</text><text x=\"246\" y=\"250\">a clear zone</text><path data-step=\"3\" d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
     },
     "printScale": 1,
     "measurementHint": "Use a ruler to measure the total diameter through the centre, including the disc. Record 0 mm if there is no clear zone outside the disc. Reading tolerance: ±1 mm.",
@@ -1397,7 +1399,7 @@
       "materialSpreader": "Sterile（無菌的） spreader（塗布器）: distributes simulated bacteria.",
       "materialTweezers": "4 forceps: use the alcohol beaker and lamp to sterilise（滅菌／消毒） them before picking up each disc.",
       "materials": "Materials and their purpose",
-      "mean": "Mean total diameter calculation",
+      "mean": "Mean clear-zone（清晰區） total diameter calculation",
       "meanLabelC": "Mean for C (control) (mm)",
       "meanLabelX": "Mean for X (mm)",
       "meanLabelY": "Mean for Y (mm)",
@@ -1501,7 +1503,7 @@
       "reflection": "Learning reflection",
       "reflectionDone": "Reflection is locked. You can print or save a PDF.",
       "reflectionPending": "PDF is available after reflection submission.",
-      "reflectionQuestion": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite readings to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+      "reflectionQuestion": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
       "reflectionRequired": "Complete your reflection, then click “Save and submit reflection”.",
       "refresh": "Authenticate and load all cloud records",
       "repeatConsistency": "To reduce random error and assess the reproducibility（可重複性） of the results and the reliability（可靠性） of the data.",
@@ -1601,7 +1603,7 @@
       "zoomOut": "Show whole plate"
     },
     "repeatPrompt": "There are 4 test samples: antibiotics X, Y, Z and the control. How many tests does each sample need in total? Why?",
-    "rankingPrompt": "Comparing the mean total clear-zone diameters in this test, their inhibitory effects rank as follows. Rank only samples with visible clear zones. Cross out unused positions with “/”.",
+    "rankingPrompt": "Comparing the mean total clear-zone diameters in this test, their [inhibitory effects] rank as follows. Rank only samples with visible clear zones. [Cross out unused positions with “/”].",
     "title": "WS4: Antibiotics and bacterial growth",
     "concepts": [
       "Antibiotics may inhibit growth or kill some bacteria. They treat [bacterial infections], not viral infections.",
@@ -1957,7 +1959,7 @@
       },
       {
         "id": "plate-3",
-        "seed": 4294967,
+        "seed": 1982,
         "discPositions": {
           "X": {
             "x": 130,
@@ -1977,9 +1979,9 @@
           }
         },
         "result": {
-          "X": 18.9,
+          "X": 17.7,
           "Y": 0,
-          "Z": 27.9,
+          "Z": 26.1,
           "C": 0
         },
         "completed": true
@@ -2014,7 +2016,7 @@
       "sterile",
       "sameConditions"
     ],
-    "reflection": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite readings to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the topic notes to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+    "reflection": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the topic notes to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
     "reference": {
       "control": "Use a matching carrier-only disc without antibiotic（抗生素） to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water.",
       "reflection": "Use readings for your chosen sample to support growth inhibition（抑制）. Explain how pre-existing resistance（抗藥性） affects survival and reproduction（繁殖）, how resistance traits（抗藥性特徵） are inherited（遺傳）, and how the resistant（具抗藥性的） proportion may increase and antibiotic（抗生素） effectiveness may decline. This is a hypothetical extension, not evidence that resistance（抗藥性） arose in this experiment."
@@ -2230,7 +2232,7 @@
       [
         "2.2",
         "means",
-        "Mean total diameter calculation",
+        "Mean clear-zone（清晰區） total diameter calculation",
         "1"
       ],
       [
@@ -2272,7 +2274,7 @@
       [
         "3",
         "reflection",
-        "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite readings to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+        "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
         "8"
       ]
     ],
