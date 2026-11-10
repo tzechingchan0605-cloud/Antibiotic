@@ -249,6 +249,7 @@ test('isolated Google-origin bridge collects independent desktop/mobile inquirie
     await expect(teacher.locator('#teacherReport')).toContainText(firstAnswer);
     await expect(teacher.locator('#teacherReport img')).toHaveAttribute('src', firstImage);
 
+    await expect(teacher.locator('#exportLocal,#importRecords')).toHaveCount(0);
     const beforeExport = service.listCalls.length;
     const downloading = teacher.waitForEvent('download');
     await teacher.locator('#exportExcel').click();

@@ -1,3 +1,17 @@
+# 現行 VL4／WS4 v10 · R4（不要求引用數據）
+
+學習目標：以X/Y/Z與同載體C探究指定MRSA的可見生長；辨識IV／DV／CV與公平比較前提；理解對照、獨立重複及原有次數理由；量度三個獨立平板共12項清晰區總直徑，依自身讀數計算四組均值；完成五MC及有效樣本／平均直徑排序；選一個有效樣本，解釋原有抗性差異經選擇、存活、繁殖、遺傳而可能改變比例及藥效。
+
+Objectives: identify variables, assumptions and carrier control; reason about independent repeats; measure twelve total diameters from three independent plates and calculate means from own readings; interpret five MCs and the sample/order conclusion; choose an effective sample and explain selection, survival, reproduction, inheritance and possible changes in resistance proportion and antibiotic effect.
+
+最後整合題不再要求引用讀數或數據；量度、均值及結論仍按各自原題評分，不因反思未列數字再次扣分。R4首範疇「樣本選擇與判斷」0–2；其餘三範疇為原有抗性差異與選擇、繁殖與遺傳、比例及效果改變，各0–2。保留反思8／VL29／WS24分，兩組活動總分不直接當同一量表。新taskVersion為VL4-reflection-no-citation-6；舊R3／29、R2／23及歷史32分各保留原題與規準，混合Excel分表標記。六人工欄的上下限、整數驗證、空白／0區別及完成閘門不變。教師只使用重新讀取全班後的雲端Excel匯出；本機匯出及JSON匯入入口已移除，既存紀錄保持。
+
+兩語WS學生及答案各四頁、D獨立。模型、固定紙本種子1001／123456789／1982、±1mm量度及自身均值±0.1mm保持。VL仍先探究、提交後讀學習重點及反思、反思提交後開放PDF；WS先讀需知、首次答案保存後才派完整答案。兩組共同15–20分鐘目標須試教，教師澄清及支援仍按D記錄。學生原文、首次／最後答案、圖像、事件及雲端紀錄不改。沒有新增題目或恢復圖表／含量延伸。
+
+以下為歷史版本；引用數據要求及舊題目／評分版本不適用R4。
+
+---
+
 # WS4 v9／實體尺與結論選項更新
 
 VL結論的有效樣本使用可複選方格，加入C干擾選項，原組合選項字串與新陣列均可讀取／評分；「沒有樣本」與其他樣本互斥。新探究taskVersion為VL4-multiselect-5、conclusionVersion2，rubricVersion3仍29分，不改配分或舊紀錄。WS排序改手寫並以／刪去不用位置；前提、讀數及反思的能力目標不變。數據仍由VL原generateResult產生，紙本種子1001、123456789、1982；非每位學生的隨機VL數字都相同。

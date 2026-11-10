@@ -1,7 +1,7 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 9,
+    "version": 10,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -11,7 +11,7 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-orange-diffusion-9",
+    "taskVersion": "VL4-WS4-no-citation-10",
     "language": "zh",
     "scenario": "一名患者的傷口感染在接受初步[抗生素治療]後，仍未明顯改善。醫院化驗確認，引起感染的是耐甲氧西林金黃葡萄球菌，簡稱 [MRSA]。此實驗比較 [X、Y、Z 三種樣本]對 MRSA 生長的影響。",
     "principle": {
@@ -169,7 +169,6 @@
       "experimentComplete": "培養已完成；選擇瓊脂板來觀察和量度。",
       "experimentResults": "你的實驗結果：",
       "exportExcel": "重新讀取全班並匯出 Excel",
-      "exportLocal": "匯出本機紀錄 Excel（非全班）",
       "extension": "可選延伸 · 紙碟含量",
       "extensionAnalysis": "這些模擬結果支持甚麼？有甚麼限制？",
       "extensionLimit": "僅討論模型圈大小；不能轉成患者用藥劑量。",
@@ -214,8 +213,6 @@
       "hypothesis": "假說建立器",
       "hypothesisReason": "你的理由（提示：抗生素可在瓊脂板上擴散。）",
       "imageError": "圖片未能讀取；請使用有效 PNG、JPEG 或 WebP 圖片（不超過 8 MB）。",
-      "importNote": "只能匯入本模組資料；VL2 蒸騰紀錄不會混入 VL4。",
-      "importRecords": "匯入 VL4／舊相容 JSON 紀錄",
       "incubate": "啟動教學培養模擬",
       "incubateAll": "三塊瓊脂板一起培養",
       "incubating": "教學培養進度",
@@ -362,7 +359,8 @@
       "reflection": "學習反思",
       "reflectionDone": "學習反思已鎖定；可列印或儲存 PDF。",
       "reflectionPending": "提交學習反思後開放 PDF。",
-      "reflectionQuestion": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+      "reflectionQuestion": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+      "reflectionQuestionV3": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
       "reflectionRequired": "請先完成學習反思，再按「儲存並提交學習反思」。",
       "refresh": "驗證並讀取全部雲端紀錄",
       "repeatConsistency": "為了降低偶然誤差，驗證實驗結果的「可重複性」與數據的可靠性。",
@@ -875,10 +873,10 @@
       "sterile",
       "sameConditions"
     ],
-    "reflection": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「課題需知」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+    "reflection": "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「課題需知」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
     "reference": {
       "control": "用相同載體但不含抗生素的紙碟，排除載體／紙碟影響；其餘條件保持相同。只有所有載體都是水時才稱水對照。",
-      "reflection": "引用所選樣本的讀數支持抑制生長的判斷；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並可能使具抗性的細菌比例增加、抗生素效果減弱。這是延伸情境，並非本次實驗已證明抗性形成。"
+      "reflection": "選出本次能抑制生長的樣本；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並可能使具抗性的細菌比例增加、抗生素效果減弱。不要求引用讀數或數據。"
     },
     "rubric": [
       [
@@ -913,7 +911,7 @@
         1,
         "教師",
         "1：實驗前提出可用樣本與載體對照比較的預測，並給出相關理由。",
-        "舊版半分不適用於R3；以0或1評：可測試預測，但理由較薄弱或不清楚。",
+        "舊版半分不適用於R4；以0或1評：可測試預測，但理由較薄弱或不清楚。",
         "0：無可測試預測或無實驗前證據；合理但不被結果支持的假說不因此扣分。",
         "designing"
       ],
@@ -922,7 +920,7 @@
         1,
         "教師",
         "1：說明獨立重複可檢查一致性／變異，次數安排有可行性理由。",
-        "舊版半分不適用於R3；以0或1評：提及可靠性但缺少獨立比較或安排理由。",
+        "舊版半分不適用於R4；以0或1評：提及可靠性但缺少獨立比較或安排理由。",
         "0：只有次數或無可評理由。不以選 3 次、次數越多給分。",
         "designing"
       ],
@@ -931,7 +929,7 @@
         1,
         "教師",
         "1：相同載體但不含抗生素的紙碟，解釋排除載體／紙碟影響及相同條件。",
-        "舊版半分不適用於R3；以0或1評：有恰當C（對照），但理由或共同條件不完整。",
+        "舊版半分不適用於R4；以0或1評：有恰當C（對照），但理由或共同條件不完整。",
         "0：缺乏適當對照，或無可評理由。",
         "designing"
       ],
@@ -963,12 +961,12 @@
         "inferring"
       ],
       [
-        "整合反思｜樣本證據與抗性選擇",
+        "整合反思｜樣本判斷與抗性選擇",
         8,
         "教師",
-        "樣本選擇及讀數證據：2：選出本次有抑制作用的樣本，引用合理讀數支持判斷；1：判斷或讀數支持其中一項恰當；0：沒有恰當支持。；原有抗性差異與選擇：2：群體原有少量抗性差異，敏感者受抑制而抗性者較易存活；1：只連結其中一項；0：目的性產生指定抗性或無相關解釋。；繁殖與遺傳：2：存活抗性者繁殖並把抗性特徵傳予後代；1：只解釋其中一項；0：無相關因果。；比例及效果改變：2：抗性者比例可能上升，使該藥效果可能下降；1：只解釋其中一項；0：無相關因果。",
+        "樣本選擇與判斷：2：選出本次能抑制生長的樣本；1：抑制生長的判斷恰當但樣本指稱不清楚；0：未有恰當樣本判斷。不要求引用讀數或數據。；原有抗性差異與選擇：2：群體原有少量抗性差異，敏感者受抑制而抗性者較易存活；1：只連結其中一項；0：目的性產生指定抗性或無相關解釋。；繁殖與遺傳：2：存活抗性者繁殖並把抗性特徵傳予後代；1：只解釋其中一項；0：無相關因果。；比例及效果改變：2：抗性者比例可能上升，使該藥效果可能下降；1：只解釋其中一項；0：無相關因果。",
         "四個互不重複範疇各0–2整數，依科學概念及因果評分，不數關鍵字。",
-        "缺答0；不要求修訂假說或另列限制。",
+        "缺答0；不要求引用讀數、修訂假說或另列限制。",
         "knowledge"
       ],
       [
@@ -1021,12 +1019,12 @@
         1,
         "自動",
         "有效樣本按模型判斷（X、Z），正確得 0.5；排序按學生讀數計算的平均值判斷，正確得 0.5，未使用的位置必須選不適用。",
-        "舊版半分不適用於R3；以0或1評：樣本選擇或排序其中一項正確。",
+        "舊版半分不適用於R4；以0或1評：樣本選擇或排序其中一項正確。",
         "0：兩項均錯或資料不足；相同平均值接受任一先後次序，不重複扣量度誤差。",
         "communicating"
       ],
       [
-        "R3總分及待評狀態",
+        "R4總分及待評狀態",
         29,
         "公式",
         "其餘21分不變，反思8分。六個人工欄及反思提交閘門；人工分僅接受範圍內整數。",
@@ -1037,9 +1035,9 @@
     ],
     "reflectionCriteria": [
       [
-        "樣本選擇及讀數證據",
+        "樣本選擇與判斷",
         2,
-        "2：選出本次有抑制作用的樣本，引用合理讀數支持判斷；1：判斷或讀數支持其中一項恰當；0：沒有恰當支持。"
+        "2：選出本次能抑制生長的樣本；1：抑制生長的判斷恰當但樣本指稱不清楚；0：未有恰當樣本判斷。不要求引用讀數或數據。"
       ],
       [
         "原有抗性差異與選擇",
@@ -1133,7 +1131,7 @@
       [
         "3",
         "reflection",
-        "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本，引用數據支持你的判斷。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
+        "從你的實驗結果中，選出一個能抑制細菌生長的抗生素樣本。假如這群細菌原本已有少量具該抗生素抗性的細菌，持續使用該抗生素後，它的效果可能如何改變？請運用「學習重點」，解釋細菌的存活、繁殖及抗性特徵的遺傳如何造成這個變化。",
         "8"
       ]
     ],
@@ -1142,7 +1140,7 @@
   },
   "en": {
     "module": "VL4",
-    "version": 9,
+    "version": 10,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -1152,7 +1150,7 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-orange-diffusion-9",
+    "taskVersion": "VL4-WS4-no-citation-10",
     "language": "en",
     "scenario": "After initial [antibiotic（抗生素） treatment], a patient’s wound infection has not clearly improved. Laboratory testing identifies methicillin-resistant Staphylococcus aureus（耐甲氧西林金黃葡萄球菌）, abbreviated as [MRSA（耐甲氧西林金黃葡萄球菌）]. This experiment compares the effects of [samples X, Y and Z] on MRSA（耐甲氧西林金黃葡萄球菌） growth.",
     "principle": {
@@ -1310,7 +1308,6 @@
       "experimentComplete": "Incubation（培養） is complete. Select a plate to observe and measure.",
       "experimentResults": "Your experimental results:",
       "exportExcel": "Reload class records and export Excel",
-      "exportLocal": "Export this device’s Excel (not the class)",
       "extension": "Optional extension · Disc content",
       "extensionAnalysis": "What do these simulated results support? What are the limits?",
       "extensionLimit": "Discuss zone size in this model only; do not turn it into a patient dose recommendation.",
@@ -1355,8 +1352,6 @@
       "hypothesis": "Hypothesis builder",
       "hypothesisReason": "Your reason (Hint: antibiotics（抗生素） can diffuse through the agar plate（瓊脂板）.)",
       "imageError": "The image could not be read. Use a valid PNG, JPEG or WebP image (up to 8 MB).",
-      "importNote": "Only compatible records for this module can be imported; VL2 transpiration records are not mixed into VL4.",
-      "importRecords": "Import VL4/compatible legacy JSON records",
       "incubate": "Start simulated incubation（培養）",
       "incubateAll": "Incubate（培養） all three plates",
       "incubating": "Teaching incubation（培養） progress",
@@ -1503,7 +1498,8 @@
       "reflection": "Learning reflection",
       "reflectionDone": "Reflection is locked. You can print or save a PDF.",
       "reflectionPending": "PDF is available after reflection submission.",
-      "reflectionQuestion": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+      "reflectionQuestion": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+      "reflectionQuestionV3": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
       "reflectionRequired": "Complete your reflection, then click “Save and submit reflection”.",
       "refresh": "Authenticate and load all cloud records",
       "repeatConsistency": "To reduce random error and assess the reproducibility（可重複性） of the results and the reliability（可靠性） of the data.",
@@ -2016,10 +2012,10 @@
       "sterile",
       "sameConditions"
     ],
-    "reflection": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the topic notes to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+    "reflection": "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the topic notes to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
     "reference": {
       "control": "Use a matching carrier-only disc without antibiotic（抗生素） to check carrier/disc effects, with other conditions the same. Call it a water control only if every carrier is water.",
-      "reflection": "Use readings for your chosen sample to support growth inhibition（抑制）. Explain how pre-existing resistance（抗藥性） affects survival and reproduction（繁殖）, how resistance traits（抗藥性特徵） are inherited（遺傳）, and how the resistant（具抗藥性的） proportion may increase and antibiotic（抗生素） effectiveness may decline. This is a hypothetical extension, not evidence that resistance（抗藥性） arose in this experiment."
+      "reflection": "Choose a sample that inhibits（抑制） growth. Explain how pre-existing resistance（抗藥性） affects survival and reproduction（繁殖）, how resistance traits（抗藥性特徵） are inherited（遺傳）, and how the resistant（具抗藥性的） proportion may increase and antibiotic（抗生素） effectiveness may decline. Citing readings or data is not required."
     },
     "rubric": [
       [
@@ -2054,7 +2050,7 @@
         1,
         "教師",
         "1：實驗前提出可用樣本與載體對照比較的預測，並給出相關理由。",
-        "舊版半分不適用於R3；以0或1評：可測試預測，但理由較薄弱或不清楚。",
+        "舊版半分不適用於R4；以0或1評：可測試預測，但理由較薄弱或不清楚。",
         "0：無可測試預測或無實驗前證據；合理但不被結果支持的假說不因此扣分。",
         "designing"
       ],
@@ -2063,7 +2059,7 @@
         1,
         "教師",
         "1：說明獨立重複可檢查一致性／變異，次數安排有可行性理由。",
-        "舊版半分不適用於R3；以0或1評：提及可靠性但缺少獨立比較或安排理由。",
+        "舊版半分不適用於R4；以0或1評：提及可靠性但缺少獨立比較或安排理由。",
         "0：只有次數或無可評理由。不以選 3 次、次數越多給分。",
         "designing"
       ],
@@ -2072,7 +2068,7 @@
         1,
         "教師",
         "1：相同載體但不含抗生素的紙碟，解釋排除載體／紙碟影響及相同條件。",
-        "舊版半分不適用於R3；以0或1評：有恰當C（對照），但理由或共同條件不完整。",
+        "舊版半分不適用於R4；以0或1評：有恰當C（對照），但理由或共同條件不完整。",
         "0：缺乏適當對照，或無可評理由。",
         "designing"
       ],
@@ -2104,12 +2100,12 @@
         "inferring"
       ],
       [
-        "整合反思｜樣本證據與抗性選擇",
+        "整合反思｜樣本判斷與抗性選擇",
         8,
         "教師",
-        "樣本選擇及讀數證據：2：選出本次有抑制作用的樣本，引用合理讀數支持判斷；1：判斷或讀數支持其中一項恰當；0：沒有恰當支持。；原有抗性差異與選擇：2：群體原有少量抗性差異，敏感者受抑制而抗性者較易存活；1：只連結其中一項；0：目的性產生指定抗性或無相關解釋。；繁殖與遺傳：2：存活抗性者繁殖並把抗性特徵傳予後代；1：只解釋其中一項；0：無相關因果。；比例及效果改變：2：抗性者比例可能上升，使該藥效果可能下降；1：只解釋其中一項；0：無相關因果。",
+        "樣本選擇與判斷：2：選出本次能抑制生長的樣本；1：抑制生長的判斷恰當但樣本指稱不清楚；0：未有恰當樣本判斷。不要求引用讀數或數據。；原有抗性差異與選擇：2：群體原有少量抗性差異，敏感者受抑制而抗性者較易存活；1：只連結其中一項；0：目的性產生指定抗性或無相關解釋。；繁殖與遺傳：2：存活抗性者繁殖並把抗性特徵傳予後代；1：只解釋其中一項；0：無相關因果。；比例及效果改變：2：抗性者比例可能上升，使該藥效果可能下降；1：只解釋其中一項；0：無相關因果。",
         "四個互不重複範疇各0–2整數，依科學概念及因果評分，不數關鍵字。",
-        "缺答0；不要求修訂假說或另列限制。",
+        "缺答0；不要求引用讀數、修訂假說或另列限制。",
         "knowledge"
       ],
       [
@@ -2162,12 +2158,12 @@
         1,
         "自動",
         "有效樣本按模型判斷（X、Z），正確得 0.5；排序按學生讀數計算的平均值判斷，正確得 0.5，未使用的位置必須選不適用。",
-        "舊版半分不適用於R3；以0或1評：樣本選擇或排序其中一項正確。",
+        "舊版半分不適用於R4；以0或1評：樣本選擇或排序其中一項正確。",
         "0：兩項均錯或資料不足；相同平均值接受任一先後次序，不重複扣量度誤差。",
         "communicating"
       ],
       [
-        "R3總分及待評狀態",
+        "R4總分及待評狀態",
         29,
         "公式",
         "其餘21分不變，反思8分。六個人工欄及反思提交閘門；人工分僅接受範圍內整數。",
@@ -2178,9 +2174,9 @@
     ],
     "reflectionCriteria": [
       [
-        "樣本選擇及讀數證據",
+        "樣本選擇與判斷",
         2,
-        "2：選出本次有抑制作用的樣本，引用合理讀數支持判斷；1：判斷或讀數支持其中一項恰當；0：沒有恰當支持。"
+        "2：選出本次能抑制生長的樣本；1：抑制生長的判斷恰當但樣本指稱不清楚；0：未有恰當樣本判斷。不要求引用讀數或數據。"
       ],
       [
         "原有抗性差異與選擇",
@@ -2274,7 +2270,7 @@
       [
         "3",
         "reflection",
-        "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
+        "Choose an antibiotic（抗生素） sample from your experimental results that can inhibit（抑制） bacterial growth. Suppose this bacterial population initially contains a small number of bacteria resistant（具抗藥性的） to that antibiotic（抗生素）. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction（繁殖） and inheritance（遺傳） of resistance traits（抗藥性特徵） cause this change.",
         "8"
       ]
     ],

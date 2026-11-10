@@ -107,13 +107,14 @@ export function referenceFor(field, record, language) {
   if(CONCLUSION_FIELDS.includes(field))return tr(language,'根據自己的觀察及平均值判斷；只比較本次模擬條件，不能由圈大小決定最佳患者治療。','Use your observations and means; compare only these simulated conditions, not the best treatment for a patient.');
   if (field === 'iv') return answerDisplay(field, VARIABLE_REFERENCE.iv, language);
   if (field === 'dv') return answerDisplay(field, VARIABLE_REFERENCE.dv, language);
+  if (field === 'reflection' && record.rubricVersion === 4) return tr(language,'選出本次能抑制生長的樣本；解釋原有抗性差異如何影響存活及繁殖，抗性特徵如何遺傳，並可能使具抗性的細菌比例增加、抗生素效果減弱。不要求引用讀數或數據。','Choose a sample that inhibits growth. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion may increase and antibiotic effectiveness may decline. Citing readings or data is not required.');
   if (field === 'cv') return answerDisplay(field, controlVariableReference(record), language);
   if (field === 'assumptions') return answerDisplay(field, ASSUMPTION_REFERENCE, language);
   return refs[field] ? tr(language,...refs[field]) : '';
 }
 const markHTML = (check, language) => check === null || check === undefined ? '' : `<span class="check ${check ? 'correct' : 'incorrect'}" aria-label="${tr(language, check ? '符合參考' : '不符合參考', check ? 'Matches reference' : 'Does not match reference')}">${check ? '✓' : '✕'}</span>`;
 function reportAnswer(record, field, value, language, withReference = true) {
-  const definition = [...ANSWER_FIELDS,...CURRENT_ANSWER_FIELDS].find(item => item[0] === field);
+  const definition = field==='reflection' && record.rubricVersion!==4 ? ['reflection',...L.reflectionQuestionV3,'knowledge'] : [...ANSWER_FIELDS,...CURRENT_ANSWER_FIELDS].find(item => item[0] === field);
   const shown = answerDisplay(field, value, language);
   const submitted = !!record.submittedAt;
   const checks = objectiveChecks({ ...record, answers: { ...record.answers, [field]: value } });
@@ -330,7 +331,7 @@ export async function buildWorkbook(inputRecords) {
   const exportFields=hasLegacy?(hasCurrent?[...ANSWER_FIELDS,...CURRENT_ANSWER_FIELDS.filter(([id])=>!ANSWER_FIELDS.some(([field])=>field===id))]:ANSWER_FIELDS):CURRENT_ANSWER_FIELDS;
   const legacyExtension=hasLegacy?['延伸預測','延伸理由','延伸公平比較','延伸結果','延伸分析']:[];
   const originalFields = ANSWER_FIELDS.filter(([field])=>!field.startsWith('analysis') && !field.startsWith('knowledge') && field !== 'reflection' && field !== 'conclusion');
-  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...exportFields.map(([,label])=>'最新｜'+label),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立瓊脂板數','設計文字',...legacyExtension,'有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數'),'題目／評分版本'];
+  const headings = ['紀錄識別碼','姓名','班別及學號','電郵','狀態','版本','探究遞交（香港）','反思提交（香港）','原始快照時間（香港）',...originalFields.map(([,label])=>'原始｜'+label),...exportFields.map(([id,label])=>'最新｜'+(id==='reflection'?'學習反思（依題目／評分版本）':label)),'plannedReplicates｜原始建議','plannedReplicateReason｜原始理由','actualReplicates｜獨立瓊脂板數','設計文字',...legacyExtension,'有效用時總秒數',...['一','二','三','四'].map(stage=>'階段'+stage+'有效秒數'),'題目／評分版本'];
   const answerGroups = [...Array(9).fill('identity'),...originalFields.map(field=>field[3]),...exportFields.map(field=>field[3]),...Array(3).fill('designing'),'conducting',...Array(legacyExtension.length).fill('inferring'),...Array(6).fill('identity')];
   const answers = createSheet(workbook,'學生探究答案',headings,answerGroups);
   const dataHeadings=['紀錄識別碼','姓名','瓊脂板識別碼','樣本','首次有無紙碟外清晰區','首次總直徑（mm）','首次備註','首次確認（香港）','最後有無紙碟外清晰區','最後總直徑（mm）','最後備註','最後確認（香港）','模型參考總直徑（mm）','直徑／紙碟外清晰區檢核','修訂紀錄','學生平均值（mm）','依學生最後讀數計算平均值','平均值檢核',...(hasLegacy?['確認棒高（mm）','圖表檢核','圖表確認（香港）']:[])];
@@ -338,12 +339,14 @@ export async function buildWorkbook(inputRecords) {
   const data=createSheet(workbook,hasLegacy?'量度計算與圖表':'量度與計算',dataHeadings,dataGroups);
   const makeScores=(columns,name)=>({columns,sheet:createSheet(workbook,name,['紀錄識別碼','姓名','班別及學號','完成狀態',...columns.map(column=>column.label+(column.max!==undefined?`（0–${column.max}）`:''))],[...Array(4).fill('identity'),...columns.map(column=>column.group)]),index:Object.fromEntries(columns.map((column,index)=>[column.id,index+5]))});
   const legacyScores=hasLegacy?makeScores(SCORE_COLUMNS,'教師評分'):null;
-  const hasV2=records.some(r=>currentAnalysis(r)&&r.rubricVersion!==3);
+  const hasV2=records.some(r=>currentAnalysis(r)&&![3,4].includes(r.rubricVersion));
   const currentScores=hasV2?makeScores(CURRENT_SCORE_COLUMNS,hasLegacy?'教師評分（新版）':'教師評分'):null;
   const v3Records=records.filter(r=>currentAnalysis(r)&&r.rubricVersion===3);
-  const v3Scores=v3Records.length||!records.length?makeScores(scoreColumnsFor(v3Records[0]||{analysisVersion:2,rubricVersion:3}),hasLegacy||hasV2?'教師評分（R3）':'教師評分'):null;
+  const v3Scores=v3Records.length?makeScores(scoreColumnsFor(v3Records[0]),hasLegacy||hasV2?'教師評分（R3）':'教師評分'):null;
+  const v4Records=records.filter(r=>currentAnalysis(r)&&r.rubricVersion===4);
+  const v4Scores=v4Records.length||!records.length?makeScores(scoreColumnsFor(v4Records[0]||{analysisVersion:2,rubricVersion:4}),hasLegacy||hasV2||v3Records.length?'教師評分（R4）':'教師評分'):null;
   const rubric=createSheet(workbook,'評分準則',['類別／題目','最高分','評分方式','滿分準則','部分得分準則','零分準則']);
-  for(const row of [...(hasLegacy?RUBRIC_ROWS:[]),...(records.some(r=>currentAnalysis(r)&&r.rubricVersion!==3)?CURRENT_RUBRIC_ROWS:[]),...(v3Records.length||!records.length?rubricRowsFor(v3Records[0]||{analysisVersion:2,rubricVersion:3}):[])]){addDataRow(rubric,row.slice(0,6),Array(6).fill(row[6]));}
+  for(const row of [...(hasLegacy?RUBRIC_ROWS:[]),...(hasV2?CURRENT_RUBRIC_ROWS:[]),...(v3Records.length?rubricRowsFor(v3Records[0]):[]),...(v4Records.length||!records.length?rubricRowsFor(v4Records[0]||{analysisVersion:2,rubricVersion:4}):[])]){addDataRow(rubric,row.slice(0,6),Array(6).fill(row[6]));}
   rubric.columns.forEach((column,index)=>{column.width=index===1?10:index===2?12:60;});
   const events=createSheet(workbook,'操作事件紀錄',['紀錄識別碼','姓名','來源','事件類型','時間（香港）','階段','事件詳情（JSON）']);events.getColumn(7).width=80;
   const designs=createSheet(workbook,'裝置設計圖',['紀錄識別碼','姓名','班別及學號','電郵','快照類別','設計文字','學生設計圖']);designs.getColumn(5).width=22;designs.getColumn(6).width=55;designs.getColumn(7).width=70;
@@ -363,15 +366,15 @@ export async function buildWorkbook(inputRecords) {
       addDataRow(data,[record.id,profile.name,plate.id,sampleName(sample,'zh'),presence(first.visible),finiteNumber(first.value)??'',first.note||'',first.at?dateText(first.at):'',presence(last.visible),finiteNumber(last.value)??'',last.note||'',last.at?dateText(last.at):'',clearZoneDiameter(plate,sample)??'',label(check),JSON.stringify(reading.revisions||[]),finiteNumber(record.means?.[sample])??'',mean===null?'':Math.round(mean*10000)/10000,label(meanCorrect),...(hasLegacy?[finiteNumber(record.graph?.values?.[sample])??'',label(graphCorrect),record.graph?.confirmedAt?dateText(record.graph.confirmedAt):'']:[])],dataGroups,{5:readingCheck(record,plate,sample,first),9:check,13:check,15:meanCorrect,17:meanCorrect,18:graphCorrect,19:graphCorrect});
       for (const revision of reading.revisions||[]) addDataRow(events,[record.id,profile.name,`${plate.id}/${sample}`,'reading_revision',dateText(revision.at||revision.next?.at),3,JSON.stringify(safeEventDetails(revision))]);
     }
-    const auto=automaticScores(record),{columns,sheet:scores,index:scoreIndex}=record.rubricVersion===3&&currentAnalysis(record)?v3Scores:currentAnalysis(record)?currentScores:legacyScores;
+    const auto=automaticScores(record),{columns,sheet:scores,index:scoreIndex}=record.rubricVersion===4&&currentAnalysis(record)?v4Scores:record.rubricVersion===3&&currentAnalysis(record)?v3Scores:currentAnalysis(record)?currentScores:legacyScores;
     const scoreRow=addDataRow(scores,[record.id,profile.name,profile.className||profile.classInfo,status,...columns.map(column=>column.manual?null:auto[column.id]??'')],[...Array(4).fill('identity'),...columns.map(column=>column.group)]);
     const cell=id=>scoreRow.getCell(scoreIndex[id]), ref=id=>cell(id).address;
     const manualColumns=columns.filter(column=>column.manual),manual=manualColumns.map(column=>ref(column.id));
-    const guards=manualColumns.map(c=>`IFERROR(AND(ISNUMBER(${ref(c.id)}),${ref(c.id)}>=0,${ref(c.id)}<=${c.max},MOD(${ref(c.id)},${record.rubricVersion===3?1:0.5})=0),FALSE)`);
+    const guards=manualColumns.map(c=>`IFERROR(AND(ISNUMBER(${ref(c.id)}),${ref(c.id)}>=0,${ref(c.id)}<=${c.max},MOD(${ref(c.id)},${[3,4].includes(record.rubricVersion)?1:0.5})=0),FALSE)`);
     const validManual=guards.join(',');
     for(const column of columns){
       const current=cell(column.id);
-      if(column.manual){current.value=null;current.dataValidation={type:record.rubricVersion===3?'whole':'decimal',operator:'between',allowBlank:true,formulae:[0,column.max],showInputMessage:true,promptTitle:'教師人工評分',prompt:`空白＝待評；有效範圍 0–${column.max}；R3只接受整數。`,showErrorMessage:true,errorStyle:'stop',errorTitle:'分數超出範圍',error:`請輸入 0–${column.max} 的數值，或保持空白。`};}
+      if(column.manual){current.value=null;current.dataValidation={type:[3,4].includes(record.rubricVersion)?'whole':'decimal',operator:'between',allowBlank:true,formulae:[0,column.max],showInputMessage:true,promptTitle:'教師人工評分',prompt:`空白＝待評；有效範圍 0–${column.max}；R3／R4只接受整數。`,showErrorMessage:true,errorStyle:'stop',errorTitle:'分數超出範圍',error:`請輸入 0–${column.max} 的數值，或保持空白。`};}
       if(column.formula){
         const dependencies=column.formula.map(ref);
         let formula=`IF(COUNT(${dependencies.join(',')})=${dependencies.length},ROUND(SUM(${dependencies.join(',')}),2),"待評")`;

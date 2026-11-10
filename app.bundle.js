@@ -23702,7 +23702,7 @@ var require_exceljs_min = __commonJS({
 });
 
 // paperwork/fingerprint.js
-var PAPER_FINGERPRINT = "2930bfd75c48401513f7d9d30668db76c16b86d2475bbc0f36e58fe44e5a2a6d";
+var PAPER_FINGERPRINT = "3323fe13915feab8395acab6730778f47a286d51d7f541d7101a1fa9ebe2036e";
 
 // english-glossary.js
 var entries = [
@@ -24188,7 +24188,8 @@ var L = {
   learning: pair("\u5B78\u7FD2\u91CD\u9EDE", "Learning points"),
   reflection: pair("\u5B78\u7FD2\u53CD\u601D", "Learning reflection"),
   experimentResults: pair("\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\uFF1A", "Your experimental results:"),
-  reflectionQuestion: pair("\u5F9E\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\u4E2D\uFF0C\u9078\u51FA\u4E00\u500B\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\u7684\u6297\u751F\u7D20\u6A23\u672C\uFF0C\u5F15\u7528\u6578\u64DA\u652F\u6301\u4F60\u7684\u5224\u65B7\u3002\u5047\u5982\u9019\u7FA4\u7D30\u83CC\u539F\u672C\u5DF2\u6709\u5C11\u91CF\u5177\u8A72\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\uFF0C\u6301\u7E8C\u4F7F\u7528\u8A72\u6297\u751F\u7D20\u5F8C\uFF0C\u5B83\u7684\u6548\u679C\u53EF\u80FD\u5982\u4F55\u6539\u8B8A\uFF1F\u8ACB\u904B\u7528\u300C\u5B78\u7FD2\u91CD\u9EDE\u300D\uFF0C\u89E3\u91CB\u7D30\u83CC\u7684\u5B58\u6D3B\u3001\u7E41\u6B96\u53CA\u6297\u6027\u7279\u5FB5\u7684\u907A\u50B3\u5982\u4F55\u9020\u6210\u9019\u500B\u8B8A\u5316\u3002", "Choose an antibiotic sample from your experimental results that can inhibit bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant to that antibiotic. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction and inheritance of resistance traits cause this change."),
+  reflectionQuestionV3: pair("\u5F9E\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\u4E2D\uFF0C\u9078\u51FA\u4E00\u500B\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\u7684\u6297\u751F\u7D20\u6A23\u672C\uFF0C\u5F15\u7528\u6578\u64DA\u652F\u6301\u4F60\u7684\u5224\u65B7\u3002\u5047\u5982\u9019\u7FA4\u7D30\u83CC\u539F\u672C\u5DF2\u6709\u5C11\u91CF\u5177\u8A72\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\uFF0C\u6301\u7E8C\u4F7F\u7528\u8A72\u6297\u751F\u7D20\u5F8C\uFF0C\u5B83\u7684\u6548\u679C\u53EF\u80FD\u5982\u4F55\u6539\u8B8A\uFF1F\u8ACB\u904B\u7528\u300C\u5B78\u7FD2\u91CD\u9EDE\u300D\uFF0C\u89E3\u91CB\u7D30\u83CC\u7684\u5B58\u6D3B\u3001\u7E41\u6B96\u53CA\u6297\u6027\u7279\u5FB5\u7684\u907A\u50B3\u5982\u4F55\u9020\u6210\u9019\u500B\u8B8A\u5316\u3002", "Choose an antibiotic sample from your experimental results that can inhibit bacterial growth, and cite data to support your judgement. Suppose this bacterial population initially contains a small number of bacteria resistant to that antibiotic. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction and inheritance of resistance traits cause this change."),
+  reflectionQuestion: pair("\u5F9E\u4F60\u7684\u5BE6\u9A57\u7D50\u679C\u4E2D\uFF0C\u9078\u51FA\u4E00\u500B\u80FD\u6291\u5236\u7D30\u83CC\u751F\u9577\u7684\u6297\u751F\u7D20\u6A23\u672C\u3002\u5047\u5982\u9019\u7FA4\u7D30\u83CC\u539F\u672C\u5DF2\u6709\u5C11\u91CF\u5177\u8A72\u6297\u751F\u7D20\u6297\u6027\u7684\u7D30\u83CC\uFF0C\u6301\u7E8C\u4F7F\u7528\u8A72\u6297\u751F\u7D20\u5F8C\uFF0C\u5B83\u7684\u6548\u679C\u53EF\u80FD\u5982\u4F55\u6539\u8B8A\uFF1F\u8ACB\u904B\u7528\u300C\u5B78\u7FD2\u91CD\u9EDE\u300D\uFF0C\u89E3\u91CB\u7D30\u83CC\u7684\u5B58\u6D3B\u3001\u7E41\u6B96\u53CA\u6297\u6027\u7279\u5FB5\u7684\u907A\u50B3\u5982\u4F55\u9020\u6210\u9019\u500B\u8B8A\u5316\u3002", "Choose an antibiotic sample from your experimental results that can inhibit bacterial growth. Suppose this bacterial population initially contains a small number of bacteria resistant to that antibiotic. How might its effectiveness change with continued use? Use the learning points to explain how bacterial survival, reproduction and inheritance of resistance traits cause this change."),
   saveReflection: pair("\u5132\u5B58\u4E26\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D", "Save and submit reflection"),
   reflectionPending: pair("\u63D0\u4EA4\u5B78\u7FD2\u53CD\u601D\u5F8C\u958B\u653E PDF\u3002", "PDF is available after reflection submission."),
   reflectionDone: pair("\u5B78\u7FD2\u53CD\u601D\u5DF2\u9396\u5B9A\uFF1B\u53EF\u5217\u5370\u6216\u5132\u5B58 PDF\u3002", "Reflection is locked. You can print or save a PDF."),
@@ -24211,8 +24212,6 @@ var L = {
   passwordPH: pair("\u5728\u79C1\u4EBA Script Properties \u8A2D\u5B9A\u7684\u5BC6\u78BC", "Password set in private Script Properties"),
   refresh: pair("\u9A57\u8B49\u4E26\u8B80\u53D6\u5168\u90E8\u96F2\u7AEF\u7D00\u9304", "Authenticate and load all cloud records"),
   exportExcel: pair("\u91CD\u65B0\u8B80\u53D6\u5168\u73ED\u4E26\u532F\u51FA Excel", "Reload class records and export Excel"),
-  exportLocal: pair("\u532F\u51FA\u672C\u6A5F\u7D00\u9304 Excel\uFF08\u975E\u5168\u73ED\uFF09", "Export this device\u2019s Excel (not the class)"),
-  importRecords: pair("\u532F\u5165 VL4\uFF0F\u820A\u76F8\u5BB9 JSON \u7D00\u9304", "Import VL4/compatible legacy JSON records"),
   demo: pair("\u9032\u5165\u793A\u7BC4\u63A2\u7A76", "Enter demonstration"),
   demoNote: pair("\u6559\u5E2B\u793A\u7BC4 \xB7 \u4E0D\u52A0\u5165\u5B78\u751F\u7D00\u9304\u6216\u8A55\u5206", "Teacher demonstration \xB7 excluded from student records and scoring"),
   teacherBack: pair("\u8FD4\u56DE\u6559\u5E2B\u5100\u8868\u677F", "Return to teacher dashboard"),
@@ -24248,7 +24247,6 @@ var L = {
   genericPH: pair("\u5BEB\u4E0B\u4F60\u7684\u60F3\u6CD5\u3002", "Write your ideas."),
   counts: pair("\u7368\u7ACB\u6E2C\u8A66", "Independent tests"),
   readonly: pair("\u63A2\u7A76\u7B54\u6848\u5DF2\u9396\u5B9A\u3002", "Inquiry answers are locked."),
-  importNote: pair("\u53EA\u80FD\u532F\u5165\u672C\u6A21\u7D44\u8CC7\u6599\uFF1BVL2 \u84B8\u9A30\u7D00\u9304\u4E0D\u6703\u6DF7\u5165 VL4\u3002", "Only compatible records for this module can be imported; VL2 transpiration records are not mixed into VL4."),
   sourceNote: pair("\u672C\u6A21\u578B\u4E0D\u4F7F\u7528\u81E8\u5E8A\u654F\u611F\uFF0F\u6297\u85E5\u5224\u5B9A\u754C\u7DDA\uFF0C\u4E0D\u80FD\u63A8\u5EE3\u81F3\u6240\u6709 MRSA\u3002", "This model uses no clinical susceptibility breakpoints and cannot be generalised to all MRSA."),
   measureSelect: pair("\u5148\u9078\u64C7\u8981\u91CF\u5EA6\u7684\u6A23\u672C", "Select the sample to measure"),
   time: pair("\u6709\u6548\u7528\u6642", "Active time"),
@@ -24328,8 +24326,8 @@ function freshRecord(profile, demo = false) {
   return {
     schemaVersion: 1,
     analysisVersion: 2,
-    rubricVersion: 3,
-    taskVersion: "VL4-multiselect-5",
+    rubricVersion: 4,
+    taskVersion: "VL4-reflection-no-citation-6",
     conclusionVersion: 2,
     moduleId: MODULE_ID,
     id: crypto.randomUUID(),
@@ -24602,9 +24600,15 @@ var REFLECTION_CRITERIA = [
 ];
 var V3_SCORE_COLUMNS = CURRENT_SCORE_COLUMNS.map((c) => c.id === "reflection" ? { ...c, max: 8, label: "\u6574\u5408\u53CD\u601D\uFF5C\u6A23\u672C\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7\uFF08\u6559\u5E2B\uFF09" } : c.id === "overall" ? { ...c, max: 29, label: "R3 \u6574\u9AD4\u7E3D\u5206\uFF0829\uFF09" } : { ...c });
 var V3_RUBRIC_ROWS = CURRENT_RUBRIC_ROWS.map((row) => row[0].startsWith("\u53CD\u601D\uFF5C") ? ["\u6574\u5408\u53CD\u601D\uFF5C\u6A23\u672C\u8B49\u64DA\u8207\u6297\u6027\u9078\u64C7", 8, "\u6559\u5E2B", REFLECTION_CRITERIA.map((c) => c[0] + "\uFF1A" + c[2]).join("\uFF1B"), "\u56DB\u500B\u4E92\u4E0D\u91CD\u8907\u7BC4\u7587\u54040\u20132\u6574\u6578\uFF0C\u4F9D\u79D1\u5B78\u6982\u5FF5\u53CA\u56E0\u679C\u8A55\u5206\uFF0C\u4E0D\u6578\u95DC\u9375\u5B57\u3002", "\u7F3A\u7B540\uFF1B\u4E0D\u8981\u6C42\u4FEE\u8A02\u5047\u8AAA\u6216\u53E6\u5217\u9650\u5236\u3002", "knowledge"] : row[0] === "\u65B0\u7248\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B" ? ["R3\u7E3D\u5206\u53CA\u5F85\u8A55\u72C0\u614B", 29, "\u516C\u5F0F", "\u5176\u991821\u5206\u4E0D\u8B8A\uFF0C\u53CD\u601D8\u5206\u3002\u516D\u500B\u4EBA\u5DE5\u6B04\u53CA\u53CD\u601D\u63D0\u4EA4\u9598\u9580\uFF1B\u4EBA\u5DE5\u5206\u50C5\u63A5\u53D7\u7BC4\u570D\u5167\u6574\u6578\u3002", "\u7A7A\u767D\u5F85\u8A55\uFF1B0\u662F\u5DF2\u8A55\u96F6\u5206\uFF1B\u4E0D\u9069\u7528\u9805\u76EE\u4E0D\u5217\u5165\u9598\u9580\u3002", "\u7121\u6548\u8CBC\u5165\u4E0D\u986F\u793A\u7E3D\u5206\uFF1B\u9EDE\u64CA\u3001\u901F\u5EA6\u3001\u6B21\u6578\u53CA\u5B8C\u6210\u7387\u4E0D\u662F\u80FD\u529B\u5206\u3002", "score"] : row.map((v) => typeof v === "string" ? v.replace("0.5\uFF1A", "\u820A\u7248\u534A\u5206\u4E0D\u9069\u7528\u65BCR3\uFF1B\u4EE50\u62161\u8A55\uFF1A") : v));
-var scoreColumnsFor = (record) => !currentAnalysis(record) ? SCORE_COLUMNS : record.rubricVersion === 3 ? V3_SCORE_COLUMNS : CURRENT_SCORE_COLUMNS;
-var rubricRowsFor = (record) => !currentAnalysis(record) ? RUBRIC_ROWS : record.rubricVersion === 3 ? V3_RUBRIC_ROWS : CURRENT_RUBRIC_ROWS;
-var assessmentLabel = (record) => !currentAnalysis(record) ? "\u6B77\u53F232\u5206" : record.rubricVersion === 3 ? "R3\uFF0F29\u5206" : "R2\uFF0F23\u5206";
+var V4_REFLECTION_CRITERIA = [
+  ["\u6A23\u672C\u9078\u64C7\u8207\u5224\u65B7", 2, "2\uFF1A\u9078\u51FA\u672C\u6B21\u80FD\u6291\u5236\u751F\u9577\u7684\u6A23\u672C\uFF1B1\uFF1A\u6291\u5236\u751F\u9577\u7684\u5224\u65B7\u6070\u7576\u4F46\u6A23\u672C\u6307\u7A31\u4E0D\u6E05\u695A\uFF1B0\uFF1A\u672A\u6709\u6070\u7576\u6A23\u672C\u5224\u65B7\u3002\u4E0D\u8981\u6C42\u5F15\u7528\u8B80\u6578\u6216\u6578\u64DA\u3002"],
+  ...REFLECTION_CRITERIA.slice(1)
+];
+var V4_SCORE_COLUMNS = V3_SCORE_COLUMNS.map((c) => c.id === "reflection" ? { ...c, label: "\u6574\u5408\u53CD\u601D\uFF5C\u6A23\u672C\u5224\u65B7\u8207\u6297\u6027\u9078\u64C7\uFF08\u6559\u5E2B\uFF09" } : c.id === "overall" ? { ...c, label: "R4 \u6574\u9AD4\u7E3D\u5206\uFF0829\uFF09" } : { ...c });
+var V4_RUBRIC_ROWS = V3_RUBRIC_ROWS.map((row) => row[0].startsWith("\u6574\u5408\u53CD\u601D\uFF5C") ? ["\u6574\u5408\u53CD\u601D\uFF5C\u6A23\u672C\u5224\u65B7\u8207\u6297\u6027\u9078\u64C7", 8, "\u6559\u5E2B", V4_REFLECTION_CRITERIA.map((c) => c[0] + "\uFF1A" + c[2]).join("\uFF1B"), "\u56DB\u500B\u4E92\u4E0D\u91CD\u8907\u7BC4\u7587\u54040\u20132\u6574\u6578\uFF0C\u4F9D\u79D1\u5B78\u6982\u5FF5\u53CA\u56E0\u679C\u8A55\u5206\uFF0C\u4E0D\u6578\u95DC\u9375\u5B57\u3002", "\u7F3A\u7B540\uFF1B\u4E0D\u8981\u6C42\u5F15\u7528\u8B80\u6578\u3001\u4FEE\u8A02\u5047\u8AAA\u6216\u53E6\u5217\u9650\u5236\u3002", "knowledge"] : row.map((v) => typeof v === "string" ? v.replaceAll("R3", "R4") : v));
+var scoreColumnsFor = (record) => !currentAnalysis(record) ? SCORE_COLUMNS : record.rubricVersion === 4 ? V4_SCORE_COLUMNS : record.rubricVersion === 3 ? V3_SCORE_COLUMNS : CURRENT_SCORE_COLUMNS;
+var rubricRowsFor = (record) => !currentAnalysis(record) ? RUBRIC_ROWS : record.rubricVersion === 4 ? V4_RUBRIC_ROWS : record.rubricVersion === 3 ? V3_RUBRIC_ROWS : CURRENT_RUBRIC_ROWS;
+var assessmentLabel = (record) => !currentAnalysis(record) ? "\u6B77\u53F232\u5206" : record.rubricVersion === 4 ? "R4\uFF0F29\u5206\uFF08\u53CD\u601D\u4E0D\u8981\u6C42\u5F15\u7528\u6578\u64DA\uFF09" : record.rubricVersion === 3 ? "R3\uFF0F29\u5206" : "R2\uFF0F23\u5206";
 
 // reports.js
 var esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
@@ -24730,13 +24734,14 @@ function referenceFor(field2, record, language2) {
   if (CONCLUSION_FIELDS.includes(field2)) return tr(language2, "\u6839\u64DA\u81EA\u5DF1\u7684\u89C0\u5BDF\u53CA\u5E73\u5747\u503C\u5224\u65B7\uFF1B\u53EA\u6BD4\u8F03\u672C\u6B21\u6A21\u64EC\u689D\u4EF6\uFF0C\u4E0D\u80FD\u7531\u5708\u5927\u5C0F\u6C7A\u5B9A\u6700\u4F73\u60A3\u8005\u6CBB\u7642\u3002", "Use your observations and means; compare only these simulated conditions, not the best treatment for a patient.");
   if (field2 === "iv") return answerDisplay(field2, VARIABLE_REFERENCE.iv, language2);
   if (field2 === "dv") return answerDisplay(field2, VARIABLE_REFERENCE.dv, language2);
+  if (field2 === "reflection" && record.rubricVersion === 4) return tr(language2, "\u9078\u51FA\u672C\u6B21\u80FD\u6291\u5236\u751F\u9577\u7684\u6A23\u672C\uFF1B\u89E3\u91CB\u539F\u6709\u6297\u6027\u5DEE\u7570\u5982\u4F55\u5F71\u97FF\u5B58\u6D3B\u53CA\u7E41\u6B96\uFF0C\u6297\u6027\u7279\u5FB5\u5982\u4F55\u907A\u50B3\uFF0C\u4E26\u53EF\u80FD\u4F7F\u5177\u6297\u6027\u7684\u7D30\u83CC\u6BD4\u4F8B\u589E\u52A0\u3001\u6297\u751F\u7D20\u6548\u679C\u6E1B\u5F31\u3002\u4E0D\u8981\u6C42\u5F15\u7528\u8B80\u6578\u6216\u6578\u64DA\u3002", "Choose a sample that inhibits growth. Explain how pre-existing resistance affects survival and reproduction, how resistance traits are inherited, and how the resistant proportion may increase and antibiotic effectiveness may decline. Citing readings or data is not required.");
   if (field2 === "cv") return answerDisplay(field2, controlVariableReference(record), language2);
   if (field2 === "assumptions") return answerDisplay(field2, ASSUMPTION_REFERENCE, language2);
   return refs[field2] ? tr(language2, ...refs[field2]) : "";
 }
 var markHTML = (check, language2) => check === null || check === void 0 ? "" : `<span class="check ${check ? "correct" : "incorrect"}" aria-label="${tr(language2, check ? "\u7B26\u5408\u53C3\u8003" : "\u4E0D\u7B26\u5408\u53C3\u8003", check ? "Matches reference" : "Does not match reference")}">${check ? "\u2713" : "\u2715"}</span>`;
 function reportAnswer(record, field2, value, language2, withReference = true) {
-  const definition = [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS].find((item) => item[0] === field2);
+  const definition = field2 === "reflection" && record.rubricVersion !== 4 ? ["reflection", ...L.reflectionQuestionV3, "knowledge"] : [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS].find((item) => item[0] === field2);
   const shown = answerDisplay(field2, value, language2);
   const submitted = !!record.submittedAt;
   const checks = objectiveChecks({ ...record, answers: { ...record.answers, [field2]: value } });
@@ -24969,7 +24974,7 @@ async function buildWorkbook(inputRecords) {
   const exportFields = hasLegacy ? hasCurrent ? [...ANSWER_FIELDS, ...CURRENT_ANSWER_FIELDS.filter(([id]) => !ANSWER_FIELDS.some(([field2]) => field2 === id))] : ANSWER_FIELDS : CURRENT_ANSWER_FIELDS;
   const legacyExtension = hasLegacy ? ["\u5EF6\u4F38\u9810\u6E2C", "\u5EF6\u4F38\u7406\u7531", "\u5EF6\u4F38\u516C\u5E73\u6BD4\u8F03", "\u5EF6\u4F38\u7D50\u679C", "\u5EF6\u4F38\u5206\u6790"] : [];
   const originalFields = ANSWER_FIELDS.filter(([field2]) => !field2.startsWith("analysis") && !field2.startsWith("knowledge") && field2 !== "reflection" && field2 !== "conclusion");
-  const headings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u72C0\u614B", "\u7248\u672C", "\u63A2\u7A76\u905E\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u53CD\u601D\u63D0\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u539F\u59CB\u5FEB\u7167\u6642\u9593\uFF08\u9999\u6E2F\uFF09", ...originalFields.map(([, label]) => "\u539F\u59CB\uFF5C" + label), ...exportFields.map(([, label]) => "\u6700\u65B0\uFF5C" + label), "plannedReplicates\uFF5C\u539F\u59CB\u5EFA\u8B70", "plannedReplicateReason\uFF5C\u539F\u59CB\u7406\u7531", "actualReplicates\uFF5C\u7368\u7ACB\u74CA\u8102\u677F\u6578", "\u8A2D\u8A08\u6587\u5B57", ...legacyExtension, "\u6709\u6548\u7528\u6642\u7E3D\u79D2\u6578", ...["\u4E00", "\u4E8C", "\u4E09", "\u56DB"].map((stage) => "\u968E\u6BB5" + stage + "\u6709\u6548\u79D2\u6578"), "\u984C\u76EE\uFF0F\u8A55\u5206\u7248\u672C"];
+  const headings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u96FB\u90F5", "\u72C0\u614B", "\u7248\u672C", "\u63A2\u7A76\u905E\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u53CD\u601D\u63D0\u4EA4\uFF08\u9999\u6E2F\uFF09", "\u539F\u59CB\u5FEB\u7167\u6642\u9593\uFF08\u9999\u6E2F\uFF09", ...originalFields.map(([, label]) => "\u539F\u59CB\uFF5C" + label), ...exportFields.map(([id, label]) => "\u6700\u65B0\uFF5C" + (id === "reflection" ? "\u5B78\u7FD2\u53CD\u601D\uFF08\u4F9D\u984C\u76EE\uFF0F\u8A55\u5206\u7248\u672C\uFF09" : label)), "plannedReplicates\uFF5C\u539F\u59CB\u5EFA\u8B70", "plannedReplicateReason\uFF5C\u539F\u59CB\u7406\u7531", "actualReplicates\uFF5C\u7368\u7ACB\u74CA\u8102\u677F\u6578", "\u8A2D\u8A08\u6587\u5B57", ...legacyExtension, "\u6709\u6548\u7528\u6642\u7E3D\u79D2\u6578", ...["\u4E00", "\u4E8C", "\u4E09", "\u56DB"].map((stage) => "\u968E\u6BB5" + stage + "\u6709\u6548\u79D2\u6578"), "\u984C\u76EE\uFF0F\u8A55\u5206\u7248\u672C"];
   const answerGroups = [...Array(9).fill("identity"), ...originalFields.map((field2) => field2[3]), ...exportFields.map((field2) => field2[3]), ...Array(3).fill("designing"), "conducting", ...Array(legacyExtension.length).fill("inferring"), ...Array(6).fill("identity")];
   const answers = createSheet(workbook, "\u5B78\u751F\u63A2\u7A76\u7B54\u6848", headings, answerGroups);
   const dataHeadings = ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u74CA\u8102\u677F\u8B58\u5225\u78BC", "\u6A23\u672C", "\u9996\u6B21\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u9996\u6B21\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u9996\u6B21\u5099\u8A3B", "\u9996\u6B21\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6700\u5F8C\u6709\u7121\u7D19\u789F\u5916\u6E05\u6670\u5340", "\u6700\u5F8C\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u6700\u5F8C\u5099\u8A3B", "\u6700\u5F8C\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09", "\u6A21\u578B\u53C3\u8003\u7E3D\u76F4\u5F91\uFF08mm\uFF09", "\u76F4\u5F91\uFF0F\u7D19\u789F\u5916\u6E05\u6670\u5340\u6AA2\u6838", "\u4FEE\u8A02\u7D00\u9304", "\u5B78\u751F\u5E73\u5747\u503C\uFF08mm\uFF09", "\u4F9D\u5B78\u751F\u6700\u5F8C\u8B80\u6578\u8A08\u7B97\u5E73\u5747\u503C", "\u5E73\u5747\u503C\u6AA2\u6838", ...hasLegacy ? ["\u78BA\u8A8D\u68D2\u9AD8\uFF08mm\uFF09", "\u5716\u8868\u6AA2\u6838", "\u5716\u8868\u78BA\u8A8D\uFF08\u9999\u6E2F\uFF09"] : []];
@@ -24977,12 +24982,14 @@ async function buildWorkbook(inputRecords) {
   const data = createSheet(workbook, hasLegacy ? "\u91CF\u5EA6\u8A08\u7B97\u8207\u5716\u8868" : "\u91CF\u5EA6\u8207\u8A08\u7B97", dataHeadings, dataGroups);
   const makeScores = (columns, name) => ({ columns, sheet: createSheet(workbook, name, ["\u7D00\u9304\u8B58\u5225\u78BC", "\u59D3\u540D", "\u73ED\u5225\u53CA\u5B78\u865F", "\u5B8C\u6210\u72C0\u614B", ...columns.map((column) => column.label + (column.max !== void 0 ? `\uFF080\u2013${column.max}\uFF09` : ""))], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]), index: Object.fromEntries(columns.map((column, index) => [column.id, index + 5])) });
   const legacyScores = hasLegacy ? makeScores(SCORE_COLUMNS, "\u6559\u5E2B\u8A55\u5206") : null;
-  const hasV2 = records.some((r) => currentAnalysis(r) && r.rubricVersion !== 3);
+  const hasV2 = records.some((r) => currentAnalysis(r) && ![3, 4].includes(r.rubricVersion));
   const currentScores = hasV2 ? makeScores(CURRENT_SCORE_COLUMNS, hasLegacy ? "\u6559\u5E2B\u8A55\u5206\uFF08\u65B0\u7248\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
   const v3Records = records.filter((r) => currentAnalysis(r) && r.rubricVersion === 3);
-  const v3Scores = v3Records.length || !records.length ? makeScores(scoreColumnsFor(v3Records[0] || { analysisVersion: 2, rubricVersion: 3 }), hasLegacy || hasV2 ? "\u6559\u5E2B\u8A55\u5206\uFF08R3\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
+  const v3Scores = v3Records.length ? makeScores(scoreColumnsFor(v3Records[0]), hasLegacy || hasV2 ? "\u6559\u5E2B\u8A55\u5206\uFF08R3\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
+  const v4Records = records.filter((r) => currentAnalysis(r) && r.rubricVersion === 4);
+  const v4Scores = v4Records.length || !records.length ? makeScores(scoreColumnsFor(v4Records[0] || { analysisVersion: 2, rubricVersion: 4 }), hasLegacy || hasV2 || v3Records.length ? "\u6559\u5E2B\u8A55\u5206\uFF08R4\uFF09" : "\u6559\u5E2B\u8A55\u5206") : null;
   const rubric = createSheet(workbook, "\u8A55\u5206\u6E96\u5247", ["\u985E\u5225\uFF0F\u984C\u76EE", "\u6700\u9AD8\u5206", "\u8A55\u5206\u65B9\u5F0F", "\u6EFF\u5206\u6E96\u5247", "\u90E8\u5206\u5F97\u5206\u6E96\u5247", "\u96F6\u5206\u6E96\u5247"]);
-  for (const row of [...hasLegacy ? RUBRIC_ROWS : [], ...records.some((r) => currentAnalysis(r) && r.rubricVersion !== 3) ? CURRENT_RUBRIC_ROWS : [], ...v3Records.length || !records.length ? rubricRowsFor(v3Records[0] || { analysisVersion: 2, rubricVersion: 3 }) : []]) {
+  for (const row of [...hasLegacy ? RUBRIC_ROWS : [], ...hasV2 ? CURRENT_RUBRIC_ROWS : [], ...v3Records.length ? rubricRowsFor(v3Records[0]) : [], ...v4Records.length || !records.length ? rubricRowsFor(v4Records[0] || { analysisVersion: 2, rubricVersion: 4 }) : []]) {
     addDataRow(rubric, row.slice(0, 6), Array(6).fill(row[6]));
   }
   rubric.columns.forEach((column, index) => {
@@ -25012,17 +25019,17 @@ async function buildWorkbook(inputRecords) {
       addDataRow(data, [record.id, profile.name, plate.id, sampleName(sample, "zh"), presence(first.visible), finiteNumber(first.value) ?? "", first.note || "", first.at ? dateText(first.at) : "", presence(last.visible), finiteNumber(last.value) ?? "", last.note || "", last.at ? dateText(last.at) : "", clearZoneDiameter(plate, sample) ?? "", label(check), JSON.stringify(reading.revisions || []), finiteNumber(record.means?.[sample]) ?? "", mean === null ? "" : Math.round(mean * 1e4) / 1e4, label(meanCorrect), ...hasLegacy ? [finiteNumber(record.graph?.values?.[sample]) ?? "", label(graphCorrect), record.graph?.confirmedAt ? dateText(record.graph.confirmedAt) : ""] : []], dataGroups, { 5: readingCheck(record, plate, sample, first), 9: check, 13: check, 15: meanCorrect, 17: meanCorrect, 18: graphCorrect, 19: graphCorrect });
       for (const revision of reading.revisions || []) addDataRow(events, [record.id, profile.name, `${plate.id}/${sample}`, "reading_revision", dateText(revision.at || revision.next?.at), 3, JSON.stringify(safeEventDetails(revision))]);
     }
-    const auto = automaticScores(record), { columns, sheet: scores, index: scoreIndex } = record.rubricVersion === 3 && currentAnalysis(record) ? v3Scores : currentAnalysis(record) ? currentScores : legacyScores;
+    const auto = automaticScores(record), { columns, sheet: scores, index: scoreIndex } = record.rubricVersion === 4 && currentAnalysis(record) ? v4Scores : record.rubricVersion === 3 && currentAnalysis(record) ? v3Scores : currentAnalysis(record) ? currentScores : legacyScores;
     const scoreRow = addDataRow(scores, [record.id, profile.name, profile.className || profile.classInfo, status, ...columns.map((column) => column.manual ? null : auto[column.id] ?? "")], [...Array(4).fill("identity"), ...columns.map((column) => column.group)]);
     const cell = (id) => scoreRow.getCell(scoreIndex[id]), ref = (id) => cell(id).address;
     const manualColumns = columns.filter((column) => column.manual), manual = manualColumns.map((column) => ref(column.id));
-    const guards = manualColumns.map((c) => `IFERROR(AND(ISNUMBER(${ref(c.id)}),${ref(c.id)}>=0,${ref(c.id)}<=${c.max},MOD(${ref(c.id)},${record.rubricVersion === 3 ? 1 : 0.5})=0),FALSE)`);
+    const guards = manualColumns.map((c) => `IFERROR(AND(ISNUMBER(${ref(c.id)}),${ref(c.id)}>=0,${ref(c.id)}<=${c.max},MOD(${ref(c.id)},${[3, 4].includes(record.rubricVersion) ? 1 : 0.5})=0),FALSE)`);
     const validManual = guards.join(",");
     for (const column of columns) {
       const current = cell(column.id);
       if (column.manual) {
         current.value = null;
-        current.dataValidation = { type: record.rubricVersion === 3 ? "whole" : "decimal", operator: "between", allowBlank: true, formulae: [0, column.max], showInputMessage: true, promptTitle: "\u6559\u5E2B\u4EBA\u5DE5\u8A55\u5206", prompt: `\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF1B\u6709\u6548\u7BC4\u570D 0\u2013${column.max}\uFF1BR3\u53EA\u63A5\u53D7\u6574\u6578\u3002`, showErrorMessage: true, errorStyle: "stop", errorTitle: "\u5206\u6578\u8D85\u51FA\u7BC4\u570D", error: `\u8ACB\u8F38\u5165 0\u2013${column.max} \u7684\u6578\u503C\uFF0C\u6216\u4FDD\u6301\u7A7A\u767D\u3002` };
+        current.dataValidation = { type: [3, 4].includes(record.rubricVersion) ? "whole" : "decimal", operator: "between", allowBlank: true, formulae: [0, column.max], showInputMessage: true, promptTitle: "\u6559\u5E2B\u4EBA\u5DE5\u8A55\u5206", prompt: `\u7A7A\u767D\uFF1D\u5F85\u8A55\uFF1B\u6709\u6548\u7BC4\u570D 0\u2013${column.max}\uFF1BR3\uFF0FR4\u53EA\u63A5\u53D7\u6574\u6578\u3002`, showErrorMessage: true, errorStyle: "stop", errorTitle: "\u5206\u6578\u8D85\u51FA\u7BC4\u570D", error: `\u8ACB\u8F38\u5165 0\u2013${column.max} \u7684\u6578\u503C\uFF0C\u6216\u4FDD\u6301\u7A7A\u767D\u3002` };
       }
       if (column.formula) {
         const dependencies = column.formula.map(ref);
@@ -25070,8 +25077,8 @@ async function downloadWorkbook(records, options = {}) {
 }
 
 // paperwork/source.js
-var PAPER_VERSION = 9;
-var PAPER_TASK_VERSION = "VL4-WS4-orange-diffusion-9";
+var PAPER_VERSION = 10;
+var PAPER_TASK_VERSION = "VL4-WS4-no-citation-10";
 var PAPER_SEEDS = Object.freeze([1001, 123456789, 1982]);
 var translated = (key, lang) => lang === "en" ? glossEnglish(L[key]?.[1] ?? key) : L[key]?.[0] ?? key;
 function getPaperSource(language2 = "zh") {
@@ -25118,9 +25125,9 @@ function getPaperSource(language2 = "zh") {
     variableReference: VARIABLE_REFERENCE,
     assumptionReference: ASSUMPTION_REFERENCE,
     reflection: t2("reflectionQuestion").replaceAll("\u5B78\u7FD2\u91CD\u9EDE", "\u8AB2\u984C\u9700\u77E5").replaceAll("learning points", "topic notes"),
-    reference: { control: referenceFor("controlPlan", { plates }, language2), reflection: referenceFor("reflection", { plates }, language2) },
-    rubric: V3_RUBRIC_ROWS,
-    reflectionCriteria: REFLECTION_CRITERIA,
+    reference: { control: referenceFor("controlPlan", { plates }, language2), reflection: referenceFor("reflection", { plates, rubricVersion: 4 }, language2) },
+    rubric: V4_RUBRIC_ROWS,
+    reflectionCriteria: V4_REFLECTION_CRITERIA,
     mapping,
     wsMaximum: 24,
     vlMaximum: 29
@@ -27242,9 +27249,6 @@ $("#exportExcel").onclick = async () => {
     $("#dashboardStatus").textContent = t("cloudReadFailed");
   }
 };
-$("#exportLocal").onclick = async () => {
-  await downloadWorkbook(studentRecords(), { scope: "local" });
-};
 function renderTeacherRows() {
   const rows = cloudRecords ?? studentRecords();
   $("#teacherRows").innerHTML = rows.map((r) => `<tr><td>${esc2(r.profile.name)}</td><td>${esc2(r.profile.className)}</td><td><small>${esc2(r.id)}</small></td><td>${t(r.reflectionSubmittedAt ? "stateComplete" : r.submittedAt ? "stateReflection" : "stateAwaiting")}</td><td>${esc2(r.savedAt || "")}</td><td><button class="secondary" data-view="${esc2(r.id)}">${t("view")}</button></td></tr>`).join("") || `<tr><td colspan="6">${t("emptyRecords")}</td></tr>`;
@@ -27259,36 +27263,6 @@ function renderTeacherRows() {
 }
 $("#teacherPDF").onclick = () => {
   if (selectedRecord?.reflectionSubmittedAt) openPrintReport(selectedRecord, language);
-};
-$("#importRecords").onchange = async (e) => {
-  const g = generation, rows = studentRecords();
-  let n = 0;
-  try {
-    for (const file of e.target.files) {
-      const parsed = JSON.parse(await file.text());
-      if (g !== generation || !teacherProfile) return;
-      const data = Array.isArray(parsed) ? parsed : parsed.records || [parsed];
-      for (const raw of data) {
-        const candidate = canonicalRecord(raw);
-        if (!candidate) continue;
-        const i = rows.findIndex((r) => r.id === candidate.id);
-        if (i < 0) {
-          rows.push(candidate);
-          n++;
-        } else if ((candidate.version || 0) > (rows[i].version || 0)) {
-          rows[i] = candidate;
-          n++;
-        }
-      }
-    }
-    if (damaged.has(KEYS.records)) throw Error();
-    localStorage.setItem(KEYS.records, JSON.stringify(rows));
-    cloudRecords = null;
-    renderTeacherRows();
-    $("#dashboardStatus").textContent = `${t("importRecords")} \xB7 ${n}`;
-  } catch {
-    $("#dashboardStatus").textContent = t("storageError");
-  }
 };
 window.addEventListener("beforeunload", (e) => {
   if (!state || state.demo) return;

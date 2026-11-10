@@ -195,17 +195,13 @@ async function readClass(){
 }
 $('#refreshCloud').onclick=()=>readClass().catch(()=>{});
 $('#exportExcel').onclick=async()=>{try{const rows=await readClass();await downloadWorkbook(rows);}catch{$('#dashboardStatus').textContent=t('cloudReadFailed');}};
-$('#exportLocal').onclick=async()=>{await downloadWorkbook(studentRecords(),{scope:'local'});};
 function renderTeacherRows(){
  const rows=cloudRecords??studentRecords();$('#teacherRows').innerHTML=rows.map(r=>`<tr><td>${esc(r.profile.name)}</td><td>${esc(r.profile.className)}</td><td><small>${esc(r.id)}</small></td><td>${t(r.reflectionSubmittedAt?'stateComplete':r.submittedAt?'stateReflection':'stateAwaiting')}</td><td>${esc(r.savedAt||'')}</td><td><button class="secondary" data-view="${esc(r.id)}">${t('view')}</button></td></tr>`).join('')||`<tr><td colspan="6">${t('emptyRecords')}</td></tr>`;
  $$('[data-view]').forEach(b=>b.onclick=()=>{selectedRecord=clone(rows.find(r=>r.id===b.dataset.view));$('#teacherReport').innerHTML=renderReport(selectedRecord,language);$('#teacherDetail').hidden=false;$('#teacherPDF').disabled=!selectedRecord.reflectionSubmittedAt;});
  $('#exportExcel').disabled=!CLOUD_ENDPOINT;$('#refreshCloud').disabled=!CLOUD_ENDPOINT;
 }
 $('#teacherPDF').onclick=()=>{if(selectedRecord?.reflectionSubmittedAt)openPrintReport(selectedRecord,language);};
-$('#importRecords').onchange=async e=>{
- const g=generation,rows=studentRecords();let n=0;
- try{for(const file of e.target.files){const parsed=JSON.parse(await file.text());if(g!==generation||!teacherProfile)return;const data=Array.isArray(parsed)?parsed:parsed.records||[parsed];for(const raw of data){const candidate=canonicalRecord(raw);if(!candidate)continue;const i=rows.findIndex(r=>r.id===candidate.id);if(i<0){rows.push(candidate);n++;}else if((candidate.version||0)>(rows[i].version||0)){rows[i]=candidate;n++;}}}if(damaged.has(KEYS.records))throw Error();localStorage.setItem(KEYS.records,JSON.stringify(rows));cloudRecords=null;renderTeacherRows();$('#dashboardStatus').textContent=`${t('importRecords')} · ${n}`;}catch{$('#dashboardStatus').textContent=t('storageError');}
-};
+
 window.addEventListener('beforeunload',e=>{if(!state||state.demo)return;save();e.preventDefault();e.returnValue='';});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){const n=performance.now();if(state&&!state.demo)state.timing[state.phase]+=Math.max(0,n-lastTime)/1000;lastTime=n;save();}else lastTime=performance.now();});
 setInterval(()=>{if(!state||state.demo){$('#activeTime').textContent='';return;}const total=Object.values(state.timing).reduce((a,b)=>a+b,0)+(document.hidden?0:Math.max(0,performance.now()-lastTime)/1000);$('#activeTime').textContent=`${t('time')} · ${(total/60).toFixed(1)} ${t('minutes')}`;},1000);
