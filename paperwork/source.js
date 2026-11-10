@@ -5,7 +5,7 @@ import {MC_QUESTIONS,EFFECTIVE_SAMPLE_OPTIONS} from '../analysis.js';
 import {generateResult,DEFAULT_POSITIONS,SAMPLES,DISC_MM,ACTUAL_REPLICATES} from '../model.js';
 import {referenceFor,learningDiagram} from '../reports.js';
 import {VARIABLE_REFERENCE,ASSUMPTION_REFERENCE,TOLERANCES,V4_RUBRIC_ROWS,V4_REFLECTION_CRITERIA} from '../rubric.js';
-export const PAPER_VERSION=11,PAPER_TASK_VERSION='VL4-WS4-wide-plate-variable-11',PAPER_SEEDS=Object.freeze([1001,123456789,1982]);
+export const PAPER_VERSION=12,PAPER_TASK_VERSION='VL4-WS4-growth-label-hanging-12',PAPER_SEEDS=Object.freeze([1001,123456789,1982]);
 export const translated=(key,lang)=>lang==='en'?glossEnglish(L[key]?.[1]??key):L[key]?.[0]??key;
 export function getPaperSource(language='zh'){
  if(!['zh','en'].includes(language))throw Error('Invalid language');

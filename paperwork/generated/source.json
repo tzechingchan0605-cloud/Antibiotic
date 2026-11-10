@@ -1,7 +1,7 @@
 {
   "zh": {
     "module": "VL4",
-    "version": 11,
+    "version": 12,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -11,12 +11,12 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-wide-plate-variable-11",
+    "taskVersion": "VL4-WS4-growth-label-hanging-12",
     "language": "zh",
     "scenario": "一名患者的傷口感染在接受初步[抗生素治療]後，仍未明顯改善。醫院化驗確認，引起感染的是耐甲氧西林金黃葡萄球菌，簡稱 [MRSA]。此實驗比較 [X、Y、Z 三種樣本]對 MRSA 生長的影響。",
     "principle": {
       "title": "A. 實驗原理：抗生素樣本的擴散與清晰區的形成",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\">① 紙碟承載抗生素</text><path data-step=\"1\" d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\" fill=\"#C56800\">② 抗生素向瓊脂擴散</text>\n <text x=\"225\" y=\"204\">③ 抗生素抑制細菌生長</text><text x=\"246\" y=\"227\">並形成清晰區</text><path data-step=\"3\" d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"紙碟承載抗生素，抗生素向瓊脂擴散並抑制細菌生長，形成清晰區。\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\">\n <g data-label=\"disc\"><text x=\"225\" y=\"65\">紙碟承載抗生素</text><path d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/></g>\n <g data-label=\"diffusion\" fill=\"#C56800\"><text x=\"225\" y=\"126\">抗生素向瓊脂擴散</text></g>\n <g data-label=\"zone\"><text x=\"225\" y=\"204\">抗生素抑制細菌生長</text><text x=\"225\" y=\"227\">並形成清晰區</text><path d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g>\n <g data-label=\"growth\"><text x=\"225\" y=\"274\">可見細菌生長區</text><path d=\"M217 267L170 241L91 213\" fill=\"none\" stroke=\"#698a87\"/></g>\n </g></svg>"
     },
     "printScale": 1,
     "measurementHint": "請用直尺通過圓心量度總直徑（包括紙碟）；無紙碟外清晰區時記錄為0 mm。量度容差：±1 mm。",
@@ -1140,7 +1140,7 @@
   },
   "en": {
     "module": "VL4",
-    "version": 11,
+    "version": 12,
     "worksheetPages": 4,
     "pageMap": {
       "notes": 1,
@@ -1150,12 +1150,12 @@
       "conclusion": 4,
       "reflection": 4
     },
-    "taskVersion": "VL4-WS4-wide-plate-variable-11",
+    "taskVersion": "VL4-WS4-growth-label-hanging-12",
     "language": "en",
     "scenario": "After initial [antibiotic（抗生素） treatment], a patient’s wound infection has not clearly improved. Laboratory testing identifies methicillin-resistant Staphylococcus aureus（耐甲氧西林金黃葡萄球菌）, abbreviated as [MRSA（耐甲氧西林金黃葡萄球菌）]. This experiment compares the effects of [samples X, Y and Z] on MRSA（耐甲氧西林金黃葡萄球菌） growth.",
     "principle": {
       "title": "A. Experimental principle: antibiotic（抗生素） diffusion and clear-zone（清晰區） formation",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">1. Disc carries antibiotic（抗生素）</tspan></text><path data-step=\"1\" d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/>\n <text x=\"225\" y=\"126\" fill=\"#C56800\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">2. Antibiotic（抗生素） diffuses</tspan></text><text x=\"246\" y=\"146\" fill=\"#C56800\">through agar</text>\n <text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">3. Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"246\" y=\"227\">bacterial growth, forming</text><text x=\"246\" y=\"250\">a clear zone</text><path data-step=\"3\" d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g></svg>"
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 460 285\" role=\"img\" aria-label=\"The disc carries antibiotic（抗生素）, which diffuses through agar and inhibits（抑制） bacterial growth, forming a clear zone（清晰區）.\">\n <defs><marker id=\"vl4-science-arrow\" markerWidth=\"7\" markerHeight=\"7\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0 0L6 3L0 6\" fill=\"#C56800\"/></marker></defs>\n <circle cx=\"115\" cy=\"142\" r=\"91\" fill=\"#ddd9ae\" stroke=\"#6e897b\"/><circle cx=\"115\" cy=\"142\" r=\"54\" fill=\"#f8faec\" stroke=\"#b4bda3\" stroke-dasharray=\"4 4\"/>\n <g fill=\"#79815c\"><circle cx=\"60\" cy=\"86\" r=\"3\"/><circle cx=\"173\" cy=\"99\" r=\"3\"/><circle cx=\"46\" cy=\"158\" r=\"3\"/><circle cx=\"169\" cy=\"195\" r=\"3\"/><circle cx=\"91\" cy=\"213\" r=\"3\"/><circle cx=\"175\" cy=\"157\" r=\"3\"/><circle cx=\"104\" cy=\"69\" r=\"3\"/><circle cx=\"75\" cy=\"186\" r=\"3\"/></g><circle cx=\"115\" cy=\"142\" r=\"12\" fill=\"#fff\" stroke=\"#5e7475\"/>\n <g fill=\"none\" stroke=\"#C56800\" stroke-width=\"2\" marker-end=\"url(#vl4-science-arrow)\"><path d=\"M129 142H157\"/><path d=\"M101 142H74\"/><path d=\"M115 127V103\"/><path d=\"M115 157V181\"/></g>\n <g font-size=\"16\" fill=\"#15333b\">\n <g data-label=\"disc\"><text x=\"225\" y=\"65\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">Disc carries antibiotic（抗生素）</tspan></text><path d=\"M221 72L115 142\" fill=\"none\" stroke=\"#698a87\"/></g>\n <g data-label=\"diffusion\" fill=\"#C56800\"><text x=\"225\" y=\"126\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">Antibiotic（抗生素） diffuses</tspan></text><text x=\"225\" y=\"146\">through agar</text></g>\n <g data-label=\"zone\"><text x=\"225\" y=\"204\"><tspan textLength=\"223\" lengthAdjust=\"spacingAndGlyphs\">Antibiotic（抗生素） inhibits（抑制）</tspan></text><text x=\"225\" y=\"227\">bacterial growth, forming</text><text x=\"225\" y=\"250\">a clear zone</text><path d=\"M221 213L136 168\" fill=\"none\" stroke=\"#698a87\"/></g>\n <g data-label=\"growth\"><text x=\"225\" y=\"274\">Visible bacterial growth</text><path d=\"M217 267L170 241L91 213\" fill=\"none\" stroke=\"#698a87\"/></g>\n </g></svg>"
     },
     "printScale": 1,
     "measurementHint": "Use a ruler to measure the total diameter through the centre, including the disc. Record 0 mm if there is no clear zone outside the disc. Reading tolerance: ±1 mm.",

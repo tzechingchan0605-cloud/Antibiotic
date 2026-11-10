@@ -33,7 +33,7 @@ test('student reports are fully bilingual, preserve original/latest evidence and
   assert.match(zh,/你的原始研究計劃/);assert.match(en,/Your original research plan/);
   assert.doesNotMatch(zh,/學習重溫備註/);assert.doesNotMatch(en,/Learning review notes/);
   assert.match(zh,/實驗原理：抗生素樣本的擴散與清晰區的形成/);assert.match(en,/antibiotic（抗生素） diffusion and clear-zone（清晰區） formation/);
-  assert.match(zh,/① 紙碟承載抗生素/);assert.match(zh,/② 抗生素向瓊脂擴散/);assert.match(zh,/③ 抗生素抑制細菌生長/);
+  assert.match(zh,/紙碟承載抗生素/);assert.match(zh,/抗生素向瓊脂擴散/);assert.match(zh,/抗生素抑制細菌生長/);assert.match(zh,/可見細菌生長區/);assert.match(en,/Visible bacterial growth/);for(const lang of ['zh','en'])assert.doesNotMatch(learningDiagram(lang).split('</figure>')[0],/[①②③]|[123]\. /);
   assert.match(zh,/離紙碟越遠，濃度通常越低/);assert.match(en,/concentration generally decreases with distance/);
   assert.match(zh,/過度或不當使用抗生素/);assert.match(en,/antibiotic（抗生素） overuse（過度使用） or misuse（不當使用）/i);
   assert.match(zh,/C（對照）/);assert.match(en,/C \(control\)/);

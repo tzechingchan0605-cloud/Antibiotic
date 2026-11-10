@@ -131,9 +131,12 @@ export function learningDiagram(language = 'zh') {
  <circle cx="115" cy="142" r="91" fill="#ddd9ae" stroke="#6e897b"/><circle cx="115" cy="142" r="54" fill="#f8faec" stroke="#b4bda3" stroke-dasharray="4 4"/>
  <g fill="#79815c">${[[60,86],[173,99],[46,158],[169,195],[91,213],[175,157],[104,69],[75,186]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3"/>`).join('')}</g><circle cx="115" cy="142" r="12" fill="#fff" stroke="#5e7475"/>
  <g fill="none" stroke="#C56800" stroke-width="2" marker-end="url(#vl4-science-arrow)"><path d="M129 142H157"/><path d="M101 142H74"/><path d="M115 127V103"/><path d="M115 157V181"/></g>
- <g font-size="16" fill="#15333b"><text x="225" y="65">${t('① 紙碟承載抗生素','1. Disc carries antibiotic')}</text><path data-step="1" d="M221 72L115 142" fill="none" stroke="#698a87"/>
- <text x="225" y="126" fill="#C56800">${t('② 抗生素向瓊脂擴散','2. Antibiotic diffuses')}</text>${language==='en'?'<text x="246" y="146" fill="#C56800">through agar</text>':''}
- <text x="225" y="204">${t('③ 抗生素抑制細菌生長','3. Antibiotic inhibits')}</text><text x="246" y="227">${t('並形成清晰區','bacterial growth, forming')}</text>${language==='en'?'<text x="246" y="250">a clear zone</text>':''}<path data-step="3" d="M221 213L136 168" fill="none" stroke="#698a87"/></g></svg>
+ <g font-size="16" fill="#15333b">
+ <g data-label="disc"><text x="225" y="65">${t('紙碟承載抗生素','Disc carries antibiotic')}</text><path d="M221 72L115 142" fill="none" stroke="#698a87"/></g>
+ <g data-label="diffusion" fill="#C56800"><text x="225" y="126">${t('抗生素向瓊脂擴散','Antibiotic diffuses')}</text>${language==='en'?'<text x="225" y="146">through agar</text>':''}</g>
+ <g data-label="zone"><text x="225" y="204">${t('抗生素抑制細菌生長','Antibiotic inhibits')}</text><text x="225" y="227">${t('並形成清晰區','bacterial growth, forming')}</text>${language==='en'?'<text x="225" y="250">a clear zone</text>':''}<path d="M221 213L136 168" fill="none" stroke="#698a87"/></g>
+ <g data-label="growth"><text x="225" y="274">${t('可見細菌生長區','Visible bacterial growth')}</text><path d="M217 267L170 241L91 213" fill="none" stroke="#698a87"/></g>
+ </g></svg>
  <p class="caption">${t('示意圖，非按比例；不能證明細菌全部死亡。','Schematic, not to scale; it does not prove complete killing.')}</p></figure>
  <figure class="learning-figure"><figcaption>${t('B. 細菌結構與可能作用位置','B. Structures and possible action sites')}</figcaption>
  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 285" role="img" aria-label="${t('細菌結構與抗生素可能作用位置','Bacterial structures and possible antibiotic action sites')}">

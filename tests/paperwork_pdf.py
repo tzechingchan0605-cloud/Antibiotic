@@ -34,6 +34,14 @@ for lang in ['zh','en']:
    if key!='D':
     identity=[s for s in spans if ('姓名：' if lang=='zh' else 'Name:') in s['text']];assert len(identity)==int(i==0)
     if i==0:
+     bullet_x=None;bullet_count=0
+     for line in [line for block in p.get_text('rawdict')['blocks'] for line in block.get('lines',[]) if line['bbox'][0]>290 and line['bbox'][1]<790]:
+      chars=[c for span in line['spans'] for c in span['chars']];line_text=''.join(c['c'] for c in chars)
+      if line_text.startswith('•'):
+       bullet_count+=1;bullet_x=next(c['origin'][0] for c in chars[1:] if not c['c'].isspace())
+      elif line_text.startswith(('（','(')):bullet_x=None
+      elif bullet_x is not None:assert abs(chars[0]['origin'][0]-bullet_x)<.2,(lang,key,'bullet text misaligned',line_text)
+     assert bullet_count==4,(lang,key,'four concept bullets required')
      photo=max([r for img in p.get_images() for r in p.get_image_rects(img[0])],key=lambda r:r.height)
      assert photo.width>240 and photo.height>330,(lang,key,'photo was not enlarged')
      diffusion=[s for s in spans if ('抗生素由紙碟' if lang=='zh' else '• Antibiotic ') in s['text']]

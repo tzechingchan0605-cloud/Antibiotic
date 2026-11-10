@@ -57,7 +57,7 @@ class Sheet:
     if color or emph:r.font.color.rgb=RGBColor.from_string(RED if emph else color)
   prefix=re.match(r'^(?:[•□☑]\s*(?:[A-D]\.\s*)?|[A-D]\.\s+|\d+(?:\.\d+)*[.、]?\s+(?:[·｜]\s*)?)',p.text)
   if prefix:
-   indent=HANG_FONTS[(self.lang,bool(p.runs[0].bold))].getlength(prefix[0].replace('☑',''))/10*size/11+prefix[0].count('☑')*CHECK_ADVANCE*size;p.paragraph_format.left_indent=Pt(indent);p.paragraph_format.first_line_indent=Pt(-indent)
+   indent=HANG_FONTS[(self.lang,bool(p.runs[0].bold))].getlength(prefix[0].replace('☑','').replace('•','') if self.lang=='zh' else prefix[0].replace('☑',''))/10*size/11+prefix[0].count('☑')*CHECK_ADVANCE*size+(prefix[0].count('•')*size if self.lang=='zh' else 0);p.paragraph_format.left_indent=Pt(indent);p.paragraph_format.first_line_indent=Pt(-indent)
 
  def p(self,text='',size=12,color=None,bold=False,parent=None):
   p=(parent or self.d).add_paragraph();
@@ -121,19 +121,22 @@ def history(m):
 def principle(m):
  # Reuse the live VL's actual figure A, with a print layout and >=11pt labels.
  root=E.fromstring(m['principle']['svg'].encode());ns={'s':'http://www.w3.org/2000/svg'}
- texts=root.findall('.//s:text',ns);labels=[' '.join(t.itertext()) for t in texts]
- colours=[texts[i].get('fill','#15333b') for i in ([0,1,3] if m['language']=='en' else [0,1,2])]
- targets=[(int(path.get('data-step'))-1,re.findall(r'[-+]?[0-9]*\.?[0-9]+',path.get('d'))[-2:]) for group in root.findall('s:g',ns) if group.get('font-size') for path in group.findall('s:path',ns)]
+ labels={group.get('data-label'):group for group in root.findall('.//s:g[@data-label]',ns)}
  for group in root.findall('s:g',ns):
   if group.get('font-size'):root.remove(group)
  body='<g transform="scale(.5)">'+''.join(E.tostring(n,encoding='unicode') for n in root)+'</g>'
- blocks=[labels[0],' '.join(labels[1:3]),' '.join(labels[3:])] if m['language']=='en' else [labels[0],labels[1],' '.join(labels[2:])]
- for j,text in enumerate(blocks):
-  prefix=re.match(r'^(?:[①②③]|[1-3]\.)\s*',text)[0];indent=label_width(prefix)
-  for k,label in enumerate(label_lines(text[len(prefix):],137-indent)):
-   body+=f'<text x="{118 if k==0 else 118+indent}" y="{[20,62,98][j]+k*14}" font-size="11" fill="{colours[j]}">{html.escape(prefix+label if k==0 else label)}</text>'
- for j,(x,y) in targets:body+=f'<path d="M111 {[25,67,103][j]}L{float(x)/2} {float(y)/2}" stroke="#698a87" fill="none"/>'
+ placements={'disc':(118,20,137),'diffusion':(118,62,137),'zone':(118,98,137),'growth':(7,134,105)}
+ leaders={'disc':(111,25),'zone':(111,103),'growth':(45.5,121)}
+ for name,(x,y,width) in placements.items():
+  group=labels[name];text=' '.join(' '.join(node.itertext()) for node in group.findall('s:text',ns));colour=group.get('fill','#15333b')
+  for k,line in enumerate(label_lines(text,width)):
+   body+=f'<text x="{x}" y="{y+k*14}" font-size="11" fill="{colour}">{html.escape(line)}</text>'
+  path=group.find('s:path',ns)
+  if path is not None:
+   tx,ty=re.findall(r'[-+]?[0-9]*\.?[0-9]+',path.get('d'))[-2:];sx,sy=leaders[name]
+   body+=f'<path d="M{sx} {sy}L{float(tx)/2} {float(ty)/2}" stroke="#698a87" fill="none"/>'
  return svgdoc(body,w=92*PT_MM,h=155 if m['language']=='en' else 138)
+
 def plates(m):
  s=''
  for i,p in enumerate(m['plates']):

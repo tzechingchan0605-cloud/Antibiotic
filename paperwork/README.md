@@ -1,4 +1,4 @@
-# WS4 v11：抗生素與細菌生長
+# WS4 v12：抗生素與細菌生長
 
 唯一教材來源是 `source.js`：讀取現行L、完整變量／假設選項、MC、模型、容差、參考函式與rubric。`worksheet.py`產生可編輯DOCX，LibreOffice從同一DOCX產生PDF；不是整頁圖片。十二項資料來自seeds1001/123456789/1982，清晰區及6mm紙碟按1:1實際印刷尺寸繪製，不附內置直尺；圖的結果不另造數據。學生版不預印待答讀數或均值。v4改用較分散的固定種子，直接取自同一generateResult，沒有改VL模型公式或既存結果。
 
@@ -16,18 +16,18 @@ npm test
 npm run paper:test
 ```
 
-需要Noto CJK、Noto Color Emoji、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v11及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
+需要Noto CJK、Noto Color Emoji、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v12及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
 
 <!-- paper-summary:start -->
-WS4 v11 · f1fbf101a569
+WS4 v12 · 240d6eb7a4af
 
 | 教材 | 頁數（中／英） | 繁中 | English |
 | --- | ---: | --- | --- |
-| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_studentPDF_en_v11_f1fbf101a569.pdf) |
-| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v11_f1fbf101a569.docx) | [Download](generated/VL4_studentWord_en_v11_f1fbf101a569.docx) |
-| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_answersPDF_en_v11_f1fbf101a569.pdf) |
-| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v11_f1fbf101a569.docx) | [Download](generated/VL4_answersWord_en_v11_f1fbf101a569.docx) |
-| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_D_en_v11_f1fbf101a569.pdf) |
+| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v12_240d6eb7a4af.pdf) | [Download](generated/VL4_studentPDF_en_v12_240d6eb7a4af.pdf) |
+| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v12_240d6eb7a4af.docx) | [Download](generated/VL4_studentWord_en_v12_240d6eb7a4af.docx) |
+| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v12_240d6eb7a4af.pdf) | [Download](generated/VL4_answersPDF_en_v12_240d6eb7a4af.pdf) |
+| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v12_240d6eb7a4af.docx) | [Download](generated/VL4_answersWord_en_v12_240d6eb7a4af.docx) |
+| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v12_240d6eb7a4af.pdf) | [Download](generated/VL4_D_en_v12_240d6eb7a4af.pdf) |
 <!-- paper-summary:end -->
 
 學生／答案各四頁：課題需知與情境；變量、假設、對照與重複安排；量度、均值與兩道分析；結論、其餘分析及整合解釋。姓名只在首頁，同一行。所有題目、選項及提示來自現行VL；最後題把學習重點對應為課題需知；v10刪去引用讀數／數據要求，保留選有效樣本及抗性因果解釋。
@@ -65,3 +65,6 @@ v11：2.1第一欄由1.8cm加闊至2.8cm，兩語瓊脂板1／2／3均保持單�
 
 
 v11同輪詞彙更新：VL、WS、提示、報告及Excel顯示文字統一「自變量」，英語Independent variable及iv識別碼不變。
+
+
+v12：共用圖A移除三個標籤前的編號，加入「可見細菌生長區／Visible bacterial growth」，標示線接清晰區外的原有細菌點。紙本用同一語言文字及線端座標重排至圖下方，字體11pt，橙色擴散箭嘴與文字保持。四點需知採實際字型的懸掛縮排，修正繁中圓點在LibreOffice使用全字寬、與Pillow量度不同導致的續行偏左。全部續行對齊正文首字；兩語學生／答案仍四頁。
