@@ -85,7 +85,7 @@ This rubric is an initial researcher's draft. Before longitudinal comparisons ac
 | sterile | 無菌的 |
 | contamination | 污染 |
 | hypothesis | 假說 |
-| independent variable | 自變量／獨立變量 |
+| independent variable | 自變量 |
 | dependent variable | 因變量 |
 | controlled variables | 控制變量 |
 | inference | 推論 |

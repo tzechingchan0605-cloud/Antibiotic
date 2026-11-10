@@ -21,7 +21,7 @@ export const ANSWER_FIELDS = [
   ['prediction', '你預測哪些樣本會出現紙碟外的可見清晰區？', 'Which samples do you predict will have a visible zone outside the disc?', 'designing'],
   ['largestPrediction', ...L.largestPrediction, 'designing'],
   ['reason', ...L.hypothesisReason, 'designing'],
-  ['iv', '獨立變量：本次改變甚麼？', 'Independent variable: what do we change?', 'classifying'],
+  ['iv', '自變量：本次改變甚麼？', 'Independent variable: what do we change?', 'classifying'],
   ['dv', '因變量：本次觀察及量度甚麼？', 'Dependent variable: what do we observe and measure?', 'classifying'],
   ['cv', '控制變量：哪些條件保持相同？', 'Controlled variables: what stays the same?', 'classifying'],
   ['assumptions', '探究假設', 'Assumptions for a fair investigation', 'designing'],

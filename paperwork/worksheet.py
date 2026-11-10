@@ -206,10 +206,15 @@ def worksheet(lang,answers):
    value=plate['result'][sample]
    presence.append('✓ / ✗')
    readings.append(str(value) if answers else '')
-  rows.append([s.t('瓊脂板','Plate ')+str(i+1)]+presence)
+  rows.append([s.t('瓊脂板 ','Plate ')+str(i+1)]+presence)
   rows.append(['']+readings)
   if answers:marks.update((i*2+2,col) for col in range(2,6))
- result_table=s.table(rows,[1.8,6.4]+[2.55]*4,marks)
+ result_table=s.table(rows,[2.8,6.4]+[2.3]*4,marks)
+ for row in result_table.rows:
+  for cell in row.cells[2:]:
+   margins=xml('w:tcMar')
+   for side in ['left','right']:margins.append(xml('w:'+side,**{'w:w':'40','w:type':'dxa'}))
+   cell._tc.get_or_add_tcPr().append(margins)
  result_table.cell(0,0).merge(result_table.cell(0,1))
  for i in range(3):
   result_table.cell(i*2+1,0).merge(result_table.cell(i*2+2,0))

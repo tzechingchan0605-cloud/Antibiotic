@@ -153,7 +153,7 @@ export const L={
  drawingHint:pair('不用精緻地繪畫所有特徵，簡單繪畫並標示清楚便可。','You do not need to draw every detail carefully. A simple drawing with clear labels is enough.'),
 
  controlHint:pair('（提示：此對照組與實驗組有何不同之處？）','(Hint: how does the control differ from the experimental group?)'),
- controlPurposeHint:pair('（提示：對照組主要功能是作為比較的基準，用來確認實驗中的改變是由獨立變量所引起，而非其他外在因素的干擾，因此對照組不包含獨立變量的處理條件）','(Hint: The control group provides a baseline for comparison. It helps check whether changes in the experiment are caused by the independent variable rather than other external factors. Therefore, the control group does not receive the treatment being tested.)'),
+ controlPurposeHint:pair('（提示：對照組主要功能是作為比較的基準，用來確認實驗中的改變是由自變量所引起，而非其他外在因素的干擾，因此對照組不包含自變量的處理條件）','(Hint: The control group provides a baseline for comparison. It helps check whether changes in the experiment are caused by the independent variable rather than other external factors. Therefore, the control group does not receive the treatment being tested.)'),
  controlHeading:pair('探究的對照組','The investigation control'),
  designStep4:pair('04 · 對照組設計','04 · Control design'),
  assumptionNote:pair('請選出所有適用的假設，可選多於一項。','Select all applicable assumptions; you may choose more than one.'),
@@ -206,7 +206,7 @@ export const L={
  hypothesis:pair('假說建立器','Hypothesis builder'),prediction:pair('你預測 X、Y、Z 中哪些樣本會在紙碟周圍出現沒有可見細菌生長的區域？','Which samples do you predict will have an area without visible bacterial growth around the disc?'),
  all:pair('全部','All'),some:pair('部分','Some'),none:pair('都不會','None'),reason:pair('你的理由','Your reason'),
  predictionNote:pair('請記錄你對清晰區出現及大小的預測；合理但未獲結果支持的預測仍有研究價值。','Record your predictions of clear-zone formation and size; a reasonable prediction remains useful even if the results do not support it.'),
- variables:pair('辨認實驗變量','Identify the variables'),iv:pair('獨立變量','Independent variable'),dv:pair('因變量','Dependent variable'),cv:pair('控制變量','Controlled variables'),
+ variables:pair('辨認實驗變量','Identify the variables'),iv:pair('自變量','Independent variable'),dv:pair('因變量','Dependent variable'),cv:pair('控制變量','Controlled variables'),
  ivHint:pair('主動改變的因素','The factor you change'),dvHint:pair('觀察/量度的結果','The outcome you observe/measure'),cvHint:pair('保持相同的因素','The factors kept the same'),
  vSample:pair('紙碟所含樣本','Sample in the disc'),vZone:pair('是否有可見清晰區及其總直徑','Visible clear zone and its total diameter'),vStrain:pair('使用的細菌種類','Type of bacteria used'),vDistribution:pair('初始細菌分布','Initial bacterial distribution'),vMedium:pair('瓊脂板的成份','Composition of the agar plate'),vDisc:pair('紙碟大小','Disc size'),vPreparation:pair('各樣本預設製備條件','Preset sample preparation'),vObservation:pair('共同培養及觀察條件','Shared simulation and observation conditions'),
  assumptions:pair('探究假設（可多選）','Investigation assumptions (choose all that apply)'),

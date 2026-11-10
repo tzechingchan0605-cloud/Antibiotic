@@ -49,6 +49,8 @@ for lang in ['zh','en']:
     if i in [0,sources[lang]['pageMap']['results']-1]:
      rects=[r for img in p.get_images() for r in p.get_image_rects(img[0])];assert any(r.height>(280 if i==0 else 125) and r.width>=(195 if i==0 else 520) for r in rects),(lang,key,i,'diagram clipped')
     if i==sources[lang]['pageMap']['results']-1:
+     printed_lines=[''.join(span['text'] for span in line['spans']) for block in p.get_text('dict')['blocks'] if 'lines' in block for line in block['lines'] if line['bbox'][0]<100 and line['bbox'][1]>max(rects,key=lambda r:r.width).y1]
+     for plate_number in range(1,4):assert any(('瓊脂板 ' if lang=='zh' else 'Plate ')+str(plate_number) in line for line in printed_lines),(lang,key,'plate label wraps',plate_number)
      image_rect=max(rects,key=lambda r:r.width);assert abs(image_rect.width-184*72/25.4)<.1 and abs(image_rect.height-184)<.2,(lang,key,'print image resized');pix=p.get_pixmap(matrix=fitz.Matrix(3,3),colorspace=fitz.csGRAY,alpha=False);im=Image.frombytes('L',[pix.width,pix.height],pix.samples)
      def gray(x,y):
       px=round((image_rect.x0+x*image_rect.width/(184*72/25.4))*3);py=round((image_rect.y0+y*image_rect.height/184)*3);box=im.crop((px-1,py-1,px+2,py+2));return sum(box.tobytes())/9

@@ -1,4 +1,4 @@
-# WS4 v10：抗生素與細菌生長
+# WS4 v11：抗生素與細菌生長
 
 唯一教材來源是 `source.js`：讀取現行L、完整變量／假設選項、MC、模型、容差、參考函式與rubric。`worksheet.py`產生可編輯DOCX，LibreOffice從同一DOCX產生PDF；不是整頁圖片。十二項資料來自seeds1001/123456789/1982，清晰區及6mm紙碟按1:1實際印刷尺寸繪製，不附內置直尺；圖的結果不另造數據。學生版不預印待答讀數或均值。v4改用較分散的固定種子，直接取自同一generateResult，沒有改VL模型公式或既存結果。
 
@@ -16,18 +16,18 @@ npm test
 npm run paper:test
 ```
 
-需要Noto CJK、Noto Color Emoji、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v10及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
+需要Noto CJK、Noto Color Emoji、Chromium、Poppler及LibreOffice（soffice，可用SOFFICE_PATH覆寫）。`npm run build`會在來源改變時重建；沒有更改不重複生成。檔名包含v11及內容雜湊；manifest檢查來源與十檔checksum，舊版本／缺檔／損壞均拒絕。保留舊app.bundle雜湊檔給快取HTML使用。Pages來源為main根目錄/.nojekyll，正常非強制push；發布後須另查線上檔案，不能以本機成功當上線。
 
 <!-- paper-summary:start -->
-WS4 v10 · bde3b55f0dca
+WS4 v11 · f1fbf101a569
 
 | 教材 | 頁數（中／英） | 繁中 | English |
 | --- | ---: | --- | --- |
-| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v10_bde3b55f0dca.pdf) | [Download](generated/VL4_studentPDF_en_v10_bde3b55f0dca.pdf) |
-| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v10_bde3b55f0dca.docx) | [Download](generated/VL4_studentWord_en_v10_bde3b55f0dca.docx) |
-| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v10_bde3b55f0dca.pdf) | [Download](generated/VL4_answersPDF_en_v10_bde3b55f0dca.pdf) |
-| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v10_bde3b55f0dca.docx) | [Download](generated/VL4_answersWord_en_v10_bde3b55f0dca.docx) |
-| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v10_bde3b55f0dca.pdf) | [Download](generated/VL4_D_en_v10_bde3b55f0dca.pdf) |
+| 完整學生 PDF | 4 | [下載](generated/VL4_studentPDF_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_studentPDF_en_v11_f1fbf101a569.pdf) |
+| 完整學生 Word | 4 | [下載](generated/VL4_studentWord_zh_v11_f1fbf101a569.docx) | [Download](generated/VL4_studentWord_en_v11_f1fbf101a569.docx) |
+| 完整連答案 PDF | 4 | [下載](generated/VL4_answersPDF_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_answersPDF_en_v11_f1fbf101a569.pdf) |
+| 完整連答案 Word | 4 | [下載](generated/VL4_answersWord_zh_v11_f1fbf101a569.docx) | [Download](generated/VL4_answersWord_en_v11_f1fbf101a569.docx) |
+| D 教師指引、配對及評分 | 4 | [下載](generated/VL4_D_zh_v11_f1fbf101a569.pdf) | [Download](generated/VL4_D_en_v11_f1fbf101a569.pdf) |
 <!-- paper-summary:end -->
 
 學生／答案各四頁：課題需知與情境；變量、假設、對照與重複安排；量度、均值與兩道分析；結論、其餘分析及整合解釋。姓名只在首頁，同一行。所有題目、選項及提示來自現行VL；最後題把學習重點對應為課題需知；v10刪去引用讀數／數據要求，保留選有效樣本及抗性因果解釋。
@@ -59,3 +59,9 @@ v9同輪文字批註：2.2改「清晰區的總直徑平均值計算」；結論
 
 
 v10／R4：兩語VL與WS最後一題移除引用數據要求。完整答案不再把讀數作為必答內容，D及新Excel首範疇改評樣本判斷；其餘三個機制範疇不變，反思8／VL29／WS24仍相同。舊R3題幹及證據規準保留，混合匯出分表並標示版本。沒有改學生原文或現有紀錄。
+
+
+v11：2.1第一欄由1.8cm加闊至2.8cm，兩語瓊脂板1／2／3均保持單行。紀錄項欄保持6.4cm，四個樣本欄各2.3cm，整表寬度不變；學生／答案PDF與Word及預覽同步，資料、題目及R4評分保持。
+
+
+v11同輪詞彙更新：VL、WS、提示、報告及Excel顯示文字統一「自變量」，英語Independent variable及iv識別碼不變。
